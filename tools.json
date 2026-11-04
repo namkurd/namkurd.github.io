@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "tabs": [
+    { "id": "home", "label": "Home" },
+    { "id": "live", "label": "Live" },
+    { "id": "history", "label": "History" },
+    { "id": "moves", "label": "Moves" },
+    { "id": "league", "label": "League" }
+  ],
+  "tools": [
+    { "id": "rumbles", "name": "Rumble Central", "short": "Rumbles", "tab": "live",
+      "path": "/SleeperLiveRumbles/rumbles.html", "repo": "namkurd/SleeperLiveRumbles",
+      "description": "Live Rumbles standings and matchups",
+      "links": { "replay": "/SleeperLiveRumbles/rumbles.html?season={season}&wp={week}.{rid}.{opp}" } },
+    { "id": "recordbook", "name": "Record Book", "short": "Records", "tab": "history",
+      "path": "/Recordbook/", "repo": "namkurd/Recordbook",
+      "description": "League records, holders and history",
+      "links": { "search": "/Recordbook/?q={q}", "manager": "/Recordbook/?mgr={manager}" } },
+    { "id": "h2h", "name": "Head-to-Head", "short": "H2H", "tab": "history",
+      "path": "/Sleeper-Head-to-Head/", "repo": "namkurd/Sleeper-Head-to-Head",
+      "description": "Career win-loss matrix between every pair of managers" },
+    { "id": "lifetime", "name": "Lifetime Win/Loss", "short": "Lifetime", "tab": "history",
+      "path": "/sleepersheet/", "repo": "namkurd/sleepersheet",
+      "description": "All-time records for every manager" },
+    { "id": "trades", "name": "Trade Network", "short": "Trades", "tab": "moves",
+      "path": "/SleeperTradeNodes/", "repo": "namkurd/SleeperTradeNodes",
+      "description": "Who trades with whom, and what changed hands",
+      "links": { "filter": "/SleeperTradeNodes/?season={season}&manager={manager}" } },
+    { "id": "fab", "name": "FAB Management", "short": "FAB", "tab": "moves",
+      "path": "/FAB-Management/", "repo": "namkurd/FAB-Management",
+      "description": "Waiver wire spending and pickups",
+      "links": { "filter": "/FAB-Management/?season={season}&manager={manager}" } },
+    { "id": "auction", "name": "Auction Archive", "short": "Auction", "tab": "moves",
+      "path": "/SleeperAuction/", "repo": "namkurd/SleeperAuction",
+      "description": "Every auction draft since 2012",
+      "links": { "player": "/SleeperAuction/#players/{key}", "draft": "/SleeperAuction/#drafts/{season}", "manager": "/SleeperAuction/#managers/{manager}" } },
+    { "id": "rulebook", "name": "Rulebook", "short": "Rules", "tab": "league",
+      "path": "/Rulebook/", "repo": "namkurd/Rulebook",
+      "description": "Every rule and proposal, 2019 to now" }
+  ],
+  "pages": [],
+  "external": [
+    { "id": "slack", "name": "Slack", "tab": "league", "url": "https://dtf-club.slack.com/" },
+    { "id": "sleeper", "name": "Sleeper league", "tab": "league", "url": "https://sleeper.com/leagues/1389416556617801728" },
+    { "id": "install", "name": "Add to home screen", "tab": "league", "path": "/install/" }
+  ]
+}
