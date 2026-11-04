@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DTF Club</title>
+<link rel="stylesheet" href="/shell/tokens.css">
+</head><body class="dtf-page"><div class="dtf-wrap">
+<h1>DTF Club</h1>
+<p style="color:var(--dtf-dim);margin:0">Your league, in one place.</p>
+<div id="me"></div>
+<h2>Tools</h2>
+<div class="dtf-grid" id="grid"><a class="dtf-card" href="/SleeperLiveRumbles/rumbles.html"><b>Rumble Central</b><span>Live Rumbles standings and matchups</span></a></div>
+<script>
+(function(){
+  var g=document.getElementById('grid');
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  fetch('/tools.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(j){
+    g.innerHTML=(j.tools||[]).concat(j.pages||[]).map(function(t){
+      return '<a class="dtf-card" href="'+esc(t.path)+'"><b>'+esc(t.name)+'</b><span>'+esc(t.description||'')+'</span></a>';
+    }).join('');
+  }).catch(function(){});
+})();
+</script>
+<p style="margin-top:24px"><a href="/install/">Add DTF Club to your home screen</a></p>
+</div><script src="/shell/nav.js" defer></script></body></html>

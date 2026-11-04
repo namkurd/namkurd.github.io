@@ -1,0 +1,16 @@
+/* DTF Club shared design tokens (opt-in for tools; the hub pages use them). */
+:root {
+  --dtf-bg: #f5f6f9; --dtf-panel: #fff; --dtf-border: #dfe2ea; --dtf-text: #14171f; --dtf-dim: #5d6577; --dtf-accent: #d9741f;
+  --dtf-font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --dtf-bg: #0f1115; --dtf-panel: #181b22; --dtf-border: #2a2f3a; --dtf-text: #e8eaf0; --dtf-dim: #9097a8; --dtf-accent: #f0914a; }
+}
+.dtf-page { margin: 0; background: var(--dtf-bg); color: var(--dtf-text); font: 16px/1.5 var(--dtf-font); }
+.dtf-wrap { max-width: 760px; margin: 0 auto; padding: 16px; }
+.dtf-wrap h1 { font-size: 1.5rem; margin: 8px 0 4px; }
+.dtf-wrap h2 { font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; color: var(--dtf-dim); margin: 24px 0 8px; }
+.dtf-wrap a { color: var(--dtf-accent); }
+.dtf-card { display: block; background: var(--dtf-panel); border: 1px solid var(--dtf-border); border-radius: 12px; padding: 12px 14px; color: inherit; text-decoration: none; }
+.dtf-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+.dtf-card b { display: block; } .dtf-card span { color: var(--dtf-dim); font-size: .85rem; }
