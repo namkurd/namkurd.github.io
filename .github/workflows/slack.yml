@@ -1,0 +1,32 @@
+# Rebuilds slack.json: the three busiest conversations in the league Slack this week (public channels only).
+# Needs the repository secret SLACK_BOT_TOKEN (see tools/build_slack.py). Optional secret ANTHROPIC_API_KEY writes nicer titles.
+name: Update Slack topics
+on:
+  schedule:
+    - cron: "41 11 * * *"
+  workflow_dispatch:
+concurrency:
+  group: hub-data
+  cancel-in-progress: false
+permissions:
+  contents: write
+jobs:
+  slack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python3 tools/build_slack.py
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add slack.json
+          if git diff --cached --quiet; then echo "no change"; else git commit -m "Update Slack topics" && git pull --rebase origin main && git push; fi

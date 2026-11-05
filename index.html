@@ -4,12 +4,19 @@
 <title>DTF Club</title>
 <link rel="stylesheet" href="/shell/tokens.css">
 <style>
-  h1.home { font-size: 1.7rem; margin: 6px 0 14px; letter-spacing: -.01em; }
-  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-  @media (min-width: 720px) { .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; } .dtf-wrap { max-width: 980px; } }
-  /* each tool has its own colour (--c, optional --c2) taken from tools.json: tinted glow, gradient edge, dark logo plate */
+  /* Home fits one screen on a phone: header, the eight tool tiles (big), and a compact tabbed feed. Sizes follow the screen height. */
+  /* sizes follow the space between the bars (screen minus status bar, notch and tab bar), so the installed app fits as well as a browser tab */
+  .dtf-wrap { padding: 10px 16px 6px; --avail: calc(100dvh - var(--dtf-top-pad, 0px) - var(--dtf-nav-h, 56px)); }
+  .top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 2px 0 8px; }
+  h1.home { font-size: 1.35rem; margin: 0; letter-spacing: -.01em; }
+  .next { font-size: .78rem; color: var(--dtf-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+  .next b { color: var(--dtf-text); font-weight: 600; }
+  .next[hidden] { display: none; }
+
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(5px, calc(var(--avail) * .0105), 12px); --plate: clamp(40px, calc(var(--avail) * .0745), 66px); }
+  /* each tool has its own colour (--c, optional --c2) from tools.json: tinted glow, gradient edge, dark logo plate */
   .dtf-wrap a.tile { color: var(--dtf-text); }
-  .tile { --c2: var(--c); position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 3px; padding: 16px 10px 15px; border-radius: 22px; text-decoration: none; color: var(--dtf-text);
+  .tile { --c2: var(--c); display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2px; padding: clamp(5px, calc(var(--avail) * .0125), 14px) 8px clamp(5px, calc(var(--avail) * .0105), 12px); border-radius: 20px; text-decoration: none;
     border: 1.5px solid transparent; -webkit-tap-highlight-color: transparent; transition: transform .12s ease, box-shadow .2s ease;
     background:
       radial-gradient(120% 85% at 50% 0%, color-mix(in srgb, var(--c) 24%, transparent), transparent 72%) padding-box,
@@ -19,39 +26,130 @@
   .tile:active { transform: scale(.97); }
   @media (hover: hover) { .tile:hover { transform: translateY(-2px); box-shadow: 0 16px 30px -14px color-mix(in srgb, var(--c) 80%, transparent); } }
   .tile:focus-visible { outline: 2px solid var(--c); outline-offset: 3px; }
-  .plate { width: 88px; height: 88px; display: grid; place-items: center; border-radius: 24px;
+  .plate { width: var(--plate); height: var(--plate); display: grid; place-items: center; border-radius: 24%;
     background: linear-gradient(150deg, color-mix(in srgb, var(--c) 32%, #0f1115), color-mix(in srgb, var(--c2) 12%, #0f1115));
     box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c) 45%, transparent), inset 0 -14px 24px -16px color-mix(in srgb, var(--c2) 60%, transparent); }
-  .plate img { width: 68px; height: 68px; display: block; }
-  .tile b { margin-top: 8px; font-size: 1rem; line-height: 1.2; }
-  .tile .t { font-size: .78rem; line-height: 1.25; color: var(--dtf-dim); }
-  .tile .nm2 { color: var(--c); }
-  .foot { margin: 22px 0 6px; text-align: center; font-size: .9rem; }
+  .plate img { width: 78%; height: 78%; display: block; }
+  .tile b { margin-top: 4px; font-size: .92rem; line-height: 1.15; }
+  .tile .t { display: none; font-size: .78rem; line-height: 1.25; color: var(--dtf-dim); }
+
+  .feed { margin-top: clamp(6px, calc(var(--avail) * .0165), 14px); background: var(--dtf-panel); border: 1px solid var(--dtf-border); border-radius: 18px; padding: 8px 10px 6px; }
+  .feed[hidden] { display: none; }
+  .tabs { display: flex; gap: 2px; padding: 2px; margin-bottom: 4px; background: color-mix(in srgb, var(--dtf-bg) 70%, transparent); border-radius: 12px; }
+  .tabs button { flex: 1 1 auto; min-width: 0; height: 32px; padding: 0 8px; border: 0; border-radius: 10px; background: none; color: var(--dtf-dim); font-weight: 600; font-size: .74rem; line-height: 1; font-family: inherit; white-space: nowrap; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .tabs button[aria-selected="true"] { background: var(--dtf-panel); color: var(--dtf-text); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ac) 55%, transparent); }
+  .panel { display: none; --ac: var(--dtf-accent); }
+  .panel.on { display: block; }
+  .panel h2 { display: none; margin: 0 0 4px; font-size: .74rem; }
+  .dtf-wrap a.row { color: var(--dtf-text); }
+  .row { display: grid; grid-template-columns: 22px minmax(0, 1fr) 12px; align-items: center; gap: 9px; min-height: clamp(34px, calc(var(--avail) * .05), 40px); padding: 2px 4px; border-radius: 10px; text-decoration: none; color: var(--dtf-text); -webkit-tap-highlight-color: transparent; }
+  .row:active, .row:hover { background: color-mix(in srgb, var(--ac) 12%, transparent); }
+  .row .rk { width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%; background: color-mix(in srgb, var(--ac) 24%, transparent); color: var(--ac); font-size: .72rem; font-weight: 700; }
+  .row b { display: block; font-size: .84rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .row small { display: block; font-size: .72rem; color: var(--dtf-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .row .go { color: var(--dtf-dim); font-size: .9rem; }
+  .none { margin: 8px 4px; color: var(--dtf-dim); font-size: .8rem; }
+  .meta { margin: 2px 4px 0; font-size: .68rem; color: var(--dtf-dim); text-align: right; }
+  .meta .old { color: #e0a23a; }
+  .foot { margin: 8px 0 2px; text-align: center; font-size: .8rem; }
   .foot[hidden] { display: none; }
-  .skel { height: 168px; border-radius: 22px; background: var(--dtf-panel); border: 1px solid var(--dtf-border); opacity: .6; }
+
+  @media (min-width: 900px) {
+    .dtf-wrap { max-width: 1200px; padding-top: 14px; }
+    h1.home { font-size: 1.6rem; } .next { font-size: .9rem; }
+    .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; --plate: 76px; }
+    .tile { padding: 16px 10px 15px; gap: 3px; } .tile b { font-size: 1rem; margin-top: 8px; } .tile .t { display: block; }
+    .feed { margin-top: 18px; padding: 14px 16px 10px; }
+    .tabs { display: none; }
+    .panels { display: grid; grid-template-columns: repeat(var(--n, 5), minmax(0, 1fr)); gap: 18px; }
+    .panel, .panel.on { display: block; } .panel h2 { display: block; color: var(--ac); text-transform: uppercase; letter-spacing: .06em; }
+    .row { align-items: start; padding: 5px 4px; } .row .rk { margin-top: 2px; } .row .go { margin-top: 4px; }
+    .row b { font-size: .88rem; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+    .row small { white-space: normal; }
+  }
+  .skel { height: 96px; border-radius: 20px; background: var(--dtf-panel); border: 1px solid var(--dtf-border); opacity: .6; }
 </style>
 </head><body class="dtf-page"><div class="dtf-wrap">
-<h1 class="home">DTF Club</h1>
+<div class="top"><h1 class="home">DTF Club</h1><div class="next" id="next" hidden></div></div>
 <div class="grid" id="grid" aria-live="polite">
   <div class="skel"></div><div class="skel"></div><div class="skel"></div><div class="skel"></div>
   <div class="skel"></div><div class="skel"></div><div class="skel"></div><div class="skel"></div>
 </div>
+<section class="feed" id="feed" aria-label="This season at a glance" hidden>
+  <div class="tabs" id="tabs" role="tablist"></div>
+  <div class="panels" id="panels"></div>
+  <div class="meta" id="meta"></div>
+</section>
 <p class="foot" id="foot"><a href="/install/">Add DTF Club to your home screen</a></p>
 <script>
 (function () {
-  var grid = document.getElementById('grid'), foot = document.getElementById('foot');
-  if ((window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone) foot.hidden = true;   // already installed
+  var $ = function (id) { return document.getElementById(id); };
+  if ((window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone) $('foot').hidden = true;   // already installed
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function get(url) { return fetch(url, { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw 0; return r.json(); }); }
+  function ls(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) {} return null; }
+  function ago(iso) {
+    var m = Math.max(0, (Date.now() - Date.parse(iso)) / 60000);
+    return m < 90 ? Math.round(m) + ' min ago' : m < 2880 ? Math.round(m / 60) + ' h ago' : Math.round(m / 1440) + ' days ago';
+  }
+
+  // ---- tool tiles (from the registry)
   function tile(t) {
     var st = '--c:' + esc(t.color || '#f0914a') + (t.color2 ? ';--c2:' + esc(t.color2) : '');
-    return '<a class="tile" href="' + esc(t.path) + '" style="' + st + '">' +
-      '<span class="plate">' + (t.logo ? '<img src="' + esc(t.logo) + '" alt="" width="68" height="68" decoding="async">' : '') + '</span>' +
+    return '<a class="tile" href="' + esc(t.path) + '" style="' + st + '"><span class="plate">' + (t.logo ? '<img src="' + esc(t.logo) + '" alt="" decoding="async">' : '') + '</span>' +
       '<b>' + esc(t.name) + '</b><span class="t">' + esc(t.tagline || t.description || '') + '</span></a>';
   }
-  function render(j) { grid.innerHTML = (j.tools || []).concat(j.pages || []).map(tile).join(''); }
-  fetch('/tools.json', { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(render).catch(function () {
-    try { var c = sessionStorage.getItem('dtf.registry'); if (c) return render(JSON.parse(c)); } catch (e) {}
-    grid.innerHTML = '<p>Couldn’t load the tool list. Check your connection and refresh.</p>';
+  get('/tools.json').then(function (j) { $('grid').innerHTML = (j.tools || []).concat(j.pages || []).map(tile).join(''); }).catch(function () {
+    try { var c = sessionStorage.getItem('dtf.registry'); if (c) { $('grid').innerHTML = (JSON.parse(c).tools || []).map(tile).join(''); return; } } catch (e) {}
+    $('grid').innerHTML = '<p>Couldn’t load the tool list. Check your connection and refresh.</p>';
+  });
+
+  // ---- next key date (from the Sleeper league settings, via league.json)
+  get('/league.json').then(function (l) {
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    var next = (l.keyDates || []).map(function (d) { var t = new Date(d.date + 'T12:00:00'); return { d: d, t: t, days: Math.round((t - today) / 864e5) }; })
+      .filter(function (x) { return x.days >= 0; }).sort(function (a, b) { return a.days - b.days; })[0];
+    var bits = [];
+    if (l.week && l.status === 'in_season') bits.push('Wk ' + l.week);
+    if (next) bits.push('<b>' + esc(next.d.label) + '</b> ' + next.t.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) + ' · ' + (next.days === 0 ? 'today' : next.days === 1 ? 'tomorrow' : next.days + ' days'));
+    if (bits.length) { $('next').innerHTML = bits.join(' · '); $('next').hidden = false; }
+  }).catch(function () {});
+
+  // ---- the feed: top 3 per tab (phone) / five columns (desktop)
+  var META = {
+    matchups: { tab: 'Matchups', title: 'Top matchups', ac: '#f0914a' },
+    trades: { tab: 'Trades', title: 'Top trades', ac: '#22d3ee' },
+    waivers: { tab: 'Waivers', title: 'Top waiver claims', ac: '#a3e635' },
+    'free-agents': { tab: 'Free agents', title: 'Top free agents', ac: '#a3e635' },
+    slack: { tab: 'Slack', title: 'Hot in Slack', ac: '#e8eaf0' }
+  };
+  function row(it) {
+    var ext = /^https?:/.test(it.href);
+    return '<a class="row" href="' + esc(it.href) + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '><span class="rk">' + it.rank + '</span><span><b>' + esc(it.title) + '</b><small>' + esc(it.sub) + '</small></span><span class="go" aria-hidden="true">›</span></a>';
+  }
+  Promise.allSettled([get('/feed.json'), get('/slack.json')]).then(function (res) {
+    var sections = [], feed = res[0].status === 'fulfilled' ? res[0].value : null, slack = res[1].status === 'fulfilled' ? res[1].value : null;
+    if (feed) feed.sections.forEach(function (s) { if (META[s.id]) sections.push({ id: s.id, items: s.items }); });
+    if (slack && slack.topics && slack.topics.length && (Date.now() - Date.parse(slack.generatedAt)) < 10 * 864e5) {
+      sections.push({ id: 'slack', items: slack.topics.map(function (t, i) { return { rank: i + 1, title: t.title, sub: '#' + t.channel + ' · ' + t.messages + ' messages', href: t.href }; }) });
+    }
+    if (!sections.length) return;
+    var want = ls('dtf.homeTab'), on = sections.some(function (s) { return s.id === want; }) ? want : sections[0].id;
+    $('tabs').innerHTML = sections.map(function (s) { return '<button role="tab" data-id="' + s.id + '" aria-selected="' + (s.id === on) + '">' + META[s.id].tab + '</button>'; }).join('');
+    $('panels').style.setProperty('--n', sections.length);
+    $('panels').innerHTML = sections.map(function (s) {
+      return '<div class="panel' + (s.id === on ? ' on' : '') + '" role="tabpanel" data-id="' + s.id + '" style="--ac:' + META[s.id].ac + '"><h2>' + META[s.id].title + '</h2>' +
+        (s.items.length ? s.items.map(row).join('') : '<p class="none">Nothing yet this season.</p>') + '</div>';
+    }).join('');
+    $('tabs').addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-id]'); if (!b) return;
+      ls('dtf.homeTab', b.dataset.id);
+      [].forEach.call($('tabs').children, function (x) { x.setAttribute('aria-selected', x === b); });
+      [].forEach.call($('panels').children, function (p) { p.classList.toggle('on', p.dataset.id === b.dataset.id); });
+    });
+    var gen = feed && feed.generatedAt, old = gen && (Date.now() - Date.parse(gen)) > 2 * 864e5;
+    $('meta').innerHTML = gen ? (feed.season + ' season · updated ' + ago(gen) + (old ? ' <span class="old">· may be out of date</span>' : '')) : '';
+    $('feed').hidden = false;
   });
 })();
 </script>

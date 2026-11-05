@@ -1,0 +1,103 @@
+{
+ "schema": 1,
+ "season": 2026,
+ "sections": [
+  {
+   "id": "matchups",
+   "title": "Matchups",
+   "items": [
+    {
+     "rank": 1,
+     "title": "Steven 186.6 – 182.7 Ryan",
+     "sub": "Week 5 · 369 pts combined",
+     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=5.7.10"
+    },
+    {
+     "rank": 2,
+     "title": "Aidan 174.5 – 171.8 Ankit",
+     "sub": "Week 5 · 346 pts combined",
+     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=5.1.8"
+    },
+    {
+     "rank": 3,
+     "title": "Steven 192.2 – 176.0 Haan",
+     "sub": "Week 1 · 368 pts combined",
+     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=1.7.4"
+    }
+   ]
+  },
+  {
+   "id": "trades",
+   "title": "Trades",
+   "items": [
+    {
+     "rank": 1,
+     "title": "Aidan ⇄ Christian",
+     "sub": "D. Moore +1 ⇄ T. McLaurin +1 · Wk 6",
+     "href": "/SleeperTradeNodes/?season=2026&manager=Aidan"
+    },
+    {
+     "rank": 2,
+     "title": "Ben ⇄ Alex",
+     "sub": "M. Golden +1 ⇄ B. Tuten · Wk 4",
+     "href": "/SleeperTradeNodes/?season=2026&manager=Ben"
+    },
+    {
+     "rank": 3,
+     "title": "Alex ⇄ Ankit",
+     "sub": "M. Washington +1 ⇄ C. Tate +1 · Wk 8",
+     "href": "/SleeperTradeNodes/?season=2026&manager=Alex"
+    }
+   ]
+  },
+  {
+   "id": "waivers",
+   "title": "Waivers",
+   "items": [
+    {
+     "rank": 1,
+     "title": "Kirk Cousins · Ryan",
+     "sub": "+59 PAR · $21 · Wk 2",
+     "href": "/FAB-Management/?season=2026&manager=Ryan"
+    },
+    {
+     "rank": 2,
+     "title": "Braelon Allen · Jake",
+     "sub": "+54 PAR · $150 · Wk 3",
+     "href": "/FAB-Management/?season=2026&manager=Jake"
+    },
+    {
+     "rank": 3,
+     "title": "Tyler Huntley · Ankit",
+     "sub": "+25 PAR · $21 · Wk 4",
+     "href": "/FAB-Management/?season=2026&manager=Ankit"
+    }
+   ]
+  },
+  {
+   "id": "free-agents",
+   "title": "Free agents",
+   "items": [
+    {
+     "rank": 1,
+     "title": "Kyle Pitts Sr. · Jake",
+     "sub": "+14 PAR · Wk 6",
+     "href": "/FAB-Management/?season=2026&manager=Jake"
+    },
+    {
+     "rank": 2,
+     "title": "T.J. Hockenson · Haan",
+     "sub": "+11 PAR · Wk 4",
+     "href": "/FAB-Management/?season=2026&manager=Haan"
+    },
+    {
+     "rank": 3,
+     "title": "Keenan Allen · Haan",
+     "sub": "+10 PAR · Wk 6",
+     "href": "/FAB-Management/?season=2026&manager=Haan"
+    }
+   ]
+  }
+ ],
+ "generatedAt": "2026-11-05T15:19:53Z"
+}

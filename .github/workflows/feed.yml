@@ -1,0 +1,29 @@
+# Rebuilds feed.json (top 3 matchups / trades / waivers / free agents) and league.json (key dates from the Sleeper settings)
+# from the tools' public data. Commits only when something changed.
+name: Update Home feed
+on:
+  schedule:
+    - cron: "23 * * * *"
+  workflow_dispatch:
+concurrency:
+  group: hub-data
+  cancel-in-progress: false
+permissions:
+  contents: write
+jobs:
+  feed:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python3 tools/build_feed.py
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add feed.json league.json
+          if git diff --cached --quiet; then echo "no change"; else git commit -m "Update Home feed" && git pull --rebase origin main && git push; fi

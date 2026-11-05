@@ -1,0 +1,9 @@
+{
+ "windowDays": 7,
+ "gapMinutes": 180,
+ "minMessages": 8,
+ "topN": 3,
+ "dedupeHours": 36,
+ "autoJoin": false,
+ "exclude": ["voting", "slackmojis", "trade-voting"]
+}

@@ -1,0 +1,30 @@
+{
+ "schema": 1,
+ "name": "DTF Club",
+ "season": 2026,
+ "league_id": "1389416556617801728",
+ "week": 9,
+ "status": "in_season",
+ "keyDates": [
+  {
+   "id": "trade-deadline",
+   "label": "Trade deadline",
+   "week": 12,
+   "date": "2026-11-26"
+  },
+  {
+   "id": "playoffs",
+   "label": "Playoffs begin",
+   "week": 15,
+   "date": "2026-12-17"
+  },
+  {
+   "id": "championship",
+   "label": "Championship",
+   "week": 17,
+   "date": "2026-12-31"
+  }
+ ],
+ "slack": "https://dtf-club.slack.com/",
+ "generatedAt": "2026-11-05T15:19:53Z"
+}
