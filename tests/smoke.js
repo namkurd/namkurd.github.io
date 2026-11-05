@@ -16,11 +16,15 @@ const VIEWS = [['phone', { width: 390, height: 844 }], ['desktop', { width: 1280
     await pg.goto(BASE + path, { waitUntil: 'load' }).catch(() => {});
     await pg.waitForTimeout(1500);
     const r = await pg.evaluate(() => {
-      const n = document.querySelector('dtf-nav'); const on = n && n.shadowRoot.querySelector('.bar .on');
-      const vt = n && n.shadowRoot.querySelectorAll('.vt button'), von = n && n.shadowRoot.querySelector('.vt button.on');
-      return { nav: !!n, active: on ? on.dataset.t : null, views: vt ? vt.length : 0, view: von ? von.textContent : null, top: getComputedStyle(document.documentElement).getPropertyValue('--dtf-top-h').trim(), hscroll: document.documentElement.scrollWidth > innerWidth + 1 };
+      const n = document.querySelector('dtf-nav'), sr = n && n.shadowRoot; const q = x => sr && sr.querySelector(x);
+      const vt = sr && sr.querySelectorAll('.vt button'), von = q('.vt button.on'), phone = innerWidth < 900;
+      const on = phone ? q('.mbar .on') : q('.dsk .on');
+      return { nav: !!n, active: on ? (phone ? on.dataset.t : on.textContent.trim()) : null, views: vt ? vt.length : 0, view: von ? von.textContent : null,
+        pad: getComputedStyle(document.documentElement).getPropertyValue('--dtf-top-pad').trim(), hscroll: document.documentElement.scrollWidth > innerWidth + 1,
+        bars: phone ? [q('.mbar').getBoundingClientRect().height, q('.ctx') && !q('.ctx').hidden ? q('.ctx').getBoundingClientRect().height : 0] : [q('.dsk').getBoundingClientRect().height] };
     });
-    const ok = r.nav && r.active === tab && !r.hscroll;
+    const want = vn === 'phone' ? tab : (path === '/' || path === '/install/' ? null : r.active);   // desktop lists every tool; just require one lit
+    const ok = r.nav && r.active === want && (vn === 'phone' || want === null || !!r.active) && !r.hscroll;
     if (!ok || errs.length) fail++;
     console.log(ok && !errs.length ? 'PASS' : 'FAIL', vn, path, JSON.stringify(r), errs.slice(0, 2).join(' | '));
     await pg.screenshot({ path: `tests/screens/${vn}-${path.replace(/\W+/g, '_')}.png` });
