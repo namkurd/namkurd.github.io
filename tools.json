@@ -19,7 +19,7 @@
     { "id": "h2h", "name": "Head-to-Head", "short": "H2H", "color": "#ef4444", "color2": "#3b82f6", "logo": "/shell/icons/tools/h2h.svg", "tagline": "Career matchup matrix", "tab": "history",
       "path": "/Sleeper-Head-to-Head/", "repo": "namkurd/Sleeper-Head-to-Head",
       "description": "Career win-loss matrix between every pair of managers" },
-    { "id": "lifetime", "name": "Lifetime Win/Loss", "short": "Lifetime", "color": "#34d399", "logo": "/shell/icons/tools/lifetime.svg", "tagline": "All-time W–L for everyone", "tab": "history",
+    { "id": "lifetime", "name": "Lifetime", "short": "Lifetime", "color": "#34d399", "logo": "/shell/icons/tools/lifetime.svg", "tagline": "All-time W–L for everyone", "tab": "history",
       "path": "/sleepersheet/", "repo": "namkurd/sleepersheet",
       "description": "All-time records for every manager" },
     { "id": "trades", "name": "Trade Network", "short": "Trades", "color": "#22d3ee", "logo": "/shell/icons/tools/trades.svg", "tagline": "Who trades with whom", "tab": "moves",
