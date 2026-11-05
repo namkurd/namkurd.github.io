@@ -3,21 +3,56 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>DTF Club</title>
 <link rel="stylesheet" href="/shell/tokens.css">
+<style>
+  h1.home { font-size: 1.7rem; margin: 6px 0 14px; letter-spacing: -.01em; }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  @media (min-width: 720px) { .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; } .dtf-wrap { max-width: 980px; } }
+  /* each tool has its own colour (--c, optional --c2) taken from tools.json: tinted glow, gradient edge, dark logo plate */
+  .dtf-wrap a.tile { color: var(--dtf-text); }
+  .tile { --c2: var(--c); position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 3px; padding: 16px 10px 15px; border-radius: 22px; text-decoration: none; color: var(--dtf-text);
+    border: 1.5px solid transparent; -webkit-tap-highlight-color: transparent; transition: transform .12s ease, box-shadow .2s ease;
+    background:
+      radial-gradient(120% 85% at 50% 0%, color-mix(in srgb, var(--c) 24%, transparent), transparent 72%) padding-box,
+      linear-gradient(var(--dtf-panel), var(--dtf-panel)) padding-box,
+      linear-gradient(140deg, color-mix(in srgb, var(--c) 75%, transparent), color-mix(in srgb, var(--c2) 75%, transparent)) border-box;
+    box-shadow: 0 10px 26px -16px color-mix(in srgb, var(--c) 70%, transparent); }
+  .tile:active { transform: scale(.97); }
+  @media (hover: hover) { .tile:hover { transform: translateY(-2px); box-shadow: 0 16px 30px -14px color-mix(in srgb, var(--c) 80%, transparent); } }
+  .tile:focus-visible { outline: 2px solid var(--c); outline-offset: 3px; }
+  .plate { width: 88px; height: 88px; display: grid; place-items: center; border-radius: 24px;
+    background: linear-gradient(150deg, color-mix(in srgb, var(--c) 32%, #0f1115), color-mix(in srgb, var(--c2) 12%, #0f1115));
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c) 45%, transparent), inset 0 -14px 24px -16px color-mix(in srgb, var(--c2) 60%, transparent); }
+  .plate img { width: 68px; height: 68px; display: block; }
+  .tile b { margin-top: 8px; font-size: 1rem; line-height: 1.2; }
+  .tile .t { font-size: .78rem; line-height: 1.25; color: var(--dtf-dim); }
+  .tile .nm2 { color: var(--c); }
+  .foot { margin: 22px 0 6px; text-align: center; font-size: .9rem; }
+  .foot[hidden] { display: none; }
+  .skel { height: 168px; border-radius: 22px; background: var(--dtf-panel); border: 1px solid var(--dtf-border); opacity: .6; }
+</style>
 </head><body class="dtf-page"><div class="dtf-wrap">
-<h1>DTF Club</h1>
-<div id="me"></div>
-<h2>Tools</h2>
-<div class="dtf-grid" id="grid"><a class="dtf-card" href="/SleeperLiveRumbles/rumbles.html"><b>Rumble Central</b><span>Live Rumbles standings and matchups</span></a></div>
+<h1 class="home">DTF Club</h1>
+<div class="grid" id="grid" aria-live="polite">
+  <div class="skel"></div><div class="skel"></div><div class="skel"></div><div class="skel"></div>
+  <div class="skel"></div><div class="skel"></div><div class="skel"></div><div class="skel"></div>
+</div>
+<p class="foot" id="foot"><a href="/install/">Add DTF Club to your home screen</a></p>
 <script>
-(function(){
-  var g=document.getElementById('grid');
-  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
-  fetch('/tools.json',{cache:'no-cache'}).then(function(r){return r.json()}).then(function(j){
-    g.innerHTML=(j.tools||[]).concat(j.pages||[]).map(function(t){
-      return '<a class="dtf-card" href="'+esc(t.path)+'"><b>'+esc(t.name)+'</b><span>'+esc(t.description||'')+'</span></a>';
-    }).join('');
-  }).catch(function(){});
+(function () {
+  var grid = document.getElementById('grid'), foot = document.getElementById('foot');
+  if ((window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone) foot.hidden = true;   // already installed
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function tile(t) {
+    var st = '--c:' + esc(t.color || '#f0914a') + (t.color2 ? ';--c2:' + esc(t.color2) : '');
+    return '<a class="tile" href="' + esc(t.path) + '" style="' + st + '">' +
+      '<span class="plate">' + (t.logo ? '<img src="' + esc(t.logo) + '" alt="" width="68" height="68" decoding="async">' : '') + '</span>' +
+      '<b>' + esc(t.name) + '</b><span class="t">' + esc(t.tagline || t.description || '') + '</span></a>';
+  }
+  function render(j) { grid.innerHTML = (j.tools || []).concat(j.pages || []).map(tile).join(''); }
+  fetch('/tools.json', { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(render).catch(function () {
+    try { var c = sessionStorage.getItem('dtf.registry'); if (c) return render(JSON.parse(c)); } catch (e) {}
+    grid.innerHTML = '<p>Couldn’t load the tool list. Check your connection and refresh.</p>';
+  });
 })();
 </script>
-<p style="margin-top:24px"><a href="/install/">Add DTF Club to your home screen</a></p>
 </div><script src="/shell/nav.js" defer></script></body></html>
