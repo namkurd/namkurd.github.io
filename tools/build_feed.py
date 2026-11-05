@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Builds the hub's Home data from the tools' public data and the Sleeper league settings:
 
-    feed.json    top 3 matchups / trades / waiver claims / free-agent pickups of the season, each linking into its tool
+    feed.json    top 3 matchups (Rumble Central's own ranking, via data/matchups.json) / trades / waiver claims / free-agent pickups of the season, each linking into its tool
     league.json  season, week and key dates (trade deadline, playoffs, championship) taken from the Sleeper league settings
 
     python3 tools/build_feed.py                 # reads the tools from raw.githubusercontent.com (main)
@@ -47,29 +47,21 @@ def short_player(n):
 
 
 # ---------------------------------------------------------------- matchups
-def top_matchups(hist, timeline_weeks, season):
-    """Most entertaining head-to-heads of the season: lots of points, decided narrowly.
-    score = combined points - 2 x margin. Only weeks Rumble Central has a replay for, so every row opens a replay."""
-    names = {int(s['roster_id']): s['manager'] for s in hist['standings']}
-    seen, games = set(), []
-    for wk, teams in hist['weekly'].items():
-        w = int(wk)
-        for rid, g in teams.items():
-            rid, opp = int(rid), int(g['opponent_roster_id'])
-            key = (w, min(rid, opp), max(rid, opp))
-            if key in seen or w not in timeline_weeks:
-                continue
-            seen.add(key)
-            a, b = g['points'], g['opponent_points']
-            win, lose = (rid, opp) if a >= b else (opp, rid)
-            pw, pl = max(a, b), min(a, b)
-            games.append({'w': w, 'win': win, 'lose': lose, 'pw': pw, 'pl': pl, 'score': pw + pl - 2 * (pw - pl)})
-    games.sort(key=lambda x: -x['score'])
+def top_matchups(season):
+    """The season's best matchups by Rumble Central's own ranking (wpInterest: closeness, lead changes, late comebacks, one big swing,
+    and a 1.25x boost for head-to-heads). The page computes it from its win-probability model; tools/build_matchups.py reads each finished
+    week's scores from the real page into data/matchups.json, and this takes the top 3 across weeks."""
+    c = json.load(open(os.path.join(HUB, 'data', 'matchups.json'), encoding='utf-8'))
+    if c.get('season') != season:
+        return []
+    rows = sorted(((int(w), r) for w, lst in c['weeks'].items() for r in lst), key=lambda x: -x[1]['it'])
     out = []
-    for i, g in enumerate(games[:3], 1):
-        out.append({'rank': i, 'title': '%s %.1f – %.1f %s' % (names.get(g['win'], '?'), g['pw'], g['pl'], names.get(g['lose'], '?')),
-                    'sub': 'Week %d · %.0f pts combined' % (g['w'], g['pw'] + g['pl']),
-                    'href': '/SleeperLiveRumbles/rumbles.html?season=%s&wp=%d.%d.%d' % (season, g['w'], g['win'], g['lose'])})
+    for i, (w, r) in enumerate(rows[:3], 1):
+        pa, pb = (float(x) for x in re.findall(r'\d+\.\d+', r['hl'])[:2])
+        n = r['flips']
+        out.append({'rank': i, 'title': '%s %.1f \u2013 %.1f %s' % (r['names'][0], pa, pb, r['names'][1]),
+                    'sub': 'Week %d \u00b7 %s \u00b7 %d lead change%s' % (w, 'H2H' if r['h2h'] else 'vs. field', n, '' if n == 1 else 's'),
+                    'href': '/SleeperLiveRumbles/rumbles.html?season=%s&wp=%s' % (season, r['best'])})
     return out
 
 
@@ -136,9 +128,9 @@ def main():
         lj, season = old_league, int(old_league.get('season') or dt.date.today().year)
     sections = []
     try:
-        hist = source(args.src, 'SleeperLiveRumbles', 'rumbles_history.json')
-        tl = source(args.src, 'SleeperLiveRumbles', 'wp_timeline/index.json')
-        sections.append({'id': 'matchups', 'title': 'Matchups', 'items': top_matchups(hist, set(tl.get('weeks', [])), season)})
+        items = top_matchups(season)
+        if items:
+            sections.append({'id': 'matchups', 'title': 'Matchups', 'items': items})
     except Exception as e:
         print('matchups: %s' % e, file=sys.stderr)
     try:

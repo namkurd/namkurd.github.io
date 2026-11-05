@@ -57,9 +57,9 @@
   @media (min-width: 900px) {
     .dtf-wrap { max-width: 1200px; padding-top: 14px; }
     h1.home { font-size: 1.6rem; } .next { font-size: .9rem; }
-    .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; --plate: 76px; }
-    .tile { padding: 16px 10px 15px; gap: 3px; } .tile b { font-size: 1rem; margin-top: 8px; } .tile .t { display: block; }
-    .feed { margin-top: 18px; padding: 14px 16px 10px; }
+    .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(8px, calc(var(--avail) * .016), 14px); --plate: clamp(46px, calc(var(--avail) * .082), 76px); }
+    .tile { padding: clamp(8px, calc(var(--avail) * .016), 16px) 10px clamp(8px, calc(var(--avail) * .014), 15px); gap: 3px; } .tile b { font-size: 1rem; margin-top: clamp(3px, calc(var(--avail) * .008), 8px); } .tile .t { display: block; }
+    .feed { margin-top: clamp(8px, calc(var(--avail) * .02), 18px); padding: 12px 16px 8px; }
     .tabs { display: none; }
     .panels { display: grid; grid-template-columns: repeat(var(--n, 5), minmax(0, 1fr)); gap: 18px; }
     .panel, .panel.on { display: block; } .panel h2 { display: block; color: var(--ac); text-transform: uppercase; letter-spacing: .06em; }

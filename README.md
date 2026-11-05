@@ -27,7 +27,7 @@ The Home screen reads three small files at the root. Nothing in the tool repos h
 | `feed.json` | `tools/build_feed.py` | Top 3 matchups, trades, waiver claims and free-agent pickups of the season, each linking into its tool. Reads the tools' public data (`rumbles_history.json`, `SleeperTradeNodes/data.json`, `FAB-Management/data.json`). |
 | `slack.json` | `tools/build_slack.py` (daily, `.github/workflows/slack.yml`) | The three busiest conversations in the league Slack this week: a short neutral title, channel, message count and a link into Slack. |
 
-How the picks are made: **matchups** by combined points minus twice the margin (high-scoring and close), only weeks Rumble Central has a replay for; **trades** by total value moved; **waivers / free agents** by points above replacement (PAR) while started.
+How the picks are made: **matchups** use Rumble Central's own best-matchups ranking (closeness, lead changes, late comebacks, one big swing, and a 1.25x boost for head-to-heads). That ranking lives in the page and rests on its win-probability model, so `tools/build_matchups.py` opens the real page in a headless browser, reads each finished week's scores (the page publishes them as `data-it`, `data-flips` and so on on every Best card) into `data/matchups.json`, and `build_feed.py` takes the season's top 3. Finished weeks never change, so only new weeks are scraped. **Trades** by total value moved; **waivers / free agents** by points above replacement (PAR) while started.
 
 ### Turning on the Slack topics
 

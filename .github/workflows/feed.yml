@@ -20,10 +20,18 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      # Rumble Central ranks its own best matchups in the page; read the finished weeks we don't have yet (rarely any: once a week)
+      - id: check
+        run: python3 tools/build_matchups.py --check
+      - if: steps.check.outputs.needed == 'true'
+        run: |
+          pip install playwright
+          python -m playwright install --with-deps chromium
+          python3 tools/build_matchups.py
       - run: python3 tools/build_feed.py
       - name: Commit if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add feed.json league.json
+          git add feed.json league.json data/matchups.json
           if git diff --cached --quiet; then echo "no change"; else git commit -m "Update Home feed" && git pull --rebase origin main && git push; fi
