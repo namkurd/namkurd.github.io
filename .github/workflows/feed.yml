@@ -5,6 +5,8 @@ on:
   schedule:
     - cron: "23 * * * *"
   workflow_dispatch:
+  push:
+    branches: ['claude/**']   # the summarising routine pushes a marker commit (message starts with 'hub-tick') to run this job, because GitHub's schedule is unreliable here
 concurrency:
   group: hub-data
   cancel-in-progress: false
@@ -12,6 +14,7 @@ permissions:
   contents: write
 jobs:
   feed:
+    if: github.event_name != 'push' || startsWith(github.event.head_commit.message, 'hub-tick')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

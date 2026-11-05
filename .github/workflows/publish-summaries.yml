@@ -1,0 +1,38 @@
+# Lands the Slack summaries a Claude routine pushed on a claude/* branch (commit message "Summarise Slack topics") onto main.
+# Only slack.json may differ on that branch, and only topics still flagged needs_summary are changed (tools/apply_summaries.py).
+name: Publish Slack summaries
+on:
+  push:
+    branches: ['claude/**']
+concurrency:
+  group: hub-data
+  cancel-in-progress: false
+permissions:
+  contents: write
+jobs:
+  publish:
+    if: startsWith(github.event.head_commit.message, 'Summarise Slack topics')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Only slack.json may have changed on the branch
+        run: |
+          git fetch origin "$GITHUB_REF_NAME"
+          base=$(git merge-base origin/main FETCH_HEAD)
+          files=$(git diff --name-only "$base" FETCH_HEAD)
+          if [ "$files" != "slack.json" ]; then echo "Refusing: the branch changes: $files"; exit 1; fi
+          git show FETCH_HEAD:slack.json > "$RUNNER_TEMP/branch_slack.json"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python3 tools/apply_summaries.py "$RUNNER_TEMP/branch_slack.json"
+      - name: Commit if changed, then remove the branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add slack.json
+          if git diff --cached --quiet; then echo "no change"; else git commit -m "Summarise Slack topics" && git pull --rebase origin main && git push origin HEAD:main; fi
+          git push origin --delete "$GITHUB_REF_NAME" || true
