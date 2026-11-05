@@ -7,7 +7,7 @@ const BASE = process.env.BASE || 'http://localhost:8080';
   await pg.goto(BASE + '/'); await pg.waitForTimeout(2500);
   await pg.goto(BASE + '/Rulebook/'); await pg.waitForTimeout(1500);
   eq('sw controls', await pg.evaluate(() => !!navigator.serviceWorker.controller), true);
-  eq('cache names', (await pg.evaluate(() => caches.keys())).sort().join(','), 'dtf-data-v16,dtf-pages-v16,dtf-shell-v16');
+  eq('cache names', (await pg.evaluate(() => caches.keys())).sort().join(','), 'dtf-data-v17,dtf-pages-v17,dtf-shell-v17');
   await ctx.setOffline(true);
   await pg.goto(BASE + '/Rulebook/').catch(() => {}); eq('offline visited', await pg.title(), 'DTF Club Rulebook');
   await pg.goto(BASE + '/Sleeper-Head-to-Head/').catch(() => {}); eq('offline unvisited', await pg.title(), 'Offline');
