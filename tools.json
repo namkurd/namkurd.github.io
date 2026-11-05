@@ -42,6 +42,6 @@
   "external": [
     { "id": "slack", "name": "Slack", "tab": "league", "url": "https://dtf-club.slack.com/" },
     { "id": "sleeper", "name": "Sleeper league", "tab": "league", "url": "https://sleeper.com/leagues/1389416556617801728" },
-    { "id": "install", "name": "Add to home screen", "tab": "league", "path": "/install/" }
+    { "id": "install", "name": "Add to home screen", "short": "Install", "tab": "league", "path": "/install/" }
   ]
 }

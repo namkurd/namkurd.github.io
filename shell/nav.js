@@ -53,6 +53,7 @@
     head('link[rel="manifest"]', function () { return el('link', { rel: 'manifest', href: '/manifest.webmanifest' }); });
     head('link[rel="apple-touch-icon"]', function () { return el('link', { rel: 'apple-touch-icon', href: '/shell/icons/apple-touch-icon-180.png' }); });
     head('link[rel~="icon"]', function () { return el('link', { rel: 'icon', href: '/shell/icons/favicon-32.png' }); });
+    head('meta[name="color-scheme"]', function () { return el('meta', { name: 'color-scheme', content: 'dark' }); });
     head('meta[name="theme-color"]', function () { return el('meta', { name: 'theme-color', content: '#0f1115' }); });
     head('meta[name="apple-mobile-web-app-capable"]', function () { return el('meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }); });
     head('meta[name="mobile-web-app-capable"]', function () { return el('meta', { name: 'mobile-web-app-capable', content: 'yes' }); });
@@ -297,9 +298,7 @@
   function build(reg) {
     var tabs = reg.tabs || FALLBACK.tabs, act = activeItem(reg) || {}, home = act.tab === 'home', sa = standalone();
     var host = D.createElement('dtf-nav'), s = host.attachShadow({ mode: 'open' });
-    var light = W.matchMedia && W.matchMedia('(prefers-color-scheme: light)').matches;
-    var vars = light ? '--bg:rgba(255,255,255,.97);--bg2:#fff;--bd:#dfe2ea;--tx:#14171f;--dim:#5d6577;--ac:#c4601a;--acbg:rgba(196,96,26,.12)'
-      : '--bg:rgba(20,23,29,.97);--bg2:#1b1f27;--bd:#2a2f3a;--tx:#e8eaf0;--dim:#9097a8;--ac:#f0914a;--acbg:rgba(240,145,74,.16)';
+    var vars = '--bg:rgba(20,23,29,.97);--bg2:#1b1f27;--bd:#2a2f3a;--tx:#e8eaf0;--dim:#9097a8;--ac:#f0914a;--acbg:rgba(240,145,74,.16)';   // dark only
     function items(tab) { return [].concat(reg.tools || [], reg.pages || [], reg.external || []).filter(function (x) { return x.tab === tab; }); }
     var name = act.name || (home ? 'DTF Club' : D.title || 'DTF Club');
     var ctxHidden = home || (!VIEWS && !sa);
