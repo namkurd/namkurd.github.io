@@ -87,6 +87,8 @@
     .row b { font-size: .88rem; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
     .row small { white-space: normal; }
     .trade b { display: block; -webkit-line-clamp: unset; }
+    .trade .tline { flex-direction: column; align-items: flex-start; gap: 3px; }   /* columns are narrow: title, then its winner tag, on every trade */
+    .trade .tline b { max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   }
   .skel { height: 96px; border-radius: 20px; background: var(--dtf-panel); border: 1px solid var(--dtf-border); opacity: .6; }
 </style>
