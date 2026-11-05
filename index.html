@@ -16,7 +16,7 @@
   .next b { color: var(--dtf-text); font-weight: 600; }
   .next[hidden] { display: none; }
 
-  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(5px, calc(var(--avail) * .009), 12px); --plate: clamp(32px, calc(var(--avail) * .048), 66px); }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(5px, calc(var(--avail) * .009), 12px); --plate: clamp(32px, calc(var(--avail) * .042), 66px); }
   /* each tool has its own colour (--c, optional --c2) from tools.json: tinted glow, gradient edge, dark logo plate */
   .dtf-wrap a.tile { color: var(--dtf-text); }
   .tile { --c2: var(--c); display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2px; padding: clamp(4px, calc(var(--avail) * .0065), 14px) 8px clamp(4px, calc(var(--avail) * .0055), 12px); border-radius: 20px; text-decoration: none;
@@ -33,9 +33,9 @@
   .tile.wide .t b { font-size: inherit; margin: 0; color: var(--dtf-text); }
   .tile.wide .wb { display: flex; flex-direction: column; min-width: 0; }
   /* IR eligibility status (from FAB's IR check) */
-  .ir { display: block; width: 100%; margin: 0 0 5px; padding: 3px 10px; border: 1px solid var(--dtf-border); border-radius: 12px; background: var(--dtf-panel); color: var(--dtf-text); font: inherit; font-size: .76rem; text-align: left; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .ir { display: inline-block; width: auto; max-width: 100%; margin: 0 0 5px; padding: 2px 9px; border: 1px solid var(--dtf-border); border-radius: 10px; background: var(--dtf-panel); color: var(--dtf-text); font: inherit; font-size: .72rem; text-align: left; cursor: pointer; -webkit-tap-highlight-color: transparent; }
   .ir[hidden] { display: none; }
-  .ir .tx { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .ir.open .tx { white-space: normal; }
+  .ir .tx { display: block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .ir.open .tx { white-space: normal; }
   .ir.bad { border-color: #e5484d; background: color-mix(in srgb, #e5484d 14%, var(--dtf-panel)); } .ir.warn { border-color: #e0a23a; background: color-mix(in srgb, #e0a23a 12%, var(--dtf-panel)); }
   .ir b { font-weight: 700; } .ir .dim { color: var(--dtf-dim); }
   .tile:active { transform: scale(.97); }
@@ -48,7 +48,7 @@
   .tile b { margin-top: 4px; font-size: .92rem; line-height: 1.15; }
   .tile .t { display: none; font-size: .78rem; line-height: 1.25; color: var(--dtf-dim); }
 
-  .feed { margin-bottom: clamp(6px, calc(var(--avail) * .0165), 14px); background: var(--dtf-panel); border: 1px solid var(--dtf-border); border-radius: 18px; padding: 8px 10px 6px; }
+  .feed { margin-bottom: clamp(5px, calc(var(--avail) * .011), 12px); background: var(--dtf-panel); border: 1px solid var(--dtf-border); border-radius: 18px; padding: 8px 10px 6px; }
   .feed[hidden] { display: none; }
   .tabs { display: flex; gap: 2px; padding: 2px; margin-bottom: 4px; background: color-mix(in srgb, var(--dtf-bg) 70%, transparent); border-radius: 12px; }
   .tabs button { flex: 1 1 auto; min-width: 0; height: 32px; padding: 0 8px; border: 0; border-radius: 10px; background: none; color: var(--dtf-dim); font-weight: 600; font-size: .74rem; line-height: 1; font-family: inherit; white-space: nowrap; cursor: pointer; -webkit-tap-highlight-color: transparent; }
@@ -75,6 +75,7 @@
   .row:active, .row:hover { background: color-mix(in srgb, var(--ac) 12%, transparent); }
   .row .rk { width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%; background: color-mix(in srgb, var(--ac) 24%, transparent); color: var(--ac); font-size: .72rem; font-weight: 700; }
   .row b { display: block; font-size: .84rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .row.mu b, .row.mu small { white-space: nowrap; text-overflow: clip; }
   .row.slack b { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.2; }
   .row small { display: block; font-size: .72rem; color: var(--dtf-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .row .go { color: var(--dtf-dim); font-size: .9rem; }
@@ -87,17 +88,19 @@
   @media (min-width: 900px) {
     .dtf-wrap { max-width: 1200px; padding-top: 14px; }
     h1.home { font-size: 1.6rem; } .next { font-size: .9rem; }
-    .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(6px, calc(var(--avail) * .012), 14px); --plate: clamp(34px, calc(var(--avail) * .05), 76px); }
+    .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(6px, calc(var(--avail) * .012), 14px); --plate: clamp(34px, calc(var(--avail) * .044), 76px); }
     .tile { padding: clamp(6px, calc(var(--avail) * .008), 16px) 10px clamp(6px, calc(var(--avail) * .006), 15px); gap: 3px; } .tile b { font-size: 1rem; margin-top: clamp(2px, calc(var(--avail) * .006), 8px); } .tile .t { display: block; }
   }
   /* wide screens: all five lists side by side (narrower ones keep the tabs) */
   @media (min-width: 1100px) {
-    .feed { margin-bottom: clamp(6px, calc(var(--avail) * .014), 18px); padding: 7px 16px 4px; }
+    .feed { margin-bottom: clamp(6px, calc(var(--avail) * .014), 18px); padding: 5px 16px 3px; }
     .tabs { display: none; }
     .panels { display: grid; grid-template-columns: repeat(var(--n, 5), minmax(0, 1fr)); gap: 18px; }
     .panel, .panel.on { display: block; } .panel h2 { color: var(--ac); text-transform: uppercase; letter-spacing: .06em; font-size: .78rem; }
-    .row { align-items: start; padding: 3px 4px; } .row .rk { margin-top: 2px; } .row .go { margin-top: 4px; }
+    .row { align-items: start; padding: 2px 4px; } .row .rk { margin-top: 2px; } .row .go { margin-top: 4px; }
     .row b { font-size: .88rem; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+    .row.mu b { display: block; white-space: nowrap; overflow: hidden; text-overflow: clip; }
+    .row.slack b { -webkit-line-clamp: 3; font-size: .8rem; }   /* the Slack column is the shortest: let summaries use three lines instead of shrinking to nothing */
     .row:not(.trade) small { white-space: nowrap; }   /* one line: with five columns the sublines would otherwise wrap and push the page past one screen */
     .trade small { white-space: normal; }
     .trade b { display: block; -webkit-line-clamp: unset; }
@@ -162,7 +165,7 @@
     var v = ir.violations || [], k = ir.blocked || [], who = function (r) { return esc(r.m) + ' (' + esc(r.player) + ')'; }, html, cls = '';
     if (v.length) { cls = 'bad'; html = '🚨 <b>IR check · Wk ' + ir.week + '</b> · ' + v.length + ' on IR who shouldn’t be: ' + v.map(who).join(', ') + (k.length ? ' · ' + k.length + ' can’t go on IR yet: ' + k.map(who).join(', ') : ''); }
     else if (k.length) { cls = 'warn'; html = '⛔ <b>IR check · Wk ' + ir.week + '</b> · ' + k.length + ' hurt but can’t go on IR until next week: ' + k.map(who).join(', '); }
-    else html = '✅ <b>IR check · Wk ' + ir.week + '</b> <span class="dim">· nobody is on IR illegally</span>';
+    else html = '✅ <b>IR check · Wk ' + ir.week + '</b> <span class="dim">· all clear</span>';
     b.className = 'ir ' + cls; b.innerHTML = '<span class="tx">' + html + '</span>'; b.hidden = false;
   }
   $('ir').addEventListener('click', function () { this.classList.toggle('open'); });
@@ -199,11 +202,11 @@
   };
   function rowHtml(it, id) {
     var ext = /^https?:/.test(it.href), mgrs = (it.managers || []).join('|');
-    var open = '<a class="row' + (id === 'trades' ? ' trade' : id === 'slack' ? ' slack' : '') + '" data-m="' + esc(mgrs) + '" href="' + esc(it.href) + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '>' + (id === 'trades' && it.sub ? '<span class="rkc"><span class="rk">' + it.rank + '</span><em class="wkn">' + esc(it.sub) + '</em></span>' : '<span class="rk">' + it.rank + '</span>');
+    var open = '<a class="row' + (id === 'trades' ? ' trade' : id === 'slack' ? ' slack' : id === 'matchups' ? ' mu' : '') + '" data-m="' + esc(mgrs) + '" href="' + esc(it.href) + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '>' + (id === 'trades' && it.sub ? '<span class="rkc"><span class="rk">' + it.rank + '</span><em class="wkn">' + esc(it.sub) + '</em></span>' : '<span class="rk">' + it.rank + '</span>');
     if (id === 'trades' && it.gets) {
       var win = it.winner ? '<span class="win">▲ ' + esc(it.winner) + ' +' + it.edge.toFixed(1) + '</span>' : '<span class="win even">Even</span>';
-      var gets = it.gets.map(function (g) { return '<i>' + esc(g.m) + '</i> gets ' + esc(g.players.join(', ')); }).join(' · ');
-      return open + '<span><span class="tline"><b>' + esc(it.title) + '<span class="youslot"></span></b>' + win + '</span><small class="gets">' + gets + '</small></span><span class="go" aria-hidden="true">›</span></a>';
+      var gets = it.gets.map(function (g) { return '<small class="gets"><i>' + esc(g.m) + '</i> gets ' + esc(g.players.join(', ')) + '</small>'; }).join('');
+      return open + '<span><span class="tline"><b>' + esc(it.title) + '<span class="youslot"></span></b>' + win + '</span>' + gets + '</span><span class="go" aria-hidden="true">›</span></a>';
     }
     return open + '<span><b>' + esc(it.title) + '<span class="youslot"></span></b><small>' + esc(it.sub) + '</small></span><span class="go" aria-hidden="true">›</span></a>';
   }
@@ -225,8 +228,24 @@
       while (el.scrollWidth > el.clientWidth && size > 8.5) { size -= 0.3; el.style.fontSize = size + 'px'; }
       if (el.scrollWidth > el.clientWidth) el.classList.add('wrap');
     });
+    [].forEach.call(document.querySelectorAll('.row.trade'), function (row) {   // a trade's two lines share one size
+      var g = [].slice.call(row.querySelectorAll('.gets')); if (g.length < 2 || !g[0].offsetWidth) return;
+      var m = Math.min.apply(null, g.map(function (e) { return parseFloat(getComputedStyle(e).fontSize); }));
+      g.forEach(function (e) { e.style.fontSize = m + 'px'; });
+    });
   }
-  window.addEventListener('resize', fitGets);
+  // matchup titles and sublines stay on one line and slack summaries inside two, by shrinking the text (never below a readable size)
+  function fitText() {
+    [].forEach.call(document.querySelectorAll('.row.mu b, .row.mu small, .row.slack b'), function (el) {
+      if (!el.offsetWidth) return;
+      el.style.fontSize = '';
+      var two = el.closest('.row.slack'), size = parseFloat(getComputedStyle(el).fontSize), min = el.tagName === 'SMALL' ? 8.5 : two ? 9.5 : 10;
+      var over = function () { return two ? el.scrollHeight > el.clientHeight + 1 : el.scrollWidth > el.clientWidth + 1; };
+      while (over() && size > min) { size -= 0.25; el.style.fontSize = size + 'px'; }
+    });
+  }
+  function fitAll() { fitGets(); fitText(); }
+  window.addEventListener('resize', fitAll);
   Promise.allSettled([get('/feed.json'), get('/slack.json')]).then(function (res) {
     var sections = [], feed = res[0].status === 'fulfilled' ? res[0].value : null, slack = res[1].status === 'fulfilled' ? res[1].value : null;
     if (feed) { STANDINGS = feed.standings || []; feed.sections.forEach(function (s) { if (META[s.id]) sections.push({ id: s.id, items: s.items }); }); paintNext(); }
@@ -248,12 +267,12 @@
       ls('dtf.homeTab', b.dataset.id);
       [].forEach.call($('tabs').children, function (x) { x.setAttribute('aria-selected', x === b); });
       [].forEach.call($('panels').children, function (p) { p.classList.toggle('on', p.dataset.id === b.dataset.id); });
-      fitGets();
+      fitAll();
     });
     var gen = feed && feed.generatedAt, old = gen && (Date.now() - Date.parse(gen)) > 2 * 864e5;
     $('meta').innerHTML = gen ? ('updated ' + ago(gen) + (old ? ' <span class="old">· may be out of date</span>' : '')) : '';
     $('feed').hidden = false;
-    markMine(); fitGets();
+    markMine(); fitAll();
   });
   paintMe();
 })();
