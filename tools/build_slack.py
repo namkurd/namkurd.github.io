@@ -138,10 +138,10 @@ def collect(slack, cfg, oldest):
         if ch['name'] in cfg['exclude']:
             continue
         try:
-            raw = list(slack.pages('conversations.history', 'messages', channel=ch['id'], oldest=str(oldest), limit=200))
+            raw = list(slack.pages('conversations.history', 'messages', channel=ch['id'], oldest='%.6f' % oldest, limit=200))
         except RuntimeError as e:
             if 'not_in_channel' in str(e) and cfg['autoJoin']:
-                slack.call('conversations.join', channel=ch['id']); raw = list(slack.pages('conversations.history', 'messages', channel=ch['id'], oldest=str(oldest), limit=200))
+                slack.call('conversations.join', channel=ch['id']); raw = list(slack.pages('conversations.history', 'messages', channel=ch['id'], oldest='%.6f' % oldest, limit=200))
             else:
                 print('skip #%s (%s)' % (ch['name'], e), file=sys.stderr); continue
         msgs = {}
@@ -152,7 +152,7 @@ def collect(slack, cfg, oldest):
         for m in raw:
             add(m)
             if m.get('reply_count', 0) >= 2 and m.get('thread_ts') == m['ts']:   # a thread: its replies are part of the conversation
-                for r in slack.pages('conversations.replies', 'messages', channel=ch['id'], ts=m['ts'], oldest=str(oldest), limit=200):
+                for r in slack.pages('conversations.replies', 'messages', channel=ch['id'], ts=m['ts'], oldest='%.6f' % oldest, limit=200):
                     add(r)
         print('read #%s: %d raw, %d counted in the last %d days (member=%s)' % (ch['name'], len(raw), len(msgs), cfg['windowDays'], ch.get('is_member')))
         if msgs:
@@ -171,10 +171,10 @@ def main():
     print('bot: %s in %s; window starts %s UTC' % (auth.get('user'), auth.get('team'), dt.datetime.fromtimestamp(time.time() - cfg['windowDays'] * 86400, dt.timezone.utc).strftime('%Y-%m-%d %H:%M')))
     oldest = time.time() - cfg['windowDays'] * 86400
     print('workspace:', team_url)
-    if os.environ.get('SLACK_PROBE', '1') == '1':   # one-off diagnostics: what does Slack really return for the first joined channel?
+    if os.environ.get('SLACK_PROBE', '0') == '1':   # one-off diagnostics: what does Slack really return for the first joined channel?
         try:
             first = next(c for c in slack.pages('conversations.list', 'channels', types='public_channel', exclude_archived='true', limit=200) if c.get('is_member'))
-            for label, extra in (('latest 5, no date filter', {}), ('since the window start', {'oldest': str(oldest)})):
+            for label, extra in (('latest 5, no date filter', {}), ('since the window start', {'oldest': '%.6f' % oldest})):
                 d = slack.call('conversations.history', channel=first['id'], limit=5, **extra)
                 ts = [m.get('ts') for m in d.get('messages', [])]
                 print('probe #%s (%s): %d messages, newest ts %s, has_more=%s, warning=%s, meta=%s, keys=%s' % (first['name'], label, len(ts), ts[:1], d.get('has_more'), d.get('warning'), d.get('response_metadata'), sorted(d)))
