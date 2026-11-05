@@ -5,7 +5,7 @@ on:
   push:
     branches: ['claude/**']
 concurrency:
-  group: hub-data
+  group: ${{ startsWith(github.event.head_commit.message, 'Summarise Slack topics') && 'hub-data' || format('skip-{0}', github.run_id) }}
   cancel-in-progress: false
 permissions:
   contents: write

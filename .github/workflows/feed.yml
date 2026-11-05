@@ -8,7 +8,8 @@ on:
   push:
     branches: ['claude/**']   # the summarising routine pushes a marker commit (message starts with 'hub-tick') to run this job, because GitHub's schedule is unreliable here
 concurrency:
-  group: hub-data
+  # a push that the job's `if` skips gets its own group, so it can never cancel a real queued run
+  group: ${{ (github.event_name == 'push' && !startsWith(github.event.head_commit.message, 'hub-tick')) && format('skip-{0}', github.run_id) || 'hub-data' }}
   cancel-in-progress: false
 permissions:
   contents: write
