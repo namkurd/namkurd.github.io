@@ -61,22 +61,25 @@ def top_matchups(season):
         n = r['flips']
         out.append({'rank': i, 'title': '%s %.1f \u2013 %.1f %s' % (r['names'][0], pa, pb, r['names'][1]),
                     'sub': 'Week %d \u00b7 %s \u00b7 %d lead change%s' % (w, 'H2H' if r['h2h'] else 'vs. field', n, '' if n == 1 else 's'),
+                    'managers': list(r['names'][:2]),
                     'href': '/SleeperLiveRumbles/rumbles.html?season=%s&wp=%s' % (season, r['best'])})
     return out
 
 
 # ---------------------------------------------------------------- trades
 def top_trades(data, season):
-    """Biggest trades of the season by total value moved."""
+    """Biggest trades of the season by total value moved. Winner = who came out ahead on trade value, as the Trade Network
+    scores it (value received minus value given); every player on both sides is listed."""
     ts = sorted([t for t in data['trades'] if t['s'] == season], key=lambda t: -(t.get('tv') or 0))
     out = []
     for i, t in enumerate(ts[:3], 1):
-        def side(assets):
-            names = [short_player(x['n']) for x in assets]
-            return (names[0] + (' +%d' % (len(names) - 1) if len(names) > 1 else '')) if names else '?'
-        out.append({'rank': i, 'title': '%s ⇄ %s' % (t['a'], t['b']),
-                    'sub': '%s ⇄ %s · Wk %d' % (side(t['ag']), side(t['bg']), t['w']),
-                    'href': '/SleeperTradeNodes/?season=%d&manager=%s' % (season, urllib.request.quote(t['a']))})
+        net = (t.get('vb') or 0) - (t.get('va') or 0)             # > 0: A received more value than A gave
+        winner = t['a'] if net > 0.05 else t['b'] if net < -0.05 else None
+        out.append({'rank': i, 'title': '%s \u21c4 %s' % (t['a'], t['b']), 'sub': 'Week %d' % t['w'], 'managers': [t['a'], t['b']],
+                    'winner': winner, 'edge': round(abs(net), 1),
+                    'gets': [{'m': t['a'], 'players': [short_player(x['n']) for x in t['bg']]},     # A receives what B gave
+                             {'m': t['b'], 'players': [short_player(x['n']) for x in t['ag']]}],
+                    'href': '/SleeperTradeNodes/?season=%d&manager=%s' % (season, urllib.request.quote(winner or t['a']))})
     return out
 
 
@@ -87,7 +90,7 @@ def top_adds(data, season, ty):
     out = []
     for i, a in enumerate(rows[:3], 1):
         bid = ' · $%d' % a['b'] if ty == 'W' and a.get('b') else ''
-        out.append({'rank': i, 'title': '%s · %s' % (a['pl'], a['m']), 'sub': '+%.0f PAR%s · Wk %d' % (a['par'], bid, a['w']),
+        out.append({'rank': i, 'title': '%s · %s' % (a['pl'], a['m']), 'sub': '+%.0f PAR%s · Wk %d' % (a['par'], bid, a['w']), 'managers': [a['m']],
                     'href': '/FAB-Management/?season=%d&manager=%s' % (season, urllib.request.quote(a['m']))})
     return out
 
@@ -110,6 +113,18 @@ def key_dates(league, state):
     return out
 
 
+def build_managers(hist, league_id, season):
+    """The people in the league this season: name (as every tool spells it), roster and Sleeper user. Feeds the 'Who are you?' picker."""
+    users = {u['user_id']: u for u in fetch('%s/league/%s/users' % (SLEEPER, league_id))}
+    owners = {int(r['roster_id']): r.get('owner_id') for r in fetch('%s/league/%s/rosters' % (SLEEPER, league_id))}
+    out = []
+    for r in sorted(hist['standings'], key=lambda r: r['manager'].lower()):
+        uid = owners.get(int(r['roster_id']))
+        out.append({'id': re.sub(r'[^a-z0-9]+', '-', r['manager'].lower()).strip('-'), 'name': r['manager'], 'roster_id': int(r['roster_id']),
+                    'sleeper_user_id': uid, 'sleeper_name': (users.get(uid) or {}).get('display_name'), 'aliases': []})
+    return {'schema': 1, 'season': season, 'managers': out}
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--src', help='directory holding sibling checkouts of the tool repos')
@@ -126,6 +141,13 @@ def main():
     except Exception as e:
         print('Sleeper unreachable (%s); keeping league.json' % e, file=sys.stderr)
         lj, season = old_league, int(old_league.get('season') or dt.date.today().year)
+    standings, managers = [], None
+    try:
+        hist = source(args.src, 'SleeperLiveRumbles', 'rumbles_history.json')
+        standings = [{'m': r['manager'], 'rank': r['rank'], 'rumbles': r['rumbles']} for r in hist['standings']]
+        managers = build_managers(hist, league_id, season)
+    except Exception as e:
+        print('standings: %s' % e, file=sys.stderr)
     sections = []
     try:
         items = top_matchups(season)
@@ -149,7 +171,7 @@ def main():
             sections.append(s)
     order = ['matchups', 'trades', 'waivers', 'free-agents']
     sections.sort(key=lambda s: order.index(s['id']) if s['id'] in order else 99)
-    feed = {'schema': 1, 'season': season, 'sections': sections, 'generatedAt': dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}
+    feed = {'schema': 1, 'season': season, 'sections': sections, 'standings': standings or old_feed.get('standings', []), 'generatedAt': dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}
 
     def write(name, obj):   # only touch the file when the content (ignoring the timestamp) changed, so the repo isn't committed to every hour
         path = os.path.join(HUB, name)
@@ -158,6 +180,8 @@ def main():
             print(name, 'unchanged'); return
         json.dump(obj, open(path, 'w', encoding='utf-8'), indent=1, ensure_ascii=False); open(path, 'a').write('\n'); print(name, 'written')
     write('league.json', lj)
+    if managers:
+        write('managers.json', managers)
     write('feed.json', feed)
 
 

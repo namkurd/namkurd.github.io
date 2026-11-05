@@ -1,6 +1,6 @@
-# DTF Club Hub
+# Rumble Central (the DTF Club hub)
 
-The home-screen app for the DTF Club fantasy football league, served at https://namkurd.github.io/.
+Rumble Central is the home-screen app for the DTF Club fantasy football league, served at https://namkurd.github.io/.
 
 It ties together the league's tools. Each tool lives in its own repo and is served on the same origin at `/<Repo>/`:
 
@@ -38,3 +38,7 @@ The seeded `slack.json` is a one-time snapshot. For it to update by itself:
 3. Optional: add `ANTHROPIC_API_KEY` as a secret so a Claude model writes the topic titles. Without it the title is the first message, cut short. With it, the conversation text is sent to Anthropic to write the title.
 
 Only **public** channels are read. This repo and site are public, so what ends up in `slack.json` is public: a short title, the channel name, counts and a link (the link needs a Slack login). Edit `tools/slack_config.json` to exclude channels. Delete `slack.json`'s topics (or the file) to hide the Slack tab.
+
+### Who are you?
+
+`managers.json` lists the people in this season's league (name as every tool spells it, roster, Sleeper user); `tools/build_feed.py` refreshes it with the feed. The picker (Home chip, or League menu > "You") stores your choice on your phone as `dtf.me` = `{"id": "ben", "name": "Ben"}`. Every tool on this site can read it: `DTF.me()` (id), `DTF.meName()`, `DTF.setMe(...)`, and a `dtf:me` event when it changes. Rumble Central uses it for its own Me tab and writes it back when you pick there, so you are asked once. On Home it marks the feed rows about you and shows your standing. Add `aliases` in `managers.json` for nicknames or former members.

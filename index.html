@@ -1,22 +1,25 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>DTF Club</title>
+<title>Rumble Central</title>
 <link rel="stylesheet" href="/shell/tokens.css">
 <style>
   /* Home fits one screen on a phone: header, the eight tool tiles (big), and a compact tabbed feed. Sizes follow the screen height. */
   /* sizes follow the space between the bars (screen minus status bar, notch and tab bar), so the installed app fits as well as a browser tab */
   .dtf-wrap { padding: 10px 16px 6px; --avail: calc(100dvh - var(--dtf-top-pad, 0px) - var(--dtf-nav-h, 56px)); }
-  .top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 2px 0 8px; }
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 2px 0 2px; }
   h1.home { font-size: 1.35rem; margin: 0; letter-spacing: -.01em; }
-  .next { font-size: .78rem; color: var(--dtf-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+  .me { flex: none; height: 28px; padding: 0 12px; border-radius: 14px; border: 1px solid var(--dtf-border); background: var(--dtf-panel); color: var(--dtf-dim); font-family: inherit; font-size: .76rem; font-weight: 600; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .me.set { color: var(--dtf-text); border-color: color-mix(in srgb, var(--dtf-accent) 55%, var(--dtf-border)); }
+  .me.ask { color: var(--dtf-accent); border-color: var(--dtf-accent); }
+  .next { margin: 0 0 8px; font-size: .78rem; color: var(--dtf-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
   .next b { color: var(--dtf-text); font-weight: 600; }
   .next[hidden] { display: none; }
 
-  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(5px, calc(var(--avail) * .0105), 12px); --plate: clamp(40px, calc(var(--avail) * .0745), 66px); }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(5px, calc(var(--avail) * .009), 12px); --plate: clamp(38px, calc(var(--avail) * .066), 66px); }
   /* each tool has its own colour (--c, optional --c2) from tools.json: tinted glow, gradient edge, dark logo plate */
   .dtf-wrap a.tile { color: var(--dtf-text); }
-  .tile { --c2: var(--c); display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2px; padding: clamp(5px, calc(var(--avail) * .0125), 14px) 8px clamp(5px, calc(var(--avail) * .0105), 12px); border-radius: 20px; text-decoration: none;
+  .tile { --c2: var(--c); display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2px; padding: clamp(4px, calc(var(--avail) * .0105), 14px) 8px clamp(4px, calc(var(--avail) * .009), 12px); border-radius: 20px; text-decoration: none;
     border: 1.5px solid transparent; -webkit-tap-highlight-color: transparent; transition: transform .12s ease, box-shadow .2s ease;
     background:
       radial-gradient(120% 85% at 50% 0%, color-mix(in srgb, var(--c) 24%, transparent), transparent 72%) padding-box,
@@ -40,7 +43,18 @@
   .tabs button[aria-selected="true"] { background: var(--dtf-panel); color: var(--dtf-text); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ac) 55%, transparent); }
   .panel { display: none; --ac: var(--dtf-accent); }
   .panel.on { display: block; }
-  .panel h2 { display: none; margin: 0 0 4px; font-size: .74rem; }
+  .panel h2 { margin: 2px 4px 0; font-size: .86rem; font-weight: 700; text-transform: none; letter-spacing: 0; color: var(--dtf-text); }
+  .panel .cap { display: block; margin: 0 4px 4px; font-size: .7rem; line-height: 1.25; color: var(--dtf-dim); }
+  .row.mine { background: color-mix(in srgb, var(--ac) 10%, transparent); box-shadow: inset 3px 0 0 var(--ac); }
+  .you { margin-left: 6px; padding: 1px 6px; border-radius: 8px; background: var(--ac); color: #0f1115; font-size: .62rem; font-weight: 800; vertical-align: 1px; }
+  /* a trade: who is winning, then every player each side gets (the line shrinks to fit) */
+  .trade b .wk { margin-left: 6px; font-size: .7rem; font-weight: 500; font-style: normal; color: var(--dtf-dim); }
+  .tline { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0 8px; }
+  .win { display: inline-block; margin: 1px 0 1px; padding: 1px 8px; border-radius: 9px; background: color-mix(in srgb, var(--ac) 22%, transparent); color: var(--ac); font-size: .7rem; font-weight: 700; }
+  .win.even { background: color-mix(in srgb, var(--dtf-dim) 20%, transparent); color: var(--dtf-dim); }
+  .trade .gets { display: block; white-space: nowrap; overflow: hidden; text-overflow: clip; font-size: .72rem; color: var(--dtf-dim); }
+  .trade .gets i { font-style: normal; color: var(--dtf-text); }
+  .trade .gets.wrap { white-space: normal; }
   .dtf-wrap a.row { color: var(--dtf-text); }
   .row { display: grid; grid-template-columns: 22px minmax(0, 1fr) 12px; align-items: center; gap: 9px; min-height: clamp(34px, calc(var(--avail) * .05), 40px); padding: 2px 4px; border-radius: 10px; text-decoration: none; color: var(--dtf-text); -webkit-tap-highlight-color: transparent; }
   .row:active, .row:hover { background: color-mix(in srgb, var(--ac) 12%, transparent); }
@@ -57,20 +71,25 @@
   @media (min-width: 900px) {
     .dtf-wrap { max-width: 1200px; padding-top: 14px; }
     h1.home { font-size: 1.6rem; } .next { font-size: .9rem; }
-    .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(8px, calc(var(--avail) * .016), 14px); --plate: clamp(46px, calc(var(--avail) * .082), 76px); }
-    .tile { padding: clamp(8px, calc(var(--avail) * .016), 16px) 10px clamp(8px, calc(var(--avail) * .014), 15px); gap: 3px; } .tile b { font-size: 1rem; margin-top: clamp(3px, calc(var(--avail) * .008), 8px); } .tile .t { display: block; }
-    .feed { margin-top: clamp(8px, calc(var(--avail) * .02), 18px); padding: 12px 16px 8px; }
+    .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(6px, calc(var(--avail) * .012), 14px); --plate: clamp(40px, calc(var(--avail) * .068), 76px); }
+    .tile { padding: clamp(6px, calc(var(--avail) * .012), 16px) 10px clamp(6px, calc(var(--avail) * .01), 15px); gap: 3px; } .tile b { font-size: 1rem; margin-top: clamp(2px, calc(var(--avail) * .006), 8px); } .tile .t { display: block; }
+  }
+  /* wide screens: all five lists side by side (narrower ones keep the tabs) */
+  @media (min-width: 1100px) {
+    .feed { margin-top: clamp(6px, calc(var(--avail) * .014), 18px); padding: 10px 16px 6px; }
     .tabs { display: none; }
     .panels { display: grid; grid-template-columns: repeat(var(--n, 5), minmax(0, 1fr)); gap: 18px; }
-    .panel, .panel.on { display: block; } .panel h2 { display: block; color: var(--ac); text-transform: uppercase; letter-spacing: .06em; }
+    .panel, .panel.on { display: block; } .panel h2 { color: var(--ac); text-transform: uppercase; letter-spacing: .06em; font-size: .78rem; }
     .row { align-items: start; padding: 5px 4px; } .row .rk { margin-top: 2px; } .row .go { margin-top: 4px; }
     .row b { font-size: .88rem; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
     .row small { white-space: normal; }
+    .trade b { display: block; -webkit-line-clamp: unset; }
   }
   .skel { height: 96px; border-radius: 20px; background: var(--dtf-panel); border: 1px solid var(--dtf-border); opacity: .6; }
 </style>
 </head><body class="dtf-page"><div class="dtf-wrap">
-<div class="top"><h1 class="home">DTF Club</h1><div class="next" id="next" hidden></div></div>
+<div class="top"><h1 class="home">Rumble Central</h1><button class="me ask" id="me" type="button" aria-label="Who are you?">Who are you?</button></div>
+<div class="next" id="next" hidden></div>
 <div class="grid" id="grid" aria-live="polite">
   <div class="skel"></div><div class="skel"></div><div class="skel"></div><div class="skel"></div>
   <div class="skel"></div><div class="skel"></div><div class="skel"></div><div class="skel"></div>
@@ -80,7 +99,7 @@
   <div class="panels" id="panels"></div>
   <div class="meta" id="meta"></div>
 </section>
-<p class="foot" id="foot"><a href="/install/">Add DTF Club to your home screen</a></p>
+<p class="foot" id="foot"><a href="/install/">Add Rumble Central to your home screen</a></p>
 <script>
 (function () {
   var $ = function (id) { return document.getElementById(id); };
@@ -92,6 +111,8 @@
     var m = Math.max(0, (Date.now() - Date.parse(iso)) / 60000);
     return m < 90 ? Math.round(m) + ' min ago' : m < 2880 ? Math.round(m / 60) + ' h ago' : Math.round(m / 1440) + ' days ago';
   }
+  // who you are (set by the picker in the nav shell, shared with every tool): {id, name} under dtf.me
+  function meName() { try { var v = JSON.parse(ls('dtf.me') || 'null'); return v && v.name || null; } catch (e) { return ls('dtf.me'); } }
 
   // ---- tool tiles (from the registry)
   function tile(t) {
@@ -104,53 +125,94 @@
     $('grid').innerHTML = '<p>Couldn’t load the tool list. Check your connection and refresh.</p>';
   });
 
-  // ---- next key date (from the Sleeper league settings, via league.json)
-  get('/league.json').then(function (l) {
-    var today = new Date(); today.setHours(0, 0, 0, 0);
-    var next = (l.keyDates || []).map(function (d) { var t = new Date(d.date + 'T12:00:00'); return { d: d, t: t, days: Math.round((t - today) / 864e5) }; })
+  // ---- the line under the title: you, your standing, and the next key date (from the Sleeper league settings)
+  var LEAGUE = null, STANDINGS = [];
+  function paintNext() {
+    var me = meName(), bits = [], today = new Date(); today.setHours(0, 0, 0, 0);
+    if (me) {
+      var st = STANDINGS.filter(function (r) { return r.m === me; })[0];
+      bits.push('<b>' + esc(me) + '</b>' + (st ? ' · #' + st.rank + ' · ' + st.rumbles + ' Rumbles' : ''));
+    } else if (LEAGUE && LEAGUE.week && LEAGUE.status === 'in_season') bits.push('Wk ' + LEAGUE.week);
+    var next = LEAGUE && (LEAGUE.keyDates || []).map(function (d) { var t = new Date(d.date + 'T12:00:00'); return { d: d, t: t, days: Math.round((t - today) / 864e5) }; })
       .filter(function (x) { return x.days >= 0; }).sort(function (a, b) { return a.days - b.days; })[0];
-    var bits = [];
-    if (l.week && l.status === 'in_season') bits.push('Wk ' + l.week);
     if (next) bits.push('<b>' + esc(next.d.label) + '</b> ' + next.t.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) + ' · ' + (next.days === 0 ? 'today' : next.days === 1 ? 'tomorrow' : next.days + ' days'));
-    if (bits.length) { $('next').innerHTML = bits.join(' · '); $('next').hidden = false; }
-  }).catch(function () {});
-
-  // ---- the feed: top 3 per tab (phone) / five columns (desktop)
-  var META = {
-    matchups: { tab: 'Matchups', title: 'Top matchups', ac: '#f0914a' },
-    trades: { tab: 'Trades', title: 'Top trades', ac: '#22d3ee' },
-    waivers: { tab: 'Waivers', title: 'Top waiver claims', ac: '#a3e635' },
-    'free-agents': { tab: 'Free agents', title: 'Top free agents', ac: '#a3e635' },
-    slack: { tab: 'Slack', title: 'Hot in Slack', ac: '#e8eaf0' }
-  };
-  function row(it) {
-    var ext = /^https?:/.test(it.href);
-    return '<a class="row" href="' + esc(it.href) + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '><span class="rk">' + it.rank + '</span><span><b>' + esc(it.title) + '</b><small>' + esc(it.sub) + '</small></span><span class="go" aria-hidden="true">›</span></a>';
+    $('next').innerHTML = bits.join(' · '); $('next').hidden = !bits.length;
   }
+  function paintMe() {
+    var me = meName(), b = $('me');
+    b.textContent = me || 'Who are you?'; b.className = 'me ' + (me ? 'set' : 'ask');
+    paintNext(); markMine();
+  }
+  $('me').addEventListener('click', function () { if (window.DTF && DTF.pickMe) DTF.pickMe(); });
+  window.addEventListener('dtf:me', paintMe);
+  get('/league.json').then(function (l) { LEAGUE = l; paintNext(); }).catch(function () {});
+
+  // ---- the feed: a labelled top 3 per tab (phone) / five columns (desktop)
+  var META = {
+    matchups: { tab: 'Matchups', title: function (y) { return 'Best matchups of ' + y; }, cap: 'Ranked by drama: tight finish, lead changes, H2H bonus', ac: '#f0914a' },
+    trades: { tab: 'Trades', title: function (y) { return 'Biggest trades of ' + y; }, cap: 'Ranked by value moved · tag = who is winning on trade value', ac: '#22d3ee' },
+    waivers: { tab: 'Waivers', title: function (y) { return 'Best waiver claims of ' + y; }, cap: 'Ranked by points above replacement (PAR) · $ = FAB bid', ac: '#a3e635' },
+    'free-agents': { tab: 'Free agents', title: function (y) { return 'Best free-agent pickups of ' + y; }, cap: 'Ranked by points above replacement (PAR).', ac: '#a3e635' },
+    slack: { tab: 'Slack', title: function () { return 'Hot in Slack this week'; }, cap: 'The busiest conversations of the past 7 days.', ac: '#e8eaf0' }
+  };
+  function rowHtml(it, id) {
+    var ext = /^https?:/.test(it.href), mgrs = (it.managers || []).join('|');
+    var open = '<a class="row' + (id === 'trades' ? ' trade' : '') + '" data-m="' + esc(mgrs) + '" href="' + esc(it.href) + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '><span class="rk">' + it.rank + '</span>';
+    if (id === 'trades' && it.gets) {
+      var win = it.winner ? '<span class="win">' + esc(it.winner) + ' winning · +' + it.edge.toFixed(1) + '</span>' : '<span class="win even">Even trade</span>';
+      var gets = it.gets.map(function (g) { return '<i>' + esc(g.m) + '</i> gets ' + esc(g.players.join(', ')); }).join(' · ');
+      return open + '<span><span class="tline"><b>' + esc(it.title) + '<em class="wk">' + esc(it.sub) + '</em><span class="youslot"></span></b>' + win + '</span><small class="gets">' + gets + '</small></span><span class="go" aria-hidden="true">›</span></a>';
+    }
+    return open + '<span><b>' + esc(it.title) + '<span class="youslot"></span></b><small>' + esc(it.sub) + '</small></span><span class="go" aria-hidden="true">›</span></a>';
+  }
+  // rows that involve you get a tint and a tag
+  function markMine() {
+    var me = meName();
+    [].forEach.call(document.querySelectorAll('.row[data-m]'), function (r) {
+      var mine = !!me && r.dataset.m.split('|').indexOf(me) >= 0;
+      r.classList.toggle('mine', mine);
+      var slot = r.querySelector('.youslot'); if (slot) slot.innerHTML = mine ? '<span class="you">YOU</span>' : '';
+    });
+  }
+  // every player stays visible: the "gets" line shrinks (down to 8.5px) and only then wraps
+  function fitGets() {
+    [].forEach.call(document.querySelectorAll('.gets'), function (el) {
+      if (!el.offsetWidth) return;
+      el.classList.remove('wrap'); el.style.fontSize = '';
+      var size = parseFloat(getComputedStyle(el).fontSize);
+      while (el.scrollWidth > el.clientWidth && size > 8.5) { size -= 0.3; el.style.fontSize = size + 'px'; }
+      if (el.scrollWidth > el.clientWidth) el.classList.add('wrap');
+    });
+  }
+  window.addEventListener('resize', fitGets);
   Promise.allSettled([get('/feed.json'), get('/slack.json')]).then(function (res) {
     var sections = [], feed = res[0].status === 'fulfilled' ? res[0].value : null, slack = res[1].status === 'fulfilled' ? res[1].value : null;
-    if (feed) feed.sections.forEach(function (s) { if (META[s.id]) sections.push({ id: s.id, items: s.items }); });
+    if (feed) { STANDINGS = feed.standings || []; feed.sections.forEach(function (s) { if (META[s.id]) sections.push({ id: s.id, items: s.items }); }); paintNext(); }
     if (slack && slack.topics && slack.topics.length && (Date.now() - Date.parse(slack.generatedAt)) < 10 * 864e5) {
       sections.push({ id: 'slack', items: slack.topics.map(function (t, i) { return { rank: i + 1, title: t.title, sub: '#' + t.channel + ' · ' + t.messages + ' messages', href: t.href }; }) });
     }
     if (!sections.length) return;
-    var want = ls('dtf.homeTab'), on = sections.some(function (s) { return s.id === want; }) ? want : sections[0].id;
+    var year = feed ? feed.season : '', want = ls('dtf.homeTab'), on = sections.some(function (s) { return s.id === want; }) ? want : sections[0].id;
     $('tabs').innerHTML = sections.map(function (s) { return '<button role="tab" data-id="' + s.id + '" aria-selected="' + (s.id === on) + '">' + META[s.id].tab + '</button>'; }).join('');
     $('panels').style.setProperty('--n', sections.length);
     $('panels').innerHTML = sections.map(function (s) {
-      return '<div class="panel' + (s.id === on ? ' on' : '') + '" role="tabpanel" data-id="' + s.id + '" style="--ac:' + META[s.id].ac + '"><h2>' + META[s.id].title + '</h2>' +
-        (s.items.length ? s.items.map(row).join('') : '<p class="none">Nothing yet this season.</p>') + '</div>';
+      var m = META[s.id];
+      return '<div class="panel' + (s.id === on ? ' on' : '') + '" role="tabpanel" data-id="' + s.id + '" style="--ac:' + m.ac + '"><h2>' + esc(m.title(year)) + '</h2><span class="cap">' + esc(m.cap) + '</span>' +
+        (s.items.length ? s.items.map(function (it) { return rowHtml(it, s.id); }).join('') : '<p class="none">Nothing yet this season.</p>') + '</div>';
     }).join('');
     $('tabs').addEventListener('click', function (e) {
       var b = e.target.closest('button[data-id]'); if (!b) return;
       ls('dtf.homeTab', b.dataset.id);
       [].forEach.call($('tabs').children, function (x) { x.setAttribute('aria-selected', x === b); });
       [].forEach.call($('panels').children, function (p) { p.classList.toggle('on', p.dataset.id === b.dataset.id); });
+      fitGets();
     });
     var gen = feed && feed.generatedAt, old = gen && (Date.now() - Date.parse(gen)) > 2 * 864e5;
-    $('meta').innerHTML = gen ? (feed.season + ' season · updated ' + ago(gen) + (old ? ' <span class="old">· may be out of date</span>' : '')) : '';
+    $('meta').innerHTML = gen ? ('updated ' + ago(gen) + (old ? ' <span class="old">· may be out of date</span>' : '')) : '';
     $('feed').hidden = false;
+    markMine(); fitGets();
   });
+  paintMe();
 })();
 </script>
 </div><script src="/shell/nav.js" defer></script></body></html>

@@ -1,0 +1,34 @@
+// "Who are you?": pick once, remembered, shown on Home and in the League menu, rows about you are marked, and it can be cleared.
+const { chromium } = require('playwright');
+const BASE = process.env.BASE || 'http://localhost:8080';
+let bad = 0;
+const eq = (n, g, w) => { const ok = JSON.stringify(g) === JSON.stringify(w); if (!ok) bad++; console.log(ok ? 'PASS' : 'FAIL', n, '->', JSON.stringify(g), ok ? '' : '(want ' + JSON.stringify(w) + ')'); };
+const nav = fn => `(() => { const r = document.querySelector('dtf-nav').shadowRoot; return (${fn})(r); })()`;
+(async () => {
+  const b = await chromium.launch(); const ctx = await b.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true }); const pg = await ctx.newPage();
+  const errs = []; pg.on('pageerror', e => errs.push(String(e)));
+  await pg.goto(BASE + '/'); await pg.waitForTimeout(1500);
+  eq('asks first', await pg.textContent('#me'), 'Who are you?');
+  await pg.click('#me'); await pg.waitForTimeout(500);
+  eq('lists the 12 managers', await pg.$$eval('.wg button', bs => bs.length), 12);
+  await pg.click('.wg button[data-n="Ben"]'); await pg.waitForTimeout(300);
+  eq('stored', await pg.evaluate(() => JSON.parse(localStorage.getItem('dtf.me'))), { id: 'ben', name: 'Ben' });
+  eq('chip shows the name', await pg.textContent('#me'), 'Ben');
+  eq('line shows standing', /^Ben · #\d+ · \d+ Rumbles/.test(await pg.textContent('#next')), true);
+  eq('rows about Ben are marked', await pg.$$eval('.row[data-m]', rs => rs.filter(r => r.dataset.m.split('|').includes('Ben')).every(r => r.classList.contains('mine') && !!r.querySelector('.you'))), true);
+  eq('rows about others are not', await pg.$$eval('.row[data-m]', rs => rs.filter(r => !r.dataset.m.split('|').includes('Ben')).every(r => !r.classList.contains('mine'))), true);
+  await pg.reload(); await pg.waitForTimeout(1500);
+  eq('remembered after reload', await pg.textContent('#me'), 'Ben');
+  await pg.evaluate(nav(r => r.querySelector('button[data-t=league]').click())); await pg.waitForTimeout(300);
+  eq('League menu row', await pg.evaluate(nav(r => r.querySelector('.sheet a[data-me] b').textContent)), 'You: Ben');
+  await pg.evaluate(nav(r => r.querySelector('.sheet a[data-me]').click())); await pg.waitForTimeout(500);
+  eq('opens the picker from the menu', await pg.evaluate(nav(r => !r.querySelector('.who').hidden)), true);
+  eq('current choice is highlighted', await pg.evaluate(nav(r => r.querySelector('.wg button.on').textContent)), 'Ben');
+  await pg.click('#wclear'); await pg.waitForTimeout(300);
+  eq('can be cleared', await pg.textContent('#me'), 'Who are you?');
+  eq('every tool can read it', await pg.evaluate(() => [DTF.me(), DTF.meName()]), [null, null]);
+  await pg.evaluate(() => DTF.setMe('Jake'));
+  eq('DTF.setMe works for tools', await pg.evaluate(() => [DTF.me(), DTF.meName()]), ['jake', 'Jake']);
+  eq('no page errors', errs, []);
+  await b.close(); process.exit(bad ? 1 : 0);
+})();

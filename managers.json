@@ -1,0 +1,102 @@
+{
+ "schema": 1,
+ "season": 2026,
+ "managers": [
+  {
+   "id": "aidan",
+   "name": "Aidan",
+   "roster_id": 1,
+   "sleeper_user_id": "622284153274048512",
+   "sleeper_name": "Legendaly",
+   "aliases": []
+  },
+  {
+   "id": "alex",
+   "name": "Alex",
+   "roster_id": 6,
+   "sleeper_user_id": "740989628160614400",
+   "sleeper_name": "ilovelamp917",
+   "aliases": []
+  },
+  {
+   "id": "ankit",
+   "name": "Ankit",
+   "roster_id": 8,
+   "sleeper_user_id": "734157966206455808",
+   "sleeper_name": "lalu101",
+   "aliases": []
+  },
+  {
+   "id": "ben",
+   "name": "Ben",
+   "roster_id": 2,
+   "sleeper_user_id": "611688251123699712",
+   "sleeper_name": "namkurd",
+   "aliases": []
+  },
+  {
+   "id": "christian",
+   "name": "Christian",
+   "roster_id": 9,
+   "sleeper_user_id": "893989602594234368",
+   "sleeper_name": "Hellerch",
+   "aliases": []
+  },
+  {
+   "id": "haan",
+   "name": "Haan",
+   "roster_id": 4,
+   "sleeper_user_id": "473908924727160832",
+   "sleeper_name": "HaanRolo",
+   "aliases": []
+  },
+  {
+   "id": "jake",
+   "name": "Jake",
+   "roster_id": 3,
+   "sleeper_user_id": "683108507217653760",
+   "sleeper_name": "thehebrewhammer24",
+   "aliases": []
+  },
+  {
+   "id": "joe",
+   "name": "Joe",
+   "roster_id": 5,
+   "sleeper_user_id": "622233730559348736",
+   "sleeper_name": "GreenBayBlay",
+   "aliases": []
+  },
+  {
+   "id": "kaitlyn",
+   "name": "Kaitlyn",
+   "roster_id": 11,
+   "sleeper_user_id": "992141374650753024",
+   "sleeper_name": "kohagan18",
+   "aliases": []
+  },
+  {
+   "id": "ryan",
+   "name": "Ryan",
+   "roster_id": 10,
+   "sleeper_user_id": "735661741740056576",
+   "sleeper_name": "rrakower",
+   "aliases": []
+  },
+  {
+   "id": "stephanie",
+   "name": "Stephanie",
+   "roster_id": 12,
+   "sleeper_user_id": "1389426153571229696",
+   "sleeper_name": "slondon1",
+   "aliases": []
+  },
+  {
+   "id": "steven",
+   "name": "Steven",
+   "roster_id": 7,
+   "sleeper_user_id": "621896714877599744",
+   "sleeper_name": "Stevster77",
+   "aliases": []
+  }
+ ]
+}

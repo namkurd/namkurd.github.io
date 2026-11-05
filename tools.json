@@ -8,7 +8,7 @@
     { "id": "league", "label": "League" }
   ],
   "tools": [
-    { "id": "rumbles", "name": "Rumble Central", "short": "Rumbles", "color": "#f0914a", "logo": "/shell/icons/tools/rumbles.svg", "tagline": "Live standings & matchups", "tab": "live",
+    { "id": "rumbles", "name": "Live Rumbles", "short": "Rumbles", "color": "#f0914a", "logo": "/shell/icons/tools/rumbles.svg", "tagline": "Live standings & matchups", "tab": "live",
       "path": "/SleeperLiveRumbles/rumbles.html", "repo": "namkurd/SleeperLiveRumbles",
       "description": "Live Rumbles standings and matchups",
       "links": { "replay": "/SleeperLiveRumbles/rumbles.html?season={season}&wp={week}.{rid}.{opp}" } },

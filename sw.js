@@ -1,6 +1,6 @@
-// DTF Club service worker (scope "/"). Network-first everywhere so data is never stale.
+// Rumble Central service worker (scope "/"). Network-first everywhere so data is never stale.
 // Bump V on every change to the shell.
-const V = 12, SHELL = 'dtf-shell-v' + V, PAGES = 'dtf-pages-v' + V, DATA = 'dtf-data-v' + V;
+const V = 13, SHELL = 'dtf-shell-v' + V, PAGES = 'dtf-pages-v' + V, DATA = 'dtf-data-v' + V;
 const PRECACHE = ['/', '/offline.html', '/404.html', '/tools.json', '/manifest.webmanifest', '/shell/nav.js',
   '/shell/tokens.css', '/shell/icons/tools/rumbles.svg', '/shell/icons/tools/recordbook.svg', '/shell/icons/tools/h2h.svg', '/shell/icons/tools/lifetime.svg', '/shell/icons/tools/trades.svg', '/shell/icons/tools/fab.svg', '/shell/icons/tools/auction.svg', '/shell/icons/tools/rulebook.svg', '/shell/icons/icon-192.png', '/shell/icons/icon-512.png', '/shell/icons/favicon.svg'];
 const MAX_BYTES = 1024 * 1024;
