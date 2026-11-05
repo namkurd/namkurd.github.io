@@ -29,7 +29,7 @@
   // Minimal registry used only if /tools.json cannot be fetched.
   var FALLBACK = { tabs: 'home:Home,live:Live,history:History,moves:Moves,league:League'.split(',').map(function (t) { t = t.split(':'); return { id: t[0], label: t[1] }; }),
     tools: ('rumbles|Rumble Central|live|/SleeperLiveRumbles/rumbles.html,recordbook|Record Book|history|/Recordbook/,h2h|Head-to-Head|history|/Sleeper-Head-to-Head/,' +
-      'lifetime|Lifetime Win/Loss|history|/sleepersheet/,trades|Trade Network|moves|/SleeperTradeNodes/,fab|FAB Management|moves|/FAB-Management/,' +
+      'lifetime|Lifetime|history|/sleepersheet/,trades|Trade Network|moves|/SleeperTradeNodes/,fab|FAB Management|moves|/FAB-Management/,' +
       'auction|Auction Archive|moves|/SleeperAuction/,rulebook|Rulebook|league|/Rulebook/').split(',').map(function (t) { t = t.split('|'); return { id: t[0], name: t[1], tab: t[2], path: t[3] }; }),
     pages: [], external: [] };
 

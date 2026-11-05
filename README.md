@@ -5,7 +5,7 @@ The home-screen app for the DTF Club fantasy football league, served at https://
 It ties together the league's tools. Each tool lives in its own repo and is served on the same origin at `/<Repo>/`:
 
 - Rumble Central
-- Lifetime Win/Loss
+- Lifetime
 - Trade Network
 - FAB Management
 - Record Book
