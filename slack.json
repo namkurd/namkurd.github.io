@@ -1,0 +1,28 @@
+{
+ "schema": 1,
+ "windowDays": 7,
+ "topics": [
+  {
+   "title": "IR rule: enforce it or scrap it?",
+   "channel": "general",
+   "messages": 59,
+   "people": 5,
+   "href": "https://dtf-club.slack.com/archives/CCFN6K3EX/p1793720254673329"
+  },
+  {
+   "title": "Sunday games and third-string QB scoring",
+   "channel": "gameday",
+   "messages": 45,
+   "people": 6,
+   "href": "https://dtf-club.slack.com/archives/CCH72NHC7/p1793557026016699"
+  },
+  {
+   "title": "Thursday night game injury scare",
+   "channel": "gameday",
+   "messages": 14,
+   "people": 3,
+   "href": "https://dtf-club.slack.com/archives/CCH72NHC7/p1793323911251529"
+  }
+ ],
+ "generatedAt": "2026-11-05T15:40:00Z"
+}
