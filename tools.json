@@ -2,7 +2,7 @@
   "schema": 1,
   "tabs": [
     { "id": "home", "label": "Home" },
-    { "id": "live", "label": "Live" },
+    { "id": "live", "label": "Rumbles" },
     { "id": "history", "label": "History" },
     { "id": "moves", "label": "Moves" },
     { "id": "league", "label": "League" }

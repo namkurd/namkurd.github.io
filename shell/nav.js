@@ -96,24 +96,33 @@
   function icon(id) { return '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="' + (ICONS[id] || ICONS.league) + '"/></svg>'; }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
-  var CSS = ':host{all:initial}*{box-sizing:border-box}button{font:inherit}' +
-    '.bar{position:fixed;z-index:25;left:0;right:0;bottom:0;display:flex;background:var(--bg);border-top:1px solid var(--bd);padding-bottom:env(safe-area-inset-bottom);font:12px/1.2 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}' +
-    '.bar>a,.bar>button{flex:1;min-width:0;height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--dim);background:none;border:0;text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent}' +
-    '.bar .on{color:var(--ac)}' +
-    '.ctx{position:fixed;z-index:25;top:0;left:0;right:0;background:var(--bg);border-bottom:1px solid var(--bd);padding-top:env(safe-area-inset-top);font:14px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--tx)}' +
-    '.ctx[hidden]{display:none}.r1{height:40px;display:flex;align-items:center;justify-content:space-between;font-weight:600}' +
-    '.r1 button{background:none;border:0;color:var(--tx);font-size:22px;width:48px;height:40px;cursor:pointer}.r1 button[hidden]{display:block;visibility:hidden}' +
-    '.r1 span,.nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}' +
-    '.vt{display:flex;overflow-x:auto;scrollbar-width:none;border-top:1px solid var(--bd)}.vt::-webkit-scrollbar{display:none}.vt[hidden]{display:none}' +
-    '.vt button{flex:none;height:38px;padding:0 14px;background:none;border:0;border-bottom:2px solid transparent;color:var(--dim);cursor:pointer;white-space:nowrap}' +
-    '.vt button.on{color:var(--ac);border-bottom-color:var(--ac);font-weight:600}.nm{display:none}' +
-    '.sheet{position:fixed;z-index:26;left:0;right:0;bottom:calc(56px + env(safe-area-inset-bottom));background:var(--bg);border-top:1px solid var(--bd);border-radius:14px 14px 0 0;padding:6px 0;font:15px system-ui,sans-serif;box-shadow:0 -8px 30px rgba(0,0,0,.35)}' +
-    '.sheet a{display:block;padding:12px 18px;color:var(--tx);text-decoration:none}.sheet a small{display:block;color:var(--dim);font-size:12px}.sheet a.on{color:var(--ac)}' +
-    '.sheet[hidden],.scrim[hidden]{display:none}.scrim{position:fixed;inset:0;z-index:25;background:rgba(0,0,0,.4)}' +
-    '@media(min-width:900px){.bar{top:0;bottom:auto;height:48px;border-top:0;border-bottom:1px solid var(--bd);padding:0 12px;justify-content:center;gap:4px}' +
-    '.bar>a,.bar>button{flex:none;height:48px;flex-direction:row;gap:8px;padding:0 16px;font-size:14px}' +
-    '.ctx.nov{display:none}.ctx{top:48px;padding-top:0;display:flex;align-items:center;gap:12px;padding:0 16px}.r1{display:none}.vt{border-top:0;flex:1}.nm{display:block;font-weight:600}' +
-    '.sheet{left:auto;right:auto;top:48px;bottom:auto;min-width:260px;border:1px solid var(--bd);border-radius:0 0 12px 12px}}';
+  // Design: phone = one slim top bar (view tabs; back/refresh only in the installed app) that hides while you scroll down,
+  // plus a bottom tab bar whose group tabs show the tool you are in. Desktop = one top bar listing every tool, view tabs underneath.
+  var CSS = ':host{all:initial}*{box-sizing:border-box}button{font:inherit;color:inherit}a{color:inherit}' +
+    ':focus-visible{outline:2px solid var(--ac);outline-offset:-2px;border-radius:8px}' +
+    '.bar,.ctx{background:var(--bg);-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px)}' +
+    '.bar{position:fixed;z-index:25;left:0;right:0;bottom:0;display:flex;border-top:1px solid var(--bd);padding-bottom:env(safe-area-inset-bottom);font:600 11px/1.1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}' +
+    '.bar>a,.bar>button{flex:1;min-width:0;height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:var(--dim);background:none;border:0;text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent}' +
+    '.bar .ic{display:flex;align-items:center;justify-content:center;width:56px;height:28px;border-radius:14px;transition:background .15s}' +
+    '.bar .on{color:var(--tx)}.bar .on .ic{background:var(--acbg);color:var(--ac)}.bar .lb{max-width:100%;padding:0 4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}' +
+    '.bar .grp .lb::after{content:" \\25B4";font-size:8px;opacity:.7}.dk{display:none}' +
+    '.ctx{position:fixed;z-index:25;top:0;left:0;right:0;height:calc(44px + env(safe-area-inset-top));padding-top:env(safe-area-inset-top);border-bottom:1px solid var(--bd);display:flex;align-items:stretch;font:14px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--tx);transition:transform .22s ease}' +
+    '.ctx[hidden]{display:none}.ctx.away{transform:translateY(-100%)}' +
+    '.ib{flex:none;width:44px;background:none;border:0;font-size:22px;cursor:pointer;color:var(--tx);-webkit-tap-highlight-color:transparent}.ib[hidden]{display:none}' +
+    '.ttl{flex:1;min-width:0;align-self:center;text-align:center;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 8px}' +
+    '.vt{flex:1;min-width:0;display:flex;overflow-x:auto;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 12px,#000 calc(100% - 12px),transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 12px,#000 calc(100% - 12px),transparent 100%)}.vt::-webkit-scrollbar{display:none}' +
+    '.vt button{flex:none;position:relative;height:44px;padding:0 16px;background:none;border:0;color:var(--dim);cursor:pointer;white-space:nowrap;font-weight:500;-webkit-tap-highlight-color:transparent}' +
+    '.vt button.on{color:var(--tx);font-weight:700}.vt button.on::after{content:"";position:absolute;left:14px;right:14px;bottom:0;height:3px;border-radius:3px 3px 0 0;background:var(--ac)}' +
+    '.sheet{position:fixed;z-index:26;left:8px;right:8px;bottom:calc(64px + env(safe-area-inset-bottom));background:var(--bg2);border:1px solid var(--bd);border-radius:16px;padding:6px;font:15px system-ui,sans-serif;box-shadow:0 12px 40px rgba(0,0,0,.45);transform-origin:bottom center;animation:up .16s ease-out}' +
+    '@keyframes up{from{opacity:0;transform:translateY(10px) scale(.98)}}@media(prefers-reduced-motion:reduce){.sheet{animation:none}.ctx{transition:none}}' +
+    '.sheet a{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:52px;padding:8px 12px;border-radius:10px;color:var(--tx);text-decoration:none}.sheet a:active,.sheet a:hover{background:var(--acbg)}' +
+    '.sheet a small{display:block;color:var(--dim);font-size:12px;margin-top:1px}.sheet a.on b{color:var(--ac)}.sheet a.on::after{content:"\\2713";color:var(--ac);font-weight:700}.sheet a.xt::after{content:"\\2197";color:var(--dim)}' +
+    '.sheet[hidden],.scrim[hidden]{display:none}.scrim{position:fixed;inset:0;z-index:25;background:rgba(0,0,0,.35)}' +
+    '@media(min-width:900px){.bar{top:0;bottom:auto;height:48px;border-top:0;border-bottom:1px solid var(--bd);padding:0 16px;justify-content:flex-start;align-items:center;gap:2px;font:500 14px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}' +
+    '.bar>a,.bar>button{flex:none;height:36px;flex-direction:row;gap:0;padding:0 12px;border-radius:8px}.bar>a:hover,.bar>button:hover{background:var(--acbg);color:var(--tx)}.bar .ic,.mb{display:none}.bar .on{background:var(--acbg);color:var(--ac)}.bar .on .lb{font-weight:700}' +
+    '.bar .grp .lb::after{content:none}.bar .brand{font-weight:800;color:var(--tx);margin-right:10px;letter-spacing:.02em}.bar .sp{flex:1}.dk{display:flex}' +
+    '.ctx{top:48px;height:44px;padding:0 16px;border-bottom:1px solid var(--bd)}.ctx.nov,.ctx .ib,.ctx .ttl{display:none}.vt{-webkit-mask-image:none;mask-image:none}.vt button{padding:0 14px}.vt button:first-child{margin-left:-14px}' +
+    '.sheet{left:auto;right:16px;top:52px;bottom:auto;min-width:260px;transform-origin:top right}}';
 
   var VIEWS = null;   // the tool's declared views, normalized
   var UI = {};
@@ -167,69 +176,109 @@
     });
   }
 
+  function standalone() { return !!((W.matchMedia && W.matchMedia('(display-mode: standalone)').matches) || navigator.standalone); }
+  function isHome() { return location.pathname === '/' || location.pathname === '/index.html'; }
+  function mobile() { return W.innerWidth < 900; }
+  var AWAY = false;
+  // Space taken by the fixed top UI. Known without measuring, so the page never shifts when the nav appears.
+  function topPad() {
+    var inset = 'env(safe-area-inset-top)';
+    if (!mobile()) return (48 + (VIEWS && !isHome() ? 44 : 0)) + 'px';
+    if (isHome()) return standalone() ? inset : '0px';
+    return VIEWS || standalone() ? 'calc(44px + ' + inset + ')' : '0px';
+  }
+  // --dtf-top-pad is static (body padding); --dtf-top-h follows the bar while it hides on scroll (tools offset sticky things with it)
   function setTop() {
-    var c = UI.ctx; if (!c || c.hidden) { root.style.setProperty('--dtf-top-h', (W.innerWidth >= 900 ? 48 : 0) + 'px'); return; }
-    var h = c.getBoundingClientRect().height + (W.innerWidth >= 900 ? 48 : 0);
-    root.style.setProperty('--dtf-top-h', h + 'px');
+    var pad = topPad(), h = AWAY && mobile() ? (standalone() ? 'env(safe-area-inset-top)' : '0px') : pad;
+    root.style.setProperty('--dtf-top-pad', pad); root.style.setProperty('--dtf-top-h', h);
+  }
+  function away(on) { if (on === AWAY || !UI.ctx) return; AWAY = on; UI.ctx.classList.toggle('away', on); setTop(); }
+  function autoHide() {
+    var last = W.scrollY, tick = false;
+    W.addEventListener('scroll', function () {
+      if (tick) return; tick = true;
+      W.requestAnimationFrame(function () {
+        tick = false;
+        if (!mobile() || !UI.ctx || UI.ctx.hidden) return;
+        var y = W.scrollY, dy = y - last;
+        if (y <= 60) { away(false); last = y; return; }
+        if (Math.abs(dy) < 8) return;
+        last = y; away(dy > 0 && y > 120);
+      });
+    }, { passive: true });
+    D.addEventListener('focusin', function () { away(false); });
   }
 
   function build(reg) {
-    var tabs = reg.tabs || FALLBACK.tabs, act = activeItem(reg) || {}, home = act.tab === 'home';
+    var tabs = reg.tabs || FALLBACK.tabs, act = activeItem(reg) || {}, home = act.tab === 'home', sa = standalone();
     var host = D.createElement('dtf-nav'), s = host.attachShadow({ mode: 'open' });
-    var dark = W.matchMedia && W.matchMedia('(prefers-color-scheme: light)').matches ? 0 : 1;
-    var vars = dark ? '--bg:#14171d;--bd:#2a2f3a;--tx:#e8eaf0;--dim:#9097a8;--ac:#f0914a' : '--bg:#fff;--bd:#dfe2ea;--tx:#14171f;--dim:#5d6577;--ac:#c4601a';
+    var light = W.matchMedia && W.matchMedia('(prefers-color-scheme: light)').matches;
+    var vars = light ? '--bg:rgba(255,255,255,.97);--bg2:#fff;--bd:#dfe2ea;--tx:#14171f;--dim:#5d6577;--ac:#c4601a;--acbg:rgba(196,96,26,.12)'
+      : '--bg:rgba(20,23,29,.97);--bg2:#1b1f27;--bd:#2a2f3a;--tx:#e8eaf0;--dim:#9097a8;--ac:#f0914a;--acbg:rgba(240,145,74,.16)';
     function items(tab) { return [].concat(reg.tools || [], reg.pages || [], reg.external || []).filter(function (x) { return x.tab === tab; }); }
     var name = act.name || (home ? 'DTF Club' : D.title || 'DTF Club');
-    var html = '<style>:host{' + vars + '}' + CSS + '</style>' +
-      '<div class="ctx' + (VIEWS ? '' : ' nov') + '"' + (home ? ' hidden' : '') + '><div class="r1"><button id="back" aria-label="Back" hidden>‹</button><span>' + esc(name) + '</span><button id="rf" aria-label="Refresh">⟳</button></div>' +
-      '<span class="nm">' + esc(name) + '</span><div class="vt" role="tablist" aria-label="' + esc(name) + ' views"' + (VIEWS ? '' : ' hidden') + '></div></div>' +
-      '<div class="scrim" hidden></div><div class="sheet" hidden></div><nav class="bar" aria-label="DTF Club">';
+    var ctxHidden = home || (!VIEWS && !sa);
+    var html = '<style>:host{' + vars + '}' + CSS + '.dsk{display:none}@media(min-width:900px){.bar.mbar{display:none}.bar.dsk{display:flex}}</style>' +
+      '<div class="ctx' + (VIEWS ? '' : ' nov') + '"' + (ctxHidden ? ' hidden' : '') + '><button class="ib" id="back" aria-label="Back" hidden>‹</button>' +
+      (VIEWS ? '<div class="vt" role="tablist" aria-label="' + esc(name) + ' views"></div>' : '<div class="ttl">' + esc(name) + '</div>') +
+      '<button class="ib" id="rf" aria-label="Refresh"' + (sa ? '' : ' hidden') + '>⟳</button></div>' +
+      '<div class="scrim" hidden></div><div class="sheet" role="dialog" aria-label="Menu" hidden></div>';
+    // phone: bottom tabs. A group tab shows the tool you are in; a single-tool tab goes straight there.
+    html += '<nav class="bar mbar" aria-label="DTF Club">';
     tabs.forEach(function (t) {
-      var list = items(t.id), on = act.tab === t.id;
-      if (t.id === 'home') html += '<a href="/" data-t="home"' + (on ? ' class="on" aria-current="page"' : '') + '>' + icon('home') + t.label + '</a>';
-      else if (list.length === 1 && (list[0].path || list[0].url)) html += '<a href="' + esc(list[0].path || list[0].url) + '" data-t="' + t.id + '"' + (on ? ' class="on" aria-current="page"' : '') + '>' + icon(t.id) + t.label + '</a>';
-      else html += '<button data-t="' + t.id + '"' + (on ? ' class="on"' : '') + '>' + icon(t.id) + t.label + '</button>';
+      var list = items(t.id), on = act.tab === t.id, cur = on && act.name ? (act.short || act.name) : null;
+      var inner = '<span class="ic">' + icon(t.id) + '</span><span class="lb">' + esc(t.id !== 'home' && list.length > 1 && cur ? cur : t.label) + '</span>';
+      var one = t.id === 'home' ? { path: '/' } : list.length === 1 && (list[0].path || list[0].url) ? list[0] : null;
+      if (one) html += '<a href="' + esc(one.path || one.url) + '" data-t="' + t.id + '"' + (on ? ' class="on" aria-current="page"' : '') + '>' + inner + '</a>';
+      else html += '<button class="grp' + (on ? ' on' : '') + '" data-t="' + t.id + '" aria-haspopup="dialog" aria-expanded="false">' + inner + '</button>';
     });
-    s.innerHTML = html + '</nav>';
+    // desktop: every tool on one bar
+    html += '</nav><nav class="bar dsk" aria-label="DTF Club"><a class="brand" href="/">DTF Club</a>';
+    [].concat(reg.tools || [], reg.pages || []).forEach(function (x) {
+      html += '<a href="' + esc(x.path) + '"' + (act.id === x.id ? ' class="on" aria-current="page"' : '') + '><span class="lb">' + esc(x.short || x.name) + '</span></a>';
+    });
+    html += '<span class="sp"></span>' + ((reg.external || []).length ? '<button id="more" aria-haspopup="dialog" aria-expanded="false"><span class="lb">More ▾</span></button>' : '') + '</nav>';
+    s.innerHTML = html;
     UI.ctx = s.querySelector('.ctx'); UI.vt = s.querySelector('.vt');
-    var sheet = s.querySelector('.sheet'), scrim = s.querySelector('.scrim');
-    function close() { sheet.hidden = scrim.hidden = true; }
-    s.querySelectorAll('button[data-t]').forEach(function (b) {
-      b.addEventListener('click', function () {
-        if (!sheet.hidden && sheet.getAttribute('data-t') === b.getAttribute('data-t')) return close();
-        sheet.setAttribute('data-t', b.getAttribute('data-t'));
-        sheet.innerHTML = items(b.getAttribute('data-t')).map(function (x) {
-          var href = x.path || x.url, ext = !x.path;
-          return '<a href="' + esc(href) + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + (act.id === x.id ? ' class="on"' : '') + '>' + esc(x.name) + (x.description ? '<small>' + esc(x.description) + '</small>' : '') + '</a>';
-        }).join('');
-        sheet.hidden = scrim.hidden = false;
-      });
-    });
+    var sheet = s.querySelector('.sheet'), scrim = s.querySelector('.scrim'), opener = null;
+    function close() { sheet.hidden = scrim.hidden = true; if (opener) { opener.setAttribute('aria-expanded', 'false'); opener.focus({ preventScroll: true }); opener = null; } }
+    function open(btn, list) {
+      if (!sheet.hidden && opener === btn) return close();
+      if (opener) opener.setAttribute('aria-expanded', 'false');
+      opener = btn; btn.setAttribute('aria-expanded', 'true');
+      sheet.innerHTML = list.map(function (x) {
+        var ext = !x.path;
+        return '<a href="' + esc(x.path || x.url) + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + ' class="' + (act.id === x.id ? 'on ' : '') + (ext ? 'xt' : '') + '"><span><b>' + esc(x.name) + '</b>' + (x.description ? '<small>' + esc(x.description) + '</small>' : '') + '</span></a>';
+      }).join('');
+      sheet.hidden = scrim.hidden = false;
+    }
+    s.querySelectorAll('button[data-t]').forEach(function (b) { b.addEventListener('click', function () { open(b, items(b.getAttribute('data-t'))); }); });
+    var more = s.getElementById('more'); if (more) more.addEventListener('click', function () { open(more, reg.external || []); });
     scrim.addEventListener('click', close);
     sheet.addEventListener('click', function (e) { if (e.target.closest('a')) close(); });
+    D.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !sheet.hidden) close(); });
+    W.addEventListener('scroll', function () { if (!sheet.hidden) close(); }, { passive: true });
     var back = s.getElementById('back');
-    if (!home && history.length > 1) back.hidden = false;
+    if (sa && !home && history.length > 1) back.hidden = false;
     back.addEventListener('click', function () { history.back(); });
     s.getElementById('rf').addEventListener('click', DTF.refresh);
     if (VIEWS) {
       UI.vt.innerHTML = VIEWS.items.map(function (it, i) { return '<button role="tab" data-i="' + i + '">' + esc(it.label) + '</button>'; }).join('');
-      UI.vt.addEventListener('click', function (e) { var b = e.target.closest('button[data-i]'); if (b) pick(+b.getAttribute('data-i')); });
+      UI.vt.addEventListener('click', function (e) { var b = e.target.closest('button[data-i]'); if (b) { away(false); pick(+b.getAttribute('data-i')); } });
       paintViews();
     }
-    if ((W.matchMedia && W.matchMedia('(display-mode: standalone)').matches) || navigator.standalone) root.classList.add('dtf-standalone');
+    if (sa) root.classList.add('dtf-standalone');
     return host;
   }
 
   function layout() {
     var css = D.createElement('style');
-    css.textContent = ':root{--dtf-top-h:0px;--dtf-nav-h:0px}' +
-      'body.dtf-has-nav{padding-top:var(--dtf-top-h);padding-bottom:calc(56px + env(safe-area-inset-bottom));--dtf-nav-h:calc(56px + env(safe-area-inset-bottom))}' +
+    css.textContent = ':root{--dtf-top-pad:0px;--dtf-top-h:0px;--dtf-nav-h:0px}' +
+      'body.dtf-has-nav{padding-top:var(--dtf-top-pad);padding-bottom:calc(56px + env(safe-area-inset-bottom));--dtf-nav-h:calc(56px + env(safe-area-inset-bottom))}' +
       '@media(min-width:900px){body.dtf-has-nav{padding-bottom:0;--dtf-nav-h:0px}}';
     D.head.appendChild(css);
     D.body.classList.add('dtf-has-nav');
-    // reserve space before the registry arrives: phone context bar is 40px (plus any status-bar inset); desktop top bar is 48px
-    var home = location.pathname === '/' || location.pathname === '/index.html';
-    root.style.setProperty('--dtf-top-h', W.innerWidth >= 900 ? '48px' : home ? '0px' : 'calc(40px + env(safe-area-inset-top))');
+    setTop();   // reserve the space before the registry arrives, so nothing jumps
   }
 
   var hiddenAt = 0;
@@ -242,13 +291,12 @@
   function start() {
     try { injectHead(); sw(); } catch (e) {}
     if (embedded) { DTF.ready = Promise.resolve(DTF.registry); return; }
-    try { layout(); initViews(); } catch (e) {}
+    try { initViews(); layout(); autoHide(); } catch (e) {}
     DTF.ready = loadRegistry().catch(function () { return FALLBACK; }).then(function (reg) {
       DTF.registry = reg; DTF.tools = reg.tools || FALLBACK.tools;
       try {
         D.body.appendChild(build(reg)); setTop();
         W.addEventListener('resize', setTop);
-        if (W.ResizeObserver && UI.ctx) new ResizeObserver(setTop).observe(UI.ctx);
       } catch (e) { if (W.console) console.warn('dtf-nav failed', e); }
       return reg;
     });
