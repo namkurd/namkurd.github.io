@@ -1,6 +1,28 @@
 {
  "schema": 1,
  "windowDays": 7,
- "topics": [],
- "generatedAt": "2026-11-05T18:22:27Z"
+ "topics": [
+  {
+   "title": "Thought it means he has to drop that player or someone else…",
+   "channel": "general",
+   "messages": 76,
+   "people": 5,
+   "href": "https://dtf-club.slack.com/archives/CCFN6K3EX/p1793706598494299"
+  },
+  {
+   "title": "Lamar Jackson is such a loser",
+   "channel": "gameday",
+   "messages": 60,
+   "people": 8,
+   "href": "https://dtf-club.slack.com/archives/CCH72NHC7/p1793557026016699"
+  },
+  {
+   "title": "There's been some difficulty finding/knowing rules. Hoping…",
+   "channel": "vibes",
+   "messages": 13,
+   "people": 5,
+   "href": "https://dtf-club.slack.com/archives/C06ARECPAN4/p1793804922969619"
+  }
+ ],
+ "generatedAt": "2026-11-05T18:35:37Z"
 }
