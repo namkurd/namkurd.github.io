@@ -68,15 +68,15 @@ def top_matchups(season):
 
 # ---------------------------------------------------------------- trades
 def top_trades(data, season):
-    """Biggest trades of the season by total value moved. Winner = who came out ahead on trade value, as the Trade Network
-    scores it (value received minus value given); every player on both sides is listed."""
+    """Biggest trades of the season by total value moved. Winner = who gained more lineup value, the Trade Network's own "Net" column
+    (lineup gain for A minus lineup gain for B); every player on both sides is listed. No lineup data yet = no winner."""
     ts = sorted([t for t in data['trades'] if t['s'] == season], key=lambda t: -(t.get('tv') or 0))
     out = []
     for i, t in enumerate(ts[:3], 1):
-        net = (t.get('vb') or 0) - (t.get('va') or 0)             # > 0: A received more value than A gave
-        winner = t['a'] if net > 0.05 else t['b'] if net < -0.05 else None
-        out.append({'rank': i, 'title': '%s \u21c4 %s' % (t['a'], t['b']), 'sub': 'Week %d' % t['w'], 'managers': [t['a'], t['b']],
-                    'winner': winner, 'edge': round(abs(net), 1),
+        net = t.get('lgNet')                                       # > 0: A's lineup gained more than B's
+        winner = t['a'] if (net or 0) > 0.05 else t['b'] if (net or 0) < -0.05 else None
+        out.append({'rank': i, 'title': '%s \u21c4 %s' % (t['a'], t['b']), 'sub': 'Wk %d' % t['w'], 'managers': [t['a'], t['b']],
+                    'winner': winner, 'edge': round(abs(net or 0), 1),
                     'gets': [{'m': t['a'], 'players': [short_player(x['n']) for x in t['bg']]},     # A receives what B gave
                              {'m': t['b'], 'players': [short_player(x['n']) for x in t['ag']]}],
                     'href': '/SleeperTradeNodes/?season=%d&manager=%s' % (season, urllib.request.quote(winner or t['a']))})
