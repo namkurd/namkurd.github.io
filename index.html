@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Rumble Central</title>
+<title>Rumble Hub</title>
 <link rel="stylesheet" href="/shell/tokens.css">
 <style>
   /* Home fits one screen on a phone: header, the eight tool tiles (big), and a compact tabbed feed. Sizes follow the screen height. */
@@ -74,6 +74,7 @@
   .row:active, .row:hover { background: color-mix(in srgb, var(--ac) 12%, transparent); }
   .row .rk { width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%; background: color-mix(in srgb, var(--ac) 24%, transparent); color: var(--ac); font-size: .72rem; font-weight: 700; }
   .row b { display: block; font-size: .84rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .row.slack b { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.2; }
   .row small { display: block; font-size: .72rem; color: var(--dtf-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .row .go { color: var(--dtf-dim); font-size: .9rem; }
   .none { margin: 8px 4px; color: var(--dtf-dim); font-size: .8rem; }
@@ -94,9 +95,10 @@
     .tabs { display: none; }
     .panels { display: grid; grid-template-columns: repeat(var(--n, 5), minmax(0, 1fr)); gap: 18px; }
     .panel, .panel.on { display: block; } .panel h2 { color: var(--ac); text-transform: uppercase; letter-spacing: .06em; font-size: .78rem; }
-    .row { align-items: start; padding: 5px 4px; } .row .rk { margin-top: 2px; } .row .go { margin-top: 4px; }
+    .row { align-items: start; padding: 3px 4px; } .row .rk { margin-top: 2px; } .row .go { margin-top: 4px; }
     .row b { font-size: .88rem; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
-    .row small { white-space: normal; }
+    .row:not(.trade) small { white-space: nowrap; }   /* one line: with five columns the sublines would otherwise wrap and push the page past one screen */
+    .trade small { white-space: normal; }
     .trade b { display: block; -webkit-line-clamp: unset; }
     .trade .tline { flex-direction: column; align-items: flex-start; gap: 3px; }   /* columns are narrow: title, then its winner tag, on every trade */
     .trade .tline b { max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -104,7 +106,7 @@
   .skel { height: 96px; border-radius: 20px; background: var(--dtf-panel); border: 1px solid var(--dtf-border); opacity: .6; }
 </style>
 </head><body class="dtf-page"><div class="dtf-wrap">
-<div class="top"><h1 class="home">Rumble Central</h1><button class="me ask" id="me" type="button" aria-label="Who are you?">Who are you?</button></div>
+<div class="top"><h1 class="home">Rumble Hub</h1><button class="me ask" id="me" type="button" aria-label="Who are you?">Who are you?</button></div>
 <div class="next" id="next" hidden></div>
 <button class="ir" id="ir" type="button" hidden></button>
 <section class="feed" id="feed" aria-label="This season at a glance" hidden>
@@ -116,7 +118,7 @@
   <div class="skel"></div><div class="skel"></div><div class="skel"></div><div class="skel"></div>
   <div class="skel"></div><div class="skel"></div><div class="skel"></div><div class="skel"></div>
 </div>
-<p class="foot" id="foot"><a href="/install/">Add Rumble Central to your home screen</a></p>
+<p class="foot" id="foot"><a href="/install/">Add Rumble Hub to your home screen</a></p>
 <script>
 (function () {
   var $ = function (id) { return document.getElementById(id); };
@@ -196,7 +198,7 @@
   };
   function rowHtml(it, id) {
     var ext = /^https?:/.test(it.href), mgrs = (it.managers || []).join('|');
-    var open = '<a class="row' + (id === 'trades' ? ' trade' : '') + '" data-m="' + esc(mgrs) + '" href="' + esc(it.href) + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '>' + (id === 'trades' && it.sub ? '<span class="rkc"><span class="rk">' + it.rank + '</span><em class="wkn">' + esc(it.sub) + '</em></span>' : '<span class="rk">' + it.rank + '</span>');
+    var open = '<a class="row' + (id === 'trades' ? ' trade' : id === 'slack' ? ' slack' : '') + '" data-m="' + esc(mgrs) + '" href="' + esc(it.href) + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '>' + (id === 'trades' && it.sub ? '<span class="rkc"><span class="rk">' + it.rank + '</span><em class="wkn">' + esc(it.sub) + '</em></span>' : '<span class="rk">' + it.rank + '</span>');
     if (id === 'trades' && it.gets) {
       var win = it.winner ? '<span class="win">▲ ' + esc(it.winner) + ' +' + it.edge.toFixed(1) + '</span>' : '<span class="win even">Even</span>';
       var gets = it.gets.map(function (g) { return '<i>' + esc(g.m) + '</i> gets ' + esc(g.players.join(', ')); }).join(' · ');

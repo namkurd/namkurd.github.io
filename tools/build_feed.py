@@ -113,6 +113,9 @@ def key_dates(league, state):
     return out
 
 
+ALIASES = {'Haan': ['Rohaan'], 'Kaitlyn': ['kohagan18', 'Kohogan18']}   # other spellings of the same person (the Auction Archive says Rohaan; Sleeper says kohagan18)
+
+
 def build_managers(hist, league_id, season):
     """The people in the league this season: name (as every tool spells it), roster and Sleeper user. Feeds the 'Who are you?' picker."""
     users = {u['user_id']: u for u in fetch('%s/league/%s/users' % (SLEEPER, league_id))}
@@ -121,7 +124,7 @@ def build_managers(hist, league_id, season):
     for r in sorted(hist['standings'], key=lambda r: r['manager'].lower()):
         uid = owners.get(int(r['roster_id']))
         out.append({'id': re.sub(r'[^a-z0-9]+', '-', r['manager'].lower()).strip('-'), 'name': r['manager'], 'roster_id': int(r['roster_id']),
-                    'sleeper_user_id': uid, 'sleeper_name': (users.get(uid) or {}).get('display_name'), 'aliases': []})
+                    'sleeper_user_id': uid, 'sleeper_name': (users.get(uid) or {}).get('display_name'), 'aliases': ALIASES.get(r['manager'], [])})
     return {'schema': 1, 'season': season, 'managers': out}
 
 
