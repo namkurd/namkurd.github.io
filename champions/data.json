@@ -1,0 +1,22 @@
+{
+ "schema": 1,
+ "note": "One entry per season. Add a new season at the top each year. Photos: put the files in /champions/photos/ and list them under champion.photos or sacko.photos as {\"src\": \"/champions/photos/2025-champion.jpg\", \"caption\": \"...\"}. The first photo is the one shown big.",
+ "seasons": [
+  {"season": 2025, "champion": {"m": "Haan", "team": "The Kiran Tor", "photos": []}, "sacko": {"m": "Ben", "photos": []}},
+  {"season": 2024, "champion": {"m": "Alex", "team": "Jazz Hands Team", "photos": []}, "sacko": {"m": "Jake", "photos": []}},
+  {"season": 2023, "champion": {"m": "Ankit", "team": "Fields of Dreams", "photos": []}, "sacko": {"m": "Tommy", "photos": []}},
+  {"season": 2022, "champion": {"m": "Ben", "team": "Maison Champ Renaud", "photos": []}, "sacko": {"m": "Ankit", "photos": []}},
+  {"season": 2021, "champion": {"m": "Ben", "team": "No Endz No Winz", "photos": []}, "sacko": {"m": "Steven", "photos": []}},
+  {"season": 2020, "champion": {"m": "Haan", "team": "Mostert on the Beet, Ho", "photos": []}, "sacko": {"m": "Joe", "photos": []}},
+  {"season": 2019, "champion": {"m": "Ryan", "team": "Le'Veon's Lane", "photos": []}, "sacko": {"m": "Joe", "photos": []}},
+  {"season": 2018, "champion": {"m": "Ben", "team": "Clear Eyes No Blunt Can't Lose", "photos": []}, "sacko": {"m": "Ankit", "photos": []}},
+  {"season": 2017, "champion": {"m": "Tommy", "team": "Lutz of Gurley KHunts", "photos": []}, "sacko": {"m": "Haan", "photos": []}},
+  {"season": 2016, "champion": {"m": "Jake", "team": "Oh Oh Oh Fitzmagic", "photos": []}, "sacko": {"m": "Oleg", "photos": []}},
+  {"season": 2015, "champion": {"m": "Tommy", "team": "Team of Destiny", "photos": []}, "sacko": {"m": "Ankit", "photos": []}},
+  {"season": 2014, "champion": {"m": "Ryan", "team": "It Is What It Is", "photos": []}, "sacko": {"m": "Joe", "photos": []}},
+  {"season": 2013, "champion": {"m": "Oleg", "team": "Wizards of OZ", "photos": []}, "sacko": {"m": "Ankit", "photos": []}},
+  {"season": 2012, "champion": {"m": "Ankit", "team": "Swagmen II: Return of the Kingh", "photos": []}},
+  {"season": 2011, "champion": {"m": "Ryan", "team": "Too Swole to Care", "photos": []}},
+  {"season": 2010, "champion": {"m": "Jake", "team": "Hebrew Hammers", "photos": []}}
+ ]
+}

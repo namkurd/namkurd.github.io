@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Champions &amp; Sackos</title>
+<link rel="stylesheet" href="/shell/tokens.css">
+<style>
+  .dtf-wrap { max-width: 980px; margin: 0 auto; padding: 14px 16px 24px; }
+  h1 { margin: 4px 0 2px; font-size: 1.5rem; }
+  .sub { margin: 0 0 14px; color: var(--dtf-dim); font-size: .85rem; }
+  .hero { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  @media (min-width: 700px) { .hero { grid-template-columns: 1fr 1fr; } }
+  .card { --c: #fbbf24; position: relative; overflow: hidden; border-radius: 20px; border: 1.5px solid color-mix(in srgb, var(--c) 55%, transparent); background: var(--dtf-panel); box-shadow: 0 12px 30px -18px color-mix(in srgb, var(--c) 80%, transparent); }
+  .card.sacko { --c: #a0683a; }
+  .shot { position: relative; aspect-ratio: 16 / 9; width: 100%; display: flex; align-items: center; justify-content: center; font-size: 4rem; background: radial-gradient(90% 90% at 50% 20%, color-mix(in srgb, var(--c) 35%, transparent), transparent 75%), var(--dtf-bg, #0f1115); }
+  .shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .shot.none small { position: absolute; bottom: 8px; left: 0; right: 0; text-align: center; font-size: .7rem; color: var(--dtf-dim); }
+  .cap { padding: 10px 14px 12px; }
+  .kick { font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--c); }
+  .card.sacko .kick { color: #d19a6a; }
+  .who { margin: 2px 0 0; font-size: 1.35rem; font-weight: 800; }
+  .team { color: var(--dtf-dim); font-size: .85rem; }
+  .tally { display: inline-block; margin-top: 4px; font-size: .72rem; color: var(--dtf-dim); }
+  h2 { margin: 22px 2px 6px; font-size: 1rem; }
+  .list { border: 1px solid var(--dtf-border); border-radius: 16px; background: var(--dtf-panel); overflow: hidden; }
+  .item { border-top: 1px solid var(--dtf-border); }
+  .item:first-child { border-top: 0; }
+  .item > summary, .item > .line { display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 10px 14px; list-style: none; }
+  .item > summary { cursor: pointer; }
+  .item > summary::-webkit-details-marker { display: none; }
+  .yr { font-weight: 800; color: var(--dtf-dim); }
+  .nm { font-weight: 700; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .nm i { font-style: normal; font-weight: 400; color: var(--dtf-dim); font-size: .8rem; margin-left: 6px; }
+  .cam { font-size: .75rem; color: var(--dtf-dim); }
+  .item[open] > summary .cam::after { content: " ▴"; } .item:not([open]) > summary .cam::after { content: " ▾"; }
+  .you { margin-left: 6px; padding: 1px 6px; border-radius: 8px; background: #fbbf24; color: #0f1115; font-size: .62rem; font-weight: 800; }
+  .pics { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; padding: 0 14px 14px; }
+  .pics figure { margin: 0; }
+  .pics img { width: 100%; border-radius: 12px; display: block; aspect-ratio: 4 / 3; object-fit: cover; background: #000; }
+  .pics figcaption { margin-top: 3px; font-size: .72rem; color: var(--dtf-dim); }
+  .hint { margin-top: 18px; font-size: .78rem; color: var(--dtf-dim); }
+</style>
+</head><body class="dtf-page"><div class="dtf-wrap">
+<h1>Champions &amp; Sackos</h1>
+<p class="sub">The reigning champion, the reigning sacko, and everyone before them.</p>
+<div class="hero" id="hero"></div>
+<h2>🏆 Hall of Champions</h2><div class="list" id="champs"></div>
+<h2>💩 The Sacko Wall</h2><div class="list" id="sackos"></div>
+<p class="hint" id="hint" hidden>Photos: send them to Claude with the year and champion / sacko, or add the files to <code>champions/photos/</code> and list them in <code>champions/data.json</code>.</p>
+</div>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function me() { try { var v = JSON.parse(localStorage.getItem('dtf.me') || 'null'); return v && v.name || null; } catch (e) { return null; } }
+  function ord(n) { var s = ['th', 'st', 'nd', 'rd'], v = n % 100; return n + (s[(v - 20) % 10] || s[v] || s[0]); }
+  fetch('/champions/data.json', { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(function (d) {
+    var seasons = (d.seasons || []).slice().sort(function (a, b) { return b.season - a.season; }), mine = me(), anyPhoto = false;
+    function tally(kind, m, upTo) { return seasons.filter(function (s) { return s[kind] && s[kind].m === m && s.season <= upTo; }).length; }
+    function you(m) { return m === mine ? '<span class="you">YOU</span>' : ''; }
+    function card(kind, s) {
+      var e = s[kind]; if (!e) return '';
+      var photo = (e.photos || [])[0], isC = kind === 'champion', n = tally(kind, e.m, s.season);
+      return '<div class="card' + (isC ? '' : ' sacko') + '"><div class="shot' + (photo ? '' : ' none') + '">' +
+        (photo ? '<img src="' + esc(photo.src) + '" alt="' + esc(e.m) + '" loading="lazy">' : (isC ? '🏆' : '💩') + '<small>No photo yet</small>') + '</div>' +
+        '<div class="cap"><div class="kick">' + s.season + (isC ? ' champion' : ' sacko') + '</div><div class="who">' + esc(e.m) + you(e.m) + '</div>' +
+        (e.team ? '<div class="team">' + esc(e.team) + '</div>' : '') + '<span class="tally">' + ord(n) + (isC ? ' title' : ' sacko') + '</span></div></div>';
+    }
+    var latest = seasons.filter(function (s) { return s.champion; })[0], latestS = seasons.filter(function (s) { return s.sacko; })[0];
+    $('hero').innerHTML = (latest ? card('champion', latest) : '') + (latestS ? card('sacko', latestS) : '');
+    function list(kind, el) {
+      el.innerHTML = seasons.filter(function (s) { return s[kind]; }).map(function (s) {
+        var e = s[kind], ph = e.photos || [], head = '<span class="yr">' + s.season + '</span><span class="nm">' + esc(e.m) + you(e.m) + (e.team ? '<i>' + esc(e.team) + '</i>' : '') + '</span>';
+        if (!ph.length) return '<div class="item"><div class="line">' + head + '<span class="cam"></span></div></div>';
+        anyPhoto = true;
+        return '<details class="item"><summary>' + head + '<span class="cam">📷 ' + ph.length + '</span></summary><div class="pics">' +
+          ph.map(function (p) { return '<figure><img src="' + esc(p.src) + '" alt="' + esc(e.m) + ' ' + s.season + '" loading="lazy">' + (p.caption ? '<figcaption>' + esc(p.caption) + '</figcaption>' : '') + '</figure>'; }).join('') + '</div></details>';
+      }).join('');
+    }
+    list('champion', $('champs')); list('sacko', $('sackos'));
+    $('hint').hidden = anyPhoto || !/[?&]help/.test(location.search);
+  }).catch(function () { $('hero').innerHTML = '<p>Couldn’t load the list. Check your connection and refresh.</p>'; });
+})();
+</script>
+<script src="/shell/nav.js" defer></script></body></html>

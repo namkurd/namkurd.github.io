@@ -16,16 +16,27 @@
   .next b { color: var(--dtf-text); font-weight: 600; }
   .next[hidden] { display: none; }
 
-  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(5px, calc(var(--avail) * .009), 12px); --plate: clamp(38px, calc(var(--avail) * .066), 66px); }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(5px, calc(var(--avail) * .009), 12px); --plate: clamp(32px, calc(var(--avail) * .048), 66px); }
   /* each tool has its own colour (--c, optional --c2) from tools.json: tinted glow, gradient edge, dark logo plate */
   .dtf-wrap a.tile { color: var(--dtf-text); }
-  .tile { --c2: var(--c); display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2px; padding: clamp(4px, calc(var(--avail) * .0105), 14px) 8px clamp(4px, calc(var(--avail) * .009), 12px); border-radius: 20px; text-decoration: none;
+  .tile { --c2: var(--c); display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2px; padding: clamp(4px, calc(var(--avail) * .0065), 14px) 8px clamp(4px, calc(var(--avail) * .0055), 12px); border-radius: 20px; text-decoration: none;
     border: 1.5px solid transparent; -webkit-tap-highlight-color: transparent; transition: transform .12s ease, box-shadow .2s ease;
     background:
       radial-gradient(120% 85% at 50% 0%, color-mix(in srgb, var(--c) 24%, transparent), transparent 72%) padding-box,
       linear-gradient(var(--dtf-panel), var(--dtf-panel)) padding-box,
       linear-gradient(140deg, color-mix(in srgb, var(--c) 75%, transparent), color-mix(in srgb, var(--c2) 75%, transparent)) border-box;
     box-shadow: 0 10px 26px -16px color-mix(in srgb, var(--c) 70%, transparent); }
+  .tile.wide { grid-column: 1 / -1; flex-direction: row; justify-content: center; gap: 12px; text-align: left; padding-top: 3px; padding-bottom: 3px; }
+  .tile.wide .plate { --plate: clamp(26px, calc(var(--avail) * .036), 38px); flex: none; }
+  .tile.wide b { margin-top: 0; } .tile.wide .t { display: block; font-size: .78rem; }
+  .tile.wide .t b { font-size: inherit; margin: 0; color: var(--dtf-text); }
+  .tile.wide .wb { display: flex; flex-direction: column; min-width: 0; }
+  /* IR eligibility status (from FAB's IR check) */
+  .ir { display: block; width: 100%; margin: 0 0 5px; padding: 3px 10px; border: 1px solid var(--dtf-border); border-radius: 12px; background: var(--dtf-panel); color: var(--dtf-text); font: inherit; font-size: .76rem; text-align: left; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .ir[hidden] { display: none; }
+  .ir .tx { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .ir.open .tx { white-space: normal; }
+  .ir.bad { border-color: #e5484d; background: color-mix(in srgb, #e5484d 14%, var(--dtf-panel)); } .ir.warn { border-color: #e0a23a; background: color-mix(in srgb, #e0a23a 12%, var(--dtf-panel)); }
+  .ir b { font-weight: 700; } .ir .dim { color: var(--dtf-dim); }
   .tile:active { transform: scale(.97); }
   @media (hover: hover) { .tile:hover { transform: translateY(-2px); box-shadow: 0 16px 30px -14px color-mix(in srgb, var(--c) 80%, transparent); } }
   .tile:focus-visible { outline: 2px solid var(--c); outline-offset: 3px; }
@@ -74,12 +85,12 @@
   @media (min-width: 900px) {
     .dtf-wrap { max-width: 1200px; padding-top: 14px; }
     h1.home { font-size: 1.6rem; } .next { font-size: .9rem; }
-    .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(6px, calc(var(--avail) * .012), 14px); --plate: clamp(40px, calc(var(--avail) * .068), 76px); }
-    .tile { padding: clamp(6px, calc(var(--avail) * .012), 16px) 10px clamp(6px, calc(var(--avail) * .01), 15px); gap: 3px; } .tile b { font-size: 1rem; margin-top: clamp(2px, calc(var(--avail) * .006), 8px); } .tile .t { display: block; }
+    .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(6px, calc(var(--avail) * .012), 14px); --plate: clamp(34px, calc(var(--avail) * .05), 76px); }
+    .tile { padding: clamp(6px, calc(var(--avail) * .008), 16px) 10px clamp(6px, calc(var(--avail) * .006), 15px); gap: 3px; } .tile b { font-size: 1rem; margin-top: clamp(2px, calc(var(--avail) * .006), 8px); } .tile .t { display: block; }
   }
   /* wide screens: all five lists side by side (narrower ones keep the tabs) */
   @media (min-width: 1100px) {
-    .feed { margin-bottom: clamp(6px, calc(var(--avail) * .014), 18px); padding: 10px 16px 6px; }
+    .feed { margin-bottom: clamp(6px, calc(var(--avail) * .014), 18px); padding: 7px 16px 4px; }
     .tabs { display: none; }
     .panels { display: grid; grid-template-columns: repeat(var(--n, 5), minmax(0, 1fr)); gap: 18px; }
     .panel, .panel.on { display: block; } .panel h2 { color: var(--ac); text-transform: uppercase; letter-spacing: .06em; font-size: .78rem; }
@@ -95,6 +106,7 @@
 </head><body class="dtf-page"><div class="dtf-wrap">
 <div class="top"><h1 class="home">Rumble Central</h1><button class="me ask" id="me" type="button" aria-label="Who are you?">Who are you?</button></div>
 <div class="next" id="next" hidden></div>
+<button class="ir" id="ir" type="button" hidden></button>
 <section class="feed" id="feed" aria-label="This season at a glance" hidden>
   <div class="tabs" id="tabs" role="tablist"></div>
   <div class="panels" id="panels"></div>
@@ -122,13 +134,35 @@
   // ---- tool tiles (from the registry)
   function tile(t) {
     var st = '--c:' + esc(t.color || '#f0914a') + (t.color2 ? ';--c2:' + esc(t.color2) : '');
-    return '<a class="tile" href="' + esc(t.path) + '" style="' + st + '"><span class="plate">' + (t.logo ? '<img src="' + esc(t.logo) + '" alt="" decoding="async">' : '') + '</span>' +
+    var plate = '<span class="plate">' + (t.logo ? '<img src="' + esc(t.logo) + '" alt="" decoding="async">' : '') + '</span>';
+    if (t.wide) return '<a class="tile wide" id="tile-' + esc(t.id) + '" href="' + esc(t.path) + '" style="' + st + '">' + plate + '<span class="wb"><b>' + esc(t.name) + '</b><span class="t">' + esc(t.tagline || '') + '</span></span></a>';
+    return '<a class="tile" href="' + esc(t.path) + '" style="' + st + '">' + plate +
       '<b>' + esc(t.name) + '</b><span class="t">' + esc(t.tagline || t.description || '') + '</span></a>';
   }
-  get('/tools.json').then(function (j) { $('grid').innerHTML = (j.tools || []).concat(j.pages || []).map(tile).join(''); }).catch(function () {
+  get('/tools.json').then(function (j) { $('grid').innerHTML = (j.tools || []).concat(j.pages || []).map(tile).join(''); champLine(); }).catch(function () {
     try { var c = sessionStorage.getItem('dtf.registry'); if (c) { $('grid').innerHTML = (JSON.parse(c).tools || []).map(tile).join(''); return; } } catch (e) {}
     $('grid').innerHTML = '<p>Couldn’t load the tool list. Check your connection and refresh.</p>';
   });
+
+  // the champions tile shows the reigning champion and sacko
+  function champLine() {
+    var el = document.querySelector('#tile-champions .t'); if (!el) return;
+    get('/champions/data.json').then(function (d) {
+      var ss = (d.seasons || []).slice().sort(function (a, b) { return b.season - a.season; }), c = ss.filter(function (x) { return x.champion; })[0], k = ss.filter(function (x) { return x.sacko; })[0];
+      if (c) el.innerHTML = '🏆 <b>' + esc(c.champion.m) + '</b> ' + c.season + (k ? ' · 💩 <b>' + esc(k.sacko.m) + '</b> ' + k.season : '');
+    }).catch(function () {});
+  }
+
+  // ---- IR eligibility check (computed from FAB-Management's ir_check.py by the hourly feed job)
+  function paintIR(ir) {
+    var b = $('ir'); if (!ir || !ir.week) { b.hidden = true; return; }
+    var v = ir.violations || [], k = ir.blocked || [], who = function (r) { return esc(r.m) + ' (' + esc(r.player) + ')'; }, html, cls = '';
+    if (v.length) { cls = 'bad'; html = '🚨 <b>IR check · Wk ' + ir.week + '</b> · ' + v.length + ' on IR who shouldn’t be: ' + v.map(who).join(', ') + (k.length ? ' · ' + k.length + ' can’t go on IR yet: ' + k.map(who).join(', ') : ''); }
+    else if (k.length) { cls = 'warn'; html = '⛔ <b>IR check · Wk ' + ir.week + '</b> · ' + k.length + ' hurt but can’t go on IR until next week: ' + k.map(who).join(', '); }
+    else html = '✅ <b>IR check · Wk ' + ir.week + '</b> <span class="dim">· nobody is on IR illegally</span>';
+    b.className = 'ir ' + cls; b.innerHTML = '<span class="tx">' + html + '</span>'; b.hidden = false;
+  }
+  $('ir').addEventListener('click', function () { this.classList.toggle('open'); });
 
   // ---- the line under the title: you, your standing, and the next key date (from the Sleeper league settings)
   var LEAGUE = null, STANDINGS = [];
@@ -196,6 +230,7 @@
     if (slack && slack.topics && slack.topics.length && (Date.now() - Date.parse(slack.generatedAt)) < 10 * 864e5) {
       sections.push({ id: 'slack', items: slack.topics.map(function (t, i) { return { rank: i + 1, title: t.title, sub: '#' + t.channel + ' · ' + t.messages + ' messages', href: t.href }; }) });
     }
+    if (feed) paintIR(feed.ir);
     if (!sections.length) return;
     var year = feed ? feed.season : '', want = ls('dtf.homeTab'), on = sections.some(function (s) { return s.id === want; }) ? want : sections[0].id;
     $('tabs').innerHTML = sections.map(function (s) { return '<button role="tab" data-id="' + s.id + '" aria-selected="' + (s.id === on) + '">' + META[s.id].tab + '</button>'; }).join('');

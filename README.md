@@ -42,3 +42,11 @@ Only **public** channels are read. This repo and site are public, so what ends u
 ### Who are you?
 
 `managers.json` lists the people in this season's league (name as every tool spells it, roster, Sleeper user); `tools/build_feed.py` refreshes it with the feed. The picker (Home chip, or League menu > "You") stores your choice on your phone as `dtf.me` = `{"id": "ben", "name": "Ben"}`. Every tool on this site can read it: `DTF.me()` (id), `DTF.meName()`, `DTF.setMe(...)`, and a `dtf:me` event when it changes. Rumble Central uses it for its own Me tab and writes it back when you pick there, so you are asked once. On Home it marks the feed rows about you and shows your standing. Add `aliases` in `managers.json` for nicknames or former members.
+
+## Champions & Sackos (`/champions/`)
+
+`champions/data.json` has one entry per season (champion + team name, sacko). Add the new season at the top each year. Photos go in `champions/photos/` and are listed under `champion.photos` / `sacko.photos` as `{"src": "/champions/photos/2025-champion.jpg", "caption": "..."}`; the first one is the big photo, and a year with photos expands to show them all. The Home screen shows a wide tile with the latest champion and sacko. Sacko years before 2013 are not recorded.
+
+## IR eligibility on Home
+
+The hourly feed job checks out `namkurd/FAB-Management`, runs its `ir_check.py --json` (Sleeper API only) and `tools/build_feed.py` stores the result as `ir` in `feed.json`. Home shows a one-line status (green = nobody on IR illegally; red = on IR but not eligible; amber = hurt but can't go on IR until next week); tap it to expand the names. Outside the regular season the check can't run and the last status is kept.

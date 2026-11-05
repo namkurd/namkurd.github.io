@@ -1,47 +1,178 @@
 {
   "schema": 1,
   "tabs": [
-    { "id": "home", "label": "Home" },
-    { "id": "live", "label": "Rumbles" },
-    { "id": "history", "label": "History" },
-    { "id": "moves", "label": "Moves" },
-    { "id": "league", "label": "League" }
+    {
+      "id": "home",
+      "label": "Home"
+    },
+    {
+      "id": "live",
+      "label": "Rumbles"
+    },
+    {
+      "id": "history",
+      "label": "History"
+    },
+    {
+      "id": "moves",
+      "label": "Moves"
+    },
+    {
+      "id": "league",
+      "label": "League"
+    }
   ],
   "tools": [
-    { "id": "rumbles", "name": "Live Rumbles", "short": "Rumbles", "color": "#f0914a", "logo": "/shell/icons/tools/rumbles.svg", "tagline": "Live standings & matchups", "tab": "live",
-      "path": "/SleeperLiveRumbles/rumbles.html", "repo": "namkurd/SleeperLiveRumbles",
+    {
+      "id": "rumbles",
+      "name": "Live Rumbles",
+      "short": "Rumbles",
+      "color": "#f0914a",
+      "logo": "/shell/icons/tools/rumbles.svg",
+      "tagline": "Live standings & matchups",
+      "tab": "live",
+      "path": "/SleeperLiveRumbles/rumbles.html",
+      "repo": "namkurd/SleeperLiveRumbles",
       "description": "Live Rumbles standings and matchups",
-      "links": { "replay": "/SleeperLiveRumbles/rumbles.html?season={season}&wp={week}.{rid}.{opp}" } },
-    { "id": "recordbook", "name": "Record Book", "short": "Records", "color": "#f5c542", "logo": "/shell/icons/tools/recordbook.svg", "tagline": "Every record & who holds it", "tab": "history",
-      "path": "/Recordbook/", "repo": "namkurd/Recordbook",
+      "links": {
+        "replay": "/SleeperLiveRumbles/rumbles.html?season={season}&wp={week}.{rid}.{opp}"
+      }
+    },
+    {
+      "id": "recordbook",
+      "name": "Record Book",
+      "short": "Records",
+      "color": "#f5c542",
+      "logo": "/shell/icons/tools/recordbook.svg",
+      "tagline": "Every record & who holds it",
+      "tab": "history",
+      "path": "/Recordbook/",
+      "repo": "namkurd/Recordbook",
       "description": "League records, holders and history",
-      "links": { "search": "/Recordbook/?q={q}", "manager": "/Recordbook/?mgr={manager}" } },
-    { "id": "h2h", "name": "Head-to-Head", "short": "H2H", "color": "#ef4444", "color2": "#3b82f6", "logo": "/shell/icons/tools/h2h.svg", "tagline": "Career matchup matrix", "tab": "history",
-      "path": "/Sleeper-Head-to-Head/", "repo": "namkurd/Sleeper-Head-to-Head",
-      "description": "Career win-loss matrix between every pair of managers" },
-    { "id": "lifetime", "name": "Lifetime", "short": "Lifetime", "color": "#34d399", "logo": "/shell/icons/tools/lifetime.svg", "tagline": "All-time W–L for everyone", "tab": "history",
-      "path": "/sleepersheet/", "repo": "namkurd/sleepersheet",
-      "description": "All-time records for every manager" },
-    { "id": "trades", "name": "Trade Network", "short": "Trades", "color": "#22d3ee", "logo": "/shell/icons/tools/trades.svg", "tagline": "Who trades with whom", "tab": "moves",
-      "path": "/SleeperTradeNodes/", "repo": "namkurd/SleeperTradeNodes",
+      "links": {
+        "search": "/Recordbook/?q={q}",
+        "manager": "/Recordbook/?mgr={manager}"
+      }
+    },
+    {
+      "id": "h2h",
+      "name": "Head-to-Head",
+      "short": "H2H",
+      "color": "#ef4444",
+      "color2": "#3b82f6",
+      "logo": "/shell/icons/tools/h2h.svg",
+      "tagline": "Career matchup matrix",
+      "tab": "history",
+      "path": "/Sleeper-Head-to-Head/",
+      "repo": "namkurd/Sleeper-Head-to-Head",
+      "description": "Career win-loss matrix between every pair of managers"
+    },
+    {
+      "id": "lifetime",
+      "name": "Lifetime",
+      "short": "Lifetime",
+      "color": "#34d399",
+      "logo": "/shell/icons/tools/lifetime.svg",
+      "tagline": "All-time W–L for everyone",
+      "tab": "history",
+      "path": "/sleepersheet/",
+      "repo": "namkurd/sleepersheet",
+      "description": "All-time records for every manager"
+    },
+    {
+      "id": "trades",
+      "name": "Trade Network",
+      "short": "Trades",
+      "color": "#22d3ee",
+      "logo": "/shell/icons/tools/trades.svg",
+      "tagline": "Who trades with whom",
+      "tab": "moves",
+      "path": "/SleeperTradeNodes/",
+      "repo": "namkurd/SleeperTradeNodes",
       "description": "Who trades with whom, and what changed hands",
-      "links": { "filter": "/SleeperTradeNodes/?season={season}&manager={manager}" } },
-    { "id": "fab", "name": "FAB & Sit/Start", "short": "FAB", "color": "#a3e635", "logo": "/shell/icons/tools/fab.svg", "tagline": "Waivers & lineup calls", "tab": "moves",
-      "path": "/FAB-Management/", "repo": "namkurd/FAB-Management",
+      "links": {
+        "filter": "/SleeperTradeNodes/?season={season}&manager={manager}"
+      }
+    },
+    {
+      "id": "fab",
+      "name": "FAB & Sit/Start",
+      "short": "FAB",
+      "color": "#a3e635",
+      "logo": "/shell/icons/tools/fab.svg",
+      "tagline": "Waivers & lineup calls",
+      "tab": "moves",
+      "path": "/FAB-Management/",
+      "repo": "namkurd/FAB-Management",
       "description": "Waiver wire spending, pickups and sit/start calls",
-      "links": { "filter": "/FAB-Management/?season={season}&manager={manager}" } },
-    { "id": "auction", "name": "Auction Archive", "short": "Auction", "color": "#a78bfa", "logo": "/shell/icons/tools/auction.svg", "tagline": "Every draft since 2012", "tab": "moves",
-      "path": "/SleeperAuction/", "repo": "namkurd/SleeperAuction",
+      "links": {
+        "filter": "/FAB-Management/?season={season}&manager={manager}"
+      }
+    },
+    {
+      "id": "auction",
+      "name": "Auction Archive",
+      "short": "Auction",
+      "color": "#a78bfa",
+      "logo": "/shell/icons/tools/auction.svg",
+      "tagline": "Every draft since 2012",
+      "tab": "moves",
+      "path": "/SleeperAuction/",
+      "repo": "namkurd/SleeperAuction",
       "description": "Every auction draft since 2012",
-      "links": { "player": "/SleeperAuction/#players/{key}", "draft": "/SleeperAuction/#drafts/{season}", "manager": "/SleeperAuction/#managers/{manager}" } },
-    { "id": "rulebook", "name": "Rulebook", "short": "Rules", "color": "#f472b6", "logo": "/shell/icons/tools/rulebook.svg", "tagline": "Rules & proposals", "tab": "league",
-      "path": "/Rulebook/", "repo": "namkurd/Rulebook",
-      "description": "Every rule and proposal, 2019 to now" }
+      "links": {
+        "player": "/SleeperAuction/#players/{key}",
+        "draft": "/SleeperAuction/#drafts/{season}",
+        "manager": "/SleeperAuction/#managers/{manager}"
+      }
+    },
+    {
+      "id": "rulebook",
+      "name": "Rulebook",
+      "short": "Rules",
+      "color": "#f472b6",
+      "logo": "/shell/icons/tools/rulebook.svg",
+      "tagline": "Rules & proposals",
+      "tab": "league",
+      "path": "/Rulebook/",
+      "repo": "namkurd/Rulebook",
+      "description": "Every rule and proposal, 2019 to now"
+    }
   ],
-  "pages": [],
+  "pages": [
+    {
+      "id": "champions",
+      "name": "Champions & Sackos",
+      "short": "Champs",
+      "color": "#fbbf24",
+      "color2": "#a0683a",
+      "logo": "/shell/icons/tools/champions.svg",
+      "tagline": "Hall of champions and the sacko wall",
+      "tab": "history",
+      "path": "/champions/",
+      "wide": true,
+      "description": "Every champion and sacko, with photos"
+    }
+  ],
   "external": [
-    { "id": "slack", "name": "Slack", "tab": "league", "url": "https://dtf-club.slack.com/" },
-    { "id": "sleeper", "name": "Sleeper league", "tab": "league", "url": "https://sleeper.com/leagues/1389416556617801728" },
-    { "id": "install", "name": "Add to home screen", "short": "Install", "tab": "league", "path": "/install/" }
+    {
+      "id": "slack",
+      "name": "Slack",
+      "tab": "league",
+      "url": "https://dtf-club.slack.com/"
+    },
+    {
+      "id": "sleeper",
+      "name": "Sleeper league",
+      "tab": "league",
+      "url": "https://sleeper.com/leagues/1389416556617801728"
+    },
+    {
+      "id": "install",
+      "name": "Add to home screen",
+      "short": "Install",
+      "tab": "league",
+      "path": "/install/"
+    }
   ]
 }
