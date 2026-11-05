@@ -74,6 +74,7 @@
   .row:active, .row:hover { background: color-mix(in srgb, var(--ac) 12%, transparent); }
   .row .rk { width: 22px; height: 22px; display: grid; place-items: center; border-radius: 50%; background: color-mix(in srgb, var(--ac) 24%, transparent); color: var(--ac); font-size: .72rem; font-weight: 700; }
   .row b { display: block; font-size: .84rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .row.slack b { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.2; }
   .row small { display: block; font-size: .72rem; color: var(--dtf-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .row .go { color: var(--dtf-dim); font-size: .9rem; }
   .none { margin: 8px 4px; color: var(--dtf-dim); font-size: .8rem; }
@@ -197,7 +198,7 @@
   };
   function rowHtml(it, id) {
     var ext = /^https?:/.test(it.href), mgrs = (it.managers || []).join('|');
-    var open = '<a class="row' + (id === 'trades' ? ' trade' : '') + '" data-m="' + esc(mgrs) + '" href="' + esc(it.href) + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '>' + (id === 'trades' && it.sub ? '<span class="rkc"><span class="rk">' + it.rank + '</span><em class="wkn">' + esc(it.sub) + '</em></span>' : '<span class="rk">' + it.rank + '</span>');
+    var open = '<a class="row' + (id === 'trades' ? ' trade' : id === 'slack' ? ' slack' : '') + '" data-m="' + esc(mgrs) + '" href="' + esc(it.href) + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '>' + (id === 'trades' && it.sub ? '<span class="rkc"><span class="rk">' + it.rank + '</span><em class="wkn">' + esc(it.sub) + '</em></span>' : '<span class="rk">' + it.rank + '</span>');
     if (id === 'trades' && it.gets) {
       var win = it.winner ? '<span class="win">▲ ' + esc(it.winner) + ' +' + it.edge.toFixed(1) + '</span>' : '<span class="win even">Even</span>';
       var gets = it.gets.map(function (g) { return '<i>' + esc(g.m) + '</i> gets ' + esc(g.players.join(', ')); }).join(' · ');

@@ -73,14 +73,16 @@ def fallback_title(conv):
 
 
 def claude_title(conv, key):
-    lines = [clean(m['text'])[:300] for m in conv['run'][:60] if clean(m['text'])]
-    body = {'model': os.environ.get('SLACK_TOPIC_MODEL', 'claude-haiku-5-5'), 'max_tokens': 30,
-            'messages': [{'role': 'user', 'content': 'Below is a fantasy football league chat. Name what the conversation is about in 3 to 7 words, '
-                          'neutral and specific, with no people\'s names and no quotation marks. Reply with only the title.\n\n' + '\n'.join(lines)}]}
+    """One neutral sentence (about 80 characters) saying what the conversation is about, like a headline: the issue and where it landed."""
+    lines = [clean(m['text'])[:300] for m in conv['run'][:80] if clean(m['text'])]
+    body = {'model': os.environ.get('SLACK_TOPIC_MODEL', 'claude-haiku-5-5'), 'max_tokens': 60,
+            'messages': [{'role': 'user', 'content': 'Below is a fantasy football league chat (oldest first). Summarize what the conversation is about in ONE sentence of at most 80 characters, '
+                          'like a headline: the actual question or dispute and, if there is one, where it landed. Neutral and family-friendly: do not quote insults or swearing, '
+                          'no quotation marks, no emoji. Reply with only the sentence.\n\n' + '\n'.join(lines)}]}
     req = urllib.request.Request('https://api.anthropic.com/v1/messages', data=json.dumps(body).encode(),
                                  headers={'x-api-key': key, 'anthropic-version': '2023-06-01', 'content-type': 'application/json'})
     t = json.load(urllib.request.urlopen(req, timeout=60))['content'][0]['text'].strip().strip('"\'').rstrip('.')
-    return t[:70] if t else None
+    return t[:90] if t else None
 
 
 # ---------------------------------------------------------------- Slack API
@@ -154,6 +156,10 @@ def main():
     print('workspace:', team_url)
     top = rank(collect(slack, cfg, oldest), cfg)
     key = os.environ.get('ANTHROPIC_API_KEY')
+    try:
+        kept = {t['href']: t['title'] for t in json.load(open(os.path.join(HUB, 'slack.json'))).get('topics', [])}   # without a key, a conversation keeps the summary it already has
+    except Exception:
+        kept = {}
     topics = []
     for c in top:
         title = None
@@ -162,6 +168,8 @@ def main():
                 title = claude_title(c, key)
             except Exception as e:
                 print('title model failed: %s' % e, file=sys.stderr)
+        href = '%sarchives/%s/p%s' % (team_url, c['channel_id'], c['first']['ts'] and ('%.6f' % c['first']['ts']).replace('.', ''))
+        title = title or kept.get(href)
         topics.append({'title': title or fallback_title(c), 'channel': c['channel'], 'messages': c['messages'], 'people': c['people'],
                        'href': '%sarchives/%s/p%s' % (team_url, c['channel_id'], c['first']['ts'] and ('%.6f' % c['first']['ts']).replace('.', ''))})
     out = {'schema': 1, 'windowDays': cfg['windowDays'], 'topics': topics, 'generatedAt': dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}
