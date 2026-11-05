@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="Lifetime Win/Loss">
+<rect x="10" y="12" width="76" height="72" rx="11" fill="#0d2a1f" stroke="#34d399" stroke-width="3"/>
+<g stroke-linecap="round" stroke-width="9" transform="translate(0 4)">
+<path d="M26 40H56" stroke="#34d399"/><path d="M63 40H70" stroke="#f87171"/>
+<path d="M26 56H46" stroke="#34d399"/><path d="M53 56H70" stroke="#f87171"/>
+<path d="M26 72H60" stroke="#34d399"/><path d="M67 72H70" stroke="#f87171"/>
+</g>
+<path d="M66 25C63 20 57 20 57 25C57 30 63 30 66 25C69 20 75 20 75 25C75 30 69 30 66 25Z" fill="none" stroke="#6ee7b7" stroke-width="2.6" stroke-linejoin="round"/>
+</svg>

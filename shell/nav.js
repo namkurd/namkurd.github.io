@@ -8,6 +8,11 @@
  *     { label: 'Players', sel: '#tab-players', native: 1 }, // tool already makes its own history entries (e.g. hash routes)
  *     { label: 'Sit / start', href: 'lineup.html' } ] };    // separate page, or '#anchor' on this page
  *   </script>
+ *
+ * A tool lists its tooltip elements so they always fit the screen (before the script tag):
+ *   <script>window.DTF_TIPS = ['#tip', '.tooltip'];</script>
+ * Whenever one of them is shown, the shell keeps it between the bars and inside the screen, caps its size, and makes it
+ * scrollable (on touch screens it also becomes tappable/scrollable and ignores taps that would dismiss it).
  */
 (function () {
   'use strict';
@@ -116,7 +121,7 @@
     '.sheet{position:fixed;z-index:26;left:8px;right:8px;bottom:calc(64px + env(safe-area-inset-bottom));background:var(--bg2);border:1px solid var(--bd);border-radius:16px;padding:6px;font:15px system-ui,sans-serif;box-shadow:0 12px 40px rgba(0,0,0,.45);transform-origin:bottom center;animation:up .16s ease-out}' +
     '@keyframes up{from{opacity:0;transform:translateY(10px) scale(.98)}}@media(prefers-reduced-motion:reduce){.sheet{animation:none}.ctx{transition:none}}' +
     '.sheet a{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:52px;padding:8px 12px;border-radius:10px;color:var(--tx);text-decoration:none}.sheet a:active,.sheet a:hover{background:var(--acbg)}' +
-    '.sheet a small{display:block;color:var(--dim);font-size:12px;margin-top:1px}.sheet a.on b{color:var(--ac)}.sheet a.on::after{content:"\\2713";color:var(--ac);font-weight:700}.sheet a.xt::after{content:"\\2197";color:var(--dim)}' +
+    '.sheet a .lg{flex:none;width:36px;height:36px;padding:4px;border-radius:10px;background:linear-gradient(150deg,color-mix(in srgb,var(--c) 32%,#0f1115),#0f1115);margin-right:2px}.sheet a>span{flex:1;min-width:0}.sheet a small{display:block;color:var(--dim);font-size:12px;margin-top:1px}.sheet a.on b{color:var(--ac)}.sheet a.on::after{content:"\\2713";color:var(--ac);font-weight:700}.sheet a.xt::after{content:"\\2197";color:var(--dim)}' +
     '.sheet[hidden],.scrim[hidden]{display:none}.scrim{position:fixed;inset:0;z-index:25;background:rgba(0,0,0,.35)}' +
     '@media(min-width:900px){.bar{top:0;bottom:auto;height:48px;border-top:0;border-bottom:1px solid var(--bd);padding:0 16px;justify-content:flex-start;align-items:center;gap:2px;font:500 14px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}' +
     '.bar>a,.bar>button{flex:none;height:36px;flex-direction:row;gap:0;padding:0 12px;border-radius:8px}.bar>a:hover,.bar>button:hover{background:var(--acbg);color:var(--tx)}.bar .ic,.mb{display:none}.bar .on{background:var(--acbg);color:var(--ac)}.bar .on .lb{font-weight:700}' +
@@ -176,21 +181,101 @@
     });
   }
 
+  // ---- tooltips: keep every declared tooltip on screen, between the bars, and scrollable when it is bigger than the space
+  function safeBox() {
+    var t = 6, b = W.innerHeight - 6, h = D.querySelector('dtf-nav'), sr = h && h.shadowRoot;
+    if (sr) {
+      var c = sr.querySelector('.ctx'), dk = sr.querySelector('.bar.dsk'), mb = sr.querySelector('.bar.mbar'), r;
+      if (c && !c.hidden && getComputedStyle(c).display !== 'none' && !c.classList.contains('away')) { r = c.getBoundingClientRect(); if (r.height) t = Math.max(t, r.bottom + 6); }
+      if (dk && getComputedStyle(dk).display !== 'none') t = Math.max(t, dk.getBoundingClientRect().bottom + 6);
+      if (mb && getComputedStyle(mb).display !== 'none') b = Math.min(b, mb.getBoundingClientRect().top - 6);
+    }
+    return { l: 6, t: t, r: W.innerWidth - 6, b: b };
+  }
+  DTF.safeBox = safeBox;
+  // 'yes', 'no', or 'fading' (an opacity transition is still running, so look again shortly)
+  function tipState(el) {
+    var cs = getComputedStyle(el);
+    if (cs.display === 'none' || cs.visibility === 'hidden' || !el.offsetWidth) return 'no';
+    if (parseFloat(cs.opacity) > 0.05) return 'yes';
+    return parseFloat(cs.transitionDuration) > 0 ? 'fading' : 'no';
+  }
+  var fitting = false;
+  function fitTip(el) {
+    if (fitting) return false;
+    var state = tipState(el);
+    if (state !== 'yes') {
+      if (el.hasAttribute('data-dtf-fit')) {   // it was hidden again: give back its taps so an invisible tooltip never blocks the page
+        fitting = true; el.style.removeProperty('pointer-events'); el.style.removeProperty('touch-action'); el.removeAttribute('data-dtf-fit'); fitting = false;
+      }
+      return state === 'fading';
+    }
+    fitting = true;
+    try {
+      var sb = safeBox(), st = el.style, aw = sb.r - sb.l, ah = sb.b - sb.t, cs = getComputedStyle(el);
+      var mw = parseFloat(cs.maxWidth), mh = parseFloat(cs.maxHeight);
+      if (!(mw <= aw)) st.setProperty('max-width', aw + 'px', 'important');
+      if (!(mh <= ah)) st.setProperty('max-height', ah + 'px', 'important');
+      st.setProperty('overflow', 'auto', 'important'); st.setProperty('overscroll-behavior', 'contain', 'important');
+      st.setProperty('-webkit-overflow-scrolling', 'touch');
+      st.translate = '';                       // measure where the tool put it, then nudge it inside the safe box
+      var r = el.getBoundingClientRect(), dx = 0, dy = 0;
+      if (r.right > sb.r) dx = sb.r - r.right;
+      if (r.left + dx < sb.l) dx = sb.l - r.left;
+      if (r.bottom > sb.b) dy = sb.b - r.bottom;
+      if (r.top + dy < sb.t) dy = sb.t - r.top;
+      if (dx || dy) st.translate = Math.round(dx) + 'px ' + Math.round(dy) + 'px';
+      var more = el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1;
+      if (more && W.matchMedia && W.matchMedia('(hover: none)').matches) {   // touch: let a long tooltip be scrolled, and don't let taps on it dismiss it
+        st.setProperty('pointer-events', 'auto', 'important'); st.setProperty('touch-action', 'pan-x pan-y', 'important');
+        if (!el.__dtfTap) { el.__dtfTap = 1; ['click', 'pointerdown', 'touchstart', 'mousedown'].forEach(function (n) { el.addEventListener(n, function (e) { e.stopPropagation(); }); }); }
+      } else { st.removeProperty('pointer-events'); st.removeProperty('touch-action'); }
+      el.setAttribute('data-dtf-fit', more ? 'scroll' : 'ok');
+    } catch (e) { if (W.console) console.warn('dtf tip fit failed', e); }
+    fitting = false;
+    return false;
+  }
+  function initTips() {
+    var sels = W.DTF_TIPS; if (!sels || !sels.length || !W.MutationObserver) return;
+    var queued = false, seen = [];
+    function run() { queued = false; var again = false; seen.forEach(function (el) { if (fitTip(el)) again = true; }); if (again) setTimeout(ping, 160); }
+    function ping() { if (!queued && !fitting) { queued = true; W.requestAnimationFrame(run); } }
+    function watch() {
+      sels.forEach(function (sel) {
+        [].forEach.call(D.querySelectorAll(sel), function (el) {
+          if (seen.indexOf(el) > -1) return;
+          seen.push(el);
+          new MutationObserver(function () { if (!fitting) ping(); }).observe(el, { attributes: true, attributeFilter: ['style', 'class', 'hidden', 'aria-hidden'], childList: true, subtree: true, characterData: true });
+        });
+      });
+    }
+    // moving from a trigger onto a tooltip you are scrolling must not read as "mouse left the trigger" (hover-model tools hide on that)
+    W.addEventListener('mouseout', function (e) { var t = e.relatedTarget; if (t && t.closest && t.closest('[data-dtf-fit="scroll"]')) e.stopPropagation(); }, true);
+    watch();
+    new MutationObserver(watch).observe(D.body, { childList: true });   // tooltips a tool creates later
+    W.addEventListener('resize', ping);
+  }
+
   function standalone() { return !!((W.matchMedia && W.matchMedia('(display-mode: standalone)').matches) || navigator.standalone); }
   function isHome() { return location.pathname === '/' || location.pathname === '/index.html'; }
   function mobile() { return W.innerWidth < 900; }
   var AWAY = false;
-  // Space taken by the fixed top UI. Known without measuring, so the page never shifts when the nav appears.
+  // The iOS status-bar / notch inset in px, measured with a probe (env() inside a JS-set custom property is not reliable on iOS Safari).
+  var probe = null;
+  function inset() {
+    if (!probe) { probe = D.createElement('div'); probe.setAttribute('aria-hidden', 'true'); probe.style.cssText = 'position:fixed;top:0;left:0;width:0;height:0;visibility:hidden;pointer-events:none;padding-top:env(safe-area-inset-top)'; D.body.appendChild(probe); }
+    return parseFloat(getComputedStyle(probe).paddingTop) || 0;
+  }
+  // Space taken by the fixed top UI, in px. Known without measuring the bar, so the page never shifts when the nav appears.
   function topPad() {
-    var inset = 'env(safe-area-inset-top)';
-    if (!mobile()) return (48 + (VIEWS && !isHome() ? 44 : 0)) + 'px';
-    if (isHome()) return standalone() ? inset : '0px';
-    return VIEWS || standalone() ? 'calc(44px + ' + inset + ')' : '0px';
+    if (!mobile()) return 48 + (VIEWS && !isHome() ? 44 : 0);
+    if (isHome()) return standalone() ? inset() : 0;
+    return VIEWS || standalone() ? 44 + inset() : 0;
   }
   // --dtf-top-pad is static (body padding); --dtf-top-h follows the bar while it hides on scroll (tools offset sticky things with it)
   function setTop() {
-    var pad = topPad(), h = AWAY && mobile() ? (standalone() ? 'env(safe-area-inset-top)' : '0px') : pad;
-    root.style.setProperty('--dtf-top-pad', pad); root.style.setProperty('--dtf-top-h', h);
+    var pad = topPad(), h = AWAY && mobile() ? (standalone() ? inset() : 0) : pad;
+    root.style.setProperty('--dtf-top-pad', pad + 'px'); root.style.setProperty('--dtf-top-h', h + 'px');
   }
   function away(on) { if (on === AWAY || !UI.ctx) return; AWAY = on; UI.ctx.classList.toggle('away', on); setTop(); }
   function autoHide() {
@@ -248,7 +333,7 @@
       opener = btn; btn.setAttribute('aria-expanded', 'true');
       sheet.innerHTML = list.map(function (x) {
         var ext = !x.path;
-        return '<a href="' + esc(x.path || x.url) + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + ' class="' + (act.id === x.id ? 'on ' : '') + (ext ? 'xt' : '') + '"><span><b>' + esc(x.name) + '</b>' + (x.description ? '<small>' + esc(x.description) + '</small>' : '') + '</span></a>';
+        return '<a href="' + esc(x.path || x.url) + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + ' class="' + (act.id === x.id ? 'on ' : '') + (ext ? 'xt' : '') + '">' + (x.logo ? '<img class="lg" src="' + esc(x.logo) + '" alt="" width="36" height="36" style="--c:' + esc(x.color || '#888') + '">' : '') + '<span><b>' + esc(x.name) + '</b>' + (x.description ? '<small>' + esc(x.description) + '</small>' : '') + '</span></a>';
       }).join('');
       sheet.hidden = scrim.hidden = false;
     }
@@ -289,7 +374,7 @@
   });
 
   function start() {
-    try { injectHead(); sw(); } catch (e) {}
+    try { injectHead(); sw(); initTips(); } catch (e) {}
     if (embedded) { DTF.ready = Promise.resolve(DTF.registry); return; }
     try { initViews(); layout(); autoHide(); } catch (e) {}
     DTF.ready = loadRegistry().catch(function () { return FALLBACK; }).then(function (reg) {
