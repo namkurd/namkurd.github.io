@@ -205,7 +205,7 @@ def main():
     topics = []
     for c in top:
         title = None
-        for name, fn, cred in (('anthropic', claude_title, key), ('github-models', models_title, os.environ.get('GITHUB_TOKEN'))):
+        for name, fn, cred in (('anthropic', claude_title, key),):
             if title or not cred:
                 continue
             try:
