@@ -10,17 +10,17 @@
 <path d="M16 48L30 40L36 56L28 70L8 66Z" fill="#334155" fill-opacity=".14"/>
 <path d="M30 40L36 56L30 66" fill="none" stroke="#475569" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
-<g transform="translate(68 50) scale(.8)"><g transform="rotate(22)">
-<path d="M-30 0L-4 -3L11 -1.9L11 1.9L-4 1.5Z" fill="url(#steel)" stroke="#64748b" stroke-width="1" stroke-linejoin="round"/>
-<path d="M-28 -0.1L-4 -2.4" stroke="#fff" stroke-opacity=".8" stroke-width=".9" stroke-linecap="round"/>
-<rect x="9" y="-1.3" width="9" height="2.6" rx="1.3" fill="#94a3b8"/>
-<ellipse cx="26" cy="0" rx="8.5" ry="6" fill="none" stroke="#ef4444" stroke-width="3.4"/>
-<ellipse cx="26" cy="-1.1" rx="8.5" ry="6" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="1"/>
-</g><g transform="rotate(-22)">
-<path d="M-30 0L-4 -3L11 -1.9L11 1.9L-4 1.5Z" fill="url(#steel)" stroke="#64748b" stroke-width="1" stroke-linejoin="round"/>
-<path d="M-28 -0.1L-4 -2.4" stroke="#fff" stroke-opacity=".8" stroke-width=".9" stroke-linecap="round"/>
-<rect x="9" y="-1.3" width="9" height="2.6" rx="1.3" fill="#94a3b8"/>
-<ellipse cx="26" cy="0" rx="8.5" ry="6" fill="none" stroke="#ef4444" stroke-width="3.4"/>
-<ellipse cx="26" cy="-1.1" rx="8.5" ry="6" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="1"/>
+<g transform="translate(71 50) scale(.8)"><g transform="rotate(33)">
+<path d="M-44 0L-8 -3.4L6 -2L6 2L-8 1.8Z" fill="url(#steel)" stroke="#64748b" stroke-width="1" stroke-linejoin="round"/>
+<path d="M-42 -0.1L-8 -2.8" stroke="#fff" stroke-opacity=".8" stroke-width=".9" stroke-linecap="round"/>
+<rect x="4" y="-1.3" width="8" height="2.6" rx="1.3" fill="#94a3b8"/>
+<ellipse cx="19" cy="0" rx="8" ry="5.8" fill="none" stroke="#ef4444" stroke-width="3.4"/>
+<ellipse cx="19" cy="-1.1" rx="8" ry="5.8" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="1"/>
+</g><g transform="rotate(-33)">
+<path d="M-44 0L-8 -3.4L6 -2L6 2L-8 1.8Z" fill="url(#steel)" stroke="#64748b" stroke-width="1" stroke-linejoin="round"/>
+<path d="M-42 -0.1L-8 -2.8" stroke="#fff" stroke-opacity=".8" stroke-width=".9" stroke-linecap="round"/>
+<rect x="4" y="-1.3" width="8" height="2.6" rx="1.3" fill="#94a3b8"/>
+<ellipse cx="19" cy="0" rx="8" ry="5.8" fill="none" stroke="#ef4444" stroke-width="3.4"/>
+<ellipse cx="19" cy="-1.1" rx="8" ry="5.8" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="1"/>
 </g><circle cx="0" cy="0" r="2.1" fill="#475569" stroke="#e2e8f0" stroke-width=".9"/></g>
 </svg>

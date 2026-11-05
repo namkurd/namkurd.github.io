@@ -94,9 +94,10 @@
     .tabs { display: none; }
     .panels { display: grid; grid-template-columns: repeat(var(--n, 5), minmax(0, 1fr)); gap: 18px; }
     .panel, .panel.on { display: block; } .panel h2 { color: var(--ac); text-transform: uppercase; letter-spacing: .06em; font-size: .78rem; }
-    .row { align-items: start; padding: 5px 4px; } .row .rk { margin-top: 2px; } .row .go { margin-top: 4px; }
+    .row { align-items: start; padding: 3px 4px; } .row .rk { margin-top: 2px; } .row .go { margin-top: 4px; }
     .row b { font-size: .88rem; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
-    .row small { white-space: normal; }
+    .row:not(.trade) small { white-space: nowrap; }   /* one line: with five columns the sublines would otherwise wrap and push the page past one screen */
+    .trade small { white-space: normal; }
     .trade b { display: block; -webkit-line-clamp: unset; }
     .trade .tline { flex-direction: column; align-items: flex-start; gap: 3px; }   /* columns are narrow: title, then its winner tag, on every trade */
     .trade .tline b { max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
