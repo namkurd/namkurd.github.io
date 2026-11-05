@@ -52,3 +52,7 @@ Only **public** channels are read. This repo and site are public, so what ends u
 ## IR eligibility on Home
 
 The hourly feed job checks out `namkurd/FAB-Management`, runs its `ir_check.py --json` (Sleeper API only) and `tools/build_feed.py` stores the result as `ir` in `feed.json`. Home shows a one-line status (green = nobody on IR illegally; red = on IR but not eligible; amber = hurt but can't go on IR until next week); tap it to expand the names. Outside the regular season the check can't run and the last status is kept.
+
+## Credits
+
+The Rulebook logo is the "whistle" icon from [Material Design Icons](https://pictogrammers.com/library/mdi/) (Pictogrammers, Apache License 2.0), recoloured.
