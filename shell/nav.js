@@ -126,6 +126,7 @@
     '.bar .on{color:var(--tx)}.bar .on .ic{background:var(--acbg);color:var(--ac)}.bar .lb{max-width:100%;padding:0 4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}' +
     '.bar .grp .lb::after{content:" \\25B4";font-size:8px;opacity:.7}.dk{display:none}' +
     '.ctx{position:fixed;z-index:25;top:0;left:0;right:0;height:calc(44px + env(safe-area-inset-top));padding-top:env(safe-area-inset-top);border-bottom:1px solid var(--bd);display:flex;align-items:stretch;font:14px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--tx);transition:transform .22s ease}' +
+    '.ctx,.ctx button,.bar>a,.bar>button{touch-action:manipulation}' +
     '.ctx[hidden]{display:none}.ctx.away{transform:translateY(-100%)}' +
     '.ib{flex:none;width:44px;background:none;border:0;font-size:22px;cursor:pointer;color:var(--tx);-webkit-tap-highlight-color:transparent}.ib[hidden]{display:none}' +
     '.ttl{flex:1;min-width:0;align-self:center;text-align:center;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 8px}' +
@@ -170,7 +171,10 @@
     if (it.sel) {
       var e = D.querySelector(it.sel); if (!e) return;
       if (!fromHistory && !it.native) { try { history.pushState(Object.assign({}, history.state, { dtfView: i }), ''); } catch (x) {} }
-      e.click();
+      // answer the tap first: highlight the tab and keep the bar in view, then let the tool do its (sometimes heavy) switch on the next frame
+      [].forEach.call(UI.vt ? UI.vt.children : [], function (b, k) { b.className = k === i ? 'on' : ''; });
+      holdBar(); away(false);
+      if (fromHistory) e.click(); else W.requestAnimationFrame(function () { setTimeout(function () { e.click(); paintViews(); holdBar(); }, 0); });
     } else if (it.href) {
       if (it.href.charAt(0) === '#') location.hash = it.href; else location.href = it.href;
     }
@@ -291,6 +295,8 @@
     var pad = topPad(), h = AWAY && mobile() ? (standalone() ? inset() : 0) : pad;
     root.style.setProperty('--dtf-top-pad', pad + 'px'); root.style.setProperty('--dtf-top-h', h + 'px');
   }
+  var holdUntil = 0;   // a view switch changes the page height, and the resulting scroll must not hide the bar under the finger
+  function holdBar() { holdUntil = Date.now() + 900; }
   function away(on) { if (on === AWAY || !UI.ctx) return; AWAY = on; UI.ctx.classList.toggle('away', on); setTop(); }
   function autoHide() {
     var last = W.scrollY, tick = false;
@@ -300,6 +306,7 @@
         tick = false;
         if (!mobile() || !UI.ctx || UI.ctx.hidden) return;
         var y = W.scrollY, dy = y - last;
+        if (Date.now() < holdUntil) { last = y; return; }
         if (y <= 60) { away(false); last = y; return; }
         if (Math.abs(dy) < 8) return;
         last = y; away(dy > 0 && y > 120);
