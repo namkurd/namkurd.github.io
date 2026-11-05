@@ -171,6 +171,16 @@ def main():
     print('bot: %s in %s; window starts %s UTC' % (auth.get('user'), auth.get('team'), dt.datetime.fromtimestamp(time.time() - cfg['windowDays'] * 86400, dt.timezone.utc).strftime('%Y-%m-%d %H:%M')))
     oldest = time.time() - cfg['windowDays'] * 86400
     print('workspace:', team_url)
+    if os.environ.get('SLACK_PROBE', '1') == '1':   # one-off diagnostics: what does Slack really return for the first joined channel?
+        try:
+            first = next(c for c in slack.pages('conversations.list', 'channels', types='public_channel', exclude_archived='true', limit=200) if c.get('is_member'))
+            for label, extra in (('latest 5, no date filter', {}), ('since the window start', {'oldest': str(oldest)})):
+                d = slack.call('conversations.history', channel=first['id'], limit=5, **extra)
+                ts = [m.get('ts') for m in d.get('messages', [])]
+                print('probe #%s (%s): %d messages, newest ts %s, has_more=%s, warning=%s, meta=%s, keys=%s' % (first['name'], label, len(ts), ts[:1], d.get('has_more'), d.get('warning'), d.get('response_metadata'), sorted(d)))
+            print('now = %.0f' % time.time())
+        except Exception as e:
+            print('probe failed: %s' % e)
     top = rank(collect(slack, cfg, oldest), cfg)
     key = os.environ.get('ANTHROPIC_API_KEY')
     try:
