@@ -8,6 +8,11 @@
  *     { label: 'Players', sel: '#tab-players', native: 1 }, // tool already makes its own history entries (e.g. hash routes)
  *     { label: 'Sit / start', href: 'lineup.html' } ] };    // separate page, or '#anchor' on this page
  *   </script>
+ *
+ * A tool lists its tooltip elements so they always fit the screen (before the script tag):
+ *   <script>window.DTF_TIPS = ['#tip', '.tooltip'];</script>
+ * Whenever one of them is shown, the shell keeps it between the bars and inside the screen, caps its size, and makes it
+ * scrollable (on touch screens it also becomes tappable/scrollable and ignores taps that would dismiss it).
  */
 (function () {
   'use strict';
@@ -176,6 +181,81 @@
     });
   }
 
+  // ---- tooltips: keep every declared tooltip on screen, between the bars, and scrollable when it is bigger than the space
+  function safeBox() {
+    var t = 6, b = W.innerHeight - 6, h = D.querySelector('dtf-nav'), sr = h && h.shadowRoot;
+    if (sr) {
+      var c = sr.querySelector('.ctx'), dk = sr.querySelector('.bar.dsk'), mb = sr.querySelector('.bar.mbar'), r;
+      if (c && !c.hidden && getComputedStyle(c).display !== 'none' && !c.classList.contains('away')) { r = c.getBoundingClientRect(); if (r.height) t = Math.max(t, r.bottom + 6); }
+      if (dk && getComputedStyle(dk).display !== 'none') t = Math.max(t, dk.getBoundingClientRect().bottom + 6);
+      if (mb && getComputedStyle(mb).display !== 'none') b = Math.min(b, mb.getBoundingClientRect().top - 6);
+    }
+    return { l: 6, t: t, r: W.innerWidth - 6, b: b };
+  }
+  DTF.safeBox = safeBox;
+  // 'yes', 'no', or 'fading' (an opacity transition is still running, so look again shortly)
+  function tipState(el) {
+    var cs = getComputedStyle(el);
+    if (cs.display === 'none' || cs.visibility === 'hidden' || !el.offsetWidth) return 'no';
+    if (parseFloat(cs.opacity) > 0.05) return 'yes';
+    return parseFloat(cs.transitionDuration) > 0 ? 'fading' : 'no';
+  }
+  var fitting = false;
+  function fitTip(el) {
+    if (fitting) return false;
+    var state = tipState(el);
+    if (state !== 'yes') {
+      if (el.hasAttribute('data-dtf-fit')) {   // it was hidden again: give back its taps so an invisible tooltip never blocks the page
+        fitting = true; el.style.removeProperty('pointer-events'); el.style.removeProperty('touch-action'); el.removeAttribute('data-dtf-fit'); fitting = false;
+      }
+      return state === 'fading';
+    }
+    fitting = true;
+    try {
+      var sb = safeBox(), st = el.style, aw = sb.r - sb.l, ah = sb.b - sb.t, cs = getComputedStyle(el);
+      var mw = parseFloat(cs.maxWidth), mh = parseFloat(cs.maxHeight);
+      if (!(mw <= aw)) st.setProperty('max-width', aw + 'px', 'important');
+      if (!(mh <= ah)) st.setProperty('max-height', ah + 'px', 'important');
+      st.setProperty('overflow', 'auto', 'important'); st.setProperty('overscroll-behavior', 'contain', 'important');
+      st.setProperty('-webkit-overflow-scrolling', 'touch');
+      st.translate = '';                       // measure where the tool put it, then nudge it inside the safe box
+      var r = el.getBoundingClientRect(), dx = 0, dy = 0;
+      if (r.right > sb.r) dx = sb.r - r.right;
+      if (r.left + dx < sb.l) dx = sb.l - r.left;
+      if (r.bottom > sb.b) dy = sb.b - r.bottom;
+      if (r.top + dy < sb.t) dy = sb.t - r.top;
+      if (dx || dy) st.translate = Math.round(dx) + 'px ' + Math.round(dy) + 'px';
+      var more = el.scrollHeight > el.clientHeight + 1 || el.scrollWidth > el.clientWidth + 1;
+      if (more && W.matchMedia && W.matchMedia('(hover: none)').matches) {   // touch: let a long tooltip be scrolled, and don't let taps on it dismiss it
+        st.setProperty('pointer-events', 'auto', 'important'); st.setProperty('touch-action', 'pan-x pan-y', 'important');
+        if (!el.__dtfTap) { el.__dtfTap = 1; ['click', 'pointerdown', 'touchstart', 'mousedown'].forEach(function (n) { el.addEventListener(n, function (e) { e.stopPropagation(); }); }); }
+      } else { st.removeProperty('pointer-events'); st.removeProperty('touch-action'); }
+      el.setAttribute('data-dtf-fit', more ? 'scroll' : 'ok');
+    } catch (e) { if (W.console) console.warn('dtf tip fit failed', e); }
+    fitting = false;
+    return false;
+  }
+  function initTips() {
+    var sels = W.DTF_TIPS; if (!sels || !sels.length || !W.MutationObserver) return;
+    var queued = false, seen = [];
+    function run() { queued = false; var again = false; seen.forEach(function (el) { if (fitTip(el)) again = true; }); if (again) setTimeout(ping, 160); }
+    function ping() { if (!queued && !fitting) { queued = true; W.requestAnimationFrame(run); } }
+    function watch() {
+      sels.forEach(function (sel) {
+        [].forEach.call(D.querySelectorAll(sel), function (el) {
+          if (seen.indexOf(el) > -1) return;
+          seen.push(el);
+          new MutationObserver(function () { if (!fitting) ping(); }).observe(el, { attributes: true, attributeFilter: ['style', 'class', 'hidden', 'aria-hidden'], childList: true, subtree: true, characterData: true });
+        });
+      });
+    }
+    // moving from a trigger onto a tooltip you are scrolling must not read as "mouse left the trigger" (hover-model tools hide on that)
+    W.addEventListener('mouseout', function (e) { var t = e.relatedTarget; if (t && t.closest && t.closest('[data-dtf-fit="scroll"]')) e.stopPropagation(); }, true);
+    watch();
+    new MutationObserver(watch).observe(D.body, { childList: true });   // tooltips a tool creates later
+    W.addEventListener('resize', ping);
+  }
+
   function standalone() { return !!((W.matchMedia && W.matchMedia('(display-mode: standalone)').matches) || navigator.standalone); }
   function isHome() { return location.pathname === '/' || location.pathname === '/index.html'; }
   function mobile() { return W.innerWidth < 900; }
@@ -289,7 +369,7 @@
   });
 
   function start() {
-    try { injectHead(); sw(); } catch (e) {}
+    try { injectHead(); sw(); initTips(); } catch (e) {}
     if (embedded) { DTF.ready = Promise.resolve(DTF.registry); return; }
     try { initViews(); layout(); autoHide(); } catch (e) {}
     DTF.ready = loadRegistry().catch(function () { return FALLBACK; }).then(function (reg) {
