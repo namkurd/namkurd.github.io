@@ -1,6 +1,6 @@
 {
-  "name": "DTF Club",
-  "short_name": "DTF",
+  "name": "Rumble Central",
+  "short_name": "Rumble Central",
   "description": "The DTF Club fantasy football league: Rumbles, records, trades, waivers and rules.",
   "start_url": "/?source=pwa",
   "scope": "/",
@@ -13,7 +13,7 @@
     { "src": "/shell/icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ],
   "shortcuts": [
-    { "name": "Rumble Central", "url": "/SleeperLiveRumbles/rumbles.html", "icons": [{ "src": "/shell/icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Live Rumbles", "url": "/SleeperLiveRumbles/rumbles.html", "icons": [{ "src": "/shell/icons/icon-192.png", "sizes": "192x192" }] },
     { "name": "Record Book", "url": "/Recordbook/", "icons": [{ "src": "/shell/icons/icon-192.png", "sizes": "192x192" }] },
     { "name": "Rulebook", "url": "/Rulebook/", "icons": [{ "src": "/shell/icons/icon-192.png", "sizes": "192x192" }] }
   ]

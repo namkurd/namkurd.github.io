@@ -1,4 +1,4 @@
-/* DTF Club shell: <script src="/shell/nav.js" defer></script>
+/* Rumble Central shell: <script src="/shell/nav.js" defer></script>
  * Global nav (bottom tabs on phones, top bar on desktop), a context bar (back, tool name, refresh, view tabs),
  * the install manifest, and window.DTF. Safe on any page; hidden in iframes and with ?embed=1.
  *
@@ -28,15 +28,28 @@
 
   // Minimal registry used only if /tools.json cannot be fetched.
   var FALLBACK = { tabs: 'home:Home,live:Live,history:History,moves:Moves,league:League'.split(',').map(function (t) { t = t.split(':'); return { id: t[0], label: t[1] }; }),
-    tools: ('rumbles|Rumble Central|live|/SleeperLiveRumbles/rumbles.html,recordbook|Record Book|history|/Recordbook/,h2h|Head-to-Head|history|/Sleeper-Head-to-Head/,' +
+    tools: ('rumbles|Live Rumbles|live|/SleeperLiveRumbles/rumbles.html,recordbook|Record Book|history|/Recordbook/,h2h|Head-to-Head|history|/Sleeper-Head-to-Head/,' +
       'lifetime|Lifetime|history|/sleepersheet/,trades|Trade Network|moves|/SleeperTradeNodes/,fab|FAB & Sit/Start|moves|/FAB-Management/,' +
       'auction|Auction Archive|moves|/SleeperAuction/,rulebook|Rulebook|league|/Rulebook/').split(',').map(function (t) { t = t.split('|'); return { id: t[0], name: t[1], tab: t[2], path: t[3] }; }),
     pages: [], external: [] };
 
   var DTF = W.DTF = { tools: FALLBACK.tools, registry: FALLBACK, ready: null };
 
-  DTF.me = function () { return ls('dtf.me'); };
-  DTF.setMe = function (id) { ls('dtf.me', id || null); try { W.dispatchEvent(new CustomEvent('dtf:me', { detail: id })); } catch (e) {} };
+  // Who you are: one choice, stored as {id, name} under dtf.me, shared by every tool on this origin (Rumble Central reads it too).
+  function readMe() {
+    var raw = ls('dtf.me'); if (!raw) return null;
+    try { var v = JSON.parse(raw); return v && v.name ? v : null; } catch (e) { return { id: String(raw).toLowerCase(), name: raw }; }
+  }
+  DTF.me = function () { var m = readMe(); return m && m.id; };
+  DTF.meName = function () { var m = readMe(); return m && m.name; };
+  DTF.setMe = function (m) {
+    if (typeof m === 'string') m = { id: m.toLowerCase(), name: m };
+    ls('dtf.me', m ? JSON.stringify({ id: m.id, name: m.name }) : null);
+    try { W.dispatchEvent(new CustomEvent('dtf:me', { detail: m || null })); } catch (e) {}
+  };
+  var mgrP = null;
+  DTF.managers = function () { return mgrP || (mgrP = fetch('/managers.json', { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (j) { return j.managers || []; }).catch(function () { mgrP = null; return []; })); };
+  DTF.pickMe = function () { if (UI.pick) UI.pick(); };
   DTF.onRefresh = function (fn) { W.addEventListener('dtf:refresh', fn); };
   DTF.refresh = function () { if (W.dispatchEvent(new CustomEvent('dtf:refresh', { cancelable: true }))) location.reload(); };
   DTF.link = function (id, name, params) {
@@ -57,7 +70,7 @@
     head('meta[name="theme-color"]', function () { return el('meta', { name: 'theme-color', content: '#0f1115' }); });
     head('meta[name="apple-mobile-web-app-capable"]', function () { return el('meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }); });
     head('meta[name="mobile-web-app-capable"]', function () { return el('meta', { name: 'mobile-web-app-capable', content: 'yes' }); });
-    head('meta[name="apple-mobile-web-app-title"]', function () { return el('meta', { name: 'apple-mobile-web-app-title', content: 'DTF Club' }); });
+    head('meta[name="apple-mobile-web-app-title"]', function () { return el('meta', { name: 'apple-mobile-web-app-title', content: 'Rumble Central' }); });
     head('meta[name="apple-mobile-web-app-status-bar-style"]', function () { return el('meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' }); });
     var vp = D.head.querySelector('meta[name="viewport"]');
     if (vp && !/viewport-fit/.test(vp.content)) vp.content += ', viewport-fit=cover';
@@ -123,8 +136,8 @@
     '@keyframes up{from{opacity:0;transform:translateY(10px) scale(.98)}}@media(prefers-reduced-motion:reduce){.sheet{animation:none}.ctx{transition:none}}' +
     '.sheet a{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:52px;padding:8px 12px;border-radius:10px;color:var(--tx);text-decoration:none}.sheet a:active,.sheet a:hover{background:var(--acbg)}' +
     '.sheet a .lg{flex:none;width:36px;height:36px;padding:4px;border-radius:10px;background:linear-gradient(150deg,color-mix(in srgb,var(--c) 32%,#0f1115),#0f1115);margin-right:2px}.sheet a>span{flex:1;min-width:0}.sheet a small{display:block;color:var(--dim);font-size:12px;margin-top:1px}.sheet a.on b{color:var(--ac)}.sheet a.on::after{content:"\\2713";color:var(--ac);font-weight:700}.sheet a.xt::after{content:"\\2197";color:var(--dim)}' +
-    '.sheet[hidden],.scrim[hidden]{display:none}.scrim{position:fixed;inset:0;z-index:25;background:rgba(0,0,0,.35)}' +
-    '@media(min-width:900px){.bar{top:0;bottom:auto;height:48px;border-top:0;border-bottom:1px solid var(--bd);padding:0 16px;justify-content:flex-start;align-items:center;gap:2px;font:500 14px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}' +
+    '.sheet[hidden],.scrim[hidden]{display:none}.who{position:fixed;inset:0;z-index:30;background:rgba(0,0,0,.55);display:flex;align-items:flex-end;justify-content:center}.who[hidden]{display:none}.wc{width:min(480px,100%);max-height:82dvh;overflow:auto;background:var(--bg2);border:1px solid var(--bd);border-radius:18px 18px 0 0;padding:16px 14px calc(14px + env(safe-area-inset-bottom));font:15px system-ui,-apple-system,sans-serif;color:var(--tx)}.wc h3{margin:0 0 4px;font-size:17px}.wc p{margin:0 0 12px;color:var(--dim);font-size:13px}.wg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.wg button{height:46px;border-radius:12px;border:1px solid var(--bd);background:none;color:var(--tx);font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}.wg button.on{border-color:var(--ac);background:var(--acbg);color:var(--ac);font-weight:700}.wf{display:flex;justify-content:space-between;margin-top:12px}.wf button{background:none;border:0;color:var(--dim);font:inherit;cursor:pointer;padding:8px 4px}.scrim{position:fixed;inset:0;z-index:25;background:rgba(0,0,0,.35)}' +
+    '@media(min-width:900px){.who{align-items:center}.wc{border-radius:18px}.bar{top:0;bottom:auto;height:48px;border-top:0;border-bottom:1px solid var(--bd);padding:0 16px;justify-content:flex-start;align-items:center;gap:2px;font:500 14px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}' +
     '.bar>a,.bar>button{flex:none;height:36px;flex-direction:row;gap:0;padding:0 12px;border-radius:8px}.bar>a:hover,.bar>button:hover{background:var(--acbg);color:var(--tx)}.bar .ic,.mb{display:none}.bar .on{background:var(--acbg);color:var(--ac)}.bar .on .lb{font-weight:700}' +
     '.bar .grp .lb::after{content:none}.bar .brand{font-weight:800;color:var(--tx);margin-right:10px;letter-spacing:.02em}.bar .sp{flex:1}.dk{display:flex}' +
     '.ctx{top:48px;height:44px;padding:0 16px;border-bottom:1px solid var(--bd)}.ctx.nov,.ctx .ib,.ctx .ttl{display:none}.vt{-webkit-mask-image:none;mask-image:none}.vt button{padding:0 14px}.vt button:first-child{margin-left:-14px}' +
@@ -300,15 +313,16 @@
     var host = D.createElement('dtf-nav'), s = host.attachShadow({ mode: 'open' });
     var vars = '--bg:rgba(20,23,29,.97);--bg2:#1b1f27;--bd:#2a2f3a;--tx:#e8eaf0;--dim:#9097a8;--ac:#f0914a;--acbg:rgba(240,145,74,.16)';   // dark only
     function items(tab) { return [].concat(reg.tools || [], reg.pages || [], reg.external || []).filter(function (x) { return x.tab === tab; }); }
-    var name = act.name || (home ? 'DTF Club' : D.title || 'DTF Club');
+    var name = act.name || (home ? 'Rumble Central' : D.title || 'Rumble Central');
     var ctxHidden = home || (!VIEWS && !sa);
     var html = '<style>:host{' + vars + '}' + CSS + '.dsk{display:none}@media(min-width:900px){.bar.mbar{display:none}.bar.dsk{display:flex}}</style>' +
       '<div class="ctx' + (VIEWS ? '' : ' nov') + '"' + (ctxHidden ? ' hidden' : '') + '><button class="ib" id="back" aria-label="Back" hidden>‹</button>' +
       (VIEWS ? '<div class="vt" role="tablist" aria-label="' + esc(name) + ' views"></div>' : '<div class="ttl">' + esc(name) + '</div>') +
       '<button class="ib" id="rf" aria-label="Refresh"' + (sa ? '' : ' hidden') + '>⟳</button></div>' +
-      '<div class="scrim" hidden></div><div class="sheet" role="dialog" aria-label="Menu" hidden></div>';
+      '<div class="scrim" hidden></div><div class="sheet" role="dialog" aria-label="Menu" hidden></div>' +
+      '<div class="who" hidden><div class="wc" role="dialog" aria-label="Who are you?"><h3>Who are you?</h3><p>Pick your team once. It is remembered on this phone and used across the app.</p><div class="wg"></div><div class="wf"><button id="wclear">Not in this list</button><button id="wx">Close</button></div></div></div>';
     // phone: bottom tabs. A group tab shows the tool you are in; a single-tool tab goes straight there.
-    html += '<nav class="bar mbar" aria-label="DTF Club">';
+    html += '<nav class="bar mbar" aria-label="Rumble Central">';
     tabs.forEach(function (t) {
       var list = items(t.id), on = act.tab === t.id, cur = on && act.name ? (act.short || act.name) : null;
       var inner = '<span class="ic">' + icon(t.id) + '</span><span class="lb">' + esc(t.id !== 'home' && list.length > 1 && cur ? cur : t.label) + '</span>';
@@ -317,7 +331,7 @@
       else html += '<button class="grp' + (on ? ' on' : '') + '" data-t="' + t.id + '" aria-haspopup="dialog" aria-expanded="false">' + inner + '</button>';
     });
     // desktop: every tool on one bar
-    html += '</nav><nav class="bar dsk" aria-label="DTF Club"><a class="brand" href="/">DTF Club</a>';
+    html += '</nav><nav class="bar dsk" aria-label="Rumble Central"><a class="brand" href="/">Rumble Central</a>';
     [].concat(reg.tools || [], reg.pages || []).forEach(function (x) {
       html += '<a href="' + esc(x.path) + '"' + (act.id === x.id ? ' class="on" aria-current="page"' : '') + '><span class="lb">' + esc(x.short || x.name) + '</span></a>';
     });
@@ -330,7 +344,8 @@
       if (!sheet.hidden && opener === btn) return close();
       if (opener) opener.setAttribute('aria-expanded', 'false');
       opener = btn; btn.setAttribute('aria-expanded', 'true');
-      sheet.innerHTML = list.map(function (x) {
+      var meRow = (btn.getAttribute('data-t') === 'league' || btn.id === 'more') ? '<a href="#" data-me="1" class="me"><span><b>' + (DTF.meName() ? 'You: ' + esc(DTF.meName()) : 'Who are you?') + '</b><small>' + (DTF.meName() ? 'Tap to change' : 'Pick your team') + '</small></span></a>' : '';
+      sheet.innerHTML = meRow + list.map(function (x) {
         var ext = !x.path;
         return '<a href="' + esc(x.path || x.url) + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + ' class="' + (act.id === x.id ? 'on ' : '') + (ext ? 'xt' : '') + '">' + (x.logo ? '<img class="lg" src="' + esc(x.logo) + '" alt="" width="36" height="36" style="--c:' + esc(x.color || '#888') + '">' : '') + '<span><b>' + esc(x.name) + '</b>' + (x.description ? '<small>' + esc(x.description) + '</small>' : '') + '</span></a>';
       }).join('');
@@ -339,8 +354,22 @@
     s.querySelectorAll('button[data-t]').forEach(function (b) { b.addEventListener('click', function () { open(b, items(b.getAttribute('data-t'))); }); });
     var more = s.getElementById('more'); if (more) more.addEventListener('click', function () { open(more, reg.external || []); });
     scrim.addEventListener('click', close);
-    sheet.addEventListener('click', function (e) { if (e.target.closest('a')) close(); });
-    D.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !sheet.hidden) close(); });
+    sheet.addEventListener('click', function (e) { var a = e.target.closest('a'); if (!a) return; if (a.hasAttribute('data-me')) { e.preventDefault(); close(); DTF.pickMe(); return; } close(); });
+    // the "Who are you?" picker (also opened from Home)
+    var who = s.querySelector('.who'), wg = s.querySelector('.wg');
+    function wclose() { who.hidden = true; }
+    UI.pick = function () {
+      who.hidden = false; wg.innerHTML = '<span style="color:var(--dim)">Loading…</span>';
+      DTF.managers().then(function (list) {
+        var me = DTF.meName();
+        wg.innerHTML = list.length ? list.map(function (m) { return '<button data-id="' + esc(m.id) + '" data-n="' + esc(m.name) + '"' + (me === m.name ? ' class="on"' : '') + '>' + esc(m.name) + '</button>'; }).join('') : '<span style="color:var(--dim)">Couldn\u2019t load the list. Try again in a moment.</span>';
+      });
+    };
+    wg.addEventListener('click', function (e) { var b = e.target.closest('button[data-id]'); if (b) { DTF.setMe({ id: b.dataset.id, name: b.dataset.n }); wclose(); } });
+    s.getElementById('wclear').addEventListener('click', function () { DTF.setMe(null); wclose(); });
+    s.getElementById('wx').addEventListener('click', wclose);
+    who.addEventListener('click', function (e) { if (e.target === who) wclose(); });
+    D.addEventListener('keydown', function (e) { if (e.key === 'Escape') { if (!who.hidden) who.hidden = true; else if (!sheet.hidden) close(); } });
     W.addEventListener('scroll', function () { if (!sheet.hidden) close(); }, { passive: true });
     var back = s.getElementById('back');
     if (sa && !home && history.length > 1) back.hidden = false;

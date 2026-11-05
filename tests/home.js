@@ -22,12 +22,16 @@ const BASE = process.env.BASE || 'http://localhost:8080';
     const ctx = await b.newContext({ viewport: vp, deviceScaleFactor: 1, hasTouch: vp.width < 900, isMobile: vp.width < 900 }); const pg = await ctx.newPage();
     if (mutate) await mutate(pg);
     await pg.goto(BASE + '/'); await pg.waitForTimeout(1500);
+    let worst = 0;   // each tab in turn: the Trades tab (winner tag + every player) is the tallest
+    for (const t of await pg.locator('#tabs button').all()) { if (await t.isVisible()) { await t.click(); await pg.waitForTimeout(200); worst = Math.max(worst, await pg.evaluate(() => document.documentElement.scrollHeight - innerHeight)); } }
     const r = await pg.evaluate(() => ({ scroll: document.documentElement.scrollHeight - innerHeight, feed: !document.getElementById('feed').hidden, tiles: document.querySelectorAll('.tile').length,
       panels: [...document.querySelectorAll('.panel')].map(p => p.querySelectorAll('.row').length), badLinks: [...document.querySelectorAll('.row')].filter(a => !/^(\/[A-Za-z]|https:\/\/dtf-club\.slack\.com\/)/.test(a.getAttribute('href'))).length }));
+    r.scroll = Math.max(r.scroll, worst);
     const ok = r.scroll <= 0 && r.tiles === 8 && r.badLinks === 0 && (name.includes('nofeed') ? !r.feed : r.feed && r.panels.length >= 4 && r.panels.every(n => n <= 3));
     if (!ok) bad++; console.log(ok ? 'PASS' : 'FAIL', 'fits', name, JSON.stringify(r)); await ctx.close();
   };
-  await fit('390x844', { width: 390, height: 844 }); await fit('393x852', { width: 393, height: 852 }); await fit('1280x800', { width: 1280, height: 800 });
+  await fit('390x844', { width: 390, height: 844 }); await fit('393x852', { width: 393, height: 852 }); await fit('430x932', { width: 430, height: 932 });
+  await fit('1280x800', { width: 1280, height: 800 }); await fit('1366x768', { width: 1366, height: 768 }); await fit('1024x768 tabs', { width: 1024, height: 768 });
   await fit('390x844 nofeed', { width: 390, height: 844 }, pg => pg.route(/\/(feed|slack)\.json/, r => r.fulfill({ status: 404, body: '' })));   // tiles still render without the feed
   await run('phone-dark', { width: 390, height: 844 }, 'dark');
   await run('phone-light', { width: 390, height: 844 }, 'light');

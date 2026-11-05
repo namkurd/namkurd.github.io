@@ -10,18 +10,30 @@
      "rank": 1,
      "title": "Ankit 169.4 – 166.5 Haan",
      "sub": "Week 2 · H2H · 4 lead changes",
+     "managers": [
+      "Ankit",
+      "Haan"
+     ],
      "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=2.8.4"
     },
     {
      "rank": 2,
      "title": "Kaitlyn 155.7 – 155.5 Steven",
      "sub": "Week 7 · H2H · 5 lead changes",
+     "managers": [
+      "Kaitlyn",
+      "Steven"
+     ],
      "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=7.11.7"
     },
     {
      "rank": 3,
      "title": "Haan 150.6 – 150.0 Alex",
      "sub": "Week 8 · H2H · 5 lead changes",
+     "managers": [
+      "Haan",
+      "Alex"
+     ],
      "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=8.4.6"
     }
    ]
@@ -33,19 +45,84 @@
     {
      "rank": 1,
      "title": "Aidan ⇄ Christian",
-     "sub": "D. Moore +1 ⇄ T. McLaurin +1 · Wk 6",
+     "sub": "Week 6",
+     "managers": [
+      "Aidan",
+      "Christian"
+     ],
+     "winner": "Aidan",
+     "edge": 4.8,
+     "gets": [
+      {
+       "m": "Aidan",
+       "players": [
+        "T. McLaurin",
+        "J. Hurts"
+       ]
+      },
+      {
+       "m": "Christian",
+       "players": [
+        "D. Moore",
+        "J. Herbert"
+       ]
+      }
+     ],
      "href": "/SleeperTradeNodes/?season=2026&manager=Aidan"
     },
     {
      "rank": 2,
      "title": "Ben ⇄ Alex",
-     "sub": "M. Golden +1 ⇄ B. Tuten · Wk 4",
+     "sub": "Week 4",
+     "managers": [
+      "Ben",
+      "Alex"
+     ],
+     "winner": "Ben",
+     "edge": 0.6,
+     "gets": [
+      {
+       "m": "Ben",
+       "players": [
+        "B. Tuten"
+       ]
+      },
+      {
+       "m": "Alex",
+       "players": [
+        "M. Golden",
+        "R. Stevenson"
+       ]
+      }
+     ],
      "href": "/SleeperTradeNodes/?season=2026&manager=Ben"
     },
     {
      "rank": 3,
      "title": "Alex ⇄ Ankit",
-     "sub": "M. Washington +1 ⇄ C. Tate +1 · Wk 8",
+     "sub": "Week 8",
+     "managers": [
+      "Alex",
+      "Ankit"
+     ],
+     "winner": "Alex",
+     "edge": 9.4,
+     "gets": [
+      {
+       "m": "Alex",
+       "players": [
+        "C. Tate",
+        "D. Goedert"
+       ]
+      },
+      {
+       "m": "Ankit",
+       "players": [
+        "M. Washington",
+        "M. Willis"
+       ]
+      }
+     ],
      "href": "/SleeperTradeNodes/?season=2026&manager=Alex"
     }
    ]
@@ -58,18 +135,27 @@
      "rank": 1,
      "title": "Kirk Cousins · Ryan",
      "sub": "+59 PAR · $21 · Wk 2",
+     "managers": [
+      "Ryan"
+     ],
      "href": "/FAB-Management/?season=2026&manager=Ryan"
     },
     {
      "rank": 2,
      "title": "Braelon Allen · Jake",
      "sub": "+54 PAR · $150 · Wk 3",
+     "managers": [
+      "Jake"
+     ],
      "href": "/FAB-Management/?season=2026&manager=Jake"
     },
     {
      "rank": 3,
      "title": "Tyler Huntley · Ankit",
      "sub": "+25 PAR · $21 · Wk 4",
+     "managers": [
+      "Ankit"
+     ],
      "href": "/FAB-Management/?season=2026&manager=Ankit"
     }
    ]
@@ -82,22 +168,93 @@
      "rank": 1,
      "title": "Kyle Pitts Sr. · Jake",
      "sub": "+14 PAR · Wk 6",
+     "managers": [
+      "Jake"
+     ],
      "href": "/FAB-Management/?season=2026&manager=Jake"
     },
     {
      "rank": 2,
      "title": "T.J. Hockenson · Haan",
      "sub": "+11 PAR · Wk 4",
+     "managers": [
+      "Haan"
+     ],
      "href": "/FAB-Management/?season=2026&manager=Haan"
     },
     {
      "rank": 3,
      "title": "Keenan Allen · Haan",
      "sub": "+10 PAR · Wk 6",
+     "managers": [
+      "Haan"
+     ],
      "href": "/FAB-Management/?season=2026&manager=Haan"
     }
    ]
   }
  ],
- "generatedAt": "2026-11-05T15:41:49Z"
+ "standings": [
+  {
+   "m": "Ben",
+   "rank": 1,
+   "rumbles": 112
+  },
+  {
+   "m": "Steven",
+   "rank": 2,
+   "rumbles": 104
+  },
+  {
+   "m": "Ryan",
+   "rank": 3,
+   "rumbles": 99
+  },
+  {
+   "m": "Jake",
+   "rank": 4,
+   "rumbles": 90
+  },
+  {
+   "m": "Kaitlyn",
+   "rank": 5,
+   "rumbles": 83
+  },
+  {
+   "m": "Stephanie",
+   "rank": 6,
+   "rumbles": 81
+  },
+  {
+   "m": "Christian",
+   "rank": 7,
+   "rumbles": 79
+  },
+  {
+   "m": "Alex",
+   "rank": 8,
+   "rumbles": 73
+  },
+  {
+   "m": "Haan",
+   "rank": 9,
+   "rumbles": 72
+  },
+  {
+   "m": "Ankit",
+   "rank": 10,
+   "rumbles": 69
+  },
+  {
+   "m": "Joe",
+   "rank": 11,
+   "rumbles": 67
+  },
+  {
+   "m": "Aidan",
+   "rank": 12,
+   "rumbles": 31
+  }
+ ],
+ "generatedAt": "2026-11-05T16:08:42Z"
 }
