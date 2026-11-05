@@ -10,7 +10,7 @@ const BASE = process.env.BASE || 'http://localhost:8080';
     const pg = await ctx.newPage();
     if (inset) { const c = await ctx.newCDPSession(pg); await c.send('Emulation.setSafeAreaInsetsOverride', { insets: { top: inset, bottom: 34, left: 0, right: 0 } }).catch(() => {}); }
     await pg.goto(BASE + '/'); await pg.waitForTimeout(1500);
-    const r = await pg.evaluate(() => ({ tiles: document.querySelectorAll('.tile').length, imgs: [...document.querySelectorAll('.tile img')].filter(i => i.complete && i.naturalWidth > 0).length,
+    const r = await pg.evaluate(() => ({ tiles: document.querySelectorAll('.tile').length, imgs: [...document.querySelectorAll('.tile .plate img')].filter(i => i.complete && i.naturalWidth > 0).length,
       h1top: Math.round(document.querySelector('h1').getBoundingClientRect().top), pad: getComputedStyle(document.documentElement).getPropertyValue('--dtf-top-pad').trim(), hscroll: document.documentElement.scrollWidth > innerWidth + 1,
       foot: !document.getElementById('foot').hidden, over: document.documentElement.scrollHeight - innerHeight }));
     const ok = r.tiles === 9 && r.imgs === 9 && !r.hscroll && (!inset || (r.h1top >= inset && r.over <= 0));   // installed app with a notch: still one screen
