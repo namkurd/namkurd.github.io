@@ -36,7 +36,12 @@
    "champion": {
     "m": "Ankit",
     "team": "Fields of Dreams",
-    "photos": []
+    "photos": [
+     {
+      "src": "/champions/photos/2023-champion.jpg",
+      "caption": "Ankit, 2023 champion"
+     }
+    ]
    },
    "sacko": {
     "m": "Tommy",
@@ -52,7 +57,12 @@
    },
    "sacko": {
     "m": "Ankit",
-    "photos": []
+    "photos": [
+     {
+      "src": "/champions/photos/2022-sacko.jpg",
+      "caption": "Ankit, 2022 sacko"
+     }
+    ]
    }
   },
   {
@@ -60,7 +70,12 @@
    "champion": {
     "m": "Ben",
     "team": "No Endz No Winz",
-    "photos": []
+    "photos": [
+     {
+      "src": "/champions/photos/2021-champion.jpg",
+      "caption": "Ben, 2021 champion"
+     }
+    ]
    },
    "sacko": {
     "m": "Steven",
