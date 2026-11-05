@@ -96,9 +96,24 @@ def models_title(conv, token):
     """The same, through GitHub Models with the workflow's own GITHUB_TOKEN (needs `models: read`): no key to create."""
     body = {'model': os.environ.get('GITHUB_MODELS_MODEL', 'openai/gpt-4.1-mini'), 'max_tokens': 60, 'temperature': 0.2,
             'messages': [{'role': 'user', 'content': summary_prompt(conv)}]}
-    req = urllib.request.Request('https://models.github.ai/inference/chat/completions', data=json.dumps(body).encode(),
-                                 headers={'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28'})
-    return tidy(json.load(urllib.request.urlopen(req, timeout=60))['choices'][0]['message']['content'])
+    last = None
+    for url, model in (('https://models.github.ai/inference/chat/completions', body['model']),
+                       ('https://models.inference.ai.azure.com/chat/completions', body['model'].split('/')[-1])):   # the older GitHub Models address takes bare model names
+        req = urllib.request.Request(url, data=json.dumps(dict(body, model=model)).encode(), method='POST',
+                                     headers={'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-GitHub-Api-Version': '2022-11-28'})
+        try:
+            with urllib.request.urlopen(req, timeout=60) as r:
+                raw = r.read().decode('utf-8', 'replace')
+                status = r.status
+        except urllib.error.HTTPError as e:
+            last = '%s -> HTTP %s %s' % (url, e.code, e.read().decode('utf-8', 'replace')[:200]); print(last, file=sys.stderr); continue
+        except Exception as e:
+            last = '%s -> %s' % (url, e); print(last, file=sys.stderr); continue
+        try:
+            return tidy(json.loads(raw)['choices'][0]['message']['content'])
+        except Exception as e:
+            last = '%s -> HTTP %s, unreadable reply (%s): %r' % (url, status, e, raw[:200]); print(last, file=sys.stderr)
+    raise RuntimeError(last or 'no reply')
 
 
 # ---------------------------------------------------------------- Slack API
