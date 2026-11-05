@@ -256,5 +256,11 @@
    "rumbles": 31
   }
  ],
- "generatedAt": "2026-11-05T16:47:03Z"
+ "ir": {
+  "week": 9,
+  "state": "clear",
+  "violations": [],
+  "blocked": []
+ },
+ "generatedAt": "2026-11-05T18:38:08Z"
 }

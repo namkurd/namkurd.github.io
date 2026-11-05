@@ -125,8 +125,21 @@ def build_managers(hist, league_id, season):
     return {'schema': 1, 'season': season, 'managers': out}
 
 
+def ir_status(path, managers):
+    """The IR eligibility check (FAB-Management's ir_check.py --json, run by the feed workflow into this file): who is on IR who shouldn't be,
+    and who is hurt but can't go on IR until next week. Rows are named the way every tool spells managers."""
+    raw = json.load(open(path, encoding='utf-8'))
+    names = {int(m['roster_id']): m['name'] for m in (managers or {}).get('managers', [])}
+
+    def row(r):
+        return {'m': names.get(int(r['roster_id']), 'Roster %s' % r['roster_id']), 'player': short_player(r['player']), 'pos': r.get('pos'), 'status': r.get('status'), 'how': r.get('how')}
+    v, b = [row(r) for r in raw.get('violations', [])], [row(r) for r in raw.get('blocked', [])]
+    return {'week': raw['week'], 'state': 'violations' if v else 'blocked' if b else 'clear', 'violations': v, 'blocked': b}
+
+
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument('--ir', help='JSON from FAB-Management/ir_check.py --json (default: ir.json next to feed.json, if present)')
     ap.add_argument('--src', help='directory holding sibling checkouts of the tool repos')
     args = ap.parse_args()
     old_league, old_feed = prev('league.json'), prev('feed.json')
@@ -171,7 +184,14 @@ def main():
             sections.append(s)
     order = ['matchups', 'trades', 'waivers', 'free-agents']
     sections.sort(key=lambda s: order.index(s['id']) if s['id'] in order else 99)
-    feed = {'schema': 1, 'season': season, 'sections': sections, 'standings': standings or old_feed.get('standings', []), 'generatedAt': dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}
+    ir = old_feed.get('ir')   # keep the last status if the check couldn't run (offseason, Sleeper down)
+    try:
+        irp = args.ir or os.path.join(HUB, 'ir.json')
+        if os.path.exists(irp):
+            ir = ir_status(irp, managers or prev('managers.json'))
+    except Exception as e:
+        print('ir: %s' % e, file=sys.stderr)
+    feed = {'schema': 1, 'season': season, 'sections': sections, 'standings': standings or old_feed.get('standings', []), **({'ir': ir} if ir else {}), 'generatedAt': dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}
 
     def write(name, obj):   # only touch the file when the content (ignoring the timestamp) changed, so the repo isn't committed to every hour
         path = os.path.join(HUB, name)

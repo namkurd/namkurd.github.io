@@ -28,6 +28,14 @@ jobs:
           pip install playwright
           python -m playwright install --with-deps chromium
           python3 tools/build_matchups.py
+      # IR eligibility: run the FAB tool's own check (it only reads the Sleeper API); if it can't (offseason) the last status is kept
+      - uses: actions/checkout@v4
+        with:
+          repository: namkurd/FAB-Management
+          path: fab
+      - run: |
+          pip install requests
+          python3 fab/ir_check.py --json > ir.json || rm -f ir.json
       - run: python3 tools/build_feed.py
       - name: Commit if changed
         run: |

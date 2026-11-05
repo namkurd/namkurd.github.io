@@ -13,7 +13,7 @@ const BASE = process.env.BASE || 'http://localhost:8080';
     const r = await pg.evaluate(() => ({ tiles: document.querySelectorAll('.tile').length, imgs: [...document.querySelectorAll('.tile img')].filter(i => i.complete && i.naturalWidth > 0).length,
       h1top: Math.round(document.querySelector('h1').getBoundingClientRect().top), pad: getComputedStyle(document.documentElement).getPropertyValue('--dtf-top-pad').trim(), hscroll: document.documentElement.scrollWidth > innerWidth + 1,
       foot: !document.getElementById('foot').hidden, over: document.documentElement.scrollHeight - innerHeight }));
-    const ok = r.tiles === 8 && r.imgs === 8 && !r.hscroll && (!inset || (r.h1top >= inset && r.over <= 0));   // installed app with a notch: still one screen
+    const ok = r.tiles === 9 && r.imgs === 9 && !r.hscroll && (!inset || (r.h1top >= inset && r.over <= 0));   // installed app with a notch: still one screen
     if (!ok) bad++; console.log(ok ? 'PASS' : 'FAIL', name, JSON.stringify(r));
     await pg.screenshot({ path: `tests/screens/home-${name}.png` }); await ctx.close();
   };
@@ -27,7 +27,7 @@ const BASE = process.env.BASE || 'http://localhost:8080';
     const r = await pg.evaluate(() => ({ scroll: document.documentElement.scrollHeight - innerHeight, feed: !document.getElementById('feed').hidden, tiles: document.querySelectorAll('.tile').length,
       panels: [...document.querySelectorAll('.panel')].map(p => p.querySelectorAll('.row').length), badLinks: [...document.querySelectorAll('.row')].filter(a => !/^(\/[A-Za-z]|https:\/\/dtf-club\.slack\.com\/)/.test(a.getAttribute('href'))).length }));
     r.scroll = Math.max(r.scroll, worst);
-    const ok = r.scroll <= 0 && r.tiles === 8 && r.badLinks === 0 && (name.includes('nofeed') ? !r.feed : r.feed && r.panels.length >= 4 && r.panels.every(n => n <= 3));
+    const ok = r.scroll <= 0 && r.tiles === 9 && r.badLinks === 0 && (name.includes('nofeed') ? !r.feed : r.feed && r.panels.length >= 4 && r.panels.every(n => n <= 3));
     if (!ok) bad++; console.log(ok ? 'PASS' : 'FAIL', 'fits', name, JSON.stringify(r)); await ctx.close();
   };
   await fit('390x844', { width: 390, height: 844 }); await fit('393x852', { width: 393, height: 852 }); await fit('430x932', { width: 430, height: 932 });
