@@ -1,6 +1,14 @@
 /* DTF Club shell: <script src="/shell/nav.js" defer></script>
- * Adds the global nav (bottom tabs on phones, top bar on desktop), the install manifest, and window.DTF.
- * Safe to include on any page: if anything fails the host page keeps working. Hidden in iframes and with ?embed=1. */
+ * Global nav (bottom tabs on phones, top bar on desktop), a context bar (back, tool name, refresh, view tabs),
+ * the install manifest, and window.DTF. Safe on any page; hidden in iframes and with ?embed=1.
+ *
+ * A tool declares its views BEFORE the script tag (all optional):
+ *   <script>window.DTF_VIEWS = { hide: '.tabs', items: [
+ *     { label: 'Records', sel: '#tab-records' },          // click this element of the tool to switch (history entry added)
+ *     { label: 'Players', sel: '#tab-players', native: 1 }, // tool already makes its own history entries (e.g. hash routes)
+ *     { label: 'Sit / start', href: 'lineup.html' } ] };    // separate page, or '#anchor' on this page
+ *   </script>
+ */
 (function () {
   'use strict';
   if (window.DTF) return;
@@ -25,10 +33,7 @@
   DTF.me = function () { return ls('dtf.me'); };
   DTF.setMe = function (id) { ls('dtf.me', id || null); try { W.dispatchEvent(new CustomEvent('dtf:me', { detail: id })); } catch (e) {} };
   DTF.onRefresh = function (fn) { W.addEventListener('dtf:refresh', fn); };
-  DTF.refresh = function () {
-    var ev = new CustomEvent('dtf:refresh', { cancelable: true });
-    if (W.dispatchEvent(ev)) location.reload();
-  };
+  DTF.refresh = function () { if (W.dispatchEvent(new CustomEvent('dtf:refresh', { cancelable: true }))) location.reload(); };
   DTF.link = function (id, name, params) {
     var t = (DTF.tools || []).filter(function (x) { return x.id === id; })[0];
     if (!t) return '#';
@@ -52,7 +57,6 @@
     if (vp && !/viewport-fit/.test(vp.content)) vp.content += ', viewport-fit=cover';
   }
 
-  // ---- service worker
   function sw() {
     if (!('serviceWorker' in navigator) || (location.protocol !== 'https:' && location.hostname !== 'localhost')) return;
     // Rumble Central used to register its own no-op worker at /SleeperLiveRumbles/; it would shadow the root one.
@@ -62,7 +66,6 @@
     navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch(function () {});
   }
 
-  // ---- registry
   function loadRegistry() {
     try { var c = sessionStorage.getItem('dtf.registry'); if (c) return Promise.resolve(JSON.parse(c)); } catch (e) {}
     return fetch('/tools.json', { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (j) {
@@ -75,9 +78,8 @@
   function activeItem(reg) {
     var p = location.pathname.replace(/index\.html$/, '');
     if (p === '/') return { tab: 'home' };
-    var all = [].concat(reg.tools || [], reg.pages || [], reg.external || []).filter(function (x) { return x.path; });
     var best = null;
-    all.forEach(function (x) {
+    [].concat(reg.tools || [], reg.pages || [], reg.external || []).filter(function (x) { return x.path; }).forEach(function (x) {
       var d = dirOf(x.path), hit = p === x.path || (d !== '/' && p.indexOf(d) === 0);
       if (hit && (!best || dirOf(x.path).length > dirOf(best.path).length)) best = x;
     });
@@ -94,30 +96,93 @@
   function icon(id) { return '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="' + (ICONS[id] || ICONS.league) + '"/></svg>'; }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
-  var CSS = ':host{all:initial}*{box-sizing:border-box}' +
-    '.bar{position:fixed;z-index:2147483002;left:0;right:0;bottom:0;display:flex;background:var(--bg);border-top:1px solid var(--bd);padding-bottom:env(safe-area-inset-bottom);font:12px/1.2 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}' +
-    '.bar>a,.bar>button{flex:1;min-width:0;height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--dim);background:none;border:0;font:inherit;text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent}' +
-    '.bar .on{color:var(--ac)}.bar .sp,.hd .sp{display:none}' +
-    '.hd{display:none;position:fixed;z-index:2147483000;top:0;left:0;right:0;height:calc(40px + env(safe-area-inset-top));padding-top:env(safe-area-inset-top);background:var(--bg);border-bottom:1px solid var(--bd);align-items:center;justify-content:space-between;font:600 14px system-ui,sans-serif;color:var(--tx)}' +
-    '.hd button{background:none;border:0;color:var(--tx);font-size:22px;width:48px;height:40px;cursor:pointer}.hd button[hidden]{visibility:hidden;display:block}' +
-    ':host(.hdr) .hd{display:flex}' +
-    '.sheet{position:fixed;z-index:2147483001;left:0;right:0;bottom:calc(56px + env(safe-area-inset-bottom));background:var(--bg);border-top:1px solid var(--bd);border-radius:14px 14px 0 0;padding:6px 0;font:15px system-ui,sans-serif;box-shadow:0 -8px 30px rgba(0,0,0,.35)}' +
+  var CSS = ':host{all:initial}*{box-sizing:border-box}button{font:inherit}' +
+    '.bar{position:fixed;z-index:25;left:0;right:0;bottom:0;display:flex;background:var(--bg);border-top:1px solid var(--bd);padding-bottom:env(safe-area-inset-bottom);font:12px/1.2 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}' +
+    '.bar>a,.bar>button{flex:1;min-width:0;height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--dim);background:none;border:0;text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent}' +
+    '.bar .on{color:var(--ac)}' +
+    '.ctx{position:fixed;z-index:25;top:0;left:0;right:0;background:var(--bg);border-bottom:1px solid var(--bd);padding-top:env(safe-area-inset-top);font:14px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--tx)}' +
+    '.ctx[hidden]{display:none}.r1{height:40px;display:flex;align-items:center;justify-content:space-between;font-weight:600}' +
+    '.r1 button{background:none;border:0;color:var(--tx);font-size:22px;width:48px;height:40px;cursor:pointer}.r1 button[hidden]{display:block;visibility:hidden}' +
+    '.r1 span,.nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}' +
+    '.vt{display:flex;overflow-x:auto;scrollbar-width:none;border-top:1px solid var(--bd)}.vt::-webkit-scrollbar{display:none}.vt[hidden]{display:none}' +
+    '.vt button{flex:none;height:38px;padding:0 14px;background:none;border:0;border-bottom:2px solid transparent;color:var(--dim);cursor:pointer;white-space:nowrap}' +
+    '.vt button.on{color:var(--ac);border-bottom-color:var(--ac);font-weight:600}.nm{display:none}' +
+    '.sheet{position:fixed;z-index:26;left:0;right:0;bottom:calc(56px + env(safe-area-inset-bottom));background:var(--bg);border-top:1px solid var(--bd);border-radius:14px 14px 0 0;padding:6px 0;font:15px system-ui,sans-serif;box-shadow:0 -8px 30px rgba(0,0,0,.35)}' +
     '.sheet a{display:block;padding:12px 18px;color:var(--tx);text-decoration:none}.sheet a small{display:block;color:var(--dim);font-size:12px}.sheet a.on{color:var(--ac)}' +
-    '.sheet[hidden],.scrim[hidden]{display:none}.scrim{position:fixed;inset:0;z-index:2147483000;background:rgba(0,0,0,.4)}' +
+    '.sheet[hidden],.scrim[hidden]{display:none}.scrim{position:fixed;inset:0;z-index:25;background:rgba(0,0,0,.4)}' +
     '@media(min-width:900px){.bar{top:0;bottom:auto;height:48px;border-top:0;border-bottom:1px solid var(--bd);padding:0 12px;justify-content:center;gap:4px}' +
-    '.bar>a,.bar>button{flex:none;height:48px;flex-direction:row;gap:8px;padding:0 16px;font-size:14px}.bar .sp{display:block;flex:1}.hd{display:none!important}' +
-    '.sheet{left:auto;right:auto;top:48px;bottom:auto;min-width:260px;border:1px solid var(--bd);border-radius:0 0 12px 12px;padding:6px 0}}';
+    '.bar>a,.bar>button{flex:none;height:48px;flex-direction:row;gap:8px;padding:0 16px;font-size:14px}' +
+    '.ctx.nov{display:none}.ctx{top:48px;padding-top:0;display:flex;align-items:center;gap:12px;padding:0 16px}.r1{display:none}.vt{border-top:0;flex:1}.nm{display:block;font-weight:600}' +
+    '.sheet{left:auto;right:auto;top:48px;bottom:auto;min-width:260px;border:1px solid var(--bd);border-radius:0 0 12px 12px}}';
+
+  var VIEWS = null;   // the tool's declared views, normalized
+  var UI = {};
+
+  function isOn(e) {
+    return e.getAttribute('aria-pressed') === 'true' || e.getAttribute('aria-selected') === 'true' || /(^|\s)(active|on)(\s|$)/.test(e.className || '');
+  }
+  function currentView() {
+    var i, it, path = location.pathname.split('/').pop() || 'index.html';
+    for (i = 0; i < VIEWS.items.length; i++) {
+      it = VIEWS.items[i];
+      if (it.sel) { var e = D.querySelector(it.sel); if (e && isOn(e)) return i; }
+      else if (it.href && it.href.charAt(0) === '#') { if (location.hash === it.href) return i; }
+      else if (it.href && it.href.split(/[?#]/)[0].split('/').pop() === path) return i;
+    }
+    var f = VIEWS.items[0];
+    return f && f.href && f.href.charAt(0) === '#' && !location.hash ? 0 : -1;
+  }
+  function paintViews() {
+    if (!VIEWS || !UI.vt) return;
+    var cur = currentView();
+    [].forEach.call(UI.vt.children, function (b, i) { b.className = i === cur ? 'on' : ''; if (i === cur) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
+  }
+  function pick(i, fromHistory) {
+    var it = VIEWS.items[i];
+    if (it.sel) {
+      var e = D.querySelector(it.sel); if (!e) return;
+      if (!fromHistory && !it.native) { try { history.pushState(Object.assign({}, history.state, { dtfView: i }), ''); } catch (x) {} }
+      e.click();
+    } else if (it.href) {
+      if (it.href.charAt(0) === '#') location.hash = it.href; else location.href = it.href;
+    }
+    setTimeout(paintViews, 0);
+  }
+  function initViews() {
+    var cfg = W.DTF_VIEWS;
+    if (!cfg || !cfg.items || !cfg.items.length) return;
+    VIEWS = cfg;
+    if (cfg.hide) { var st = D.createElement('style'); st.textContent = 'body.dtf-has-nav ' + cfg.hide.split(',').join(',body.dtf-has-nav ') + '{display:none!important}'; D.head.appendChild(st); }
+    VIEWS.initial = Math.max(0, currentView());
+    try { history.replaceState(Object.assign({}, history.state, { dtfView: VIEWS.initial }), ''); } catch (e) {}
+    W.addEventListener('popstate', function (ev) {
+      var s = ev.state;
+      if (s && typeof s.dtfView === 'number') pick(s.dtfView, true);
+      else if (s === null && !VIEWS.items.some(function (x) { return x.native || !x.sel; }) && VIEWS.items[VIEWS.initial]) pick(VIEWS.initial, true);
+    });
+    W.addEventListener('hashchange', paintViews);
+    VIEWS.items.forEach(function (it) {
+      var e = it.sel && D.querySelector(it.sel);
+      if (e && W.MutationObserver) new MutationObserver(paintViews).observe(e, { attributes: true, attributeFilter: ['class', 'aria-pressed', 'aria-selected'] });
+    });
+  }
+
+  function setTop() {
+    var c = UI.ctx; if (!c || c.hidden) { root.style.setProperty('--dtf-top-h', (W.innerWidth >= 900 ? 48 : 0) + 'px'); return; }
+    var h = c.getBoundingClientRect().height + (W.innerWidth >= 900 ? 48 : 0);
+    root.style.setProperty('--dtf-top-h', h + 'px');
+  }
 
   function build(reg) {
-    var tabs = reg.tabs || FALLBACK.tabs, act = activeItem(reg) || {};
+    var tabs = reg.tabs || FALLBACK.tabs, act = activeItem(reg) || {}, home = act.tab === 'home';
     var host = D.createElement('dtf-nav'), s = host.attachShadow({ mode: 'open' });
     var dark = W.matchMedia && W.matchMedia('(prefers-color-scheme: light)').matches ? 0 : 1;
     var vars = dark ? '--bg:#14171d;--bd:#2a2f3a;--tx:#e8eaf0;--dim:#9097a8;--ac:#f0914a' : '--bg:#fff;--bd:#dfe2ea;--tx:#14171f;--dim:#5d6577;--ac:#c4601a';
-    function items(tab) {
-      var a = [].concat(reg.tools || [], reg.pages || [], reg.external || []).filter(function (x) { return x.tab === tab; });
-      return a;
-    }
-    var html = '<style>:host{' + vars + '}' + CSS + '</style><div class="hd"><button id="back" aria-label="Back" hidden>‹</button><span>DTF Club</span><button id="rf" aria-label="Refresh">⟳</button></div>' +
+    function items(tab) { return [].concat(reg.tools || [], reg.pages || [], reg.external || []).filter(function (x) { return x.tab === tab; }); }
+    var name = act.name || (home ? 'DTF Club' : D.title || 'DTF Club');
+    var html = '<style>:host{' + vars + '}' + CSS + '</style>' +
+      '<div class="ctx' + (VIEWS ? '' : ' nov') + '"' + (home ? ' hidden' : '') + '><div class="r1"><button id="back" aria-label="Back" hidden>‹</button><span>' + esc(name) + '</span><button id="rf" aria-label="Refresh">⟳</button></div>' +
+      '<span class="nm">' + esc(name) + '</span><div class="vt" role="tablist" aria-label="' + esc(name) + ' views"' + (VIEWS ? '' : ' hidden') + '></div></div>' +
       '<div class="scrim" hidden></div><div class="sheet" hidden></div><nav class="bar" aria-label="DTF Club">';
     tabs.forEach(function (t) {
       var list = items(t.id), on = act.tab === t.id;
@@ -126,12 +191,12 @@
       else html += '<button data-t="' + t.id + '"' + (on ? ' class="on"' : '') + '>' + icon(t.id) + t.label + '</button>';
     });
     s.innerHTML = html + '</nav>';
+    UI.ctx = s.querySelector('.ctx'); UI.vt = s.querySelector('.vt');
     var sheet = s.querySelector('.sheet'), scrim = s.querySelector('.scrim');
     function close() { sheet.hidden = scrim.hidden = true; }
     s.querySelectorAll('button[data-t]').forEach(function (b) {
       b.addEventListener('click', function () {
-        var open = !sheet.hidden && sheet.getAttribute('data-t') === b.getAttribute('data-t');
-        if (open) return close();
+        if (!sheet.hidden && sheet.getAttribute('data-t') === b.getAttribute('data-t')) return close();
         sheet.setAttribute('data-t', b.getAttribute('data-t'));
         sheet.innerHTML = items(b.getAttribute('data-t')).map(function (x) {
           var href = x.path || x.url, ext = !x.path;
@@ -143,26 +208,30 @@
     scrim.addEventListener('click', close);
     sheet.addEventListener('click', function (e) { if (e.target.closest('a')) close(); });
     var back = s.getElementById('back');
-    if (act.tab !== 'home' && history.length > 1) back.hidden = false;
+    if (!home && history.length > 1) back.hidden = false;
     back.addEventListener('click', function () { history.back(); });
     s.getElementById('rf').addEventListener('click', DTF.refresh);
-    var standalone = (W.matchMedia && W.matchMedia('(display-mode: standalone)').matches) || navigator.standalone || ls('dtf.header') === '1';
-    if (standalone) { host.className = 'hdr'; root.classList.add('dtf-standalone'); }
+    if (VIEWS) {
+      UI.vt.innerHTML = VIEWS.items.map(function (it, i) { return '<button role="tab" data-i="' + i + '">' + esc(it.label) + '</button>'; }).join('');
+      UI.vt.addEventListener('click', function (e) { var b = e.target.closest('button[data-i]'); if (b) pick(+b.getAttribute('data-i')); });
+      paintViews();
+    }
+    if ((W.matchMedia && W.matchMedia('(display-mode: standalone)').matches) || navigator.standalone) root.classList.add('dtf-standalone');
     return host;
   }
 
   function layout() {
     var css = D.createElement('style');
-    css.textContent = ':root{--dtf-nav-h:0px;--dtf-top-h:0px}' +
-      'body.dtf-has-nav{padding-bottom:calc(56px + env(safe-area-inset-bottom))}' +
-      '.dtf-standalone body.dtf-has-nav{padding-top:calc(40px + env(safe-area-inset-top))}' +
-      'body.dtf-has-nav{--dtf-nav-h:calc(56px + env(safe-area-inset-bottom))}' +
-      '@media(min-width:900px){body.dtf-has-nav,.dtf-standalone body.dtf-has-nav{padding-bottom:0;padding-top:48px;--dtf-nav-h:0px}}';
+    css.textContent = ':root{--dtf-top-h:0px;--dtf-nav-h:0px}' +
+      'body.dtf-has-nav{padding-top:var(--dtf-top-h);padding-bottom:calc(56px + env(safe-area-inset-bottom));--dtf-nav-h:calc(56px + env(safe-area-inset-bottom))}' +
+      '@media(min-width:900px){body.dtf-has-nav{padding-bottom:0;--dtf-nav-h:0px}}';
     D.head.appendChild(css);
     D.body.classList.add('dtf-has-nav');
+    // reserve space before the registry arrives: phone context bar is 40px (plus any status-bar inset); desktop top bar is 48px
+    var home = location.pathname === '/' || location.pathname === '/index.html';
+    root.style.setProperty('--dtf-top-h', W.innerWidth >= 900 ? '48px' : home ? '0px' : 'calc(40px + env(safe-area-inset-top))');
   }
 
-  // Come back to the app after a long absence: ask the page to refresh itself (default: reload).
   var hiddenAt = 0;
   D.addEventListener('visibilitychange', function () {
     if (D.hidden) { hiddenAt = Date.now(); return; }
@@ -173,10 +242,14 @@
   function start() {
     try { injectHead(); sw(); } catch (e) {}
     if (embedded) { DTF.ready = Promise.resolve(DTF.registry); return; }
-    try { layout(); } catch (e) {}
+    try { layout(); initViews(); } catch (e) {}
     DTF.ready = loadRegistry().catch(function () { return FALLBACK; }).then(function (reg) {
       DTF.registry = reg; DTF.tools = reg.tools || FALLBACK.tools;
-      try { D.body.appendChild(build(reg)); } catch (e) { if (W.console) console.warn('dtf-nav failed', e); }
+      try {
+        D.body.appendChild(build(reg)); setTop();
+        W.addEventListener('resize', setTop);
+        if (W.ResizeObserver && UI.ctx) new ResizeObserver(setTop).observe(UI.ctx);
+      } catch (e) { if (W.console) console.warn('dtf-nav failed', e); }
       return reg;
     });
   }
