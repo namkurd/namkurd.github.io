@@ -4,6 +4,6 @@
  "minMessages": 8,
  "topN": 3,
  "dedupeHours": 36,
- "autoJoin": false,
+ "autoJoin": true,
  "exclude": ["voting", "slackmojis", "trade-voting"]
 }
