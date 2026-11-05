@@ -199,7 +199,7 @@ def main():
     top = rank(collect(slack, cfg, oldest), cfg)
     key = os.environ.get('ANTHROPIC_API_KEY')
     try:
-        kept = {t['href']: t['title'] for t in json.load(open(os.path.join(HUB, 'slack.json'))).get('topics', [])}   # without a key, a conversation keeps the summary it already has
+        kept = {t['href']: t['title'] for t in json.load(open(os.path.join(HUB, 'slack.json'))).get('topics', []) if not t.get('needs_summary')}   # without a key, a conversation keeps the summary it already has
     except Exception:
         kept = {}
     topics = []
@@ -215,7 +215,8 @@ def main():
                 print('%s summary failed: %s' % (name, e), file=sys.stderr)
         href = '%sarchives/%s/p%s' % (team_url, c['channel_id'], c['first']['ts'] and ('%.6f' % c['first']['ts']).replace('.', ''))
         title = title or kept.get(href)
-        topics.append({'title': title or fallback_title(c), 'channel': c['channel'], 'messages': c['messages'], 'people': c['people'],
+        # no summary yet: the title is just the first message, and the topic is flagged so the summarising routine (or a later run with a model) picks it up
+        topics.append({'title': title or fallback_title(c), **({} if title else {'needs_summary': True}), 'channel': c['channel'], 'messages': c['messages'], 'people': c['people'],
                        'href': '%sarchives/%s/p%s' % (team_url, c['channel_id'], c['first']['ts'] and ('%.6f' % c['first']['ts']).replace('.', ''))})
     out = {'schema': 1, 'windowDays': cfg['windowDays'], 'topics': topics, 'generatedAt': dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}
     path = os.path.join(HUB, 'slack.json')
