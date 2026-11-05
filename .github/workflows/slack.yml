@@ -1,15 +1,16 @@
 # Rebuilds slack.json: the three busiest conversations in the league Slack this week (public channels only).
-# Needs the repository secret SLACK_BOT_TOKEN (see tools/build_slack.py). Optional secret ANTHROPIC_API_KEY writes nicer titles.
+# Needs the repository secret SLACK_BOT_TOKEN (see tools/build_slack.py). Summaries: ANTHROPIC_API_KEY if set, otherwise GitHub Models with the job's own token.
 name: Update Slack topics
 on:
   schedule:
-    - cron: "41 11 * * *"
+    - cron: "41 3,11,19 * * *"   # every 8 hours
   workflow_dispatch:
 concurrency:
   group: hub-data
   cancel-in-progress: false
 permissions:
   contents: write
+  models: read   # lets the job summarise conversations with GitHub Models, no API key needed
 jobs:
   slack:
     runs-on: ubuntu-latest
@@ -24,6 +25,7 @@ jobs:
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Commit if changed
         run: |
           git config user.name "github-actions[bot]"
