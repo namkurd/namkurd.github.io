@@ -114,7 +114,9 @@ class Slack:
 
 def collect(slack, cfg, oldest):
     by = {}
+    n_listed = 0
     for ch in slack.pages('conversations.list', 'channels', types='public_channel', exclude_archived='true', limit=200):
+        n_listed += 1
         if ch['name'] in cfg['exclude']:
             continue
         try:
@@ -134,8 +136,10 @@ def collect(slack, cfg, oldest):
             if m.get('reply_count', 0) >= 2 and m.get('thread_ts') == m['ts']:   # a thread: its replies are part of the conversation
                 for r in slack.pages('conversations.replies', 'messages', channel=ch['id'], ts=m['ts'], oldest=str(oldest), limit=200):
                     add(r)
+        print('read #%s: %d messages in the last %d days' % (ch['name'], len(msgs), cfg['windowDays']))
         if msgs:
             by[ch['id']] = {'name': ch['name'], 'messages': list(msgs.values())}
+    print('%d public channels listed, %d with messages' % (n_listed, len(by)))
     return by
 
 
@@ -147,6 +151,7 @@ def main():
     slack = Slack(token)
     team_url = slack.call('auth.test')['url']
     oldest = time.time() - cfg['windowDays'] * 86400
+    print('workspace:', team_url)
     top = rank(collect(slack, cfg, oldest), cfg)
     key = os.environ.get('ANTHROPIC_API_KEY')
     topics = []
@@ -162,7 +167,10 @@ def main():
     out = {'schema': 1, 'windowDays': cfg['windowDays'], 'topics': topics, 'generatedAt': dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}
     path = os.path.join(HUB, 'slack.json')
     try:
-        old = json.load(open(path)); age = (dt.datetime.now(dt.timezone.utc) - dt.datetime.strptime(old['generatedAt'], '%Y-%m-%dT%H:%M:%SZ').replace(tzinfo=dt.timezone.utc)).days
+        old = json.load(open(path))
+        if not topics and old.get('topics') and (dt.datetime.now(dt.timezone.utc) - dt.datetime.strptime(old['generatedAt'], '%Y-%m-%dT%H:%M:%SZ').replace(tzinfo=dt.timezone.utc)).days < 14:
+            print('no conversation qualified: keeping the last slack.json'); return
+        age = (dt.datetime.now(dt.timezone.utc) - dt.datetime.strptime(old['generatedAt'], '%Y-%m-%dT%H:%M:%SZ').replace(tzinfo=dt.timezone.utc)).days
         if old.get('topics') == topics and age < 3:
             print('slack.json unchanged'); return
     except Exception:
