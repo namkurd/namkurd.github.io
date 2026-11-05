@@ -72,17 +72,33 @@ def fallback_title(conv):
     return 'Busy chat in #%s' % conv['channel']
 
 
-def claude_title(conv, key):
-    """One neutral sentence (about 80 characters) saying what the conversation is about, like a headline: the issue and where it landed."""
+def summary_prompt(conv):
     lines = [clean(m['text'])[:300] for m in conv['run'][:80] if clean(m['text'])]
-    body = {'model': os.environ.get('SLACK_TOPIC_MODEL', 'claude-haiku-5-5'), 'max_tokens': 60,
-            'messages': [{'role': 'user', 'content': 'Below is a fantasy football league chat (oldest first). Summarize what the conversation is about in ONE sentence of at most 80 characters, '
-                          'like a headline: the actual question or dispute and, if there is one, where it landed. Neutral and family-friendly: do not quote insults or swearing, '
-                          'no quotation marks, no emoji. Reply with only the sentence.\n\n' + '\n'.join(lines)}]}
+    return ('Below is a fantasy football league chat (oldest first). Summarize what the conversation is about in ONE sentence of at most 80 characters, '
+            'like a headline: the actual question or dispute and, if there is one, where it landed. Neutral and family-friendly: do not quote insults or swearing, '
+            'no quotation marks, no emoji. Reply with only the sentence.\n\n' + '\n'.join(lines))
+
+
+def tidy(t):
+    t = (t or '').strip().strip('"\'').rstrip('.')
+    return t[:90] if t else None
+
+
+def claude_title(conv, key):
+    """One neutral sentence (about 80 characters) saying what the conversation is about, with an Anthropic API key."""
+    body = {'model': os.environ.get('SLACK_TOPIC_MODEL', 'claude-haiku-5-5'), 'max_tokens': 60, 'messages': [{'role': 'user', 'content': summary_prompt(conv)}]}
     req = urllib.request.Request('https://api.anthropic.com/v1/messages', data=json.dumps(body).encode(),
                                  headers={'x-api-key': key, 'anthropic-version': '2023-06-01', 'content-type': 'application/json'})
-    t = json.load(urllib.request.urlopen(req, timeout=60))['content'][0]['text'].strip().strip('"\'').rstrip('.')
-    return t[:90] if t else None
+    return tidy(json.load(urllib.request.urlopen(req, timeout=60))['content'][0]['text'])
+
+
+def models_title(conv, token):
+    """The same, through GitHub Models with the workflow's own GITHUB_TOKEN (needs `models: read`): no key to create."""
+    body = {'model': os.environ.get('GITHUB_MODELS_MODEL', 'openai/gpt-4.1-mini'), 'max_tokens': 60, 'temperature': 0.2,
+            'messages': [{'role': 'user', 'content': summary_prompt(conv)}]}
+    req = urllib.request.Request('https://models.github.ai/inference/chat/completions', data=json.dumps(body).encode(),
+                                 headers={'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28'})
+    return tidy(json.load(urllib.request.urlopen(req, timeout=60))['choices'][0]['message']['content'])
 
 
 # ---------------------------------------------------------------- Slack API
@@ -163,11 +179,14 @@ def main():
     topics = []
     for c in top:
         title = None
-        if key:
+        for name, fn, cred in (('anthropic', claude_title, key), ('github-models', models_title, os.environ.get('GITHUB_TOKEN'))):
+            if title or not cred:
+                continue
             try:
-                title = claude_title(c, key)
+                title = fn(c, cred)
+                print('summary via %s: %s' % (name, title))
             except Exception as e:
-                print('title model failed: %s' % e, file=sys.stderr)
+                print('%s summary failed: %s' % (name, e), file=sys.stderr)
         href = '%sarchives/%s/p%s' % (team_url, c['channel_id'], c['first']['ts'] and ('%.6f' % c['first']['ts']).replace('.', ''))
         title = title or kept.get(href)
         topics.append({'title': title or fallback_title(c), 'channel': c['channel'], 'messages': c['messages'], 'people': c['people'],
