@@ -1,6 +1,6 @@
 // DTF Club service worker (scope "/"). Network-first everywhere so data is never stale.
 // Bump V on every change to the shell.
-const V = 8, SHELL = 'dtf-shell-v' + V, PAGES = 'dtf-pages', DATA = 'dtf-data';
+const V = 9, SHELL = 'dtf-shell-v' + V, PAGES = 'dtf-pages', DATA = 'dtf-data';
 const PRECACHE = ['/', '/offline.html', '/404.html', '/tools.json', '/manifest.webmanifest', '/shell/nav.js',
   '/shell/tokens.css', '/shell/icons/icon-192.png', '/shell/icons/icon-512.png', '/shell/icons/favicon.svg'];
 const MAX_BYTES = 1024 * 1024;

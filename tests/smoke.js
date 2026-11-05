@@ -17,7 +17,8 @@ const VIEWS = [['phone', { width: 390, height: 844 }], ['desktop', { width: 1280
     await pg.waitForTimeout(1500);
     const r = await pg.evaluate(() => {
       const n = document.querySelector('dtf-nav'); const on = n && n.shadowRoot.querySelector('.bar .on');
-      return { nav: !!n, active: on ? on.dataset.t : null, hscroll: document.documentElement.scrollWidth > innerWidth + 1 };
+      const vt = n && n.shadowRoot.querySelectorAll('.vt button'), von = n && n.shadowRoot.querySelector('.vt button.on');
+      return { nav: !!n, active: on ? on.dataset.t : null, views: vt ? vt.length : 0, view: von ? von.textContent : null, top: getComputedStyle(document.documentElement).getPropertyValue('--dtf-top-h').trim(), hscroll: document.documentElement.scrollWidth > innerWidth + 1 };
     });
     const ok = r.nav && r.active === tab && !r.hscroll;
     if (!ok || errs.length) fail++;
