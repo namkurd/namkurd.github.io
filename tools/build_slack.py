@@ -154,7 +154,7 @@ def collect(slack, cfg, oldest):
             if m.get('reply_count', 0) >= 2 and m.get('thread_ts') == m['ts']:   # a thread: its replies are part of the conversation
                 for r in slack.pages('conversations.replies', 'messages', channel=ch['id'], ts=m['ts'], oldest=str(oldest), limit=200):
                     add(r)
-        print('read #%s: %d messages in the last %d days' % (ch['name'], len(msgs), cfg['windowDays']))
+        print('read #%s: %d raw, %d counted in the last %d days (member=%s)' % (ch['name'], len(raw), len(msgs), cfg['windowDays'], ch.get('is_member')))
         if msgs:
             by[ch['id']] = {'name': ch['name'], 'messages': list(msgs.values())}
     print('%d public channels listed, %d with messages' % (n_listed, len(by)))
@@ -167,7 +167,8 @@ def main():
         print('SLACK_BOT_TOKEN not set: keeping slack.json'); return
     cfg = dict(CFG); cfg.update(json.load(open(os.path.join(HUB, 'tools', 'slack_config.json'))) if os.path.exists(os.path.join(HUB, 'tools', 'slack_config.json')) else {})
     slack = Slack(token)
-    team_url = slack.call('auth.test')['url']
+    auth = slack.call('auth.test'); team_url = auth['url']
+    print('bot: %s in %s; window starts %s UTC' % (auth.get('user'), auth.get('team'), dt.datetime.fromtimestamp(time.time() - cfg['windowDays'] * 86400, dt.timezone.utc).strftime('%Y-%m-%d %H:%M')))
     oldest = time.time() - cfg['windowDays'] * 86400
     print('workspace:', team_url)
     top = rank(collect(slack, cfg, oldest), cfg)
