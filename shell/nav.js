@@ -126,7 +126,7 @@
     '.bar .on{color:var(--tx)}.bar .on .ic{background:var(--acbg);color:var(--ac)}.bar .lb{max-width:100%;padding:0 4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}' +
     '.bar .grp .lb::after{content:" \\25B4";font-size:8px;opacity:.7}.dk{display:none}' +
     '.ctx{position:fixed;z-index:25;top:0;left:0;right:0;height:calc(44px + env(safe-area-inset-top));padding-top:env(safe-area-inset-top);border-bottom:1px solid var(--bd);display:flex;align-items:stretch;font:14px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--tx);transition:transform .22s ease}' +
-    '.ctx,.ctx button,.bar>a,.bar>button{touch-action:manipulation}' +
+    '.ctx,.ctx button,.bar>a,.bar>button{touch-action:manipulation}.vt button.dis{opacity:.4}' +
     '.ctx[hidden]{display:none}.ctx.away{transform:translateY(-100%)}' +
     '.ib{flex:none;width:44px;background:none;border:0;font-size:22px;cursor:pointer;color:var(--tx);-webkit-tap-highlight-color:transparent}.ib[hidden]{display:none}' +
     '.ttl{flex:1;min-width:0;align-self:center;text-align:center;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 8px}' +
@@ -161,22 +161,39 @@
     var f = VIEWS.items[0];
     return f && f.href && f.href.charAt(0) === '#' && !location.hash ? 0 : -1;
   }
+  function dead(e) { return !!e && (e.disabled || e.getAttribute('aria-disabled') === 'true' || /(^|\s)off(\s|$)/.test(e.className || '')); }   // a view the tool has switched off (e.g. past seasons)
+  function revealActive(cur) {   // keep the active tab in view in a strip that scrolls sideways (after layout, so the width is known)
+    function go() {
+      var v = UI.vt, on = v && v.children[cur]; if (!on || !v.clientWidth) return;
+      var vr = v.getBoundingClientRect(), r = on.getBoundingClientRect();
+      if (r.left < vr.left || r.right > vr.right) v.scrollLeft += (r.left - vr.left) - (v.clientWidth - r.width) / 2;
+    }
+    W.requestAnimationFrame(go); setTimeout(go, 350);
+  }
   function paintViews() {
     if (!VIEWS || !UI.vt) return;
     var cur = currentView();
-    [].forEach.call(UI.vt.children, function (b, i) { b.className = i === cur ? 'on' : ''; if (i === cur) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
+    [].forEach.call(UI.vt.children, function (b, i) {
+      var it = VIEWS.items[i], off = it && it.sel && dead(D.querySelector(it.sel));
+      b.className = (i === cur ? 'on' : '') + (off ? ' dis' : '');
+      if (off) b.setAttribute('aria-disabled', 'true'); else b.removeAttribute('aria-disabled');
+      if (i === cur) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current');
+    });
+    revealActive(cur);
   }
   function pick(i, fromHistory) {
     var it = VIEWS.items[i];
+    holdBar(); away(false);   // the scroll a view switch causes (page height, #anchors) must not hide the bar under the finger
     if (it.sel) {
       var e = D.querySelector(it.sel); if (!e) return;
-      if (!fromHistory && !it.native) { try { history.pushState(Object.assign({}, history.state, { dtfView: i }), ''); } catch (x) {} }
-      // answer the tap first: highlight the tab and keep the bar in view, then let the tool do its (sometimes heavy) switch on the next frame
+      if (!fromHistory && dead(e)) return;   // switched off by the tool: don't add history or pretend
+      var same = !fromHistory && i === currentView();   // tapping the tab you are on adds no history entry
+      if (!fromHistory && !it.native && !same) { try { history.pushState(Object.assign({}, history.state, { dtfView: i }), ''); } catch (x) {} }
+      // answer the tap first: highlight the tab, then let the tool do its (sometimes heavy) switch on the next frame
       [].forEach.call(UI.vt ? UI.vt.children : [], function (b, k) { b.className = k === i ? 'on' : ''; });
-      holdBar(); away(false);
       if (fromHistory) e.click(); else W.requestAnimationFrame(function () { setTimeout(function () { e.click(); paintViews(); holdBar(); }, 0); });
     } else if (it.href) {
-      if (it.href.charAt(0) === '#') location.hash = it.href; else location.href = it.href;
+      if (it.href.charAt(0) === '#') { if (location.hash !== it.href) location.hash = it.href; } else location.href = it.href;
     }
     setTimeout(paintViews, 0);
   }
@@ -192,7 +209,7 @@
       if (s && typeof s.dtfView === 'number') pick(s.dtfView, true);
       else if (s === null && !VIEWS.items.some(function (x) { return x.native || !x.sel; }) && VIEWS.items[VIEWS.initial]) pick(VIEWS.initial, true);
     });
-    W.addEventListener('hashchange', paintViews);
+    W.addEventListener('hashchange', function () { holdBar(); paintViews(); });
     VIEWS.items.forEach(function (it) {
       var e = it.sel && D.querySelector(it.sel);
       if (e && W.MutationObserver) new MutationObserver(paintViews).observe(e, { attributes: true, attributeFilter: ['class', 'aria-pressed', 'aria-selected'] });
