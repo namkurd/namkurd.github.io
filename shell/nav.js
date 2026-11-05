@@ -1,4 +1,4 @@
-/* Rumble Central shell: <script src="/shell/nav.js" defer></script>
+/* Rumble Hub shell: <script src="/shell/nav.js" defer></script>
  * Global nav (bottom tabs on phones, top bar on desktop), a context bar (back, tool name, refresh, view tabs),
  * the install manifest, and window.DTF. Safe on any page; hidden in iframes and with ?embed=1.
  *
@@ -70,7 +70,7 @@
     head('meta[name="theme-color"]', function () { return el('meta', { name: 'theme-color', content: '#0f1115' }); });
     head('meta[name="apple-mobile-web-app-capable"]', function () { return el('meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }); });
     head('meta[name="mobile-web-app-capable"]', function () { return el('meta', { name: 'mobile-web-app-capable', content: 'yes' }); });
-    head('meta[name="apple-mobile-web-app-title"]', function () { return el('meta', { name: 'apple-mobile-web-app-title', content: 'Rumble Central' }); });
+    head('meta[name="apple-mobile-web-app-title"]', function () { return el('meta', { name: 'apple-mobile-web-app-title', content: 'Rumble Hub' }); });
     head('meta[name="apple-mobile-web-app-status-bar-style"]', function () { return el('meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' }); });
     var vp = D.head.querySelector('meta[name="viewport"]');
     if (vp && !/viewport-fit/.test(vp.content)) vp.content += ', viewport-fit=cover';
@@ -337,7 +337,7 @@
     var host = D.createElement('dtf-nav'), s = host.attachShadow({ mode: 'open' });
     var vars = '--bg:rgba(20,23,29,.97);--bg2:#1b1f27;--bd:#2a2f3a;--tx:#e8eaf0;--dim:#9097a8;--ac:#f0914a;--acbg:rgba(240,145,74,.16)';   // dark only
     function items(tab) { return [].concat(reg.tools || [], reg.pages || [], reg.external || []).filter(function (x) { return x.tab === tab; }); }
-    var name = act.name || (home ? 'Rumble Central' : D.title || 'Rumble Central');
+    var name = act.name || (home ? 'Rumble Hub' : D.title || 'Rumble Hub');
     var ctxHidden = home || (!VIEWS && !sa);
     var html = '<style>:host{' + vars + '}' + CSS + '.dsk{display:none}@media(min-width:900px){.bar.mbar{display:none}.bar.dsk{display:flex}}</style>' +
       '<div class="ctx' + (VIEWS ? '' : ' nov') + '"' + (ctxHidden ? ' hidden' : '') + '><button class="ib" id="back" aria-label="Back" hidden>‹</button>' +
@@ -346,7 +346,7 @@
       '<div class="scrim" hidden></div><div class="sheet" role="dialog" aria-label="Menu" hidden></div>' +
       '<div class="who" hidden><div class="wc" role="dialog" aria-label="Who are you?"><h3>Who are you?</h3><p>Pick your team once. It is remembered on this phone and used across the app.</p><div class="wg"></div><div class="wf"><button id="wclear">Not in this list</button><button id="wx">Close</button></div></div></div>';
     // phone: bottom tabs. A group tab shows the tool you are in; a single-tool tab goes straight there.
-    html += '<nav class="bar mbar" aria-label="Rumble Central">';
+    html += '<nav class="bar mbar" aria-label="Rumble Hub">';
     tabs.forEach(function (t) {
       var list = items(t.id), on = act.tab === t.id, cur = on && act.name ? (act.short || act.name) : null;
       var inner = '<span class="ic">' + icon(t.id) + '</span><span class="lb">' + esc(t.id !== 'home' && list.length > 1 && cur ? cur : t.label) + '</span>';
@@ -355,7 +355,7 @@
       else html += '<button class="grp' + (on ? ' on' : '') + '" data-t="' + t.id + '" aria-haspopup="dialog" aria-expanded="false">' + inner + '</button>';
     });
     // desktop: every tool on one bar
-    html += '</nav><nav class="bar dsk" aria-label="Rumble Central"><a class="brand" href="/">Rumble Central</a>';
+    html += '</nav><nav class="bar dsk" aria-label="Rumble Hub"><a class="brand" href="/">Rumble Hub</a>';
     [].concat(reg.tools || [], reg.pages || []).forEach(function (x) {
       html += '<a href="' + esc(x.path) + '"' + (act.id === x.id ? ' class="on" aria-current="page"' : '') + '><span class="lb">' + esc(x.short || x.name) + '</span></a>';
     });

@@ -1,6 +1,6 @@
 {
-  "name": "Rumble Central",
-  "short_name": "Rumble Central",
+  "name": "Rumble Hub",
+  "short_name": "Rumble Hub",
   "description": "The DTF Club fantasy football league: Rumbles, records, trades, waivers and rules.",
   "start_url": "/?source=pwa",
   "scope": "/",
