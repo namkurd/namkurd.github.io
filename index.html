@@ -48,9 +48,12 @@
   .row.mine { background: color-mix(in srgb, var(--ac) 10%, transparent); box-shadow: inset 3px 0 0 var(--ac); }
   .you { margin-left: 6px; padding: 1px 6px; border-radius: 8px; background: var(--ac); color: #0f1115; font-size: .62rem; font-weight: 800; vertical-align: 1px; }
   /* a trade: who is winning, then every player each side gets (the line shrinks to fit) */
-  .trade b .wk { margin-left: 6px; font-size: .7rem; font-weight: 500; font-style: normal; color: var(--dtf-dim); }
-  .tline { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0 8px; }
-  .win { display: inline-block; margin: 1px 0 1px; padding: 1px 8px; border-radius: 9px; background: color-mix(in srgb, var(--ac) 22%, transparent); color: var(--ac); font-size: .7rem; font-weight: 700; }
+  .row.trade { grid-template-columns: 30px minmax(0, 1fr) 12px; }
+  .rkc { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  .wkn { font-size: .6rem; font-style: normal; line-height: 1; color: var(--dtf-dim); white-space: nowrap; }
+  .tline { display: flex; align-items: center; justify-content: space-between; gap: 8px; }   /* title left, winner tag right, on every trade */
+  .tline b { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .win { flex: none; white-space: nowrap; padding: 1px 8px; border-radius: 9px; background: color-mix(in srgb, var(--ac) 22%, transparent); color: var(--ac); font-size: .7rem; font-weight: 700; }
   .win.even { background: color-mix(in srgb, var(--dtf-dim) 20%, transparent); color: var(--dtf-dim); }
   .trade .gets { display: block; white-space: nowrap; overflow: hidden; text-overflow: clip; font-size: .72rem; color: var(--dtf-dim); }
   .trade .gets i { font-style: normal; color: var(--dtf-text); }
@@ -150,18 +153,18 @@
   // ---- the feed: a labelled top 3 per tab (phone) / five columns (desktop)
   var META = {
     matchups: { tab: 'Matchups', title: function (y) { return 'Best matchups of ' + y; }, cap: 'Ranked by drama: tight finish, lead changes, H2H bonus', ac: '#f0914a' },
-    trades: { tab: 'Trades', title: function (y) { return 'Biggest trades of ' + y; }, cap: 'Ranked by value moved · tag = who is winning on trade value', ac: '#22d3ee' },
+    trades: { tab: 'Trades', title: function (y) { return 'Biggest trades of ' + y; }, cap: 'By value moved · ▲ tag = winner on net lineup value', ac: '#22d3ee' },
     waivers: { tab: 'Waivers', title: function (y) { return 'Best waiver claims of ' + y; }, cap: 'Ranked by points above replacement (PAR) · $ = FAB bid', ac: '#a3e635' },
     'free-agents': { tab: 'Free agents', title: function (y) { return 'Best free-agent pickups of ' + y; }, cap: 'Ranked by points above replacement (PAR).', ac: '#a3e635' },
     slack: { tab: 'Slack', title: function () { return 'Hot in Slack this week'; }, cap: 'The busiest conversations of the past 7 days.', ac: '#e8eaf0' }
   };
   function rowHtml(it, id) {
     var ext = /^https?:/.test(it.href), mgrs = (it.managers || []).join('|');
-    var open = '<a class="row' + (id === 'trades' ? ' trade' : '') + '" data-m="' + esc(mgrs) + '" href="' + esc(it.href) + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '><span class="rk">' + it.rank + '</span>';
+    var open = '<a class="row' + (id === 'trades' ? ' trade' : '') + '" data-m="' + esc(mgrs) + '" href="' + esc(it.href) + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '>' + (id === 'trades' && it.sub ? '<span class="rkc"><span class="rk">' + it.rank + '</span><em class="wkn">' + esc(it.sub) + '</em></span>' : '<span class="rk">' + it.rank + '</span>');
     if (id === 'trades' && it.gets) {
-      var win = it.winner ? '<span class="win">' + esc(it.winner) + ' winning · +' + it.edge.toFixed(1) + '</span>' : '<span class="win even">Even trade</span>';
+      var win = it.winner ? '<span class="win">▲ ' + esc(it.winner) + ' +' + it.edge.toFixed(1) + '</span>' : '<span class="win even">Even</span>';
       var gets = it.gets.map(function (g) { return '<i>' + esc(g.m) + '</i> gets ' + esc(g.players.join(', ')); }).join(' · ');
-      return open + '<span><span class="tline"><b>' + esc(it.title) + '<em class="wk">' + esc(it.sub) + '</em><span class="youslot"></span></b>' + win + '</span><small class="gets">' + gets + '</small></span><span class="go" aria-hidden="true">›</span></a>';
+      return open + '<span><span class="tline"><b>' + esc(it.title) + '<span class="youslot"></span></b>' + win + '</span><small class="gets">' + gets + '</small></span><span class="go" aria-hidden="true">›</span></a>';
     }
     return open + '<span><b>' + esc(it.title) + '<span class="youslot"></span></b><small>' + esc(it.sub) + '</small></span><span class="go" aria-hidden="true">›</span></a>';
   }

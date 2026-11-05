@@ -45,13 +45,13 @@
     {
      "rank": 1,
      "title": "Aidan ⇄ Christian",
-     "sub": "Week 6",
+     "sub": "Wk 6",
      "managers": [
       "Aidan",
       "Christian"
      ],
-     "winner": "Aidan",
-     "edge": 4.8,
+     "winner": "Christian",
+     "edge": 25.6,
      "gets": [
       {
        "m": "Aidan",
@@ -68,18 +68,18 @@
        ]
       }
      ],
-     "href": "/SleeperTradeNodes/?season=2026&manager=Aidan"
+     "href": "/SleeperTradeNodes/?season=2026&manager=Christian"
     },
     {
      "rank": 2,
      "title": "Ben ⇄ Alex",
-     "sub": "Week 4",
+     "sub": "Wk 4",
      "managers": [
       "Ben",
       "Alex"
      ],
-     "winner": "Ben",
-     "edge": 0.6,
+     "winner": "Alex",
+     "edge": 75.9,
      "gets": [
       {
        "m": "Ben",
@@ -95,18 +95,18 @@
        ]
       }
      ],
-     "href": "/SleeperTradeNodes/?season=2026&manager=Ben"
+     "href": "/SleeperTradeNodes/?season=2026&manager=Alex"
     },
     {
      "rank": 3,
      "title": "Alex ⇄ Ankit",
-     "sub": "Week 8",
+     "sub": "Wk 8",
      "managers": [
       "Alex",
       "Ankit"
      ],
-     "winner": "Alex",
-     "edge": 9.4,
+     "winner": "Ankit",
+     "edge": 11.7,
      "gets": [
       {
        "m": "Alex",
@@ -123,7 +123,7 @@
        ]
       }
      ],
-     "href": "/SleeperTradeNodes/?season=2026&manager=Alex"
+     "href": "/SleeperTradeNodes/?season=2026&manager=Ankit"
     }
    ]
   },
@@ -256,5 +256,5 @@
    "rumbles": 31
   }
  ],
- "generatedAt": "2026-11-05T16:08:42Z"
+ "generatedAt": "2026-11-05T16:47:03Z"
 }
