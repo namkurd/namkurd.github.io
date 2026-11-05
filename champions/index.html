@@ -22,6 +22,8 @@
   .team { color: var(--dtf-dim); font-size: .85rem; }
   .tally { display: inline-block; margin-top: 4px; font-size: .72rem; color: var(--dtf-dim); }
   h2 { margin: 22px 2px 6px; font-size: 1rem; }
+  .tr { height: 1.25em; width: auto; vertical-align: -.25em; }
+  .shot .tr { height: 78%; vertical-align: baseline; filter: drop-shadow(0 6px 14px rgba(0,0,0,.5)); }
   .list { border: 1px solid var(--dtf-border); border-radius: 16px; background: var(--dtf-panel); overflow: hidden; }
   .item { border-top: 1px solid var(--dtf-border); }
   .item:first-child { border-top: 0; }
@@ -44,7 +46,7 @@
 <h1>Champions &amp; Sackos</h1>
 <p class="sub">The reigning champion, the reigning sacko, and everyone before them.</p>
 <div class="hero" id="hero"></div>
-<h2>🏆 Hall of Champions</h2><div class="list" id="champs"></div>
+<h2><img class="tr" src="/shell/icons/trophy.png" alt="" decoding="async"> Hall of Champions</h2><div class="list" id="champs"></div>
 <h2>💩 The Sacko Wall</h2><div class="list" id="sackos"></div>
 <p class="hint" id="hint" hidden>Photos: send them to Claude with the year and champion / sacko, or add the files to <code>champions/photos/</code> and list them in <code>champions/data.json</code>.</p>
 </div>
@@ -62,7 +64,7 @@
       var e = s[kind]; if (!e) return '';
       var photo = (e.photos || [])[0], isC = kind === 'champion', n = tally(kind, e.m, s.season);
       return '<div class="card' + (isC ? '' : ' sacko') + '"><div class="shot' + (photo ? '' : ' none') + '">' +
-        (photo ? '<img src="' + esc(photo.src) + '" alt="' + esc(e.m) + '" loading="lazy">' : (isC ? '🏆' : '💩') + '<small>No photo yet</small>') + '</div>' +
+        (photo ? '<img src="' + esc(photo.src) + '" alt="' + esc(e.m) + '" loading="lazy">' : (isC ? '<img class="tr" src="/shell/icons/trophy.png" alt="" decoding="async">' : '💩') + '<small>No photo yet</small>') + '</div>' +
         '<div class="cap"><div class="kick">' + s.season + (isC ? ' champion' : ' sacko') + '</div><div class="who">' + esc(e.m) + you(e.m) + '</div>' +
         (e.team ? '<div class="team">' + esc(e.team) + '</div>' : '') + '<span class="tally">' + ord(n) + (isC ? ' title' : ' sacko') + '</span></div></div>';
     }
