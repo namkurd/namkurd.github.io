@@ -24,7 +24,12 @@
    "champion": {
     "m": "Alex",
     "team": "Jazz Hands Team",
-    "photos": []
+    "photos": [
+     {
+      "src": "/champions/photos/2024-champion.jpg",
+      "caption": "Alex, 2024 champion"
+     }
+    ]
    },
    "sacko": {
     "m": "Jake",

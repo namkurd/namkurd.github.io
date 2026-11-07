@@ -40,6 +40,13 @@
   .pics figure { margin: 0; }
   .pics img { width: 100%; border-radius: 12px; display: block; aspect-ratio: 3 / 4; object-fit: cover; object-position: 50% 20%; background: #000; }
   .pics figcaption { margin-top: 3px; font-size: .72rem; color: var(--dtf-dim); }
+  /* the finals-week Rumble card, squeezed to sit beside a photo: team, then the starters, then the total */
+  .rcard { min-width: 0; border: 1px solid var(--dtf-border); border-radius: 12px; background: color-mix(in srgb, var(--dtf-bg) 55%, var(--dtf-panel)); padding: 7px 8px 6px; font-size: .66rem; line-height: 1.25; align-self: start; }
+  .rch { display: flex; align-items: center; gap: 6px; padding-bottom: 5px; margin-bottom: 3px; border-bottom: 1px solid var(--dtf-border); }
+  .rch .lg { flex: none; width: 28px; height: 28px; border-radius: 50%; object-fit: cover; background: #232a36; display: grid; place-items: center; font-weight: 800; font-size: .8rem; color: var(--dtf-dim); }
+  .rct { min-width: 0; } .rct b { display: block; font-size: .74rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .rct span { display: block; color: var(--dtf-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .rcl { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 4px; padding: 1px 0; } .rcl i { font-style: normal; color: var(--dtf-dim); } .rcl span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .rcl em { font-style: normal; font-variant-numeric: tabular-nums; }
+  .rcf { display: flex; justify-content: space-between; gap: 6px; margin-top: 3px; padding-top: 4px; border-top: 1px solid var(--dtf-border); color: var(--dtf-dim); } .rcf b { color: var(--dtf-text); font-variant-numeric: tabular-nums; }
   .hint { margin-top: 18px; font-size: .78rem; color: var(--dtf-dim); }
 </style>
 </head><body class="dtf-page"><div class="dtf-wrap">
@@ -56,7 +63,9 @@
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function me() { try { var v = JSON.parse(localStorage.getItem('dtf.me') || 'null'); return v && v.name || null; } catch (e) { return null; } }
   function ord(n) { var s = ['th', 'st', 'nd', 'rd'], v = n % 100; return n + (s[(v - 20) % 10] || s[v] || s[0]); }
-  fetch('/champions/data.json', { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(function (d) {
+  var CARDS = {};
+  var cardsP = fetch('/champions/cards.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : {}; }).then(function (j) { CARDS = (j && j.seasons) || {}; }).catch(function () {});
+  fetch('/champions/data.json', { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(function (d) { return cardsP.then(function () { return d; }); }).then(function (d) {
     var seasons = (d.seasons || []).slice().sort(function (a, b) { return b.season - a.season; }), mine = me(), anyPhoto = false;
     function tally(kind, m, upTo) { return seasons.filter(function (s) { return s[kind] && s[kind].m === m && s.season <= upTo; }).length; }
     function you(m) { return m === mine ? '<span class="you">YOU</span>' : ''; }
@@ -70,13 +79,19 @@
     }
     var latest = seasons.filter(function (s) { return s.champion; })[0], latestS = seasons.filter(function (s) { return s.sacko; })[0];
     $('hero').innerHTML = (latest ? card('champion', latest) : '') + (latestS ? card('sacko', latestS) : '');
+    function rcard(rc) {
+      var logo = rc.logo ? '<img class="lg" src="' + esc(rc.logo) + '" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML=\'<span class=lg>' + esc((rc.team || rc.m || '?').charAt(0)) + '</span>\'">' : '<span class="lg">' + esc((rc.team || rc.m || '?').charAt(0)) + '</span>';
+      return '<div class="rcard" aria-label="Week ' + rc.week + ' lineup"><div class="rch">' + logo + '<div class="rct"><b>' + esc(rc.team || rc.m) + '</b><span>' + esc(rc.record) + ' reg. season</span></div></div>' +
+        rc.lineup.map(function (l) { return '<div class="rcl"><i>' + esc(l.s) + '</i><span>' + esc(l.n) + '</span><em>' + l.p.toFixed(1) + '</em></div>'; }).join('') +
+        '<div class="rcf"><span>Wk ' + rc.week + (rc.rumbles != null ? ' · ' + rc.rumbles + ' Rumbles' : '') + '</span><b>' + rc.total.toFixed(1) + '</b></div></div>';
+    }
     function list(kind, el) {
       el.innerHTML = seasons.filter(function (s) { return s[kind]; }).map(function (s) {
-        var e = s[kind], ph = e.photos || [], head = '<span class="yr">' + s.season + '</span><span class="nm">' + esc(e.m) + you(e.m) + (e.team ? '<i>' + esc(e.team) + '</i>' : '') + '</span>';
-        if (!ph.length) return '<div class="item"><div class="line">' + head + '<span class="cam"></span></div></div>';
-        anyPhoto = true;
-        return '<details class="item"><summary>' + head + '<span class="cam">📷 ' + ph.length + '</span></summary><div class="pics">' +
-          ph.map(function (p) { return '<figure><img src="' + esc(p.src) + '" alt="' + esc(e.m) + ' ' + s.season + '" loading="lazy">' + (p.caption ? '<figcaption>' + esc(p.caption) + '</figcaption>' : '') + '</figure>'; }).join('') + '</div></details>';
+        var e = s[kind], ph = e.photos || [], rc = (CARDS[s.season] || {})[kind], head = '<span class="yr">' + s.season + '</span><span class="nm">' + esc(e.m) + you(e.m) + (e.team ? '<i>' + esc(e.team) + '</i>' : '') + '</span>';
+        if (!ph.length && !rc) return '<div class="item"><div class="line">' + head + '<span class="cam"></span></div></div>';
+        if (ph.length) anyPhoto = true;
+        return '<details class="item"><summary>' + head + '<span class="cam">' + (ph.length ? '📷 ' + ph.length : 'Wk ' + rc.week + ' card') + '</span></summary><div class="pics">' +
+          ph.map(function (p) { return '<figure><img src="' + esc(p.src) + '" alt="' + esc(e.m) + ' ' + s.season + '" loading="lazy">' + (p.caption ? '<figcaption>' + esc(p.caption) + '</figcaption>' : '') + '</figure>'; }).join('') + (rc ? rcard(rc) : '') + '</div></details>';
       }).join('');
     }
     list('champion', $('champs')); list('sacko', $('sackos'));
