@@ -93,6 +93,8 @@ def main():
                 if rivals:
                     opp = by_name[max(rivals, key=lambda g: g['loser_score'])['loser']]
                     link = '/SleeperLiveRumbles/rumbles.html?season=%d&wp=%d.%d.%d' % (y, wk, rid, opp)
+            elif (week.get(str(rid)) or {}).get('opponent_roster_id') is not None:   # the sacko's own finals-week game
+                link = '/SleeperLiveRumbles/rumbles.html?season=%d&wp=%d.%d.%d' % (y, wk, rid, week[str(rid)]['opponent_roster_id'])
             out.setdefault(str(y), {})[kind] = {'m': e['m'], 'team': name, 'logo': logo, 'record': '%d-%d' % (r['h2h_w'], r['h2h_l']), 'week': wk,
                                                  'total': round(sum(l['p'] for l in lines), 2), 'rumbles': (week.get(str(rid)) or {}).get('rumbles'), 'lineup': lines, **({'link': link} if link else {})}
     json.dump({'schema': 1, 'note': 'Built by tools/build_champion_cards.py', 'seasons': out}, open(os.path.join(HUB, 'champions', 'cards.json'), 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
