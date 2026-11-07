@@ -68,6 +68,7 @@ def main():
         rows = {r['manager']: r for r in hist['standings']}
         unnamed = [r for r in hist['standings'] if r['manager'].startswith('Roster ')]   # a seat Sleeper had no owner name for that year
         week = (hist.get('extra_weekly') or {}).get(str(wk)) or hist['weekly'].get(str(wk)) or {}
+        by_name = {r['manager']: r['roster_id'] for r in hist['standings']}
         for kind in ('champion', 'sacko'):
             e = s.get(kind)
             if not e or (e['m'] not in rows and len(unnamed) != 1):
@@ -86,8 +87,14 @@ def main():
             for i, (pid, pts) in enumerate(lineup):
                 nm, pos = epa['names'].get(str(pid), [str(pid), ''])
                 lines.append({'s': SLOT.get(slots[i], slots[i]) if i < len(slots) else pos, 'n': short(nm, pos), 'p': round(pts, 2)})
+            link = None
+            if kind == 'champion':   # the final: the champion against the closest loser (a 3-team final is two rows), as a Rumble Central ?wp=week.me.them link
+                rivals = [g for g in games if g['season'] == y and g['week'] == wk and g['winner'] == e['m'] and g['loser'] in by_name]
+                if rivals:
+                    opp = by_name[max(rivals, key=lambda g: g['loser_score'])['loser']]
+                    link = '/SleeperLiveRumbles/rumbles.html?season=%d&wp=%d.%d.%d' % (y, wk, rid, opp)
             out.setdefault(str(y), {})[kind] = {'m': e['m'], 'team': name, 'logo': logo, 'record': '%d-%d' % (r['h2h_w'], r['h2h_l']), 'week': wk,
-                                                 'total': round(sum(l['p'] for l in lines), 2), 'rumbles': (week.get(str(rid)) or {}).get('rumbles'), 'lineup': lines}
+                                                 'total': round(sum(l['p'] for l in lines), 2), 'rumbles': (week.get(str(rid)) or {}).get('rumbles'), 'lineup': lines, **({'link': link} if link else {})}
     json.dump({'schema': 1, 'note': 'Built by tools/build_champion_cards.py', 'seasons': out}, open(os.path.join(HUB, 'champions', 'cards.json'), 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
     open(os.path.join(HUB, 'champions', 'cards.json'), 'a').write('\n')
     print('wrote cards for', {y: sorted(v) for y, v in out.items()})

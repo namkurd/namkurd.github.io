@@ -47,6 +47,7 @@
   .rct { min-width: 0; } .rct b { display: block; font-size: .74rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .rct span { display: block; color: var(--dtf-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .rcl { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 4px; padding: 1px 0; } .rcl i { font-style: normal; color: var(--dtf-dim); } .rcl span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .rcl em { font-style: normal; font-variant-numeric: tabular-nums; }
   .rcf { display: flex; justify-content: space-between; gap: 6px; margin-top: 3px; padding-top: 4px; border-top: 1px solid var(--dtf-border); color: var(--dtf-dim); } .rcf b { color: var(--dtf-text); font-variant-numeric: tabular-nums; }
+  .rcf .watch { color: var(--dtf-accent); font-weight: 700; text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
   .hint { margin-top: 18px; font-size: .78rem; color: var(--dtf-dim); }
 </style>
 </head><body class="dtf-page"><div class="dtf-wrap">
@@ -83,7 +84,7 @@
       var logo = rc.logo ? '<img class="lg" src="' + esc(rc.logo) + '" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML=\'<span class=lg>' + esc((rc.team || rc.m || '?').charAt(0)) + '</span>\'">' : '<span class="lg">' + esc((rc.team || rc.m || '?').charAt(0)) + '</span>';
       return '<div class="rcard" aria-label="Week ' + rc.week + ' lineup"><div class="rch">' + logo + '<div class="rct"><b>' + esc(rc.team || rc.m) + '</b><span>' + esc(rc.record) + ' reg. season</span></div></div>' +
         rc.lineup.map(function (l) { return '<div class="rcl"><i>' + esc(l.s) + '</i><span>' + esc(l.n) + '</span><em>' + l.p.toFixed(1) + '</em></div>'; }).join('') +
-        '<div class="rcf"><span>Wk ' + rc.week + (rc.rumbles != null ? ' · ' + rc.rumbles + ' Rumbles' : '') + '</span><b>' + rc.total.toFixed(1) + '</b></div></div>';
+        '<div class="rcf">' + (rc.link ? '<a class="watch" href="' + esc(rc.link) + '" title="Watch the final in Rumble Central" aria-label="Watch the final in Rumble Central">▶ Watch</a>' : '<span>Total</span>') + '<b>' + rc.total.toFixed(1) + '</b></div></div>';
     }
     function list(kind, el) {
       el.innerHTML = seasons.filter(function (s) { return s[kind]; }).map(function (s) {
