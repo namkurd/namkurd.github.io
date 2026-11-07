@@ -47,6 +47,9 @@
   .rct { min-width: 0; } .rct b { display: block; font-size: .74rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .rct span { display: block; color: var(--dtf-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .rcl { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 4px; padding: 1px 0; } .rcl i { font-style: normal; color: var(--dtf-dim); } .rcl span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .rcl em { font-style: normal; font-variant-numeric: tabular-nums; }
   .rcf { display: flex; justify-content: space-between; gap: 6px; margin-top: 3px; padding-top: 4px; border-top: 1px solid var(--dtf-border); color: var(--dtf-dim); } .rcf b { color: var(--dtf-text); font-variant-numeric: tabular-nums; }
+  .rcw { display: flex; flex-direction: column; gap: 6px; align-self: start; min-width: 0; }
+  .rcw .rcard { align-self: stretch; }
+  .rcw .watch { display: block; text-align: center; padding: 5px 6px; border-radius: 8px; background: var(--dtf-accent, #f0914a); color: #0f1115; font-size: .64rem; white-space: nowrap; font-weight: 700; text-decoration: none; }
   .hint { margin-top: 18px; font-size: .78rem; color: var(--dtf-dim); }
 </style>
 </head><body class="dtf-page"><div class="dtf-wrap">
@@ -85,13 +88,14 @@
         rc.lineup.map(function (l) { return '<div class="rcl"><i>' + esc(l.s) + '</i><span>' + esc(l.n) + '</span><em>' + l.p.toFixed(1) + '</em></div>'; }).join('') +
         '<div class="rcf"><span>Wk ' + rc.week + (rc.rumbles != null ? ' · ' + rc.rumbles + ' Rumbles' : '') + '</span><b>' + rc.total.toFixed(1) + '</b></div></div>';
     }
+    function rblock(rc) { return rc.link ? '<div class="rcw">' + rcard(rc) + '<a class="watch" href="' + esc(rc.link) + '">▶ Watch in Rumble Central</a></div>' : rcard(rc); }
     function list(kind, el) {
       el.innerHTML = seasons.filter(function (s) { return s[kind]; }).map(function (s) {
         var e = s[kind], ph = e.photos || [], rc = (CARDS[s.season] || {})[kind], head = '<span class="yr">' + s.season + '</span><span class="nm">' + esc(e.m) + you(e.m) + (e.team ? '<i>' + esc(e.team) + '</i>' : '') + '</span>';
         if (!ph.length && !rc) return '<div class="item"><div class="line">' + head + '<span class="cam"></span></div></div>';
         if (ph.length) anyPhoto = true;
         return '<details class="item"><summary>' + head + '<span class="cam">' + (ph.length ? '📷 ' + ph.length : 'Wk ' + rc.week + ' card') + '</span></summary><div class="pics">' +
-          ph.map(function (p) { return '<figure><img src="' + esc(p.src) + '" alt="' + esc(e.m) + ' ' + s.season + '" loading="lazy">' + (p.caption ? '<figcaption>' + esc(p.caption) + '</figcaption>' : '') + '</figure>'; }).join('') + (rc ? rcard(rc) : '') + '</div></details>';
+          ph.map(function (p) { return '<figure><img src="' + esc(p.src) + '" alt="' + esc(e.m) + ' ' + s.season + '" loading="lazy">' + (p.caption ? '<figcaption>' + esc(p.caption) + '</figcaption>' : '') + '</figure>'; }).join('') + (rc ? rblock(rc) : '') + '</div></details>';
       }).join('');
     }
     list('champion', $('champs')); list('sacko', $('sackos'));
