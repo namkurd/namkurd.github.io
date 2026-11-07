@@ -52,7 +52,7 @@ Only **public** channels are read. This repo and site are public, so what ends u
 
 ## IR eligibility on Home
 
-The hourly feed job checks out `namkurd/FAB-Management`, runs its `ir_check.py --json` (Sleeper API only) and `tools/build_feed.py` stores the result as `ir` in `feed.json`. Home shows a one-line status (green = nobody on IR illegally; red = on IR but not eligible; amber = hurt but can't go on IR until next week); tap it to expand the names. Outside the regular season the check can't run and the last status is kept.
+The hourly feed job checks out `namkurd/FAB-Management`, runs its `ir_check.py --json` (Sleeper API only) and `tools/build_feed.py` stores the result as `ir` in `feed.json`. Home shows a one-line status (✅ nobody on IR illegally; ⛔ red = a player is in the IR slot who isn't eligible; 🟡 yellow = a hurt player added this week who isn't IR-eligible until next week, only a heads-up while he's on the bench); tap it to expand the names. Outside the regular season the check can't run and the last status is kept.
 
 ## Credits
 
