@@ -258,9 +258,24 @@
  ],
  "ir": {
   "week": 9,
-  "state": "clear",
+  "state": "blocked",
   "violations": [],
-  "blocked": []
+  "blocked": [
+   {
+    "m": "Joe",
+    "player": "T. Spears",
+    "pos": "RB",
+    "status": "Out",
+    "how": "waiver"
+   },
+   {
+    "m": "Joe",
+    "player": "Z. Knight",
+    "pos": "RB",
+    "status": "Out",
+    "how": "waiver"
+   }
+  ]
  },
- "generatedAt": "2026-11-05T18:38:08Z"
+ "generatedAt": "2026-11-07T16:53:44Z"
 }
