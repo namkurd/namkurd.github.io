@@ -274,8 +274,15 @@
     "pos": "RB",
     "status": "Out",
     "how": "waiver"
+   },
+   {
+    "m": "Steven",
+    "player": "X. Worthy",
+    "pos": "WR",
+    "status": "Out",
+    "how": "free agent"
    }
   ]
  },
- "generatedAt": "2026-11-07T16:53:44Z"
+ "generatedAt": "2026-11-08T23:47:18Z"
 }
