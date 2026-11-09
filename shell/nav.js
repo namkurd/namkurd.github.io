@@ -318,6 +318,15 @@
   function setTop() {
     var pad = topPad(), h = AWAY && mobile() ? (standalone() ? inset() : 0) : pad;
     root.style.setProperty('--dtf-top-pad', pad + 'px'); root.style.setProperty('--dtf-top-h', h + 'px');
+    statusCover(AWAY && mobile() && standalone() && h > 0 && !isHome());
+  }
+  // With the top bar hidden, the strip under the status bar belongs to no one: scrolled content showed through it above a tool's own sticky bar.
+  var cover = null;
+  function statusCover(on) {
+    if (!on) { if (cover) cover.style.display = 'none'; return; }
+    if (!cover) { cover = D.createElement('div'); cover.setAttribute('aria-hidden', 'true'); D.body.appendChild(cover); }
+    var bg = ''; [D.body, D.documentElement].some(function (n) { var c = W.getComputedStyle(n).backgroundColor; if (c && !/rgba\(0, 0, 0, 0\)|transparent/.test(c)) { bg = c; return true; } });
+    cover.style.cssText = 'position:fixed;z-index:1000;top:0;left:0;right:0;height:var(--dtf-top-h);pointer-events:none;background:' + (bg || '#0f1115');
   }
   var holdUntil = 0;   // a view switch changes the page height, and the resulting scroll must not hide the bar under the finger
   function holdBar() { holdUntil = Date.now() + 900; }
