@@ -58,7 +58,7 @@
    "champion": {
     "m": "Ben",
     "team": "Maison Champ Renaud",
-    "photos": []
+    "photos": [{"src": "/champions/photos/2022-champion.jpg", "caption": "Ben, 2022 champion"}]
    },
    "sacko": {
     "m": "Ankit",
