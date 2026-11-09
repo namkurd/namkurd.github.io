@@ -16,6 +16,7 @@
   .next b { color: var(--dtf-text); font-weight: 600; }
   .next[hidden] { display: none; }
 
+  /* four equal tiles per row, two rows; Champions & Sackos spans the full width */
   .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(4px, calc(var(--avail) * .007), 10px); --plate: clamp(26px, calc(var(--avail) * .046), 62px); }
   /* each tool has its own colour (--c, optional --c2) from tools.json: tinted glow, gradient edge, dark logo plate */
   .dtf-wrap a.tile { color: var(--dtf-text); }
@@ -88,7 +89,7 @@
   @media (min-width: 900px) {
     .dtf-wrap { max-width: 1200px; padding-top: 14px; }
     h1.home { font-size: 1.6rem; } .next { font-size: .9rem; }
-    .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(6px, calc(var(--avail) * .012), 14px); --plate: clamp(34px, calc(var(--avail) * .044), 76px); }
+    .grid { gap: clamp(6px, calc(var(--avail) * .012), 14px); --plate: clamp(34px, calc(var(--avail) * .044), 76px); }
     .tile { padding: clamp(6px, calc(var(--avail) * .008), 16px) 10px clamp(6px, calc(var(--avail) * .006), 15px); gap: 3px; } .tile b { font-size: 1rem; margin-top: clamp(2px, calc(var(--avail) * .006), 8px); } .tile .t { display: block; }
   }
   /* wide screens: all five lists side by side (narrower ones keep the tabs) */
@@ -113,7 +114,7 @@
   .card[hidden] { display: none; }
   .card .k { font-size: .62rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--dtf-accent); }
   .pod { display: flex; gap: 10px; align-items: stretch; }
-  .pv { flex: 0 0 42%; max-width: 260px; position: relative; aspect-ratio: 16 / 9; border-radius: 9px; overflow: hidden; background: #000; align-self: center; }
+  .pv { flex: 0 0 var(--pw, 42%); max-width: 260px; position: relative; aspect-ratio: 16 / 9; border-radius: 9px; overflow: hidden; background: #000; align-self: center; }
   .pv iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
   .pb { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 2px; }
   .pb b { font-size: .8rem; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
@@ -127,7 +128,7 @@
   .sgrow .who { font-weight: 700; font-size: .68rem; white-space: nowrap; }
   .sgrow .you { margin-left: 4px; padding: 0 4px; font-size: .52rem; background: var(--dtf-accent); }
   .sgp { font-size: .64rem; color: var(--dtf-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
-  .sgp i { display: none; font-style: normal; opacity: .75; margin-left: 2px; }
+  .sgp i { font-style: normal; font-size: .86em; opacity: .7; margin-left: 2px; }
   .sgp .done { color: var(--good, #3fb97a); }
   .sgclean { margin: 3px 3px 0; font-size: .62rem; color: var(--dtf-dim); }
   /* when the page is still taller than the screen, fitHome() tightens it in steps */
@@ -138,7 +139,7 @@
   .tight2 .row { min-height: 27px; } .tight2 .panel h2 { font-size: .78rem; } .tight2 .meta { display: none; }
   @media (min-width: 900px) {
     .lower { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
-    .pb b { font-size: .92rem; } .pb small { font-size: .74rem; } .sgrow .who, .sgp, .sgrow .n { font-size: .74rem; } .sgp i { display: inline; }
+    .pb b { font-size: .92rem; } .pb small { font-size: .74rem; } .sgrow .who, .sgp, .sgrow .n { font-size: .74rem; }
   }
   .skel { height: 96px; border-radius: 20px; background: var(--dtf-panel); border: 1px solid var(--dtf-border); opacity: .6; }
 </style>
@@ -181,6 +182,12 @@
   function meName() { try { var v = JSON.parse(ls('dtf.me') || 'null'); return v && v.name || null; } catch (e) { return ls('dtf.me'); } }
 
   // ---- tool tiles (from the registry)
+  // the order on Home (the registry order drives the nav menus, so this is kept here): four tiles on top, four below, then the wide ones
+  var HOME_ORDER = ['rumbles', 'trades', 'fab', 'lifetime', 'h2h', 'auction', 'recordbook', 'rulebook'];
+  function homeOrder(list) {
+    var rank = function (t) { var i = HOME_ORDER.indexOf(t.id); return i < 0 ? HOME_ORDER.length : i; };
+    return list.map(function (t, i) { return [t, i]; }).sort(function (a, b) { return rank(a[0]) - rank(b[0]) || a[1] - b[1]; }).map(function (x) { return x[0]; });
+  }
   function tile(t) {
     var st = '--c:' + esc(t.color || '#f0914a') + (t.color2 ? ';--c2:' + esc(t.color2) : '');
     var plate = '<span class="plate">' + (t.logo ? '<img src="' + esc(t.logo) + '" alt="" decoding="async">' : '') + '</span>';
@@ -188,8 +195,8 @@
     return '<a class="tile" href="' + esc(t.path) + '" style="' + st + '">' + plate +
       '<b>' + esc(t.name) + '</b><span class="t">' + esc(t.tagline || t.description || '') + '</span></a>';
   }
-  get('/tools.json').then(function (j) { $('grid').innerHTML = (j.tools || []).concat(j.pages || []).map(tile).join(''); champLine(); }).catch(function () {
-    try { var c = sessionStorage.getItem('dtf.registry'); if (c) { $('grid').innerHTML = (JSON.parse(c).tools || []).map(tile).join(''); return; } } catch (e) {}
+  get('/tools.json').then(function (j) { $('grid').innerHTML = homeOrder(j.tools || []).concat(j.pages || []).map(tile).join(''); champLine(); }).catch(function () {
+    try { var c = sessionStorage.getItem('dtf.registry'); if (c) { $('grid').innerHTML = homeOrder(JSON.parse(c).tools || []).map(tile).join(''); return; } } catch (e) {}
     $('grid').innerHTML = '<p>Couldn’t load the tool list. Check your connection and refresh.</p>';
   });
 
@@ -290,17 +297,18 @@
   function fitAll() { fitGets(); fitText(); fitHome(); }
   // Home is meant to fit one screen: if the content is taller than the space between the bars it is tightened in steps (the lower cards
   // shrink, the feed loses its caption, the tiles get smaller) and stops as soon as it fits; below the last step the page just scrolls
-  var HOME_STEPS = [[1, 0], [1, 1], [.92, 1], [.84, 1], [.76, 1], [.76, 2]];
+  var HOME_STEPS = [[1, 42, 0], [1, 42, 1], [.92, 38, 1], [.84, 34, 1], [.76, 30, 1], [.76, 30, 2]];   // [Shotguns zoom, player width %, feed/tile tightening]
   function fitHome() {
-    var lo = $('lower'), root = document.querySelector('.dtf-wrap'); if (!lo || !root) return;
-    var over = function () { return document.documentElement.scrollHeight > window.innerHeight + 1; };
+    var lo = $('lower'), sg = $('sg'), root = document.querySelector('.dtf-wrap'); if (!lo || !root) return;
+    var over = function () { return document.documentElement.scrollHeight > window.innerHeight; };
     for (var i = 0; i < HOME_STEPS.length; i++) {
-      lo.style.zoom = HOME_STEPS[i][0] === 1 ? '' : HOME_STEPS[i][0];
-      root.classList.toggle('tight1', HOME_STEPS[i][1] >= 1); root.classList.toggle('tight2', HOME_STEPS[i][1] >= 2);
+      sg.style.zoom = HOME_STEPS[i][0] === 1 ? '' : HOME_STEPS[i][0]; lo.style.setProperty('--pw', HOME_STEPS[i][1] + '%');
+      root.classList.toggle('tight1', HOME_STEPS[i][2] >= 1); root.classList.toggle('tight2', HOME_STEPS[i][2] >= 2);
       if (!over()) break;
     }
   }
   window.addEventListener('resize', fitAll);
+  window.addEventListener('load', function () { setTimeout(fitHome, 150); setTimeout(fitHome, 900); });   // fonts, the player and late data settle after the first fit
   Promise.allSettled([get('/feed.json'), get('/slack.json')]).then(function (res) {
     var sections = [], feed = res[0].status === 'fulfilled' ? res[0].value : null, slack = res[1].status === 'fulfilled' ? res[1].value : null;
     if (feed) { STANDINGS = feed.standings || []; feed.sections.forEach(function (s) { if (META[s.id]) sections.push({ id: s.id, items: s.items }); }); paintNext(); }
@@ -347,7 +355,7 @@
     $('sg-m').textContent = d.throughWeek ? 'through week ' + d.throughWeek : '';
     $('sg-l').innerHTML = (withAny.length ? withAny.map(function (m) {
       return '<div class="sgrow' + (m.name === me ? ' mine' : '') + '"><span class="n">' + m.count + '</span><span class="who">' + esc(m.name) + (m.name === me ? '<span class="you">YOU</span>' : '') + '</span><span class="sgp">' +
-        m.shots.map(function (s) { return '<span class="' + (s.done ? 'done' : '') + '" title="' + esc(s.full) + ', week ' + s.week + ': ' + s.pts + ' pts">' + esc(s.player) + '<i>wk' + s.week + '</i></span>'; }).join(', ') + '</span></div>';
+        m.shots.map(function (s) { return '<span class="' + (s.done ? 'done' : '') + '" title="' + esc(s.full) + ', week ' + s.week + ': ' + s.pts + ' pts">' + esc(s.player) + '<i>' + s.week + '</i></span>'; }).join(', ') + '</span></div>';
     }).join('') : '<p class="none">No shotguns yet this season.</p>') + (clean.length && withAny.length ? '<p class="sgclean">Clean so far: ' + clean.map(function (m) { return esc(m.name); }).join(', ') + '</p>' : '');
     $('sg').hidden = false; fitHome();
   }

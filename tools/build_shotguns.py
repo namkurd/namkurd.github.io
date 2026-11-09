@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """Builds shotguns.json: this season's Shotguns, by manager, for the Home screen.
 
-A Shotgun is a score of 0 or less from a non-defense starter who took the field (the Record Book's definition). The Record Book already
+A Shotgun is a score of 0 or less from a non-defense starter who took the field and was not ruled out in the game (the Record Book's definition).
+Ruled out in his game means: a starting QB whose backup's points the league credited (Rumble Central's QB-injury adjustment, confirmed or likely), or
+any starter Sleeper marked Out/IR/PUP before the 2nd half of his own game (Rumble Central's live_injury_captures.json, logged during games from week 9
+on), or a hand entry in Rumble Central's injury_overrides.json. A ruling that came once the 2nd half had started still leaves it a Shotgun. The Record Book already
 works them out for every finished week (data/cache/facts.json: per team, per week, `shot` = [[player id, points]]; names.json gives the
 players), so this reads that cache instead of repeating the rules.
 
@@ -17,6 +20,7 @@ import argparse, datetime as dt, json, os, re, sys, urllib.request
 HUB = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RB_RAW = 'https://raw.githubusercontent.com/namkurd/Recordbook/%s/data/cache/%s'
 RB_BRANCH = 'claude/initial-build'      # the Record Book's published branch
+RC_RAW = 'https://raw.githubusercontent.com/namkurd/SleeperLiveRumbles/main/%s'   # this season's QB-injury adjustments and in-game injury log
 
 
 def load(path):
@@ -30,12 +34,31 @@ def fetch(name, src):
     return json.load(urllib.request.urlopen(req, timeout=60))
 
 
+def ruled_out(history, captures=None, overrides=None):
+    """{(week, roster id, player id)}: starters ruled out in their game this season (see the module doc)."""
+    out = {(int(e['week']), int(e['roster_id']), str(e['injured_qb']['player_id'])) for e in (history or {}).get('qb_adjustments') or []
+           if e.get('confidence') in ('confirmed', 'likely') and e.get('injured_qb')}
+    for e in (captures or {}).get('captures') or []:           # logged during games; only a ruling before the 2nd half exempts
+        if e.get('player') and not e.get('second_half_started'):
+            out.add((int(e['week']), int(e['roster_id']), str(e['player']['player_id'])))
+    for e in (overrides or {}).get('ruled_out') or []:         # hand entries always do
+        out.add((int(e['week']), int(e['roster_id']), str(e['player_id'])))
+    return out
+
+
+def fetch_rc(name, src):
+    if src:
+        return json.load(open(os.path.join(src, 'SleeperLiveRumbles', name), encoding='utf-8'))
+    req = urllib.request.Request(RC_RAW % name, headers={'User-Agent': 'dtf-club-hub'})
+    return json.load(urllib.request.urlopen(req, timeout=60))
+
+
 def short(name):
     parts = (name or '').split()
     return parts[0][0] + '. ' + ' '.join(parts[1:]) if len(parts) >= 2 else name or ''
 
 
-def build(facts, names, managers, season, done):
+def build(facts, names, managers, season, done, out_qbs=frozenset()):
     """-> shotguns.json content. managers: [{'name', 'roster_id', 'id'}]"""
     by_roster = {int(m['roster_id']): m for m in managers}
     rows = {rid: [] for rid in by_roster}
@@ -50,6 +73,8 @@ def build(facts, names, managers, season, done):
                 continue
             for pid, pts in t.get('shot') or []:
                 if pid == '0' or (len(pid) <= 3 and pid.isalpha()):        # an empty slot / a defense
+                    continue
+                if (w, int(rid), pid) in out_qbs:        # ruled out in his game: no Shotgun
                     continue
                 nm, pos = (names.get(pid) or [pid, ''])[:2]
                 k = '%d-%d-%s-%s' % (season, w, pid, rid)
@@ -73,7 +98,14 @@ def main():
             done = set(load('data/shotguns_done.json').get('keys') or [])
         except Exception:
             done = set()
-        out = build(fetch('facts.json', args.src), fetch('names.json', args.src), managers, season, done)
+        try:
+            def soft(name):
+                try: return fetch_rc(name, args.src)
+                except Exception: return {}
+            out_qbs = ruled_out(fetch_rc('rumbles_history.json', args.src), soft('live_injury_captures.json'), soft('injury_overrides.json'))
+        except Exception as e:
+            print('injury data unavailable (%s); counting every 0-or-less starter who played' % e, file=sys.stderr); out_qbs = frozenset()
+        out = build(fetch('facts.json', args.src), fetch('names.json', args.src), managers, season, done, out_qbs)
     except Exception as e:
         print('shotguns: %s; keeping shotguns.json' % e, file=sys.stderr); return
     path = os.path.join(HUB, 'shotguns.json')
