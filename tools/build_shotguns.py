@@ -2,7 +2,9 @@
 """Builds shotguns.json: this season's Shotguns, by manager, for the Home screen.
 
 A Shotgun is a score of 0 or less from a non-defense starter who took the field and was not ruled out in the game (the Record Book's definition).
-A starting QB ruled out in his game (Rumble Central's QB-injury adjustment, confirmed or likely: his backup's points were credited) does not count. The Record Book already
+Ruled out in his game means: a starting QB whose backup's points the league credited (Rumble Central's QB-injury adjustment, confirmed or likely), or
+any starter Sleeper marked Out/IR/PUP before the 2nd half of his own game (Rumble Central's live_injury_captures.json, logged during games from week 9
+on), or a hand entry in Rumble Central's injury_overrides.json. A ruling that came once the 2nd half had started still leaves it a Shotgun. The Record Book already
 works them out for every finished week (data/cache/facts.json: per team, per week, `shot` = [[player id, points]]; names.json gives the
 players), so this reads that cache instead of repeating the rules.
 
@@ -18,7 +20,7 @@ import argparse, datetime as dt, json, os, re, sys, urllib.request
 HUB = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RB_RAW = 'https://raw.githubusercontent.com/namkurd/Recordbook/%s/data/cache/%s'
 RB_BRANCH = 'claude/initial-build'      # the Record Book's published branch
-RC_RAW = 'https://raw.githubusercontent.com/namkurd/SleeperLiveRumbles/main/rumbles_history.json'   # this season's QB-injury adjustments
+RC_RAW = 'https://raw.githubusercontent.com/namkurd/SleeperLiveRumbles/main/%s'   # this season's QB-injury adjustments and in-game injury log
 
 
 def load(path):
@@ -32,16 +34,22 @@ def fetch(name, src):
     return json.load(urllib.request.urlopen(req, timeout=60))
 
 
-def ruled_out(history):
-    """(week, roster id, player id) of every starting QB ruled out in his game this season (confirmed or likely)."""
-    return {(int(e['week']), int(e['roster_id']), str(e['injured_qb']['player_id'])) for e in (history or {}).get('qb_adjustments') or []
-            if e.get('confidence') in ('confirmed', 'likely') and e.get('injured_qb')}
+def ruled_out(history, captures=None, overrides=None):
+    """{(week, roster id, player id)}: starters ruled out in their game this season (see the module doc)."""
+    out = {(int(e['week']), int(e['roster_id']), str(e['injured_qb']['player_id'])) for e in (history or {}).get('qb_adjustments') or []
+           if e.get('confidence') in ('confirmed', 'likely') and e.get('injured_qb')}
+    for e in (captures or {}).get('captures') or []:           # logged during games; only a ruling before the 2nd half exempts
+        if e.get('player') and not e.get('second_half_started'):
+            out.add((int(e['week']), int(e['roster_id']), str(e['player']['player_id'])))
+    for e in (overrides or {}).get('ruled_out') or []:         # hand entries always do
+        out.add((int(e['week']), int(e['roster_id']), str(e['player_id'])))
+    return out
 
 
-def fetch_history(src):
+def fetch_rc(name, src):
     if src:
-        return json.load(open(os.path.join(src, 'SleeperLiveRumbles', 'rumbles_history.json'), encoding='utf-8'))
-    req = urllib.request.Request(RC_RAW, headers={'User-Agent': 'dtf-club-hub'})
+        return json.load(open(os.path.join(src, 'SleeperLiveRumbles', name), encoding='utf-8'))
+    req = urllib.request.Request(RC_RAW % name, headers={'User-Agent': 'dtf-club-hub'})
     return json.load(urllib.request.urlopen(req, timeout=60))
 
 
@@ -91,9 +99,13 @@ def main():
         except Exception:
             done = set()
         try:
-            out_qbs = ruled_out(fetch_history(args.src))
+            opt = lambda name: (lambda: fetch_rc(name, args.src))
+            def soft(name):
+                try: return fetch_rc(name, args.src)
+                except Exception: return {}
+            out_qbs = ruled_out(fetch_rc('rumbles_history.json', args.src), soft('live_injury_captures.json'), soft('injury_overrides.json'))
         except Exception as e:
-            print('QB-injury adjustments unavailable (%s); counting every 0-or-less starter who played' % e, file=sys.stderr); out_qbs = frozenset()
+            print('injury data unavailable (%s); counting every 0-or-less starter who played' % e, file=sys.stderr); out_qbs = frozenset()
         out = build(fetch('facts.json', args.src), fetch('names.json', args.src), managers, season, done, out_qbs)
     except Exception as e:
         print('shotguns: %s; keeping shotguns.json' % e, file=sys.stderr); return

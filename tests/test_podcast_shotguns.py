@@ -37,4 +37,11 @@ hist = {'qb_adjustments': [{'week': 2, 'roster_id': 1, 'injured_qb': {'player_id
                            {'week': 2, 'roster_id': 2, 'injured_qb': {'player_id': '102'}, 'confidence': 'possible'}]}
 res = S.build(facts, names, mgrs, 2026, set(), S.ruled_out(hist))
 assert res['total'] == 2 and [(x['name'], x['count']) for x in res['managers']][:2] == [('Aidan', 1), ('Ben', 1)], res
+# starters of any position: a capture before the 2nd half exempts, one after it does not, a hand entry always does
+caps = {'captures': [{'week': 1, 'roster_id': 1, 'player': {'player_id': '100'}, 'second_half_started': False},
+                     {'week': 2, 'roster_id': 1, 'player': {'player_id': '101'}, 'second_half_started': True}]}
+res = S.build(facts, names, mgrs, 2026, set(), S.ruled_out({}, caps, {'ruled_out': []}))
+assert [(x['name'], x['count']) for x in res['managers']][:2] == [('Aidan', 1), ('Ben', 1)] and res['total'] == 2, res
+res = S.build(facts, names, mgrs, 2026, set(), S.ruled_out({}, caps, {'ruled_out': [{'week': 2, 'roster_id': 1, 'player_id': '101'}]}))
+assert res['total'] == 1, res
 print('PASS: podcast and Shotgun builders')
