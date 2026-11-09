@@ -112,7 +112,7 @@
     moves: 'M7 7h11l-3-3 1.4-1.4L22 8l-5.6 5.4L15 12l3-3H7zm10 10H6l3 3-1.4 1.4L2 16l5.6-5.4L9 12l-3 3h11z',
     league: 'M5 3h11a3 3 0 0 1 3 3v15H8a3 3 0 0 1-3-3zm3 0v15a1 1 0 0 0 1 1h8V6a1 1 0 0 0-1-1z'
   };
-  function icon(id) { return '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="' + (ICONS[id] || ICONS.league) + '"/></svg>'; }
+  function icon(id) { var EM = { live: '\uD83E\uDD4A', history: '\u231B' }; if (EM[id]) return '<span class="em" aria-hidden="true">' + EM[id] + '</span>'; return '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="' + (ICONS[id] || ICONS.league) + '"/></svg>'; }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
   // Design: phone = one slim top bar (view tabs; back/refresh only in the installed app) that hides while you scroll down,
@@ -120,9 +120,10 @@
   var CSS = ':host{all:initial}*{box-sizing:border-box}button{font:inherit;color:inherit}a{color:inherit}' +
     ':focus-visible{outline:2px solid var(--ac);outline-offset:-2px;border-radius:8px}' +
     '.bar,.ctx{background:var(--bg);-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px)}' +
-    '.bar{position:fixed;z-index:25;left:0;right:0;bottom:0;display:flex;border-top:1px solid var(--bd);padding-bottom:env(safe-area-inset-bottom);font:600 11px/1.1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}' +
+    '.bar{position:fixed;z-index:25;left:0;right:0;bottom:0;display:flex;border-top:1px solid var(--bd);padding-bottom:calc(env(safe-area-inset-bottom) * .4);font:600 11px/1.1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}' +
     '.bar>a,.bar>button{flex:1;min-width:0;height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:var(--dim);background:none;border:0;text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent}' +
     '.bar .ic{display:flex;align-items:center;justify-content:center;width:56px;height:28px;border-radius:14px;transition:background .15s}' +
+    '.bar .em{font-size:19px;line-height:1;filter:grayscale(1) brightness(2.2);opacity:.7;transition:filter .15s,opacity .15s}.bar .on .em{filter:none;opacity:1}' +
     '.bar .on{color:var(--tx)}.bar .on .ic{background:var(--acbg);color:var(--ac)}.bar .lb{max-width:100%;padding:0 4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}' +
     '.bar .grp .lb::after{content:" \\25B4";font-size:8px;opacity:.7}.dk{display:none}' +
     '.ctx{position:fixed;z-index:25;top:0;left:0;right:0;height:calc(44px + env(safe-area-inset-top));padding-top:env(safe-area-inset-top);border-bottom:1px solid var(--bd);display:flex;align-items:stretch;font:14px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--tx);transition:transform .22s ease}' +
@@ -133,7 +134,7 @@
     '.vt{flex:1;min-width:0;display:flex;overflow-x:auto;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 12px,#000 calc(100% - 12px),transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 12px,#000 calc(100% - 12px),transparent 100%)}.vt::-webkit-scrollbar{display:none}' +
     '.vt button{flex:none;position:relative;height:44px;padding:0 16px;background:none;border:0;color:var(--dim);cursor:pointer;white-space:nowrap;font-weight:500;-webkit-tap-highlight-color:transparent}' +
     '.vt button.on{color:var(--tx);font-weight:700}.vt button.on::after{content:"";position:absolute;left:14px;right:14px;bottom:0;height:3px;border-radius:3px 3px 0 0;background:var(--ac)}' +
-    '.sheet{position:fixed;z-index:2147483000;left:8px;right:8px;bottom:calc(64px + env(safe-area-inset-bottom));background:var(--bg2);border:1px solid var(--bd);border-radius:16px;padding:6px;font:15px system-ui,sans-serif;box-shadow:0 12px 40px rgba(0,0,0,.45);transform-origin:bottom center;animation:up .16s ease-out}' +
+    '.sheet{position:fixed;z-index:2147483000;left:8px;right:8px;bottom:calc(64px + calc(env(safe-area-inset-bottom) * .4));background:var(--bg2);border:1px solid var(--bd);border-radius:16px;padding:6px;font:15px system-ui,sans-serif;box-shadow:0 12px 40px rgba(0,0,0,.45);transform-origin:bottom center;animation:up .16s ease-out}' +
     '@keyframes up{from{opacity:0;transform:translateY(10px) scale(.98)}}@media(prefers-reduced-motion:reduce){.sheet{animation:none}.ctx{transition:none}}' +
     '.sheet a{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:52px;padding:8px 12px;border-radius:10px;color:var(--tx);text-decoration:none}.sheet a:active,.sheet a:hover{background:var(--acbg)}' +
     '.sheet a .lg{flex:none;width:36px;height:36px;padding:4px;box-sizing:border-box;object-fit:contain;border-radius:10px;background:linear-gradient(150deg,color-mix(in srgb,var(--c) 32%,#0f1115),#0f1115);margin-right:2px}.sheet a>span{flex:1;min-width:0}.sheet a small{display:block;color:var(--dim);font-size:12px;margin-top:1px}.sheet a.on b{color:var(--ac)}.sheet a.on::after{content:"\\2713";color:var(--ac);font-weight:700}.sheet a.xt::after{content:"\\2197";color:var(--dim)}' +
@@ -411,7 +412,7 @@
   function layout() {
     var css = D.createElement('style');
     css.textContent = ':root{--dtf-top-pad:0px;--dtf-top-h:0px;--dtf-nav-h:0px}' +
-      'body.dtf-has-nav{padding-top:var(--dtf-top-pad);padding-bottom:calc(56px + env(safe-area-inset-bottom));--dtf-nav-h:calc(56px + env(safe-area-inset-bottom))}' +
+      'body.dtf-has-nav{padding-top:var(--dtf-top-pad);padding-bottom:calc(56px + calc(env(safe-area-inset-bottom) * .4));--dtf-nav-h:calc(56px + calc(env(safe-area-inset-bottom) * .4))}' +
       '@media(min-width:900px){body.dtf-has-nav{padding-bottom:0;--dtf-nav-h:0px}}';
     D.head.appendChild(css);
     D.body.classList.add('dtf-has-nav');
