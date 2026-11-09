@@ -99,7 +99,6 @@ def main():
         except Exception:
             done = set()
         try:
-            opt = lambda name: (lambda: fetch_rc(name, args.src))
             def soft(name):
                 try: return fetch_rc(name, args.src)
                 except Exception: return {}
