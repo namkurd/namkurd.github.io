@@ -112,7 +112,13 @@
     moves: 'M7 7h11l-3-3 1.4-1.4L22 8l-5.6 5.4L15 12l3-3H7zm10 10H6l3 3-1.4 1.4L2 16l5.6-5.4L9 12l-3 3h11z',
     league: 'M5 3h11a3 3 0 0 1 3 3v15H8a3 3 0 0 1-3-3zm3 0v15a1 1 0 0 0 1 1h8V6a1 1 0 0 0-1-1z'
   };
-  function icon(id) { var EM = { live: '\uD83E\uDD4A', history: '\u231B' }; if (EM[id]) return '<span class="em" aria-hidden="true">' + EM[id] + '</span>'; return '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="' + (ICONS[id] || ICONS.league) + '"/></svg>'; }
+  // flat two-tone glyphs: grey like the other tab icons until the tab is active, then coloured
+  var FLAT = {
+    live: '<path class="f1" d="M13 2.500c4 0 7 2.500 7 6.500v5a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4v-4.500C5 6 8.500 2.500 13 2.500z"/><ellipse class="f1" cx="4.800" cy="11.500" rx="2.600" ry="3.300"/><path class="f2" d="M10 7.500h7M10 11h7" stroke="var(--bg2)" stroke-width="1.600" stroke-linecap="round" fill="none"/><rect class="f3" x="7" y="19" width="10" height="3" rx="1"/>',
+    history: '<path class="f3" d="M5 2h14v2H5zM5 20h14v2H5z"/><path class="f1" d="M6 4h12c0 3-3 5-4.5 8 1.5 3 4.5 5 4.5 8H6c0-3 3-5 4.5-8C9 9 6 7 6 4z"/><path class="f2" d="M8.5 18.5c0-1.5 3.5-3 3.5-3s3.500 1.500 3.500 3z"/>',
+    league: '<path class="f1" d="M7 2h11a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7z"/><path class="f3" d="M3.500 5h5v2h-5zM3.500 11h5v2h-5zM3.500 17h5v2h-5z"/><path class="f2" d="M11 6h6v2h-6z"/>'
+  };
+  function icon(id) { if (FLAT[id]) return '<svg class="fl ' + id + '" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">' + FLAT[id] + '</svg>'; return '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="' + (ICONS[id] || ICONS.league) + '"/></svg>'; }
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
   // Design: phone = one slim top bar (view tabs; back/refresh only in the installed app) that hides while you scroll down,
@@ -123,7 +129,7 @@
     '.bar{position:fixed;z-index:25;left:0;right:0;bottom:0;display:flex;border-top:1px solid var(--bd);padding-bottom:calc(env(safe-area-inset-bottom) * .4);font:600 11px/1.1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}' +
     '.bar>a,.bar>button{flex:1;min-width:0;height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:var(--dim);background:none;border:0;text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent}' +
     '.bar .ic{display:flex;align-items:center;justify-content:center;width:56px;height:28px;border-radius:14px;transition:background .15s}' +
-    '.bar .em{font-size:19px;line-height:1;filter:grayscale(1) brightness(2.2);opacity:.7;transition:filter .15s,opacity .15s}.bar .on .em{filter:none;opacity:1}' +
+    '.bar .fl .f1,.bar .fl .f3{fill:currentColor}.bar .fl .f2{fill:var(--bg2);opacity:.9}.bar .on .live .f1{fill:#e5484d}.bar .on .live .f2{fill:#f4a4a6}.bar .on .live .f3{fill:#f5c542}.bar .on .history .f1{fill:#9bd3f0}.bar .on .history .f2{fill:#f5b942}.bar .on .history .f3{fill:#b0763c}.bar .on .league .f1{fill:#4f8ff0}.bar .on .league .f2{fill:#fff}.bar .on .league .f3{fill:#f5b942}' +
     '.bar .on{color:var(--tx)}.bar .on .ic{background:var(--acbg);color:var(--ac)}.bar .lb{max-width:100%;padding:0 4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}' +
     '.bar .grp .lb::after{content:" \\25B4";font-size:8px;opacity:.7}.dk{display:none}' +
     '.ctx{position:fixed;z-index:25;top:0;left:0;right:0;height:calc(44px + env(safe-area-inset-top));padding-top:env(safe-area-inset-top);border-bottom:1px solid var(--bd);display:flex;align-items:stretch;font:14px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--tx);transition:transform .22s ease}' +
