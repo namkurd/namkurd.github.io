@@ -356,7 +356,7 @@
     $('sg-m').textContent = d.throughWeek ? 'through week ' + d.throughWeek : '';
     $('sg-l').innerHTML = (withAny.length ? withAny.map(function (m) {
       return '<div class="sgrow' + (m.name === me ? ' mine' : '') + '"><span class="n">' + m.count + '</span><span class="who">' + esc(m.name) + (m.name === me ? '<span class="you">YOU</span>' : '') + '</span><span class="sgp">' +
-        m.shots.map(function (s) { return '<span class="' + (s.done ? 'done' : '') + '" title="' + esc(s.full) + ', week ' + s.week + ': ' + s.pts + ' pts">' + esc(s.player) + '<i>wk' + s.week + '</i></span>'; }).join(', ') + '</span></div>';
+        m.shots.map(function (s) { return '<span class="' + (s.done ? 'done' : '') + '" title="' + esc(s.full) + ', week ' + s.week + ': ' + s.pts + ' pts">' + esc(s.player) + '<i>' + s.week + '</i></span>'; }).join(', ') + '</span></div>';
     }).join('') : '<p class="none">No shotguns yet this season.</p>') + (clean.length && withAny.length ? '<p class="sgclean">Clean so far: ' + clean.map(function (m) { return esc(m.name); }).join(', ') + '</p>' : '');
     $('sg').hidden = false; fitHome();
   }
