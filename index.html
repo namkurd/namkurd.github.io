@@ -293,7 +293,7 @@
   var HOME_STEPS = [[1, 42, 0], [1, 42, 1], [.92, 38, 1], [.84, 34, 1], [.76, 30, 1], [.76, 30, 2]];   // [Shotguns zoom, player width %, feed/tile tightening]
   function fitHome() {
     var lo = $('lower'), sg = $('sg'), root = document.querySelector('.dtf-wrap'); if (!lo || !root) return;
-    var over = function () { return document.documentElement.scrollHeight > window.innerHeight + 1; };
+    var over = function () { return document.documentElement.scrollHeight > window.innerHeight; };
     for (var i = 0; i < HOME_STEPS.length; i++) {
       sg.style.zoom = HOME_STEPS[i][0] === 1 ? '' : HOME_STEPS[i][0]; lo.style.setProperty('--pw', HOME_STEPS[i][1] + '%');
       root.classList.toggle('tight1', HOME_STEPS[i][2] >= 1); root.classList.toggle('tight2', HOME_STEPS[i][2] >= 2);
