@@ -1,0 +1,14 @@
+{
+ "_comment": "What the weekly backup e-mail holds: per repository (checked out under its own name), the data files worth keeping, as glob patterns. Derived and bulky files (win-probability timelines, highlight clips, caches that can be rebuilt) are left out.",
+ "repos": {
+  "namkurd.github.io": ["*.json", "data/*.json", "champions/*.json", "champions/photos/*", "tools/*.json"],
+  "Recordbook": ["data/*.json", "data/*.jsonl", "data/cache/*.json"],
+  "SleeperLiveRumbles": ["rumbles_history.json", "epa_weekly.json", "live_qb_captures.json", "live_injury_captures.json", "injury_overrides.json", "seasons/index.json", "seasons/*/rumbles_history.json", "seasons/*/epa_weekly.json", "seasons/*/playoffs.json"],
+  "FAB-Management": ["data.json", "playoff_teams.json"],
+  "SleeperTradeNodes": ["*.json"],
+  "SleeperAuction": ["data/*.csv", "site/data.json", "*.xlsx"],
+  "Rulebook": ["data/*.json", "tools/*.txt"],
+  "sleepersheet": ["data/*.json"],
+  "Sleeper-Head-to-Head": ["*.tsv", "rumbles_history.json"]
+ }
+}
