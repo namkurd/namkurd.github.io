@@ -2,22 +2,13 @@
  "schema": 1,
  "season": 2026,
  "throughWeek": 8,
- "total": 13,
+ "total": 11,
  "managers": [
   {
    "id": "aidan",
    "name": "Aidan",
-   "count": 4,
+   "count": 3,
    "shots": [
-    {
-     "week": 2,
-     "player": "D. Moore",
-     "full": "DJ Moore",
-     "pos": "WR",
-     "pts": -0.1,
-     "key": "2026-2-4983-1",
-     "done": false
-    },
     {
      "week": 6,
      "player": "C. Skattebo",
@@ -48,40 +39,6 @@
    ]
   },
   {
-   "id": "jake",
-   "name": "Jake",
-   "count": 3,
-   "shots": [
-    {
-     "week": 1,
-     "player": "C. Loveland",
-     "full": "Colston Loveland",
-     "pos": "TE",
-     "pts": 0.0,
-     "key": "2026-1-12517-3",
-     "done": false
-    },
-    {
-     "week": 4,
-     "player": "K. Sadiq",
-     "full": "Kenyon Sadiq",
-     "pos": "TE",
-     "pts": 0.0,
-     "key": "2026-4-13330-3",
-     "done": false
-    },
-    {
-     "week": 5,
-     "player": "R. Wilson",
-     "full": "Roman Wilson",
-     "pos": "WR",
-     "pts": 0.0,
-     "key": "2026-5-11630-3",
-     "done": false
-    }
-   ]
-  },
-  {
    "id": "haan",
    "name": "Haan",
    "count": 2,
@@ -102,6 +59,31 @@
      "pos": "K",
      "pts": 0.0,
      "key": "2026-8-11792-4",
+     "done": false
+    }
+   ]
+  },
+  {
+   "id": "jake",
+   "name": "Jake",
+   "count": 2,
+   "shots": [
+    {
+     "week": 1,
+     "player": "C. Loveland",
+     "full": "Colston Loveland",
+     "pos": "TE",
+     "pts": 0.0,
+     "key": "2026-1-12517-3",
+     "done": false
+    },
+    {
+     "week": 4,
+     "player": "K. Sadiq",
+     "full": "Kenyon Sadiq",
+     "pos": "TE",
+     "pts": 0.0,
+     "key": "2026-4-13330-3",
      "done": false
     }
    ]
@@ -201,5 +183,5 @@
    "shots": []
   }
  ],
- "generatedAt": "2026-11-09T12:36:47Z"
+ "generatedAt": "2026-11-09T13:58:34Z"
 }
