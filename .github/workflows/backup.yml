@@ -1,0 +1,54 @@
+# Weekly backup of the league tools' data: a zip of every tool's data files (tools/backup_manifest.json), e-mailed to you and kept as a
+# run artifact for 30 days. E-mail needs these repository secrets (Settings > Secrets and variables > Actions):
+#   SMTP_HOST (e.g. smtp.gmail.com)   SMTP_USER   SMTP_PASSWORD (a Gmail "app password", not your login)   BACKUP_EMAIL_TO
+#   optional: SMTP_PORT (465 by default; 587 uses STARTTLS), SMTP_FROM
+# Without them the zip is still built and kept as the artifact. See the README ("Weekly backup").
+name: Weekly data backup
+on:
+  schedule:
+    - cron: "23 13 * * 3"   # Wednesday 13:23 UTC, after the Tuesday data refreshes of every tool
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: backup
+  cancel-in-progress: false
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { path: namkurd.github.io }
+      - uses: actions/checkout@v4
+        with: { repository: namkurd/Recordbook, path: Recordbook }
+      - uses: actions/checkout@v4
+        with: { repository: namkurd/SleeperLiveRumbles, path: SleeperLiveRumbles }
+      - uses: actions/checkout@v4
+        with: { repository: namkurd/FAB-Management, path: FAB-Management }
+      - uses: actions/checkout@v4
+        with: { repository: namkurd/SleeperTradeNodes, path: SleeperTradeNodes }
+      - uses: actions/checkout@v4
+        with: { repository: namkurd/SleeperAuction, path: SleeperAuction }
+      - uses: actions/checkout@v4
+        with: { repository: namkurd/Rulebook, path: Rulebook }
+      - uses: actions/checkout@v4
+        with: { repository: namkurd/sleepersheet, path: sleepersheet }
+      - uses: actions/checkout@v4
+        with: { repository: namkurd/Sleeper-Head-to-Head, path: Sleeper-Head-to-Head }
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build the zip and e-mail it
+        run: python3 namkurd.github.io/tools/build_backup.py --src . --out backup.zip --send
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_FROM: ${{ secrets.SMTP_FROM }}
+          BACKUP_EMAIL_TO: ${{ secrets.BACKUP_EMAIL_TO }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: backup
+          path: backup.zip
+          retention-days: 30

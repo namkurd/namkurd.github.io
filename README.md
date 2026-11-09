@@ -56,6 +56,22 @@ Only **public** channels are read. This repo and site are public, so what ends u
 
 The hourly feed job checks out `namkurd/FAB-Management`, runs its `ir_check.py --json` (Sleeper API only) and `tools/build_feed.py` stores the result as `ir` in `feed.json`. Home shows a one-line status (✅ nobody on IR illegally; ⛔ red = a player is in the IR slot who isn't eligible; 🟡 yellow = a hurt player added this week who isn't IR-eligible until next week, only a heads-up while he's on the bench); tap it to expand the names. Outside the regular season the check can't run and the last status is kept.
 
+## Weekly backup
+
+`.github/workflows/backup.yml` runs every **Wednesday** (after the Tuesday refreshes) and on demand (**Actions > Weekly data backup > Run workflow**). It checks out every tool's repository, zips the data files listed in `tools/backup_manifest.json` (records, standings and lineups by season, trades, FAB, auction picks, rules, lifetime, Head-to-Head, this hub's feeds and Champions photos; about 2 MB zipped; no code, win-probability timelines or highlight clips, which can be rebuilt) with `tools/build_backup.py`, e-mails the zip, and keeps it as the run's `backup` artifact for 30 days (so it is there even before e-mail is set up).
+
+To get the e-mail, add these in **Settings > Secrets and variables > Actions > New repository secret**:
+
+| Secret | Value |
+|---|---|
+| `SMTP_HOST` | `smtp.gmail.com` (or your provider's SMTP server) |
+| `SMTP_USER` | the address it sends from, e.g. your Gmail |
+| `SMTP_PASSWORD` | for Gmail a 16-character **app password** (Google Account > Security > 2-Step Verification > App passwords), not your login password |
+| `BACKUP_EMAIL_TO` | where the backup goes (your address; a secret so it is not in this public repo) |
+| `SMTP_PORT`, `SMTP_FROM` | optional: 465 (SSL) is the default, 587 uses STARTTLS |
+
+Then run the workflow once by hand to test. A zip over 20 MB is not attached; the e-mail points to the run's artifact instead. To change what is backed up, edit the globs in `tools/backup_manifest.json`.
+
 ## Credits
 
 The Rulebook logo is the "whistle" icon from [Material Design Icons](https://pictogrammers.com/library/mdi/) (Pictogrammers, Apache License 2.0), recoloured.
