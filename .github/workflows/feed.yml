@@ -41,9 +41,11 @@ jobs:
           pip install requests
           python3 fab/ir_check.py --json > ir.json || rm -f ir.json
       - run: python3 tools/build_feed.py
+      - name: This season's Shotguns (from the Record Book's cache)
+        run: python3 tools/build_shotguns.py
       - name: Commit if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add feed.json league.json managers.json data/matchups.json
+          git add feed.json league.json managers.json data/matchups.json shotguns.json
           if git diff --cached --quiet; then echo "no change"; else git commit -m "Update Home feed" && git pull --rebase origin main && git push; fi
