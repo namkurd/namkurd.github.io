@@ -46,7 +46,7 @@
     background: linear-gradient(150deg, color-mix(in srgb, var(--c) 32%, #0f1115), color-mix(in srgb, var(--c2) 12%, #0f1115));
     box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c) 45%, transparent), inset 0 -14px 24px -16px color-mix(in srgb, var(--c2) 60%, transparent); }
   .plate img { width: calc(var(--plate) * .78); height: calc(var(--plate) * .78); display: block; object-fit: contain; }
-  .tile b { margin-top: 3px; font-size: .64rem; line-height: 1.12; overflow-wrap: anywhere; }
+  .tile b { margin-top: 3px; font-size: .64rem; line-height: 1.12; white-space: nowrap; max-width: 100%; }
   .tile .t { display: none; font-size: .78rem; line-height: 1.25; color: var(--dtf-dim); }
 
   .feed { margin-bottom: clamp(5px, calc(var(--avail) * .011), 12px); background: var(--dtf-panel); border: 1px solid var(--dtf-border); border-radius: 18px; padding: 8px 10px 6px; }
@@ -299,7 +299,14 @@
       while (over() && size > min) { size -= 0.25; el.style.fontSize = size + 'px'; }
     });
   }
-  function fitAll() { fitGets(); fitText(); fitHome(); }
+  // every tile label sits on one line at one shared size (the longest name sets it), so the tiles are identical
+  function fitTiles() {
+    var bs = [].slice.call(document.querySelectorAll('.grid .tile:not(.wide) b')); if (!bs.length || !bs[0].offsetWidth) return;
+    bs.forEach(function (b) { b.style.fontSize = ''; });
+    var size = parseFloat(getComputedStyle(bs[0]).fontSize), min = 8, over = function () { return bs.some(function (b) { return b.scrollWidth > b.clientWidth + 0.5 || b.scrollWidth > b.parentNode.clientWidth - 6; }); };
+    while (over() && size > min) { size -= 0.25; bs.forEach(function (b) { b.style.fontSize = size + 'px'; }); }
+  }
+  function fitAll() { fitGets(); fitText(); fitHome(); fitTiles(); }
   // Home is meant to fit one screen: if the content is taller than the space between the bars it is tightened in steps (the lower cards
   // shrink, the feed loses its caption, the tiles get smaller) and stops as soon as it fits; below the last step the page just scrolls
   // [Shotguns zoom, player width %, layout]: negative layouts are roomier (loose1, loose2), positive ones tighter (tight1, tight2). The roomiest that fits wins.
@@ -312,6 +319,7 @@
       sg.style.zoom = st[0] === 1 ? '' : st[0]; lo.style.setProperty('--pw', st[1] + '%');
       root.classList.toggle('loose2', st[2] <= -2); root.classList.toggle('loose1', st[2] <= -1);
       root.classList.toggle('tight1', st[2] >= 1); root.classList.toggle('tight2', st[2] >= 2); root.classList.toggle('tight3', st[2] >= 3);
+      fitTiles();
       if (!over()) break;
     }
   }
