@@ -16,7 +16,8 @@
   .next b { color: var(--dtf-text); font-weight: 600; }
   .next[hidden] { display: none; }
 
-  .grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(4px, calc(var(--avail) * .007), 10px); --plate: clamp(26px, calc(var(--avail) * .046), 62px); }
+  /* a 30-column grid: the first row holds three tiles (10 columns each), the second five (6 each), Champions & Sackos spans all 30 */
+  .grid { display: grid; grid-template-columns: repeat(30, minmax(0, 1fr)); gap: clamp(4px, calc(var(--avail) * .007), 10px); --plate: clamp(26px, calc(var(--avail) * .046), 62px); }
   /* each tool has its own colour (--c, optional --c2) from tools.json: tinted glow, gradient edge, dark logo plate */
   .dtf-wrap a.tile { color: var(--dtf-text); }
   .tile { --c2: var(--c); display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2px; padding: clamp(4px, calc(var(--avail) * .0065), 12px) 3px clamp(3px, calc(var(--avail) * .005), 10px); border-radius: 16px; text-decoration: none;
@@ -26,6 +27,7 @@
       linear-gradient(var(--dtf-panel), var(--dtf-panel)) padding-box,
       linear-gradient(140deg, color-mix(in srgb, var(--c) 75%, transparent), color-mix(in srgb, var(--c2) 75%, transparent)) border-box;
     box-shadow: 0 10px 26px -16px color-mix(in srgb, var(--c) 70%, transparent); }
+  .tile { grid-column: span 6; } .tile.top { grid-column: span 10; }
   .tile.wide { grid-column: 1 / -1; flex-direction: row; justify-content: center; gap: 12px; text-align: left; padding-top: 3px; padding-bottom: 3px; }
   .tile.wide .plate { --plate: clamp(26px, calc(var(--avail) * .036), 38px); flex: none; }
   .tile.wide b { margin-top: 0; } .tile.wide .t { display: block; font-size: .78rem; }
@@ -88,7 +90,7 @@
   @media (min-width: 900px) {
     .dtf-wrap { max-width: 1200px; padding-top: 14px; }
     h1.home { font-size: 1.6rem; } .next { font-size: .9rem; }
-    .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(6px, calc(var(--avail) * .012), 14px); --plate: clamp(34px, calc(var(--avail) * .044), 76px); }
+    .grid { gap: clamp(6px, calc(var(--avail) * .012), 14px); --plate: clamp(34px, calc(var(--avail) * .044), 76px); }
     .tile { padding: clamp(6px, calc(var(--avail) * .008), 16px) 10px clamp(6px, calc(var(--avail) * .006), 15px); gap: 3px; } .tile b { font-size: 1rem; margin-top: clamp(2px, calc(var(--avail) * .006), 8px); } .tile .t { display: block; }
   }
   /* wide screens: all five lists side by side (narrower ones keep the tabs) */
@@ -181,15 +183,21 @@
   function meName() { try { var v = JSON.parse(ls('dtf.me') || 'null'); return v && v.name || null; } catch (e) { return ls('dtf.me'); } }
 
   // ---- tool tiles (from the registry)
+  // the order on Home (the registry order drives the nav menus, so this is kept here): three tiles on top, the rest below, then the wide ones
+  var HOME_TOP = ['rumbles', 'trades', 'fab'], HOME_ORDER = HOME_TOP.concat(['h2h', 'lifetime', 'auction', 'recordbook', 'rulebook']);
+  function homeOrder(list) {
+    var rank = function (t) { var i = HOME_ORDER.indexOf(t.id); return i < 0 ? HOME_ORDER.length : i; };
+    return list.map(function (t, i) { return [t, i]; }).sort(function (a, b) { return rank(a[0]) - rank(b[0]) || a[1] - b[1]; }).map(function (x) { return x[0]; });
+  }
   function tile(t) {
     var st = '--c:' + esc(t.color || '#f0914a') + (t.color2 ? ';--c2:' + esc(t.color2) : '');
     var plate = '<span class="plate">' + (t.logo ? '<img src="' + esc(t.logo) + '" alt="" decoding="async">' : '') + '</span>';
     if (t.wide) return '<a class="tile wide" id="tile-' + esc(t.id) + '" href="' + esc(t.path) + '" style="' + st + '">' + plate + '<span class="wb"><b>' + esc(t.name) + '</b><span class="t">' + esc(t.tagline || '') + '</span></span></a>';
-    return '<a class="tile" href="' + esc(t.path) + '" style="' + st + '">' + plate +
+    return '<a class="tile' + (HOME_TOP.indexOf(t.id) >= 0 ? ' top' : '') + '" href="' + esc(t.path) + '" style="' + st + '">' + plate +
       '<b>' + esc(t.name) + '</b><span class="t">' + esc(t.tagline || t.description || '') + '</span></a>';
   }
-  get('/tools.json').then(function (j) { $('grid').innerHTML = (j.tools || []).concat(j.pages || []).map(tile).join(''); champLine(); }).catch(function () {
-    try { var c = sessionStorage.getItem('dtf.registry'); if (c) { $('grid').innerHTML = (JSON.parse(c).tools || []).map(tile).join(''); return; } } catch (e) {}
+  get('/tools.json').then(function (j) { $('grid').innerHTML = homeOrder(j.tools || []).concat(j.pages || []).map(tile).join(''); champLine(); }).catch(function () {
+    try { var c = sessionStorage.getItem('dtf.registry'); if (c) { $('grid').innerHTML = homeOrder(JSON.parse(c).tools || []).map(tile).join(''); return; } } catch (e) {}
     $('grid').innerHTML = '<p>Couldn’t load the tool list. Check your connection and refresh.</p>';
   });
 
