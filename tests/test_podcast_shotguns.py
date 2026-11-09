@@ -32,4 +32,9 @@ assert res['total'] == 3 and res['throughWeek'] == 2, res
 assert [(x['name'], x['count']) for x in res['managers']] == [('Aidan', 2), ('Ben', 1), ('Cal', 0)], 'most first, then by name'
 assert [s['player'] for s in res['managers'][0]['shots']] == ['K. Pitts Sr.', 'L. Jackson']
 assert res['managers'][1]['shots'][0]['done'] is True and res['managers'][0]['shots'][0]['done'] is False
+# a starting QB ruled out in his game is not a Shotgun (a 'possible' adjustment is not enough)
+hist = {'qb_adjustments': [{'week': 2, 'roster_id': 1, 'injured_qb': {'player_id': '101'}, 'confidence': 'confirmed'},
+                           {'week': 2, 'roster_id': 2, 'injured_qb': {'player_id': '102'}, 'confidence': 'possible'}]}
+res = S.build(facts, names, mgrs, 2026, set(), S.ruled_out(hist))
+assert res['total'] == 2 and [(x['name'], x['count']) for x in res['managers']][:2] == [('Aidan', 1), ('Ben', 1)], res
 print('PASS: podcast and Shotgun builders')

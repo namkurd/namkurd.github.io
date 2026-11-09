@@ -2,7 +2,7 @@
  "schema": 1,
  "season": 2026,
  "throughWeek": 8,
- "total": 15,
+ "total": 13,
  "managers": [
   {
    "id": "aidan",
@@ -107,22 +107,6 @@
    ]
   },
   {
-   "id": "alex",
-   "name": "Alex",
-   "count": 1,
-   "shots": [
-    {
-     "week": 1,
-     "player": "K. Murray",
-     "full": "Kyler Murray",
-     "pos": "QB",
-     "pts": -0.18,
-     "key": "2026-1-5849-6",
-     "done": false
-    }
-   ]
-  },
-  {
    "id": "ankit",
    "name": "Ankit",
    "count": 1,
@@ -134,22 +118,6 @@
      "pos": "TE",
      "pts": 0.0,
      "key": "2026-1-7553-8",
-     "done": false
-    }
-   ]
-  },
-  {
-   "id": "christian",
-   "name": "Christian",
-   "count": 1,
-   "shots": [
-    {
-     "week": 8,
-     "player": "L. Jackson",
-     "full": "Lamar Jackson",
-     "pos": "QB",
-     "pts": 0.0,
-     "key": "2026-8-4881-9",
      "done": false
     }
    ]
@@ -203,8 +171,20 @@
    ]
   },
   {
+   "id": "alex",
+   "name": "Alex",
+   "count": 0,
+   "shots": []
+  },
+  {
    "id": "ben",
    "name": "Ben",
+   "count": 0,
+   "shots": []
+  },
+  {
+   "id": "christian",
+   "name": "Christian",
    "count": 0,
    "shots": []
   },
@@ -221,5 +201,5 @@
    "shots": []
   }
  ],
- "generatedAt": "2026-11-09T11:50:41Z"
+ "generatedAt": "2026-11-09T12:36:47Z"
 }
