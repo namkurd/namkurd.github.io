@@ -132,12 +132,16 @@
   .sgp i { font-style: normal; font-size: .86em; opacity: .7; margin-left: 2px; }
   .sgp .done { color: var(--good, #3fb97a); }
   .sgclean { margin: 3px 3px 0; font-size: .62rem; color: var(--dtf-dim); }
+  /* spare room on a tall screen is used: fitHome() tries the roomiest layout first and steps down to the first one that fits */
+  .loose1 .grid { --plate: clamp(32px, calc(var(--avail) * .056), 70px); gap: clamp(6px, calc(var(--avail) * .01), 12px); } .loose1 .tile b { font-size: .7rem; margin-top: 4px; }
+  .loose1 .tile { padding-top: clamp(6px, calc(var(--avail) * .009), 14px); padding-bottom: clamp(5px, calc(var(--avail) * .008), 12px); } .loose1 .lower { gap: clamp(6px, calc(var(--avail) * .012), 14px); margin-top: clamp(6px, calc(var(--avail) * .012), 14px); }
+  .loose2 .grid { --plate: clamp(36px, calc(var(--avail) * .064), 80px); } .loose2 .tile b { font-size: .76rem; } .loose2 .card { padding: 9px 11px 10px; } .loose2 .sgrow { padding: 2px 3px; }
   /* when the page is still taller than the screen, fitHome() tightens it in steps */
   .tight1 .tile:not(.wide) .t { display: none; }
   .tight1 .panel .cap { display: none; } .tight1 .tabs { margin-bottom: 2px; } .tight1 .tabs button { height: 28px; } .tight1 .row { min-height: 30px; }
   .tight1 .feed { padding: 5px 8px 3px; } .tight1 .top { margin: 0; } .tight1 .next { margin-bottom: 5px; } .tight1 .ir { margin-bottom: 3px; }
-  .tight2 .grid { --plate: 22px; } .tight2 .tile { padding-top: 3px; padding-bottom: 3px; } .tight2 .tile b { font-size: .6rem; margin-top: 1px; }
-  .tight2 .row { min-height: 27px; } .tight2 .panel h2 { font-size: .78rem; } .tight2 .meta { display: none; }
+  .tight2 .grid { --plate: 26px; } .tight2 .tile { padding-top: 3px; padding-bottom: 3px; } .tight2 .tile b { font-size: .62rem; margin-top: 2px; }
+  .tight3 .grid { --plate: 22px; } .tight3 .tile b { font-size: .6rem; margin-top: 1px; } .tight3 .row { min-height: 27px; } .tight3 .panel h2 { font-size: .78rem; } .tight3 .meta { display: none; }
   @media (min-width: 900px) {
     .lower { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
     .pb b { font-size: .92rem; } .pb small { font-size: .74rem; } .sgrow .who, .sgp, .sgrow .n { font-size: .74rem; }
@@ -298,13 +302,16 @@
   function fitAll() { fitGets(); fitText(); fitHome(); }
   // Home is meant to fit one screen: if the content is taller than the space between the bars it is tightened in steps (the lower cards
   // shrink, the feed loses its caption, the tiles get smaller) and stops as soon as it fits; below the last step the page just scrolls
-  var HOME_STEPS = [[1, 42, 0], [1, 42, 1], [.92, 38, 1], [.84, 34, 1], [.76, 30, 1], [.76, 30, 2]];   // [Shotguns zoom, player width %, feed/tile tightening]
+  // [Shotguns zoom, player width %, layout]: negative layouts are roomier (loose1, loose2), positive ones tighter (tight1, tight2). The roomiest that fits wins.
+  var HOME_STEPS = [[1.22, 52, -2], [1.14, 48, -2], [1.14, 48, -1], [1.08, 45, -1], [1, 42, 0], [1, 42, 1], [.92, 38, 1], [.84, 34, 1], [.84, 34, 2], [.76, 30, 2], [.76, 30, 3]];
   function fitHome() {
     var lo = $('lower'), sg = $('sg'), root = document.querySelector('.dtf-wrap'); if (!lo || !root) return;
     var over = function () { return document.documentElement.scrollHeight > window.innerHeight; };
     for (var i = 0; i < HOME_STEPS.length; i++) {
-      sg.style.zoom = HOME_STEPS[i][0] === 1 ? '' : HOME_STEPS[i][0]; lo.style.setProperty('--pw', HOME_STEPS[i][1] + '%');
-      root.classList.toggle('tight1', HOME_STEPS[i][2] >= 1); root.classList.toggle('tight2', HOME_STEPS[i][2] >= 2);
+      var st = HOME_STEPS[i];
+      sg.style.zoom = st[0] === 1 ? '' : st[0]; lo.style.setProperty('--pw', st[1] + '%');
+      root.classList.toggle('loose2', st[2] <= -2); root.classList.toggle('loose1', st[2] <= -1);
+      root.classList.toggle('tight1', st[2] >= 1); root.classList.toggle('tight2', st[2] >= 2); root.classList.toggle('tight3', st[2] >= 3);
       if (!over()) break;
     }
   }
