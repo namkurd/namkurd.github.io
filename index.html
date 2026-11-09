@@ -117,6 +117,10 @@
   .pod { display: flex; gap: 10px; align-items: stretch; }
   .pv { flex: 0 0 var(--pw, 42%); max-width: 260px; position: relative; aspect-ratio: 16 / 9; border-radius: 9px; overflow: hidden; background: #000; align-self: center; }
   .pv iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .pv .pp { position: absolute; inset: 0; display: block; -webkit-tap-highlight-color: transparent; }
+  .pv .pp img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .pv .pl { position: absolute; left: 50%; top: 50%; width: 34px; height: 24px; margin: -12px 0 0 -17px; border-radius: 7px; background: rgba(255,0,0,.9); box-shadow: 0 2px 8px rgba(0,0,0,.45); }
+  .pv .pl::after { content: ""; position: absolute; left: 14px; top: 6px; border-left: 11px solid #fff; border-top: 6px solid transparent; border-bottom: 6px solid transparent; }
   .pb { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 2px; }
   .pb b { font-size: .8rem; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
   .pb small { color: var(--dtf-dim); font-size: .66rem; line-height: 1.25; }
@@ -163,7 +167,7 @@
 </div>
 <div class="lower" id="lower">
   <section class="card pod" id="pod" hidden aria-label="Latest podcast episode">
-    <div class="pv"><iframe id="pod-f" title="Latest podcast episode" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+    <div class="pv" id="pod-v"><a id="pod-p" class="pp" href="#" target="_blank" rel="noopener" aria-label="Play the latest episode"><img id="pod-i" alt="" decoding="async"><span class="pl" aria-hidden="true"></span></a></div>
     <div class="pb"><span class="k">Content Boys <img class="cbc" src="/shell/icons/cbc-coin.webp" alt="Content Boy Coin" width="16" height="16" decoding="async"></span><b id="pod-t"></b><small id="pod-m"></small><a id="pod-a" target="_blank" rel="noopener">Open on YouTube</a></div>
   </section>
   <section class="card sg" id="sg" hidden aria-label="Shotguns this season">
@@ -359,7 +363,29 @@
     $('pod-t').textContent = p.title || 'Latest episode';
     $('pod-m').textContent = (p.channel ? p.channel + ' \u00b7 ' : '') + (p.postedAt ? 'posted ' + ago(p.postedAt) : '');
     $('pod-a').href = p.url || ('https://www.youtube.com/watch?v=' + encodeURIComponent(p.videoId));
-    $('pod-f').src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(p.videoId) + '?rel=0&playsinline=1';
+    var vid = encodeURIComponent(p.videoId), yt = $('pod-a').href, pv = $('pod-v'), pa = $('pod-p');
+    $('pod-i').src = 'https://i.ytimg.com/vi/' + vid + '/hqdefault.jpg';
+    pa.href = yt;
+    // Tapping the picture plays it right here; if YouTube refuses to embed (or says nothing within a few seconds) the picture goes back to being a plain link to YouTube.
+    function plain() { var f = pv.querySelector('iframe'); if (f) f.remove(); pa.hidden = false; pa.removeAttribute('data-on'); }
+    pa.addEventListener('click', function (e) {
+      if (pa.getAttribute('data-on') === 'fail') return;     // second try: let the link open YouTube
+      e.preventDefault();
+      var f = document.createElement('iframe'), ok = false, done = function () { window.removeEventListener('message', onMsg); };
+      f.title = 'Latest podcast episode'; f.allowFullscreen = true; f.referrerPolicy = 'strict-origin-when-cross-origin';
+      f.allow = 'autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      f.src = 'https://www.youtube.com/embed/' + vid + '?autoplay=1&rel=0&playsinline=1&enablejsapi=1&origin=' + encodeURIComponent(location.origin);
+      function fail() { done(); plain(); pa.setAttribute('data-on', 'fail'); }
+      function onMsg(ev) {
+        if (ev.source !== f.contentWindow) return;
+        var d = ev.data; try { if (typeof d === 'string') d = JSON.parse(d); } catch (x) { return; }
+        if (d && d.event === 'onError') fail(); else if (d) ok = true;
+      }
+      window.addEventListener('message', onMsg);
+      f.addEventListener('load', function () { try { f.contentWindow.postMessage(JSON.stringify({ event: 'listening', id: 1 }), '*'); } catch (x) {} });
+      pv.appendChild(f); pa.hidden = true;
+      setTimeout(function () { if (!ok) fail(); }, 7000);
+    });
     $('pod').hidden = false; fitHome();
   }).catch(function () {});
   // ---- this season's Shotguns (shotguns.json, built from the Record Book's weekly cache)
