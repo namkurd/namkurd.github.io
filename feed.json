@@ -51,7 +51,7 @@
       "Christian"
      ],
      "winner": "Christian",
-     "edge": 25.6,
+     "edge": 36.2,
      "gets": [
       {
        "m": "Aidan",
@@ -79,7 +79,7 @@
       "Alex"
      ],
      "winner": "Alex",
-     "edge": 75.9,
+     "edge": 131.7,
      "gets": [
       {
        "m": "Ben",
@@ -106,7 +106,7 @@
       "Ankit"
      ],
      "winner": "Ankit",
-     "edge": 11.7,
+     "edge": 1.2,
      "gets": [
       {
        "m": "Alex",
@@ -134,7 +134,7 @@
     {
      "rank": 1,
      "title": "Kirk Cousins · Ryan",
-     "sub": "+59 PAR · $21 · Wk 2",
+     "sub": "+63 PAR · $21 · Wk 2",
      "managers": [
       "Ryan"
      ],
@@ -143,7 +143,7 @@
     {
      "rank": 2,
      "title": "Braelon Allen · Jake",
-     "sub": "+54 PAR · $150 · Wk 3",
+     "sub": "+52 PAR · $150 · Wk 3",
      "managers": [
       "Jake"
      ],
@@ -151,12 +151,12 @@
     },
     {
      "rank": 3,
-     "title": "Tyler Huntley · Ankit",
-     "sub": "+25 PAR · $21 · Wk 4",
+     "title": "Jonah Coleman · Ben",
+     "sub": "+26 PAR · $76 · Wk 2",
      "managers": [
-      "Ankit"
+      "Ben"
      ],
-     "href": "/FAB-Management/?season=2026&manager=Ankit"
+     "href": "/FAB-Management/?season=2026&manager=Ben"
     }
    ]
   },
@@ -166,26 +166,26 @@
    "items": [
     {
      "rank": 1,
-     "title": "Kyle Pitts Sr. · Jake",
-     "sub": "+14 PAR · Wk 6",
+     "title": "Shedeur Sanders · Alex",
+     "sub": "+13 PAR · Wk 9",
+     "managers": [
+      "Alex"
+     ],
+     "href": "/FAB-Management/?season=2026&manager=Alex"
+    },
+    {
+     "rank": 2,
+     "title": "New York Giants · Jake",
+     "sub": "+13 PAR · Wk 8",
      "managers": [
       "Jake"
      ],
      "href": "/FAB-Management/?season=2026&manager=Jake"
     },
     {
-     "rank": 2,
+     "rank": 3,
      "title": "T.J. Hockenson · Haan",
      "sub": "+11 PAR · Wk 4",
-     "managers": [
-      "Haan"
-     ],
-     "href": "/FAB-Management/?season=2026&manager=Haan"
-    },
-    {
-     "rank": 3,
-     "title": "Keenan Allen · Haan",
-     "sub": "+10 PAR · Wk 6",
      "managers": [
       "Haan"
      ],
@@ -198,91 +198,69 @@
   {
    "m": "Ben",
    "rank": 1,
-   "rumbles": 112
+   "rumbles": 129
   },
   {
    "m": "Steven",
    "rank": 2,
-   "rumbles": 104
-  },
-  {
-   "m": "Ryan",
-   "rank": 3,
-   "rumbles": 99
+   "rumbles": 124
   },
   {
    "m": "Jake",
-   "rank": 4,
-   "rumbles": 90
+   "rank": 3,
+   "rumbles": 108
   },
   {
-   "m": "Kaitlyn",
-   "rank": 5,
-   "rumbles": 83
+   "m": "Ryan",
+   "rank": 4,
+   "rumbles": 101
   },
   {
    "m": "Stephanie",
-   "rank": 6,
-   "rumbles": 81
-  },
-  {
-   "m": "Christian",
-   "rank": 7,
-   "rumbles": 79
+   "rank": 5,
+   "rumbles": 97
   },
   {
    "m": "Alex",
-   "rank": 8,
-   "rumbles": 73
+   "rank": 6,
+   "rumbles": 92
+  },
+  {
+   "m": "Kaitlyn",
+   "rank": 7,
+   "rumbles": 88
   },
   {
    "m": "Haan",
-   "rank": 9,
-   "rumbles": 72
+   "rank": 8,
+   "rumbles": 85
   },
   {
-   "m": "Ankit",
-   "rank": 10,
-   "rumbles": 69
+   "m": "Christian",
+   "rank": 9,
+   "rumbles": 79
   },
   {
    "m": "Joe",
+   "rank": 10,
+   "rumbles": 73
+  },
+  {
+   "m": "Ankit",
    "rank": 11,
-   "rumbles": 67
+   "rumbles": 70
   },
   {
    "m": "Aidan",
    "rank": 12,
-   "rumbles": 31
+   "rumbles": 34
   }
  ],
  "ir": {
-  "week": 9,
-  "state": "blocked",
+  "week": 10,
+  "state": "clear",
   "violations": [],
-  "blocked": [
-   {
-    "m": "Joe",
-    "player": "T. Spears",
-    "pos": "RB",
-    "status": "Out",
-    "how": "waiver"
-   },
-   {
-    "m": "Joe",
-    "player": "Z. Knight",
-    "pos": "RB",
-    "status": "Out",
-    "how": "waiver"
-   },
-   {
-    "m": "Steven",
-    "player": "X. Worthy",
-    "pos": "WR",
-    "status": "Out",
-    "how": "free agent"
-   }
-  ]
+  "blocked": []
  },
- "generatedAt": "2026-11-08T23:47:18Z"
+ "generatedAt": "2026-11-10T09:59:39Z"
 }
