@@ -258,9 +258,17 @@
  ],
  "ir": {
   "week": 10,
-  "state": "clear",
+  "state": "blocked",
   "violations": [],
-  "blocked": []
+  "blocked": [
+   {
+    "m": "Joe",
+    "player": "D. Adams",
+    "pos": "WR",
+    "status": "IR",
+    "how": "trade"
+   }
+  ]
  },
- "generatedAt": "2026-11-10T09:59:39Z"
+ "generatedAt": "2026-11-11T17:11:59Z"
 }
