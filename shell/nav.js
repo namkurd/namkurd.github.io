@@ -316,7 +316,10 @@
   }
   // --dtf-top-pad is static (body padding); --dtf-top-h follows the bar while it hides on scroll (tools offset sticky things with it)
   function setTop() {
-    var pad = topPad(), h = AWAY && mobile() ? (standalone() ? inset() : 0) : pad;
+    var pad = topPad();
+    // the bar's real height wins over the estimate (the estimate can disagree with what is drawn, which left a blank band above the page)
+    if (pad > 0 && mobile() && UI.ctx && !UI.ctx.hidden) { var bh = Math.round(UI.ctx.getBoundingClientRect().height); if (bh > 0 && Math.abs(bh - pad) > 1) pad = bh; }
+    var h = AWAY && mobile() ? (standalone() ? inset() : 0) : pad;
     root.style.setProperty('--dtf-top-pad', pad + 'px'); root.style.setProperty('--dtf-top-h', h + 'px');
     statusCover(AWAY && mobile() && standalone() && h > 0 && !isHome());
   }
@@ -450,6 +453,7 @@
       try {
         D.body.appendChild(build(reg)); setTop();
         W.addEventListener('resize', setTop);
+        W.addEventListener('orientationchange', function () { setTimeout(setTop, 250); }); W.addEventListener('pageshow', setTop); W.addEventListener('load', function () { setTimeout(setTop, 300); });
       } catch (e) { if (W.console) console.warn('dtf-nav failed', e); }
       return reg;
     });
