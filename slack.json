@@ -3,19 +3,20 @@
  "windowDays": 7,
  "topics": [
   {
+   "title": "Bake shouldn't even be on a roster",
+   "needs_summary": true,
+   "channel": "trade-discussion",
+   "messages": 54,
+   "people": 5,
+   "href": "https://dtf-club.slack.com/archives/C07QP48E83E/p1794415020359869"
+  },
+  {
    "title": "Steph coming out swinging for rivalry week",
    "needs_summary": true,
    "channel": "gameday",
    "messages": 25,
    "people": 6,
    "href": "https://dtf-club.slack.com/archives/CCH72NHC7/p1794153114585549"
-  },
-  {
-   "title": "IR and position-cap question, and an idea for an AI that answers league rules",
-   "channel": "vibes",
-   "messages": 13,
-   "people": 5,
-   "href": "https://dtf-club.slack.com/archives/C06ARECPAN4/p1793804922969619"
   },
   {
    "title": "Happy NFL trade deadline to all who celebrate!",
@@ -26,5 +27,5 @@
    "href": "https://dtf-club.slack.com/archives/CCFN6K3EX/p1794316577174709"
   }
  ],
- "generatedAt": "2026-11-10T18:49:35Z"
+ "generatedAt": "2026-11-11T18:51:39Z"
 }
