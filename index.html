@@ -222,11 +222,12 @@
   // ---- IR eligibility check (computed from FAB-Management's ir_check.py by the hourly feed job)
   function paintIR(ir) {
     var b = $('ir'); if (!ir || !ir.week) { b.hidden = true; return; }
-    var v = ir.violations || [], k = ir.blocked || [], who = function (r) { return esc(r.m) + ' (' + esc(r.player) + ')'; }, html, cls = '';
-    if (v.length) { cls = 'bad'; html = '⛔ <b>IR check · Wk ' + ir.week + '</b> · ' + v.length + ' on IR who shouldn’t be: ' + v.map(who).join(', ') + (k.length ? ' · ' + k.length + ' can’t go on IR yet: ' + k.map(who).join(', ') : ''); }
-    else if (k.length) { cls = 'warn'; html = '🟡 <b>IR check · Wk ' + ir.week + '</b> · ' + k.length + ' new this week, not IR-eligible until next week: ' + k.map(who).join(', '); }
+    var v = ir.violations || [], k = ir.blocked || [], who = function (r) { return '<b>' + esc(r.player) + '</b> (' + esc(r.m) + ')'; }, html, cls = '';
+    // player first, then the manager; the "not IR eligible until next week" ending appears once, after the last name
+    if (v.length) { cls = 'bad'; html = '⛔ ' + v.map(who).join(', ') + ' on IR but shouldn’t be' + (k.length ? ' · ' + k.map(who).join(', ') + ' not IR eligible until next week' : ''); }
+    else if (k.length) { cls = 'warn'; html = '🟡 ' + k.map(who).join(', ') + ' not IR eligible until next week'; }
     else html = '✅ <b>IR check · Wk ' + ir.week + '</b> <span class="dim">· all clear</span>';
-    b.className = 'ir ' + cls; b.innerHTML = '<span class="tx">' + html + '</span>'; b.hidden = false;
+    b.title = 'IR check · Week ' + ir.week; b.className = 'ir ' + cls; b.innerHTML = '<span class="tx">' + html + '</span>'; b.hidden = false;
   }
   $('ir').addEventListener('click', function () { this.classList.toggle('open'); });
 
