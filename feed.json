@@ -267,8 +267,15 @@
     "pos": "WR",
     "status": "IR",
     "how": "trade"
+   },
+   {
+    "m": "Steven",
+    "player": "P. Nacua",
+    "pos": "WR",
+    "status": "IR",
+    "how": "trade"
    }
   ]
  },
- "generatedAt": "2026-11-13T01:11:49Z"
+ "generatedAt": "2026-11-16T22:17:30Z"
 }
