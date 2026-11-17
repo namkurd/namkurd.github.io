@@ -134,7 +134,7 @@
     {
      "rank": 1,
      "title": "Kirk Cousins · Ryan",
-     "sub": "+63 PAR · $21 · Wk 2",
+     "sub": "+61 PAR · $21 · Wk 2",
      "managers": [
       "Ryan"
      ],
@@ -143,7 +143,7 @@
     {
      "rank": 2,
      "title": "Braelon Allen · Jake",
-     "sub": "+52 PAR · $150 · Wk 3",
+     "sub": "+53 PAR · $150 · Wk 3",
      "managers": [
       "Jake"
      ],
@@ -151,12 +151,12 @@
     },
     {
      "rank": 3,
-     "title": "Jonah Coleman · Ben",
-     "sub": "+26 PAR · $76 · Wk 2",
+     "title": "Minnesota Vikings · Joe",
+     "sub": "+39 PAR · $11 · Wk 2",
      "managers": [
-      "Ben"
+      "Joe"
      ],
-     "href": "/FAB-Management/?season=2026&manager=Ben"
+     "href": "/FAB-Management/?season=2026&manager=Joe"
     }
    ]
   },
@@ -166,12 +166,12 @@
    "items": [
     {
      "rank": 1,
-     "title": "Shedeur Sanders · Alex",
-     "sub": "+13 PAR · Wk 9",
+     "title": "Emmett Johnson · Ben",
+     "sub": "+28 PAR · Wk 1",
      "managers": [
-      "Alex"
+      "Ben"
      ],
-     "href": "/FAB-Management/?season=2026&manager=Alex"
+     "href": "/FAB-Management/?season=2026&manager=Ben"
     },
     {
      "rank": 2,
@@ -184,12 +184,12 @@
     },
     {
      "rank": 3,
-     "title": "T.J. Hockenson · Haan",
-     "sub": "+11 PAR · Wk 4",
+     "title": "Shedeur Sanders · Alex",
+     "sub": "+12 PAR · Wk 9",
      "managers": [
-      "Haan"
+      "Alex"
      ],
-     "href": "/FAB-Management/?season=2026&manager=Haan"
+     "href": "/FAB-Management/?season=2026&manager=Alex"
     }
    ]
   }
@@ -262,5 +262,5 @@
   "violations": [],
   "blocked": []
  },
- "generatedAt": "2026-11-17T12:34:31Z"
+ "generatedAt": "2026-11-17T14:37:01Z"
 }
