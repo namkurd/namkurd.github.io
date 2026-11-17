@@ -449,8 +449,8 @@
   function close() { stopClip(); sh.hidden = true; f.removeAttribute('src'); b.focus(); }   // removing the source stops the song
 
   // Podcast clips from the theme song (audio/theme-song.mp3), played through Web Audio so the fade-out works on phones too.
-  // Intro: from the start, fading out from 0:15 and stopping at 0:20. Outro: from 0:40 to the end.
-  var CLIPS = { 'in': { from: 0, to: 20, fadeAt: 15 }, 'out': { from: 40, to: null, fadeAt: null } };
+  // Intro: from the start, fading out from 0:13.5 and stopping at 0:18.5. Outro: from 0:40 to the end.
+  var CLIPS = { 'in': { from: 0, to: 18.5, fadeAt: 13.5 }, 'out': { from: 40, to: null, fadeAt: null } };
   var AC = null, buf = null, loading = null, cur = null, bi = document.getElementById('clip-in'), bo = document.getElementById('clip-out'), bs = document.getElementById('clip-stop');
   function ctx() {
     if (navigator.audioSession) { try { navigator.audioSession.type = 'playback'; } catch (e) {} }   // iPhone: play even with the silent switch on
