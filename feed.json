@@ -79,7 +79,7 @@
       "Christian"
      ],
      "winner": "Christian",
-     "edge": 36.2,
+     "edge": 53.1,
      "gets": [
       {
        "m": "Aidan",
@@ -107,7 +107,7 @@
       "Alex"
      ],
      "winner": "Alex",
-     "edge": 131.7,
+     "edge": 117.7,
      "gets": [
       {
        "m": "Ben",
@@ -198,85 +198,69 @@
   {
    "m": "Ben",
    "rank": 1,
-   "rumbles": 129
+   "rumbles": 149
   },
   {
    "m": "Steven",
    "rank": 2,
-   "rumbles": 124
+   "rumbles": 137
   },
   {
-   "m": "Jake",
+   "m": "Stephanie",
    "rank": 3,
-   "rumbles": 108
+   "rumbles": 113
   },
   {
    "m": "Ryan",
    "rank": 4,
-   "rumbles": 101
+   "rumbles": 112
   },
   {
-   "m": "Stephanie",
+   "m": "Jake",
    "rank": 5,
-   "rumbles": 97
-  },
-  {
-   "m": "Alex",
-   "rank": 6,
-   "rumbles": 92
-  },
-  {
-   "m": "Kaitlyn",
-   "rank": 7,
-   "rumbles": 88
+   "rumbles": 108
   },
   {
    "m": "Haan",
+   "rank": 6,
+   "rumbles": 104
+  },
+  {
+   "m": "Alex",
+   "rank": 7,
+   "rumbles": 93
+  },
+  {
+   "m": "Kaitlyn",
    "rank": 8,
-   "rumbles": 85
-  },
-  {
-   "m": "Christian",
-   "rank": 9,
-   "rumbles": 79
-  },
-  {
-   "m": "Joe",
-   "rank": 10,
-   "rumbles": 73
+   "rumbles": 91
   },
   {
    "m": "Ankit",
+   "rank": 9,
+   "rumbles": 88
+  },
+  {
+   "m": "Christian",
+   "rank": 10,
+   "rumbles": 84
+  },
+  {
+   "m": "Joe",
    "rank": 11,
-   "rumbles": 70
+   "rumbles": 79
   },
   {
    "m": "Aidan",
    "rank": 12,
-   "rumbles": 34
+   "rumbles": 42
   }
  ],
  "ir": {
-  "week": 10,
-  "state": "violations",
-  "violations": [
-   {
-    "m": "Joe",
-    "player": "D. Adams",
-    "pos": "WR",
-    "status": "IR",
-    "how": "trade"
-   }
-  ],
-  "blocked": [
-   {
-    "m": "Steven",
-    "player": "P. Nacua",
-    "pos": "WR",
-    "status": "IR",
-    "how": "trade"
-   }
-  ]
+  "week": 11,
+  "state": "clear",
+  "violations": [],
+  "blocked": []
  },
- "generatedAt": "2026-11-17T04:35:05Z"
+ "generatedAt": "2026-11-17T12:34:31Z"
 }
