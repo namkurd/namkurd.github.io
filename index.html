@@ -129,6 +129,9 @@
   .sheet { position: fixed; inset: 0; z-index: 60; background: rgba(0,0,0,.6); display: flex; align-items: center; justify-content: center; padding: 16px; }
   .sheet[hidden] { display: none; }
   .sheet .sh { position: relative; width: min(100%, 520px); background: var(--dtf-panel); border: 1px solid var(--dtf-border); border-radius: 14px; padding: 34px 10px 10px; }
+  .clips { display: flex; gap: 8px; margin-bottom: 10px; }
+  .clips button { flex: 1; border: 1px solid var(--dtf-border); background: color-mix(in srgb, var(--dtf-accent) 14%, transparent); color: var(--dtf-text, #fff); border-radius: 9px; padding: 9px 6px; font: inherit; font-size: .84rem; font-weight: 700; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .clips button:disabled { opacity: .45; cursor: default; } .clips button.on { background: var(--dtf-accent); color: #111; border-color: var(--dtf-accent); }
   .sheet iframe { display: block; width: 100%; height: 150px; border: 0; border-radius: 9px; background: #000; }
   .sheet .sx { position: absolute; top: 4px; right: 8px; background: none; border: 0; color: var(--dtf-dim); font-size: 1.6rem; line-height: 1; cursor: pointer; padding: 2px 8px; }
   .sheet a { display: block; margin-top: 8px; text-align: center; color: var(--dtf-accent); font-size: .74rem; text-decoration: none; }
@@ -199,7 +202,7 @@
   </section>
 </div>
 <div class="sheet" id="suno-sheet" hidden role="dialog" aria-label="Theme song player">
-  <div class="sh"><button type="button" class="sx" id="suno-x" aria-label="Close">&times;</button><iframe id="suno-f" title="Theme song on Suno" allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe><a href="https://suno.com/song/675fe4d6-4948-4e43-be08-24a6f1e8db05" target="_blank" rel="noopener">Open on Suno</a></div>
+  <div class="sh"><button type="button" class="sx" id="suno-x" aria-label="Close">&times;</button><div class="clips"><button type="button" id="clip-in" data-k="in">&#9654; Intro</button><button type="button" id="clip-out" data-k="out">&#9654; Outro</button><button type="button" id="clip-stop" disabled>&#9632; Stop</button></div><iframe id="suno-f" title="Theme song on Suno" allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe><a href="https://suno.com/song/675fe4d6-4948-4e43-be08-24a6f1e8db05" target="_blank" rel="noopener">Open on Suno</a></div>
 </div>
 <p class="foot" id="foot"><a href="/install/">Add Rumble Hub to your home screen</a></p>
 <script>
@@ -443,7 +446,53 @@
   var b = document.getElementById('suno-b'), sh = document.getElementById('suno-sheet'), f = document.getElementById('suno-f'), x = document.getElementById('suno-x');
   if (!b || !sh) return;
   function open() { f.src = 'https://suno.com/embed/675fe4d6-4948-4e43-be08-24a6f1e8db05'; sh.hidden = false; x.focus(); }
-  function close() { sh.hidden = true; f.removeAttribute('src'); b.focus(); }   // removing the source stops the song
+  function close() { stopClip(); sh.hidden = true; f.removeAttribute('src'); b.focus(); }   // removing the source stops the song
+
+  // Podcast clips from the theme song (audio/theme-song.mp3), played through Web Audio so the fade-out works on phones too.
+  // Intro: from the start, fading out from 0:15 and stopping at 0:20. Outro: from 0:40 to the end.
+  var CLIPS = { 'in': { from: 0, to: 20, fadeAt: 15 }, 'out': { from: 40, to: null, fadeAt: null } };
+  var AC = null, buf = null, loading = null, cur = null, bi = document.getElementById('clip-in'), bo = document.getElementById('clip-out'), bs = document.getElementById('clip-stop');
+  function ctx() {
+    if (navigator.audioSession) { try { navigator.audioSession.type = 'playback'; } catch (e) {} }   // iPhone: play even with the silent switch on
+    if (!AC) AC = new (window.AudioContext || window.webkitAudioContext)();
+    if (AC.state === 'suspended') AC.resume();
+    return AC;
+  }
+  function load() {
+    if (buf) return Promise.resolve(buf);
+    if (loading) return loading;
+    var c = ctx();
+    loading = fetch('/audio/theme-song.mp3').then(function (r) { return r.arrayBuffer(); }).then(function (ab) {
+      return new Promise(function (ok, no) { c.decodeAudioData(ab, ok, no); });
+    }).then(function (b) { buf = b; return b; });
+    loading.catch(function () { loading = null; });
+    return loading;
+  }
+  function clipUi(busy) {
+    [bi, bo].forEach(function (x) { x.classList.toggle('on', !!cur && cur.k === x.getAttribute('data-k')); });
+    bs.disabled = !cur && !busy;
+  }
+  function stopClip() {
+    if (!cur) { clipUi(); return; }
+    var c = cur; cur = null; clipUi();
+    try { var t = AC.currentTime; c.g.gain.cancelScheduledValues(t); c.g.gain.setValueAtTime(c.g.gain.value, t); c.g.gain.linearRampToValueAtTime(0, t + 0.2); c.s.stop(t + 0.22); } catch (e) {}
+  }
+  function play(k) {
+    if (cur && cur.k === k) { stopClip(); return; }
+    stopClip(); clipUi(true);
+    var c = ctx();
+    load().then(function (b) {
+      var d = CLIPS[k], g = c.createGain(), s = c.createBufferSource(), t = c.currentTime + 0.05, len = (d.to == null ? b.duration : d.to) - d.from;
+      s.buffer = b; s.connect(g); g.connect(c.destination);
+      g.gain.setValueAtTime(1, t);
+      if (d.fadeAt != null) { g.gain.setValueAtTime(1, t + (d.fadeAt - d.from)); g.gain.linearRampToValueAtTime(0, t + len); }
+      s.start(t, d.from, len);
+      cur = { k: k, s: s, g: g };
+      s.onended = function () { if (cur && cur.s === s) { cur = null; clipUi(); } };
+      clipUi();
+    }, function () { cur = null; clipUi(); });
+  }
+  bi.addEventListener('click', function () { play('in'); }); bo.addEventListener('click', function () { play('out'); }); bs.addEventListener('click', stopClip);
   b.addEventListener('click', open); x.addEventListener('click', close);
   sh.addEventListener('click', function (e) { if (e.target === sh) close(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !sh.hidden) close(); });
