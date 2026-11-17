@@ -116,8 +116,22 @@
   .card .k .cbc { width: 1.55em; height: 1.55em; vertical-align: -.42em; margin-left: 3px; object-fit: contain; }
   .pod { display: flex; gap: 10px; align-items: stretch; }
   .pv { flex: 0 0 var(--pw, 42%); max-width: 260px; position: relative; aspect-ratio: 16 / 9; border-radius: 9px; overflow: hidden; background: #000; align-self: center; }
-  .card.suno { padding: 0; overflow: hidden; }
-  .suno iframe { display: block; width: 100%; height: 100px; border: 0; background: #000; }
+  /* phones: the song is a small tile (about a quarter of the row) beside the episode; tapping it opens the Suno player */
+  .lower { grid-template-columns: minmax(0, 1fr) 25%; }
+  .lower .pod { grid-column: 1; grid-row: 1; } .lower .suno { grid-column: 2; grid-row: 1; } .lower .sg { grid-column: 1 / -1; grid-row: 2; }
+  .card.suno { padding: 0; overflow: hidden; background: linear-gradient(160deg, #1b2a5c, #0d1330); border-color: #2c3f86; }
+  .suno .sb { all: unset; box-sizing: border-box; width: 100%; height: 100%; min-height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; cursor: pointer; -webkit-tap-highlight-color: transparent; position: relative; }
+  .suno .se { font-size: 1.5rem; line-height: 1; }
+  .suno .sp { width: 26px; height: 26px; border-radius: 50%; background: #f5f3ee; position: relative; box-shadow: 0 2px 8px rgba(0,0,0,.4); }
+  .suno .sp::after { content: ""; position: absolute; left: 10px; top: 7px; border-left: 9px solid #111; border-top: 6px solid transparent; border-bottom: 6px solid transparent; }
+  .suno .sb small { color: #c7d1ff; font-size: .62rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+  .suno .sb:focus-visible { outline: 2px solid var(--dtf-accent); outline-offset: -3px; border-radius: 14px; }
+  .sheet { position: fixed; inset: 0; z-index: 60; background: rgba(0,0,0,.6); display: flex; align-items: center; justify-content: center; padding: 16px; }
+  .sheet[hidden] { display: none; }
+  .sheet .sh { position: relative; width: min(100%, 520px); background: var(--dtf-panel); border: 1px solid var(--dtf-border); border-radius: 14px; padding: 34px 10px 10px; }
+  .sheet iframe { display: block; width: 100%; height: 150px; border: 0; border-radius: 9px; background: #000; }
+  .sheet .sx { position: absolute; top: 4px; right: 8px; background: none; border: 0; color: var(--dtf-dim); font-size: 1.6rem; line-height: 1; cursor: pointer; padding: 2px 8px; }
+  .sheet a { display: block; margin-top: 8px; text-align: center; color: var(--dtf-accent); font-size: .74rem; text-decoration: none; }
   .pv iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
   .pv .pp { position: absolute; inset: 0; display: block; -webkit-tap-highlight-color: transparent; }
   .pv .pp img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -151,6 +165,8 @@
   .tight3 .grid { --plate: 22px; } .tight3 .tile b { font-size: .6rem; margin-top: 1px; } .tight3 .row { min-height: 27px; } .tight3 .panel h2 { font-size: .78rem; } .tight3 .meta { display: none; }
   @media (min-width: 900px) {
     .lower { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
+    .lower .pod { grid-column: 1; grid-row: 1; } .lower .suno { grid-column: 1; grid-row: 2; } .lower .sg { grid-column: 2; grid-row: 1 / span 2; }   /* wide: the song sits under the episode; Shotguns stays on the right */
+    .suno .sb { flex-direction: row; justify-content: flex-start; gap: 12px; padding: 0 16px; min-height: 56px; } .suno .sb small { font-size: .76rem; }
     .pb b { font-size: .92rem; } .pb small { font-size: .74rem; } .sgrow .who, .sgp, .sgrow .n { font-size: .74rem; }
   }
   .skel { height: 96px; border-radius: 20px; background: var(--dtf-panel); border: 1px solid var(--dtf-border); opacity: .6; }
@@ -175,12 +191,15 @@
     <div class="pb"><span class="k">Content Boys <img class="cbc" src="/shell/icons/cbc-coin.webp" alt="Content Boy Coin" width="16" height="16" decoding="async"></span><b id="pod-t"></b><small id="pod-m"></small><a id="pod-a" target="_blank" rel="noopener">Open on YouTube</a></div>
   </section>
   <section class="card suno" id="suno" aria-label="Song on Suno">
-    <iframe title="Song on Suno" src="https://suno.com/embed/675fe4d6-4948-4e43-be08-24a6f1e8db05" loading="lazy" allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    <button type="button" id="suno-b" class="sb" aria-label="Play the song"><span class="se" aria-hidden="true">&#127930;</span><span class="sp" aria-hidden="true"></span><small>Song</small></button>
   </section>
   <section class="card sg" id="sg" hidden aria-label="Shotguns this season">
     <div class="sgh"><a class="k" href="/Recordbook/?r=most-shotguns-in-a-season-team" title="Shotgun records in the Record Book">Shotguns</a><b id="sg-t"></b><small id="sg-m"></small></div>
     <div id="sg-l"></div>
   </section>
+</div>
+<div class="sheet" id="suno-sheet" hidden role="dialog" aria-label="Song player">
+  <div class="sh"><button type="button" class="sx" id="suno-x" aria-label="Close">&times;</button><iframe id="suno-f" title="Song on Suno" allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin"></iframe><a href="https://suno.com/song/675fe4d6-4948-4e43-be08-24a6f1e8db05" target="_blank" rel="noopener">Open on Suno</a></div>
 </div>
 <p class="foot" id="foot"><a href="/install/">Add Rumble Hub to your home screen</a></p>
 <script>
@@ -419,4 +438,14 @@
   paintMe();
 })();
 </script>
-</div><script src="/shell/nav.js" defer></script></body></html>
+</div><script>
+(function () {
+  var b = document.getElementById('suno-b'), sh = document.getElementById('suno-sheet'), f = document.getElementById('suno-f'), x = document.getElementById('suno-x');
+  if (!b || !sh) return;
+  function open() { f.src = 'https://suno.com/embed/675fe4d6-4948-4e43-be08-24a6f1e8db05'; sh.hidden = false; x.focus(); }
+  function close() { sh.hidden = true; f.removeAttribute('src'); b.focus(); }   // removing the source stops the song
+  b.addEventListener('click', open); x.addEventListener('click', close);
+  sh.addEventListener('click', function (e) { if (e.target === sh) close(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !sh.hidden) close(); });
+})();
+</script><script src="/shell/nav.js" defer></script></body></html>
