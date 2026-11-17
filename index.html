@@ -151,6 +151,7 @@
   .tight3 .grid { --plate: 22px; } .tight3 .tile b { font-size: .6rem; margin-top: 1px; } .tight3 .row { min-height: 27px; } .tight3 .panel h2 { font-size: .78rem; } .tight3 .meta { display: none; }
   @media (min-width: 900px) {
     .lower { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
+    .lower .pod { grid-column: 1; grid-row: 1; } .lower .suno { grid-column: 1; grid-row: 2; } .lower .sg { grid-column: 2; grid-row: 1 / span 2; }   /* the song sits under the episode; Shotguns stays on the right */
     .pb b { font-size: .92rem; } .pb small { font-size: .74rem; } .sgrow .who, .sgp, .sgrow .n { font-size: .74rem; }
   }
   .skel { height: 96px; border-radius: 20px; background: var(--dtf-panel); border: 1px solid var(--dtf-border); opacity: .6; }
