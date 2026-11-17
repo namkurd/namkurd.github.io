@@ -375,7 +375,7 @@
     });
     // desktop: every tool on one bar
     html += '</nav><nav class="bar dsk" aria-label="Rumble Hub"><a class="brand" href="/">Rumble Hub</a>';
-    [].concat(reg.tools || [], reg.pages || []).forEach(function (x) {
+    [].concat(reg.tools || [], reg.pages || []).filter(function (x) { return !x.gate; }).forEach(function (x) {   // a gated tile (Playoff Hunt) lives on Home only
       html += '<a href="' + esc(x.path) + '"' + (act.id === x.id ? ' class="on" aria-current="page"' : '') + '><span class="lb">' + esc(x.short || x.name) + '</span></a>';
     });
     html += '<span class="sp"></span>' + ((reg.external || []).length ? '<button id="more" aria-haspopup="dialog" aria-expanded="false"><span class="lb">More ▾</span></button>' : '') + '</nav>';

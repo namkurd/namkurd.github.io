@@ -141,6 +141,19 @@
   ],
   "pages": [
     {
+      "id": "playoffhunt",
+      "name": "Playoff Hunt",
+      "short": "Playoffs",
+      "color": "#4f8cff",
+      "color2": "#fbbf24",
+      "logo": "/shell/icons/tools/playoffhunt.svg",
+      "tagline": "Who's in, who's out",
+      "path": "/SleeperLiveRumbles/rumbles.html?tab=playoffs",
+      "wide": true,
+      "gate": "playoffhunt",
+      "description": "The playoff race: odds, clinching scenarios and the Sacko hunt"
+    },
+    {
       "id": "champions",
       "name": "Champions & Sackos",
       "short": "Champs",
