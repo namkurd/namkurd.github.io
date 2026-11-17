@@ -44,6 +44,34 @@
    "items": [
     {
      "rank": 1,
+     "title": "Jake ⇄ Steven",
+     "sub": "Wk 10",
+     "managers": [
+      "Jake",
+      "Steven"
+     ],
+     "winner": null,
+     "edge": 0,
+     "gets": [
+      {
+       "m": "Jake",
+       "players": [
+        "B. Irving",
+        "C. Ward"
+       ]
+      },
+      {
+       "m": "Steven",
+       "players": [
+        "Travis Etienne Jr.",
+        "P. Nacua"
+       ]
+      }
+     ],
+     "href": "/SleeperTradeNodes/?season=2026&manager=Jake"
+    },
+    {
+     "rank": 2,
      "title": "Aidan ⇄ Christian",
      "sub": "Wk 6",
      "managers": [
@@ -71,7 +99,7 @@
      "href": "/SleeperTradeNodes/?season=2026&manager=Christian"
     },
     {
-     "rank": 2,
+     "rank": 3,
      "title": "Ben ⇄ Alex",
      "sub": "Wk 4",
      "managers": [
@@ -96,34 +124,6 @@
       }
      ],
      "href": "/SleeperTradeNodes/?season=2026&manager=Alex"
-    },
-    {
-     "rank": 3,
-     "title": "Alex ⇄ Ankit",
-     "sub": "Wk 8",
-     "managers": [
-      "Alex",
-      "Ankit"
-     ],
-     "winner": "Ankit",
-     "edge": 1.2,
-     "gets": [
-      {
-       "m": "Alex",
-       "players": [
-        "C. Tate",
-        "D. Goedert"
-       ]
-      },
-      {
-       "m": "Ankit",
-       "players": [
-        "M. Washington",
-        "M. Willis"
-       ]
-      }
-     ],
-     "href": "/SleeperTradeNodes/?season=2026&manager=Ankit"
     }
    ]
   },
@@ -258,16 +258,17 @@
  ],
  "ir": {
   "week": 10,
-  "state": "blocked",
-  "violations": [],
-  "blocked": [
+  "state": "violations",
+  "violations": [
    {
     "m": "Joe",
     "player": "D. Adams",
     "pos": "WR",
     "status": "IR",
     "how": "trade"
-   },
+   }
+  ],
+  "blocked": [
    {
     "m": "Steven",
     "player": "P. Nacua",
@@ -277,5 +278,5 @@
    }
   ]
  },
- "generatedAt": "2026-11-16T22:17:30Z"
+ "generatedAt": "2026-11-17T04:35:05Z"
 }
