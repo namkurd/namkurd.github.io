@@ -449,8 +449,8 @@
   function close() { stopClip(); sh.hidden = true; f.removeAttribute('src'); b.focus(); }   // removing the source stops the song
 
   // Podcast clips from the theme song (audio/theme-song.mp3), played through Web Audio so the fade-out works on phones too.
-  // Intro: from the start, fading out from 0:13.5 and stopping at 0:18.5. Outro: from 0:40 to the end.
-  var CLIPS = { 'in': { from: 0, to: 18.5, fadeAt: 13.5 }, 'out': { from: 40, to: null, fadeAt: null } };
+  // Intro: from the start, fading out from 0:13.5 and stopping at 0:18.5. Outro: from 0:42 to the end, fading in over the first second.
+  var CLIPS = { 'in': { from: 0, to: 18.5, fadeAt: 13.5 }, 'out': { from: 42, to: null, fadeAt: null, fadeIn: 1 } };
   var AC = null, buf = null, loading = null, cur = null, bi = document.getElementById('clip-in'), bo = document.getElementById('clip-out'), bs = document.getElementById('clip-stop');
   function ctx() {
     if (navigator.audioSession) { try { navigator.audioSession.type = 'playback'; } catch (e) {} }   // iPhone: play even with the silent switch on
@@ -484,7 +484,7 @@
     load().then(function (b) {
       var d = CLIPS[k], g = c.createGain(), s = c.createBufferSource(), t = c.currentTime + 0.05, len = (d.to == null ? b.duration : d.to) - d.from;
       s.buffer = b; s.connect(g); g.connect(c.destination);
-      g.gain.setValueAtTime(1, t);
+      if (d.fadeIn) { g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(1, t + d.fadeIn); } else g.gain.setValueAtTime(1, t);
       if (d.fadeAt != null) { g.gain.setValueAtTime(1, t + (d.fadeAt - d.from)); g.gain.linearRampToValueAtTime(0, t + len); }
       s.start(t, d.from, len);
       cur = { k: k, s: s, g: g };
