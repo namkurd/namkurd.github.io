@@ -233,7 +233,11 @@
     return '<a class="tile" href="' + esc(t.path) + '" style="' + st + '">' + plate +
       '<b>' + esc(t.name) + '</b><span class="t">' + esc(t.tagline || t.description || '') + '</span></a>';
   }
-  get('/tools.json').then(function (j) { $('grid').innerHTML = homeOrder(j.tools || []).concat(j.pages || []).map(tile).join(''); champLine(); }).catch(function () {
+  // a gated tile only exists while its feature is awake: Playoff Hunt shows once Rumble Central says the playoff race is on (playoff_hunt.json, written by its weekly update)
+  function gates() {
+    return get('/SleeperLiveRumbles/playoff_hunt.json').then(function (g) { return { playoffhunt: !!(g && g.active) }; }, function () { return { playoffhunt: false }; });
+  }
+  Promise.all([get('/tools.json'), gates()]).then(function (a) { var j = a[0], on = a[1]; $('grid').innerHTML = homeOrder(j.tools || []).concat((j.pages || []).filter(function (p) { return !p.gate || on[p.gate]; })).map(tile).join(''); champLine(); }).catch(function () {
     try { var c = sessionStorage.getItem('dtf.registry'); if (c) { $('grid').innerHTML = homeOrder(JSON.parse(c).tools || []).map(tile).join(''); return; } } catch (e) {}
     $('grid').innerHTML = '<p>Couldn’t load the tool list. Check your connection and refresh.</p>';
   });

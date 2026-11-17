@@ -137,7 +137,7 @@
     '.ctx[hidden]{display:none}.ctx.away{transform:translateY(-100%)}' +
     '.ib{flex:none;width:44px;background:none;border:0;font-size:22px;cursor:pointer;color:var(--tx);-webkit-tap-highlight-color:transparent}.ib[hidden]{display:none}' +
     '.ttl{flex:1;min-width:0;align-self:center;text-align:center;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 8px}' +
-    '.vt{flex:1;min-width:0;display:flex;overflow-x:auto;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 12px,#000 calc(100% - 12px),transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 12px,#000 calc(100% - 12px),transparent 100%)}.vt::-webkit-scrollbar{display:none}' +
+    '.vt{flex:1;min-width:0;display:flex;overflow-x:auto;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 12px,#000 calc(100% - 12px),transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 12px,#000 calc(100% - 12px),transparent 100%)}.vt::-webkit-scrollbar{display:none}.vt button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}.vt button:active{opacity:.65}' +
     '.vt button{flex:none;position:relative;height:44px;padding:0 16px;background:none;border:0;color:var(--dim);cursor:pointer;white-space:nowrap;font-weight:500;-webkit-tap-highlight-color:transparent}' +
     '.vt button.on{color:var(--tx);font-weight:700}.vt button.on::after{content:"";position:absolute;left:14px;right:14px;bottom:0;height:3px;border-radius:3px 3px 0 0;background:var(--ac)}' +
     '.sheet{position:fixed;z-index:2147483000;left:8px;right:8px;bottom:calc(64px + calc(env(safe-area-inset-bottom) * .4));background:var(--bg2);border:1px solid var(--bd);border-radius:16px;padding:6px;font:15px system-ui,sans-serif;box-shadow:0 12px 40px rgba(0,0,0,.45);transform-origin:bottom center;animation:up .16s ease-out}' +
@@ -375,7 +375,7 @@
     });
     // desktop: every tool on one bar
     html += '</nav><nav class="bar dsk" aria-label="Rumble Hub"><a class="brand" href="/">Rumble Hub</a>';
-    [].concat(reg.tools || [], reg.pages || []).forEach(function (x) {
+    [].concat(reg.tools || [], reg.pages || []).filter(function (x) { return !x.gate; }).forEach(function (x) {   // a gated tile (Playoff Hunt) lives on Home only
       html += '<a href="' + esc(x.path) + '"' + (act.id === x.id ? ' class="on" aria-current="page"' : '') + '><span class="lb">' + esc(x.short || x.name) + '</span></a>';
     });
     html += '<span class="sp"></span>' + ((reg.external || []).length ? '<button id="more" aria-haspopup="dialog" aria-expanded="false"><span class="lb">More ▾</span></button>' : '') + '</nav>';
@@ -420,7 +420,12 @@
     s.getElementById('rf').addEventListener('click', DTF.refresh);
     if (VIEWS) {
       UI.vt.innerHTML = VIEWS.items.map(function (it, i) { return '<button role="tab" data-i="' + i + '">' + esc(it.label) + '</button>'; }).join('');
-      UI.vt.addEventListener('click', function (e) { var b = e.target.closest('button[data-i]'); if (b) { away(false); pick(+b.getAttribute('data-i')); } });
+      // A tap on a view tab acts the moment the finger lifts (pointerup), without waiting for the browser's click, which on a phone can lag
+      // or be swallowed right after the page loads. The click that follows is ignored; a mouse (or a keyboard) still uses click.
+      var tapAt = 0;
+      function tabTap(e) { var b = e.target.closest('button[data-i]'); if (b) { away(false); pick(+b.getAttribute('data-i')); } }
+      UI.vt.addEventListener('pointerup', function (e) { if (e.pointerType === 'mouse' || e.button > 0) return; if (e.target.closest('button[data-i]')) { tapAt = Date.now(); tabTap(e); } });
+      UI.vt.addEventListener('click', function (e) { if (Date.now() - tapAt < 800) return; tabTap(e); });
       paintViews();
     }
     if (sa) root.classList.add('dtf-standalone');
