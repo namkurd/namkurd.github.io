@@ -80,6 +80,18 @@
   .row.slack b { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.2; }
   .row small { display: block; font-size: .72rem; color: var(--dtf-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .row .go { color: var(--dtf-dim); font-size: .9rem; }
+  /* Plays: the same look as the top plays in Rumble Central's replays: numbered dot, the play over its matchup, a lit green play button, and the win-probability move */
+  .row.play { grid-template-columns: 22px minmax(0, 1fr) auto auto; gap: 8px; min-height: clamp(34px, calc(var(--avail) * .05), 40px); cursor: pointer; }
+  .row.play .pp { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 1.7em; height: 1.7em; padding-left: .12em; box-sizing: border-box; border-radius: 50%; font-size: .7rem; color: #2ecc71; background: color-mix(in srgb, #2ecc71 16%, transparent); border: 1px solid color-mix(in srgb, #2ecc71 70%, transparent); text-shadow: 0 0 6px #2ecc71; box-shadow: 0 0 8px 1px color-mix(in srgb, #2ecc71 55%, transparent); animation: pglow 2.4s ease-in-out infinite; }
+  .row.play:hover .pp, .row.play.open .pp { background: color-mix(in srgb, #2ecc71 28%, transparent); box-shadow: 0 0 12px 3px color-mix(in srgb, #2ecc71 80%, transparent); }
+  .row.play .pd { font-size: .7rem; font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; color: #2ecc71; }
+  @keyframes pglow { 0%, 100% { box-shadow: 0 0 6px 0 color-mix(in srgb, #2ecc71 45%, transparent); } 50% { box-shadow: 0 0 12px 3px color-mix(in srgb, #2ecc71 75%, transparent); } }
+  @media (prefers-reduced-motion: reduce) { .row.play .pp { animation: none; } }
+  /* every feed list holds ten and scrolls inside its panel (fitLists sizes it to three rows, five on a wide screen) so Home still fits one screen */
+  .flist { overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; -webkit-overflow-scrolling: touch; } .flist.has-open { max-height: none !important; overflow: visible; }
+  .pembed { margin: 0 0 6px; border-radius: 10px; overflow: hidden; background: #000; }
+  .pembed .pv { position: relative; aspect-ratio: 16 / 9; } .pembed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .pembed a { display: block; padding: 5px 8px; font-size: .7rem; color: #86efac; text-decoration: none; background: #0b1f12; }
   .none { margin: 8px 4px; color: var(--dtf-dim); font-size: .8rem; }
   .meta { margin: 2px 4px 0; font-size: .68rem; color: var(--dtf-dim); text-align: right; }
   .meta .old { color: #e0a23a; }
@@ -100,7 +112,8 @@
     .panel, .panel.on { display: block; } .panel h2 { color: var(--ac); text-transform: uppercase; letter-spacing: .06em; font-size: .78rem; }
     .row { align-items: start; padding: 2px 4px; } .row .rk { margin-top: 2px; } .row .go { margin-top: 4px; }
     .row b { font-size: .88rem; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
-    .row.mu b { display: block; white-space: nowrap; overflow: hidden; text-overflow: clip; }
+    .row.mu b, .row.play b { display: block; white-space: nowrap; overflow: hidden; text-overflow: clip; }
+    .row.play { grid-template-columns: 20px minmax(0, 1fr) auto; gap: 0 6px; } .row.play .rk { grid-row: 1 / span 2; align-self: center; } .row.play > span:nth-child(2) { grid-row: 1 / span 2; } .row.play .pp { grid-column: 3; grid-row: 1; justify-self: center; font-size: .62rem; } .row.play .pd { grid-column: 3; grid-row: 2; font-size: .58rem; } .row.play b { font-size: .72rem; } .row.play:not(.trade) small { font-size: .62rem; }
     .row.slack b { -webkit-line-clamp: 3; font-size: .8rem; }   /* the Slack column is the shortest: let summaries use three lines instead of shrinking to nothing */
     .row:not(.trade) small { white-space: nowrap; }   /* one line: with five columns the sublines would otherwise wrap and push the page past one screen */
     .trade small { white-space: normal; }
@@ -298,9 +311,11 @@
     trades: { tab: 'Trades', title: function (y) { return 'Biggest trades of ' + y; }, cap: 'By value moved · ▲ tag = winner on net lineup value', ac: '#22d3ee' },
     waivers: { tab: 'Waivers', title: function (y) { return 'Best waiver claims of ' + y; }, cap: 'Ranked by points above replacement (PAR) · $ = FAB bid', ac: '#a3e635' },
     'free-agents': { tab: 'Free agents', title: function (y) { return 'Best free-agent pickups of ' + y; }, cap: 'Ranked by points above replacement (PAR).', ac: '#a3e635' },
+    plays: { tab: 'Plays', title: function (y) { return 'Top plays of ' + y; }, cap: 'Biggest head-to-head win-probability swings · scroll for more, tap to watch', ac: '#22c55e' },
     slack: { tab: 'Slack', title: function () { return 'Hot in Slack this week'; }, cap: 'The busiest conversations of the past 7 days.', ac: '#e8eaf0' }
   };
   function rowHtml(it, id) {
+    if (id === 'plays') return '<a class="row play" data-m="' + esc((it.managers || []).join('|')) + '" data-yt="' + esc(it.clip.id) + '" data-s="' + Math.floor(it.clip.s) + '" data-e="' + Math.ceil(it.clip.e) + '" href="' + esc(it.href) + '" target="_blank" rel="noopener"><span class="rk">' + it.rank + '</span><span><b>' + esc(it.title) + '</b><small>' + esc(it.sub) + '</small></span><span class="pp" aria-hidden="true" title="Watch the play">\u25b6</span>' + (it.from != null ? '<span class="pd" title="Win probability before and after the play">' + it.from + '% \u2192 ' + it.to + '%</span>' : '') + '</a>';
     var ext = /^https?:/.test(it.href), mgrs = (it.managers || []).join('|');
     var open = '<a class="row' + (id === 'trades' ? ' trade' : id === 'slack' ? ' slack' : id === 'matchups' ? ' mu' : '') + '" data-m="' + esc(mgrs) + '" href="' + esc(it.href) + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '>' + (id === 'trades' && it.sub ? '<span class="rkc"><span class="rk">' + it.rank + '</span><em class="wkn">' + esc(it.sub) + '</em></span>' : '<span class="rk">' + it.rank + '</span>');
     if (id === 'trades' && it.gets) {
@@ -336,10 +351,10 @@
   }
   // matchup titles and sublines stay on one line and slack summaries inside two, by shrinking the text (never below a readable size)
   function fitText() {
-    [].forEach.call(document.querySelectorAll('.row.mu b, .row.mu small, .row.slack b, .sgp'), function (el) {
+    [].forEach.call(document.querySelectorAll('.row.mu b, .row.mu small, .row.play b, .row.play small, .row.slack b, .sgp'), function (el) {
       if (!el.offsetWidth) return;
       el.style.fontSize = '';
-      var two = el.closest('.row.slack'), size = parseFloat(getComputedStyle(el).fontSize), min = el.classList.contains('sgp') ? 8 : el.tagName === 'SMALL' ? 8.5 : two ? 9.5 : 10;
+      var two = el.closest('.row.slack'), size = parseFloat(getComputedStyle(el).fontSize), min = el.classList.contains('sgp') ? 8 : el.tagName === 'SMALL' ? 7.5 : two ? 9.5 : el.closest('.row.play') ? 7.5 : 10;
       var over = function () { return two ? el.scrollHeight > el.clientHeight + 1 : el.scrollWidth > el.clientWidth + 1; };
       while (over() && size > min) { size -= 0.25; el.style.fontSize = size + 'px'; }
     });
@@ -351,7 +366,19 @@
     var size = parseFloat(getComputedStyle(bs[0]).fontSize), min = 8, over = function () { return bs.some(function (b) { return b.scrollWidth > b.clientWidth + 0.5 || b.scrollWidth > b.parentNode.clientWidth - 6; }); };
     while (over() && size > min) { size -= 0.25; bs.forEach(function (b) { b.style.fontSize = size + 'px'; }); }
   }
-  function fitAll() { fitGets(); fitText(); fitHome(); fitTiles(); }
+  // each list shows three rows (five on a wide screen) and scrolls for the rest
+  function fitLists() {
+    var n = window.innerWidth >= 1100 ? 5 : 3;
+    [].forEach.call(document.querySelectorAll('.flist'), function (l) {
+      l.style.maxHeight = '';
+      var rows = [].slice.call(l.children).filter(function (c) { return c.classList.contains('row'); });
+      if (!l.offsetWidth || rows.length <= n) return;
+      var last = rows[n - 1], first = rows[0];
+      var h = last.getBoundingClientRect().bottom - first.getBoundingClientRect().top;
+      l.style.maxHeight = Math.round(h) + 'px';
+    });
+  }
+  function fitAll() { fitGets(); fitText(); fitLists(); fitHome(); fitTiles(); }
   // Home is meant to fit one screen: if the content is taller than the space between the bars it is tightened in steps (the lower cards
   // shrink, the feed loses its caption, the tiles get smaller) and stops as soon as it fits; below the last step the page just scrolls
   // [Shotguns zoom, player width %, layout]: negative layouts are roomier (loose1, loose2), positive ones tighter (tight1, tight2). The roomiest that fits wins.
@@ -364,7 +391,7 @@
       sg.style.zoom = st[0] === 1 ? '' : st[0]; lo.style.setProperty('--pw', st[1] + '%');
       root.classList.toggle('loose2', st[2] <= -2); root.classList.toggle('loose1', st[2] <= -1);
       root.classList.toggle('tight1', st[2] >= 1); root.classList.toggle('tight2', st[2] >= 2); root.classList.toggle('tight3', st[2] >= 3);
-      fitTiles();
+      fitTiles(); fitLists();
       if (!over()) break;
     }
   }
@@ -384,8 +411,20 @@
     $('panels').innerHTML = sections.map(function (s) {
       var m = META[s.id];
       return '<div class="panel' + (s.id === on ? ' on' : '') + '" role="tabpanel" data-id="' + s.id + '" style="--ac:' + m.ac + '"><h2>' + esc(m.title(year)) + '</h2><span class="cap">' + esc(m.cap) + '</span>' +
-        (s.items.length ? s.items.map(function (it) { return rowHtml(it, s.id); }).join('') : '<p class="none">Nothing yet this season.</p>') + '</div>';
+        (s.items.length ? '<div class="flist">' + s.items.map(function (it) { return rowHtml(it, s.id); }).join('') + '</div>' : '<p class="none">Nothing yet this season.</p>') + '</div>';
     }).join('');
+    // a play opens its clip right under it (one at a time); the link itself is the fallback (no script, or a video that won't embed)
+    $('panels').addEventListener('click', function (e) {
+      var r = e.target.closest('.row.play'); if (!r || e.metaKey || e.ctrlKey) return;
+      e.preventDefault();
+      var was = r.classList.contains('open');
+      [].forEach.call(document.querySelectorAll('.pembed'), function (x) { x.previousElementSibling.classList.remove('open'); x.remove(); });
+      r.parentNode.classList.remove('has-open');
+      if (was) { fitAll(); return; }
+      var d = document.createElement('div'); d.className = 'pembed';
+      d.innerHTML = '<div class="pv"><iframe src="https://www.youtube-nocookie.com/embed/' + r.dataset.yt + '?start=' + r.dataset.s + '&end=' + r.dataset.e + '&autoplay=1&playsinline=1&rel=0&modestbranding=1" title="' + esc(r.querySelector('b').textContent) + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div><a href="' + esc(r.href) + '" target="_blank" rel="noopener">Won\u2019t play? Watch on YouTube \u203a</a>';
+      r.classList.add('open'); r.after(d); r.parentNode.classList.add('has-open');
+    });
     $('tabs').addEventListener('click', function (e) {
       var b = e.target.closest('button[data-id]'); if (!b) return;
       ls('dtf.homeTab', b.dataset.id);

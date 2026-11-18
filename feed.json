@@ -35,6 +35,262 @@
       "Alex"
      ],
      "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=8.4.6"
+    },
+    {
+     "rank": 4,
+     "title": "Aidan 174.5 – 171.8 Ankit",
+     "sub": "Week 5 · H2H · 5 lead changes",
+     "managers": [
+      "Aidan",
+      "Ankit"
+     ],
+     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=5.1.8"
+    },
+    {
+     "rank": 5,
+     "title": "Steven 192.9 – 192.8 Alex",
+     "sub": "Week 9 · vs. field · 4 lead changes",
+     "managers": [
+      "Steven",
+      "Alex"
+     ],
+     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=9.7.6"
+    },
+    {
+     "rank": 6,
+     "title": "Stephanie 128.6 – 125.0 Alex",
+     "sub": "Week 7 · H2H · 4 lead changes",
+     "managers": [
+      "Stephanie",
+      "Alex"
+     ],
+     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=7.12.6"
+    },
+    {
+     "rank": 7,
+     "title": "Ben 219.0 – 218.5 Stephanie",
+     "sub": "Week 2 · vs. field · 2 lead changes",
+     "managers": [
+      "Ben",
+      "Stephanie"
+     ],
+     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=2.2.12"
+    },
+    {
+     "rank": 8,
+     "title": "Aidan 174.5 – 171.8 Joe",
+     "sub": "Week 5 · vs. field · 4 lead changes",
+     "managers": [
+      "Aidan",
+      "Joe"
+     ],
+     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=5.1.5"
+    },
+    {
+     "rank": 9,
+     "title": "Aidan 119.8 – 117.7 Ryan",
+     "sub": "Week 9 · vs. field · 3 lead changes",
+     "managers": [
+      "Aidan",
+      "Ryan"
+     ],
+     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=9.1.10"
+    },
+    {
+     "rank": 10,
+     "title": "Haan 131.4 – 121.6 Kaitlyn",
+     "sub": "Week 3 · H2H · 2 lead changes",
+     "managers": [
+      "Haan",
+      "Kaitlyn"
+     ],
+     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=3.4.11"
+    }
+   ]
+  },
+  {
+   "id": "plays",
+   "title": "Plays",
+   "items": [
+    {
+     "rank": 1,
+     "title": "T. Higbee 30 yd catch",
+     "sub": "Steven vs Ryan · Wk 5",
+     "managers": [
+      "Steven",
+      "Ryan"
+     ],
+     "swing": 70,
+     "from": 1,
+     "to": 71,
+     "clip": {
+      "id": "zjWM1TnTclU",
+      "s": 99,
+      "e": 113
+     },
+     "href": "https://www.youtube.com/watch?v=zjWM1TnTclU&t=99s"
+    },
+    {
+     "rank": 2,
+     "title": "D. Adams 11 yd TD catch",
+     "sub": "Haan vs Ankit · Wk 2",
+     "managers": [
+      "Haan",
+      "Ankit"
+     ],
+     "swing": 60,
+     "from": 34,
+     "to": 93,
+     "clip": {
+      "id": "JYluk14PmYo",
+      "s": 0,
+      "e": 15
+     },
+     "href": "https://www.youtube.com/watch?v=JYluk14PmYo&t=0s"
+    },
+    {
+     "rank": 3,
+     "title": "C. Lamb 16 yd TD catch",
+     "sub": "Steven vs Kaitlyn · Wk 7",
+     "managers": [
+      "Steven",
+      "Kaitlyn"
+     ],
+     "swing": 58,
+     "from": 16,
+     "to": 74,
+     "clip": {
+      "id": "Z-YMWV6C-kA",
+      "s": 0,
+      "e": 15
+     },
+     "href": "https://www.youtube.com/watch?v=Z-YMWV6C-kA&t=0s"
+    },
+    {
+     "rank": 4,
+     "title": "L. Burden 1 yd TD catch",
+     "sub": "Haan vs Alex · Wk 8",
+     "managers": [
+      "Haan",
+      "Alex"
+     ],
+     "swing": 53,
+     "from": 15,
+     "to": 68,
+     "clip": {
+      "id": "uOSpEtl1tec",
+      "s": 0,
+      "e": 11
+     },
+     "href": "https://www.youtube.com/watch?v=uOSpEtl1tec&t=0s"
+    },
+    {
+     "rank": 5,
+     "title": "M. Golden 50 yd catch",
+     "sub": "Alex vs Christian · Wk 5",
+     "managers": [
+      "Alex",
+      "Christian"
+     ],
+     "swing": 44,
+     "from": 40,
+     "to": 84,
+     "clip": {
+      "id": "o337rx-i8UU",
+      "s": 161,
+      "e": 181.5
+     },
+     "href": "https://www.youtube.com/watch?v=o337rx-i8UU&t=161s"
+    },
+    {
+     "rank": 6,
+     "title": "J. Brissett 9 yd TD pass",
+     "sub": "Ben vs Jake · Wk 5",
+     "managers": [
+      "Ben",
+      "Jake"
+     ],
+     "swing": 38,
+     "from": 8,
+     "to": 46,
+     "clip": {
+      "id": "LKl_QyFrA2w",
+      "s": 784,
+      "e": 796
+     },
+     "href": "https://www.youtube.com/watch?v=LKl_QyFrA2w&t=784s"
+    },
+    {
+     "rank": 7,
+     "title": "T. Tucker 44 yd TD catch",
+     "sub": "Haan vs Stephanie · Wk 6",
+     "managers": [
+      "Haan",
+      "Stephanie"
+     ],
+     "swing": 34,
+     "from": 17,
+     "to": 51,
+     "clip": {
+      "id": "1Pun0hMunlM",
+      "s": 0,
+      "e": 15
+     },
+     "href": "https://www.youtube.com/watch?v=1Pun0hMunlM&t=0s"
+    },
+    {
+     "rank": 8,
+     "title": "M. Stafford 2 yd TD pass",
+     "sub": "Aidan vs Ankit · Wk 5",
+     "managers": [
+      "Aidan",
+      "Ankit"
+     ],
+     "swing": 33,
+     "from": 48,
+     "to": 81,
+     "clip": {
+      "id": "Et-NYKEbp4g",
+      "s": 602,
+      "e": 611.5
+     },
+     "href": "https://www.youtube.com/watch?v=Et-NYKEbp4g&t=602s"
+    },
+    {
+     "rank": 9,
+     "title": "G. Pickens 21 yd TD catch",
+     "sub": "Steven vs Kaitlyn · Wk 7",
+     "managers": [
+      "Steven",
+      "Kaitlyn"
+     ],
+     "swing": 32,
+     "from": 48,
+     "to": 80,
+     "clip": {
+      "id": "gKIIUUfnjc8",
+      "s": 0,
+      "e": 15
+     },
+     "href": "https://www.youtube.com/watch?v=gKIIUUfnjc8&t=0s"
+    },
+    {
+     "rank": 10,
+     "title": "L. Burden 23 yd catch",
+     "sub": "Haan vs Alex · Wk 8",
+     "managers": [
+      "Haan",
+      "Alex"
+     ],
+     "swing": 32,
+     "from": 29,
+     "to": 60,
+     "clip": {
+      "id": "gN3H90TSDGY",
+      "s": 100,
+      "e": 118.5
+     },
+     "href": "https://www.youtube.com/watch?v=gN3H90TSDGY&t=100s"
     }
    ]
   },
@@ -124,6 +380,164 @@
       }
      ],
      "href": "/SleeperTradeNodes/?season=2026&manager=Alex"
+    },
+    {
+     "rank": 4,
+     "title": "Alex ⇄ Ankit",
+     "sub": "Wk 8",
+     "managers": [
+      "Alex",
+      "Ankit"
+     ],
+     "winner": "Ankit",
+     "edge": 1.2,
+     "gets": [
+      {
+       "m": "Alex",
+       "players": [
+        "C. Tate",
+        "D. Goedert"
+       ]
+      },
+      {
+       "m": "Ankit",
+       "players": [
+        "M. Washington",
+        "M. Willis"
+       ]
+      }
+     ],
+     "href": "/SleeperTradeNodes/?season=2026&manager=Ankit"
+    },
+    {
+     "rank": 5,
+     "title": "Joe ⇄ Ankit",
+     "sub": "Wk 10",
+     "managers": [
+      "Joe",
+      "Ankit"
+     ],
+     "winner": null,
+     "edge": 0,
+     "gets": [
+      {
+       "m": "Joe",
+       "players": [
+        "D. Adams"
+       ]
+      },
+      {
+       "m": "Ankit",
+       "players": [
+        "B. Mayfield"
+       ]
+      }
+     ],
+     "href": "/SleeperTradeNodes/?season=2026&manager=Joe"
+    },
+    {
+     "rank": 6,
+     "title": "Joe ⇄ Kaitlyn",
+     "sub": "Wk 7",
+     "managers": [
+      "Joe",
+      "Kaitlyn"
+     ],
+     "winner": "Kaitlyn",
+     "edge": 10.9,
+     "gets": [
+      {
+       "m": "Joe",
+       "players": [
+        "T. Henderson"
+       ]
+      },
+      {
+       "m": "Kaitlyn",
+       "players": [
+        "J. Brissett"
+       ]
+      }
+     ],
+     "href": "/SleeperTradeNodes/?season=2026&manager=Kaitlyn"
+    },
+    {
+     "rank": 7,
+     "title": "Ben ⇄ Joe",
+     "sub": "Wk 5",
+     "managers": [
+      "Ben",
+      "Joe"
+     ],
+     "winner": "Joe",
+     "edge": 9.4,
+     "gets": [
+      {
+       "m": "Ben",
+       "players": [
+        "J. Tyson"
+       ]
+      },
+      {
+       "m": "Joe",
+       "players": [
+        "M. Washington"
+       ]
+      }
+     ],
+     "href": "/SleeperTradeNodes/?season=2026&manager=Joe"
+    },
+    {
+     "rank": 8,
+     "title": "Joe ⇄ Steven",
+     "sub": "Wk 3",
+     "managers": [
+      "Joe",
+      "Steven"
+     ],
+     "winner": "Steven",
+     "edge": 0.5,
+     "gets": [
+      {
+       "m": "Joe",
+       "players": [
+        "M. Lemon"
+       ]
+      },
+      {
+       "m": "Steven",
+       "players": [
+        "T. Allgeier"
+       ]
+      }
+     ],
+     "href": "/SleeperTradeNodes/?season=2026&manager=Steven"
+    },
+    {
+     "rank": 9,
+     "title": "Joe ⇄ Alex",
+     "sub": "Wk 5",
+     "managers": [
+      "Joe",
+      "Alex"
+     ],
+     "winner": "Joe",
+     "edge": 6.6,
+     "gets": [
+      {
+       "m": "Joe",
+       "players": [
+        "A. Rodgers"
+       ]
+      },
+      {
+       "m": "Alex",
+       "players": [
+        "M. Lemon"
+       ]
+      }
+     ],
+     "href": "/SleeperTradeNodes/?season=2026&manager=Joe"
     }
    ]
   },
@@ -157,6 +571,69 @@
       "Joe"
      ],
      "href": "/FAB-Management/?season=2026&manager=Joe"
+    },
+    {
+     "rank": 4,
+     "title": "Jonah Coleman · Ben",
+     "sub": "+27 PAR · $76 · Wk 2",
+     "managers": [
+      "Ben"
+     ],
+     "href": "/FAB-Management/?season=2026&manager=Ben"
+    },
+    {
+     "rank": 5,
+     "title": "Tyler Huntley · Ankit",
+     "sub": "+23 PAR · $21 · Wk 4",
+     "managers": [
+      "Ankit"
+     ],
+     "href": "/FAB-Management/?season=2026&manager=Ankit"
+    },
+    {
+     "rank": 6,
+     "title": "Ollie Gordon II · Steven",
+     "sub": "+22 PAR · $88 · Wk 3",
+     "managers": [
+      "Steven"
+     ],
+     "href": "/FAB-Management/?season=2026&manager=Steven"
+    },
+    {
+     "rank": 7,
+     "title": "Carolina Panthers · Alex",
+     "sub": "+20 PAR · $2 · Wk 2",
+     "managers": [
+      "Alex"
+     ],
+     "href": "/FAB-Management/?season=2026&manager=Alex"
+    },
+    {
+     "rank": 8,
+     "title": "New England Patriots · Stephanie",
+     "sub": "+18 PAR · Wk 1",
+     "managers": [
+      "Stephanie"
+     ],
+     "href": "/FAB-Management/?season=2026&manager=Stephanie"
+    },
+    {
+     "rank": 9,
+     "title": "Buffalo Bills · Christian",
+     "sub": "+18 PAR · Wk 9",
+     "managers": [
+      "Christian"
+     ],
+     "href": "/FAB-Management/?season=2026&manager=Christian"
+    },
+    {
+     "rank": 10,
+     "title": "Spencer Shrader · Aidan",
+     "sub": "+17 PAR · $1 · Wk 3",
+     "managers": [
+      "Aidan"
+     ],
+     "href": "/FAB-Management/?season=2026&manager=Aidan"
     }
    ]
   },
@@ -190,6 +667,69 @@
       "Alex"
      ],
      "href": "/FAB-Management/?season=2026&manager=Alex"
+    },
+    {
+     "rank": 4,
+     "title": "T.J. Hockenson · Haan",
+     "sub": "+12 PAR · Wk 4",
+     "managers": [
+      "Haan"
+     ],
+     "href": "/FAB-Management/?season=2026&manager=Haan"
+    },
+    {
+     "rank": 5,
+     "title": "Chase McLaughlin · Ben",
+     "sub": "+10 PAR · Wk 7",
+     "managers": [
+      "Ben"
+     ],
+     "href": "/FAB-Management/?season=2026&manager=Ben"
+    },
+    {
+     "rank": 6,
+     "title": "Malik Willis · Alex",
+     "sub": "+8 PAR · Wk 5",
+     "managers": [
+      "Alex"
+     ],
+     "href": "/FAB-Management/?season=2026&manager=Alex"
+    },
+    {
+     "rank": 7,
+     "title": "Kyle Pitts Sr. · Jake",
+     "sub": "+8 PAR · Wk 6",
+     "managers": [
+      "Jake"
+     ],
+     "href": "/FAB-Management/?season=2026&manager=Jake"
+    },
+    {
+     "rank": 8,
+     "title": "Keenan Allen · Haan",
+     "sub": "+7 PAR · Wk 6",
+     "managers": [
+      "Haan"
+     ],
+     "href": "/FAB-Management/?season=2026&manager=Haan"
+    },
+    {
+     "rank": 9,
+     "title": "Emanuel Wilson · Aidan",
+     "sub": "+6 PAR · Wk 4",
+     "managers": [
+      "Aidan"
+     ],
+     "href": "/FAB-Management/?season=2026&manager=Aidan"
+    },
+    {
+     "rank": 10,
+     "title": "Chig Okonkwo · Ben",
+     "sub": "+6 PAR · Wk 6",
+     "managers": [
+      "Ben"
+     ],
+     "href": "/FAB-Management/?season=2026&manager=Ben"
     }
    ]
   }
@@ -262,5 +802,5 @@
   "violations": [],
   "blocked": []
  },
- "generatedAt": "2026-11-17T14:37:01Z"
+ "generatedAt": "2026-11-18T18:30:18Z"
 }

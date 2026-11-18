@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Builds the hub's Home data from the tools' public data and the Sleeper league settings:
 
-    feed.json    top 3 matchups (Rumble Central's own ranking, via data/matchups.json) / trades / waiver claims / free-agent pickups of the season, each linking into its tool
+    feed.json    top 10 matchups (Rumble Central's own ranking, via data/matchups.json) / trades / waiver claims / free-agent pickups of the season, each linking into its tool
     league.json  season, week and key dates (trade deadline, playoffs, championship) taken from the Sleeper league settings
 
     python3 tools/build_feed.py                 # reads the tools from raw.githubusercontent.com (main)
@@ -50,13 +50,13 @@ def short_player(n):
 def top_matchups(season):
     """The season's best matchups by Rumble Central's own ranking (wpInterest: closeness, lead changes, late comebacks, one big swing,
     and a 1.25x boost for head-to-heads). The page computes it from its win-probability model; tools/build_matchups.py reads each finished
-    week's scores from the real page into data/matchups.json, and this takes the top 3 across weeks."""
+    week's scores from the real page into data/matchups.json, and this takes the top 10 across weeks."""
     c = json.load(open(os.path.join(HUB, 'data', 'matchups.json'), encoding='utf-8'))
     if c.get('season') != season:
         return []
     rows = sorted(((int(w), r) for w, lst in c['weeks'].items() for r in lst), key=lambda x: -x[1]['it'])
     out = []
-    for i, (w, r) in enumerate(rows[:3], 1):
+    for i, (w, r) in enumerate(rows[:10], 1):
         pa, pb = (float(x) for x in re.findall(r'\d+\.\d+', r['hl'])[:2])
         n = r['flips']
         out.append({'rank': i, 'title': '%s %.1f \u2013 %.1f %s' % (r['names'][0], pa, pb, r['names'][1]),
@@ -66,13 +66,34 @@ def top_matchups(season):
     return out
 
 
+# ---------------------------------------------------------------- plays
+def top_plays(season):
+    """The season's biggest head-to-head win-probability swings that have an embeddable clip (data/topplays.json, built by
+    tools/build_topplays.py from Rumble Central's play-by-play)."""
+    c = json.load(open(os.path.join(HUB, 'data', 'topplays.json'), encoding='utf-8'))
+    if c.get('season') != season:
+        return []
+    rows = sorted((p for lst in c['weeks'].values() for p in lst), key=lambda p: -p['swing'])
+    out, seen = [], set()
+    for p in rows:
+        if p['clip']['id'] in seen:
+            continue
+        seen.add(p['clip']['id'])
+        out.append({'rank': len(out) + 1, 'title': ('%s %s' % (p['who'], p['label'])).strip(), 'sub': '%s vs %s \u00b7 Wk %d' % (p['a'], p['b'], p['week']),
+                    'managers': [p['a'], p['b']], 'swing': round(p['swing'] * 100), 'from': p.get('from'), 'to': p.get('to'), 'clip': p['clip'],
+                    'href': 'https://www.youtube.com/watch?v=%s&t=%ds' % (p['clip']['id'], int(p['clip']['s']))})
+        if len(out) == 10:
+            break
+    return out
+
+
 # ---------------------------------------------------------------- trades
 def top_trades(data, season):
     """Biggest trades of the season by total value moved. Winner = who gained more lineup value, the Trade Network's own "Net" column
     (lineup gain for A minus lineup gain for B); every player on both sides is listed. No lineup data yet = no winner."""
     ts = sorted([t for t in data['trades'] if t['s'] == season], key=lambda t: -(t.get('tv') or 0))
     out = []
-    for i, t in enumerate(ts[:3], 1):
+    for i, t in enumerate(ts[:10], 1):
         net = t.get('lgNet')                                       # > 0: A's lineup gained more than B's
         winner = t['a'] if (net or 0) > 0.05 else t['b'] if (net or 0) < -0.05 else None
         out.append({'rank': i, 'title': '%s \u21c4 %s' % (t['a'], t['b']), 'sub': 'Wk %d' % t['w'], 'managers': [t['a'], t['b']],
@@ -88,7 +109,7 @@ def top_adds(data, season, ty):
     """Best pickups of the season by points above replacement while started (the FAB tool's default yardstick)."""
     rows = sorted([a for a in data['adds'] if a['s'] == season and a['ty'] == ty and (a.get('par') or 0) > 0], key=lambda a: -a['par'])
     out = []
-    for i, a in enumerate(rows[:3], 1):
+    for i, a in enumerate(rows[:10], 1):
         bid = ' · $%d' % a['b'] if ty == 'W' and a.get('b') else ''
         out.append({'rank': i, 'title': '%s · %s' % (a['pl'], a['m']), 'sub': '+%.0f PAR%s · Wk %d' % (a['par'], bid, a['w']), 'managers': [a['m']],
                     'href': '/FAB-Management/?season=%d&manager=%s' % (season, urllib.request.quote(a['m']))})
@@ -172,6 +193,12 @@ def main():
     except Exception as e:
         print('matchups: %s' % e, file=sys.stderr)
     try:
+        items = top_plays(season)
+        if items:
+            sections.append({'id': 'plays', 'title': 'Plays', 'items': items})
+    except Exception as e:
+        print('plays: %s' % e, file=sys.stderr)
+    try:
         sections.append({'id': 'trades', 'title': 'Trades', 'items': top_trades(source(args.src, 'SleeperTradeNodes', 'data.json'), season)})
     except Exception as e:
         print('trades: %s' % e, file=sys.stderr)
@@ -185,7 +212,7 @@ def main():
     for s in old_feed.get('sections', []):   # a source that failed this run keeps its last good section
         if s['id'] not in have:
             sections.append(s)
-    order = ['matchups', 'trades', 'waivers', 'free-agents']
+    order = ['matchups', 'plays', 'trades', 'waivers', 'free-agents']
     sections.sort(key=lambda s: order.index(s['id']) if s['id'] in order else 99)
     ir = old_feed.get('ir')   # keep the last status if the check couldn't run (offseason, Sleeper down)
     try:
