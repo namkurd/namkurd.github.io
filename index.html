@@ -70,6 +70,8 @@
   .win.even { background: color-mix(in srgb, var(--dtf-dim) 20%, transparent); color: var(--dtf-dim); }
   .trade .gets { display: block; white-space: nowrap; overflow: hidden; text-overflow: clip; font-size: .72rem; color: var(--dtf-dim); }
   .trade .gets i { font-style: normal; color: var(--dtf-text); }
+  .trade .gets .tv { font-style: normal; font-weight: 700; color: var(--ac); margin-left: 2px; }
+  .gl { display: flex; align-items: center; gap: 6px; } .gl .gets { flex: 1 1 auto; min-width: 0; } .gl .win { padding: 0 6px; font-size: .62rem; line-height: 1.5; } .gl .you { flex: none; }
   .trade .gets.wrap { white-space: normal; }
   .dtf-wrap a.row { color: var(--dtf-text); }
   .row { display: grid; grid-template-columns: 22px minmax(0, 1fr) 12px; align-items: center; gap: 9px; min-height: clamp(34px, calc(var(--avail) * .05), 40px); padding: 2px 4px; border-radius: 10px; text-decoration: none; color: var(--dtf-text); -webkit-tap-highlight-color: transparent; }
@@ -118,8 +120,6 @@
     .row:not(.trade) small { white-space: nowrap; }   /* one line: with five columns the sublines would otherwise wrap and push the page past one screen */
     .trade small { white-space: normal; }
     .trade b { display: block; -webkit-line-clamp: unset; }
-    .trade .tline { flex-direction: column; align-items: flex-start; gap: 3px; }   /* columns are narrow: title, then its winner tag, on every trade */
-    .trade .tline b { max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   }
   /* below the tiles: the latest podcast episode (a small embedded player) and this season's Shotguns, both kept short so Home fits one screen */
   .lower { display: grid; gap: clamp(4px, calc(var(--avail) * .008), 10px); margin-top: clamp(4px, calc(var(--avail) * .008), 10px); }
@@ -320,8 +320,11 @@
     var open = '<a class="row' + (id === 'trades' ? ' trade' : id === 'slack' ? ' slack' : id === 'matchups' ? ' mu' : '') + '" data-m="' + esc(mgrs) + '" href="' + esc(it.href) + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '>' + (id === 'trades' && it.sub ? '<span class="rkc"><span class="rk">' + it.rank + '</span><em class="wkn">' + esc(it.sub) + '</em></span>' : '<span class="rk">' + it.rank + '</span>');
     if (id === 'trades' && it.gets) {
       var win = it.winner ? '<span class="win">▲ ' + esc(it.winner) + ' +' + it.edge.toFixed(1) + '</span>' : '<span class="win even">Even</span>';
-      var gets = it.gets.map(function (g) { return '<small class="gets"><i>' + esc(g.m) + '</i> gets ' + esc(g.players.join(', ')) + '</small>'; }).join('');
-      return open + '<span><span class="tline"><b>' + esc(it.title) + '<span class="youslot"></span></b>' + win + '</span>' + gets + '</span><span class="go" aria-hidden="true">›</span></a>';
+      var gets = it.gets.map(function (g, i) {
+        var tv = g.v != null ? ' <em class="tv">' + Number(g.v).toFixed(1) + '</em>' : '';
+        return '<span class="gl"><small class="gets"><i>' + esc(g.m) + '</i> gets ' + esc(g.players.join(', ')) + tv + '</small>' + (i ? win : '<span class="youslot"></span>') + '</span>';
+      }).join('');
+      return open + '<span>' + gets + '</span><span class="go" aria-hidden="true">›</span></a>';
     }
     return open + '<span><b>' + esc(it.title) + '<span class="youslot"></span></b><small>' + esc(it.sub) + '</small></span><span class="go" aria-hidden="true">›</span></a>';
   }

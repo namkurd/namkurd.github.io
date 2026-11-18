@@ -314,14 +314,16 @@
        "players": [
         "B. Irving",
         "C. Ward"
-       ]
+       ],
+       "v": 47.7
       },
       {
        "m": "Steven",
        "players": [
         "Travis Etienne Jr.",
         "P. Nacua"
-       ]
+       ],
+       "v": 51.4
       }
      ],
      "href": "/SleeperTradeNodes/?season=2026&manager=Jake"
@@ -342,14 +344,16 @@
        "players": [
         "T. McLaurin",
         "J. Hurts"
-       ]
+       ],
+       "v": 43.7
       },
       {
        "m": "Christian",
        "players": [
         "D. Moore",
         "J. Herbert"
-       ]
+       ],
+       "v": 38.9
       }
      ],
      "href": "/SleeperTradeNodes/?season=2026&manager=Christian"
@@ -369,14 +373,16 @@
        "m": "Ben",
        "players": [
         "B. Tuten"
-       ]
+       ],
+       "v": 19.9
       },
       {
        "m": "Alex",
        "players": [
         "M. Golden",
         "R. Stevenson"
-       ]
+       ],
+       "v": 19.3
       }
      ],
      "href": "/SleeperTradeNodes/?season=2026&manager=Alex"
@@ -397,14 +403,16 @@
        "players": [
         "C. Tate",
         "D. Goedert"
-       ]
+       ],
+       "v": 18.5
       },
       {
        "m": "Ankit",
        "players": [
         "M. Washington",
         "M. Willis"
-       ]
+       ],
+       "v": 9.1
       }
      ],
      "href": "/SleeperTradeNodes/?season=2026&manager=Ankit"
@@ -424,13 +432,15 @@
        "m": "Joe",
        "players": [
         "D. Adams"
-       ]
+       ],
+       "v": 14.7
       },
       {
        "m": "Ankit",
        "players": [
         "B. Mayfield"
-       ]
+       ],
+       "v": 8.7
       }
      ],
      "href": "/SleeperTradeNodes/?season=2026&manager=Joe"
@@ -450,13 +460,15 @@
        "m": "Joe",
        "players": [
         "T. Henderson"
-       ]
+       ],
+       "v": 6.6
       },
       {
        "m": "Kaitlyn",
        "players": [
         "J. Brissett"
-       ]
+       ],
+       "v": 12.4
       }
      ],
      "href": "/SleeperTradeNodes/?season=2026&manager=Kaitlyn"
@@ -476,13 +488,15 @@
        "m": "Ben",
        "players": [
         "J. Tyson"
-       ]
+       ],
+       "v": 7.7
       },
       {
        "m": "Joe",
        "players": [
         "M. Washington"
-       ]
+       ],
+       "v": 3.2
       }
      ],
      "href": "/SleeperTradeNodes/?season=2026&manager=Joe"
@@ -502,13 +516,15 @@
        "m": "Joe",
        "players": [
         "M. Lemon"
-       ]
+       ],
+       "v": 2.4
       },
       {
        "m": "Steven",
        "players": [
         "T. Allgeier"
-       ]
+       ],
+       "v": 2.2
       }
      ],
      "href": "/SleeperTradeNodes/?season=2026&manager=Steven"
@@ -528,13 +544,15 @@
        "m": "Joe",
        "players": [
         "A. Rodgers"
-       ]
+       ],
+       "v": 0.8
       },
       {
        "m": "Alex",
        "players": [
         "M. Lemon"
-       ]
+       ],
+       "v": 2.8
       }
      ],
      "href": "/SleeperTradeNodes/?season=2026&manager=Joe"
@@ -802,5 +820,5 @@
   "violations": [],
   "blocked": []
  },
- "generatedAt": "2026-11-18T18:30:18Z"
+ "generatedAt": "2026-11-18T18:53:46Z"
 }
