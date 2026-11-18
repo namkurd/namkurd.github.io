@@ -9,7 +9,7 @@
     {
      "rank": 1,
      "title": "T. Higbee 30 yd catch",
-     "sub": "Steven vs Ryan · Wk 5",
+     "sub": "Ryan vs Steven · Wk 5",
      "managers": [
       "Steven",
       "Ryan"
@@ -38,7 +38,7 @@
     {
      "rank": 2,
      "title": "D. Adams 11 yd TD catch",
-     "sub": "Haan vs Ankit · Wk 2",
+     "sub": "Ankit vs Haan · Wk 2",
      "managers": [
       "Haan",
       "Ankit"
@@ -72,7 +72,7 @@
     {
      "rank": 3,
      "title": "C. Lamb 16 yd TD catch",
-     "sub": "Steven vs Kaitlyn · Wk 7",
+     "sub": "Kaitlyn vs Steven · Wk 7",
      "managers": [
       "Steven",
       "Kaitlyn"
@@ -106,7 +106,7 @@
     {
      "rank": 4,
      "title": "L. Burden 1 yd TD catch",
-     "sub": "Haan vs Alex · Wk 8",
+     "sub": "Alex vs Haan · Wk 8",
      "managers": [
       "Haan",
       "Alex"
@@ -198,7 +198,7 @@
     {
      "rank": 7,
      "title": "T. Tucker 44 yd TD catch",
-     "sub": "Haan vs Stephanie · Wk 6",
+     "sub": "Stephanie vs Haan · Wk 6",
      "managers": [
       "Haan",
       "Stephanie"
@@ -295,7 +295,7 @@
     {
      "rank": 10,
      "title": "L. Burden 23 yd catch",
-     "sub": "Haan vs Alex · Wk 8",
+     "sub": "Alex vs Haan · Wk 8",
      "managers": [
       "Haan",
       "Alex"
@@ -324,7 +324,7 @@
     {
      "rank": 11,
      "title": "D. Samuel 70 yd TD run",
-     "sub": "Aidan vs Haan · Wk 10",
+     "sub": "Haan vs Aidan · Wk 10",
      "managers": [
       "Aidan",
       "Haan"
@@ -358,7 +358,7 @@
     {
      "rank": 12,
      "title": "B. Young 8 yd TD pass",
-     "sub": "Ankit vs Stephanie · Wk 3",
+     "sub": "Stephanie vs Ankit · Wk 3",
      "managers": [
       "Ankit",
       "Stephanie"
@@ -416,7 +416,7 @@
     {
      "rank": 14,
      "title": "C. McCaffrey 66 yd TD catch",
-     "sub": "Joe vs Stephanie · Wk 10",
+     "sub": "Stephanie vs Joe · Wk 10",
      "managers": [
       "Joe",
       "Stephanie"
@@ -508,7 +508,7 @@
     {
      "rank": 17,
      "title": "K. Coleman 12 yd TD catch",
-     "sub": "Ankit vs Christian · Wk 6",
+     "sub": "Christian vs Ankit · Wk 6",
      "managers": [
       "Ankit",
       "Christian"
@@ -610,7 +610,7 @@
     {
      "rank": 20,
      "title": "C. Williams 29 yd TD run",
-     "sub": "Ben vs Alex · Wk 1",
+     "sub": "Alex vs Ben · Wk 1",
      "managers": [
       "Ben",
       "Alex"
@@ -644,7 +644,7 @@
     {
      "rank": 21,
      "title": "C. Lamb 9 yd TD catch",
-     "sub": "Steven vs Kaitlyn · Wk 7",
+     "sub": "Kaitlyn vs Steven · Wk 7",
      "managers": [
       "Steven",
       "Kaitlyn"
@@ -736,7 +736,7 @@
     {
      "rank": 24,
      "title": "C. Watson 81 yd TD catch",
-     "sub": "Haan vs Steven · Wk 1",
+     "sub": "Steven vs Haan · Wk 1",
      "managers": [
       "Haan",
       "Steven"
@@ -770,7 +770,7 @@
     {
      "rank": 25,
      "title": "A. Jeanty 13 yd TD catch",
-     "sub": "Jake vs Kaitlyn · Wk 1",
+     "sub": "Kaitlyn vs Jake · Wk 1",
      "managers": [
       "Jake",
       "Kaitlyn"
@@ -828,7 +828,7 @@
     {
      "rank": 27,
      "title": "C. Lamb 12 yd TD catch",
-     "sub": "Alex vs Kaitlyn · Wk 4",
+     "sub": "Kaitlyn vs Alex · Wk 4",
      "managers": [
       "Alex",
       "Kaitlyn"
@@ -891,7 +891,7 @@
     {
      "rank": 29,
      "title": "D. Adams 23 yd catch",
-     "sub": "Haan vs Ankit · Wk 2",
+     "sub": "Ankit vs Haan · Wk 2",
      "managers": [
       "Haan",
       "Ankit"
@@ -1022,7 +1022,7 @@
     {
      "rank": 33,
      "title": "T. McLaurin 30 yd TD catch",
-     "sub": "Joe vs Christian · Wk 3",
+     "sub": "Christian vs Joe · Wk 3",
      "managers": [
       "Joe",
       "Christian"
@@ -1148,7 +1148,7 @@
     {
      "rank": 37,
      "title": "T. Shough 3 yd TD pass",
-     "sub": "Haan vs Kaitlyn · Wk 3",
+     "sub": "Kaitlyn vs Haan · Wk 3",
      "managers": [
       "Haan",
       "Kaitlyn"
@@ -1245,7 +1245,7 @@
     {
      "rank": 40,
      "title": "J. Burrow 1 yd TD run",
-     "sub": "Aidan vs Haan · Wk 4",
+     "sub": "Haan vs Aidan · Wk 4",
      "managers": [
       "Aidan",
       "Haan"
@@ -1913,5 +1913,5 @@
    }
   ]
  },
- "generatedAt": "2026-11-18T19:45:24Z"
+ "generatedAt": "2026-11-18T20:17:26Z"
 }

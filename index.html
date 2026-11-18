@@ -481,7 +481,7 @@
   function playsLoad() { return PL.data ? Promise.resolve(PL.data) : get('/data/topplays.json').then(function (d) { PL.data = d; return d; }, function () { return null; }); }
   function playsLast() { var w = PL.data ? Object.keys(PL.data.weeks).map(Number) : []; return w.length ? Math.max.apply(null, w) : null; }
   function mapPlay(p) {
-    return { title: (p.who + ' ' + p.label).trim(), sub: p.a + ' vs ' + p.b + ' \u00b7 Wk ' + p.week, managers: [p.a, p.b], from: p.from, to: p.to, clip: p.clip, alt: p.alt, et: p.et, sit: p.sit,
+    return { title: (p.who + ' ' + p.label).trim(), sub: (p.by === p.b ? p.b + ' vs ' + p.a : p.a + ' vs ' + p.b) + ' \u00b7 Wk ' + p.week, managers: [p.a, p.b], from: p.from, to: p.to, clip: p.clip, alt: p.alt, et: p.et, sit: p.sit,
       replay: '/SleeperLiveRumbles/rumbles.html?wp=' + p.week + '.' + p.aid + '.' + p.bid + (p.rt != null ? '&t=' + p.rt : ''), href: 'https://www.youtube.com/watch?v=' + p.clip.id + '&t=' + Math.floor(p.clip.s) + 's', swing: p.swing };
   }
   function playsItems() {
