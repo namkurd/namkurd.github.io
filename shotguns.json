@@ -125,7 +125,7 @@
      "pos": "TE",
      "pts": 0.0,
      "key": "2026-1-7553-8",
-     "done": false
+     "done": true
     }
    ]
   },
@@ -202,5 +202,5 @@
    "shots": []
   }
  ],
- "generatedAt": "2026-11-18T12:46:00Z"
+ "generatedAt": "2026-11-18T12:50:38Z"
 }

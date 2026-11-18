@@ -1,4 +1,6 @@
 {
- "_comment": "Shotgun punishments served: keys are season-week-player id-roster id (see shotguns.json). Not shown on Home yet.",
- "keys": []
+  "_comment": "Shotgun punishments served: keys are season-week-player id-roster id (see shotguns.json). Not shown on Home yet.",
+  "keys": [
+    "2026-1-7553-8"
+  ]
 }
