@@ -82,7 +82,7 @@ def top_plays(season):
         out.append({'rank': len(out) + 1, 'title': ('%s %s' % (p['who'], p['label'])).strip(), 'sub': '%s vs %s \u00b7 Wk %d' % (p['a'], p['b'], p['week']),
                     'managers': [p['a'], p['b']], 'swing': round(p['swing'] * 100), 'from': p.get('from'), 'to': p.get('to'), 'clip': p['clip'],
                     'href': 'https://www.youtube.com/watch?v=%s&t=%ds' % (p['clip']['id'], int(p['clip']['s']))})
-        if len(out) == 3:
+        if len(out) == 10:
             break
     return out
 

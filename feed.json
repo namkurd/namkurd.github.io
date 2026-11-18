@@ -95,6 +95,132 @@
       "e": 15
      },
      "href": "https://www.youtube.com/watch?v=Z-YMWV6C-kA&t=0s"
+    },
+    {
+     "rank": 4,
+     "title": "L. Burden 1 yd TD catch",
+     "sub": "Haan vs Alex · Wk 8",
+     "managers": [
+      "Haan",
+      "Alex"
+     ],
+     "swing": 53,
+     "from": 15,
+     "to": 68,
+     "clip": {
+      "id": "uOSpEtl1tec",
+      "s": 0,
+      "e": 11
+     },
+     "href": "https://www.youtube.com/watch?v=uOSpEtl1tec&t=0s"
+    },
+    {
+     "rank": 5,
+     "title": "M. Golden 50 yd catch",
+     "sub": "Alex vs Christian · Wk 5",
+     "managers": [
+      "Alex",
+      "Christian"
+     ],
+     "swing": 44,
+     "from": 40,
+     "to": 84,
+     "clip": {
+      "id": "o337rx-i8UU",
+      "s": 161,
+      "e": 181.5
+     },
+     "href": "https://www.youtube.com/watch?v=o337rx-i8UU&t=161s"
+    },
+    {
+     "rank": 6,
+     "title": "J. Brissett 9 yd TD pass",
+     "sub": "Ben vs Jake · Wk 5",
+     "managers": [
+      "Ben",
+      "Jake"
+     ],
+     "swing": 38,
+     "from": 8,
+     "to": 46,
+     "clip": {
+      "id": "LKl_QyFrA2w",
+      "s": 784,
+      "e": 796
+     },
+     "href": "https://www.youtube.com/watch?v=LKl_QyFrA2w&t=784s"
+    },
+    {
+     "rank": 7,
+     "title": "T. Tucker 44 yd TD catch",
+     "sub": "Haan vs Stephanie · Wk 6",
+     "managers": [
+      "Haan",
+      "Stephanie"
+     ],
+     "swing": 34,
+     "from": 17,
+     "to": 51,
+     "clip": {
+      "id": "1Pun0hMunlM",
+      "s": 0,
+      "e": 15
+     },
+     "href": "https://www.youtube.com/watch?v=1Pun0hMunlM&t=0s"
+    },
+    {
+     "rank": 8,
+     "title": "M. Stafford 2 yd TD pass",
+     "sub": "Aidan vs Ankit · Wk 5",
+     "managers": [
+      "Aidan",
+      "Ankit"
+     ],
+     "swing": 33,
+     "from": 48,
+     "to": 81,
+     "clip": {
+      "id": "Et-NYKEbp4g",
+      "s": 602,
+      "e": 611.5
+     },
+     "href": "https://www.youtube.com/watch?v=Et-NYKEbp4g&t=602s"
+    },
+    {
+     "rank": 9,
+     "title": "G. Pickens 21 yd TD catch",
+     "sub": "Steven vs Kaitlyn · Wk 7",
+     "managers": [
+      "Steven",
+      "Kaitlyn"
+     ],
+     "swing": 32,
+     "from": 48,
+     "to": 80,
+     "clip": {
+      "id": "gKIIUUfnjc8",
+      "s": 0,
+      "e": 15
+     },
+     "href": "https://www.youtube.com/watch?v=gKIIUUfnjc8&t=0s"
+    },
+    {
+     "rank": 10,
+     "title": "L. Burden 23 yd catch",
+     "sub": "Haan vs Alex · Wk 8",
+     "managers": [
+      "Haan",
+      "Alex"
+     ],
+     "swing": 32,
+     "from": 29,
+     "to": 60,
+     "clip": {
+      "id": "gN3H90TSDGY",
+      "s": 100,
+      "e": 118.5
+     },
+     "href": "https://www.youtube.com/watch?v=gN3H90TSDGY&t=100s"
     }
    ]
   },
@@ -322,5 +448,5 @@
   "violations": [],
   "blocked": []
  },
- "generatedAt": "2026-11-18T18:17:07Z"
+ "generatedAt": "2026-11-18T18:29:06Z"
 }

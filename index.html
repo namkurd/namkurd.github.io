@@ -87,6 +87,9 @@
   .row.play .pd { font-size: .7rem; font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; color: #2ecc71; }
   @keyframes pglow { 0%, 100% { box-shadow: 0 0 6px 0 color-mix(in srgb, #2ecc71 45%, transparent); } 50% { box-shadow: 0 0 12px 3px color-mix(in srgb, #2ecc71 75%, transparent); } }
   @media (prefers-reduced-motion: reduce) { .row.play .pp { animation: none; } }
+  /* ten plays, three showing: the list scrolls so Home still fits one screen */
+  .plist { max-height: calc(3 * clamp(36px, calc(var(--avail) * .05), 42px) + 6px); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; -webkit-overflow-scrolling: touch; } .plist.has-open { max-height: none; overflow: visible; }
+  @media (min-width: 1100px) { .plist { max-height: 250px; } }
   .pembed { margin: 0 0 6px; border-radius: 10px; overflow: hidden; background: #000; }
   .pembed .pv { position: relative; aspect-ratio: 16 / 9; } .pembed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
   .pembed a { display: block; padding: 5px 8px; font-size: .7rem; color: #86efac; text-decoration: none; background: #0b1f12; }
@@ -309,7 +312,7 @@
     trades: { tab: 'Trades', title: function (y) { return 'Biggest trades of ' + y; }, cap: 'By value moved · ▲ tag = winner on net lineup value', ac: '#22d3ee' },
     waivers: { tab: 'Waivers', title: function (y) { return 'Best waiver claims of ' + y; }, cap: 'Ranked by points above replacement (PAR) · $ = FAB bid', ac: '#a3e635' },
     'free-agents': { tab: 'Free agents', title: function (y) { return 'Best free-agent pickups of ' + y; }, cap: 'Ranked by points above replacement (PAR).', ac: '#a3e635' },
-    plays: { tab: 'Plays', title: function (y) { return 'Top plays of ' + y; }, cap: 'Biggest head-to-head win-probability swings · tap to watch', ac: '#22c55e' },
+    plays: { tab: 'Plays', title: function (y) { return 'Top plays of ' + y; }, cap: 'Biggest head-to-head win-probability swings · scroll for more, tap to watch', ac: '#22c55e' },
     slack: { tab: 'Slack', title: function () { return 'Hot in Slack this week'; }, cap: 'The busiest conversations of the past 7 days.', ac: '#e8eaf0' }
   };
   function rowHtml(it, id) {
@@ -397,7 +400,7 @@
     $('panels').innerHTML = sections.map(function (s) {
       var m = META[s.id];
       return '<div class="panel' + (s.id === on ? ' on' : '') + '" role="tabpanel" data-id="' + s.id + '" style="--ac:' + m.ac + '"><h2>' + esc(m.title(year)) + '</h2><span class="cap">' + esc(m.cap) + '</span>' +
-        (s.items.length ? s.items.map(function (it) { return rowHtml(it, s.id); }).join('') : '<p class="none">Nothing yet this season.</p>') + '</div>';
+        (s.items.length ? (s.id === 'plays' ? '<div class="plist">' : '') + s.items.map(function (it) { return rowHtml(it, s.id); }).join('') + (s.id === 'plays' ? '</div>' : '') : '<p class="none">Nothing yet this season.</p>') + '</div>';
     }).join('');
     // a play opens its clip right under it (one at a time); the link itself is the fallback (no script, or a video that won't embed)
     $('panels').addEventListener('click', function (e) {
@@ -405,10 +408,11 @@
       e.preventDefault();
       var was = r.classList.contains('open');
       [].forEach.call(document.querySelectorAll('.pembed'), function (x) { x.previousElementSibling.classList.remove('open'); x.remove(); });
+      r.parentNode.classList.remove('has-open');
       if (was) { fitAll(); return; }
       var d = document.createElement('div'); d.className = 'pembed';
       d.innerHTML = '<div class="pv"><iframe src="https://www.youtube-nocookie.com/embed/' + r.dataset.yt + '?start=' + r.dataset.s + '&end=' + r.dataset.e + '&autoplay=1&playsinline=1&rel=0&modestbranding=1" title="' + esc(r.querySelector('b').textContent) + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div><a href="' + esc(r.href) + '" target="_blank" rel="noopener">Won\u2019t play? Watch on YouTube \u203a</a>';
-      r.classList.add('open'); r.after(d);
+      r.classList.add('open'); r.after(d); r.parentNode.classList.add('has-open');
     });
     $('tabs').addEventListener('click', function (e) {
       var b = e.target.closest('button[data-id]'); if (!b) return;
