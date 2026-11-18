@@ -575,7 +575,7 @@
     $('tabs').innerHTML = sections.map(function (s) { return '<button role="tab" data-id="' + s.id + '" aria-selected="' + (s.id === on) + '">' + META[s.id].tab + '</button>'; }).join('');
     $('panels').style.setProperty('--n', sections.length);
     // desktop extras: an (i) tooltip in place of the caption, and a link on to the full tool
-    var SEEALL = { plays: ['/SleeperLiveRumbles/rumbles.html', 'See all \u203a'], matchups: ['/SleeperLiveRumbles/rumbles.html', 'See all \u203a'], trades: ['/SleeperTradeNodes/', 'See all \u203a'],
+    var SEEALL = { matchups: ['/SleeperLiveRumbles/rumbles.html', 'See all \u203a'], trades: ['/SleeperTradeNodes/', 'See all \u203a'],
       waivers: ['/FAB-Management/', 'See all \u203a'], 'free-agents': ['/FAB-Management/', 'See all \u203a'], slack: [(LEAGUE && LEAGUE.slack) || 'https://slack.com/', 'Open Slack \u203a'] };
     function tipHtml(id, m) { return '<span class="tip" tabindex="0" role="img" aria-label="' + esc(m.cap) + '" data-tip="' + esc(m.cap) + '">i</span>'; }
     function seeAll(id) { var l = SEEALL[id]; return l ? '<a class="seeall" href="' + esc(l[0]) + '"' + (/^https?:/.test(l[0]) ? ' target="_blank" rel="noopener"' : '') + '>' + l[1] + '</a>' : ''; }
