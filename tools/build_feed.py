@@ -67,6 +67,26 @@ def top_matchups(season):
 
 
 # ---------------------------------------------------------------- plays
+def play_title(who, label):
+    """'T. Higbee' + '30 yd catch' -> 'T. Higbee 30 yd catch'. A team defense's long label ('35 yd interception return TD (T.J. Watt), interception (T.J. Watt)')
+    becomes 'Steelers 35 yd pick-6 (T.J. Watt)': the team, what happened, and the defender. (index.html's playTitle() does the same for the client.)"""
+    who, label = (who or '').strip(), (label or '').strip()
+    m = re.search(r'\(([^)]+)\)', label)
+    if not m or re.match(r'^[A-Z]\.?\s', who):        # an offensive player (initial + surname), or no defender named
+        return ('%s %s' % (who, label)).strip()
+    low, y = label.lower(), re.match(r'(\d+) yd', label)
+    yd = '%s yd ' % y.group(1) if y else ''
+    if 'interception return td' in low: core = yd + 'pick-6'
+    elif 'fumble' in low and 'return td' in low: core = yd + 'fumble-6'
+    elif 'interception' in low: core = 'interception'
+    elif 'fumble recovery' in low and 'sack' in low: core = 'sack + fumble recovery'
+    elif 'fumble recovery' in low: core = 'fumble recovery'
+    elif 'safety' in low: core = 'safety'
+    elif 'sack' in low: core = 'sack'
+    else: core = re.sub(r'\s*\([^)]*\)', '', label.split(',')[0]).strip() or 'play'
+    return '%s %s (%s)' % (who, core, m.group(1))
+
+
 def top_plays(season):
     """The season's biggest head-to-head win-probability swings that have an embeddable clip (data/topplays.json, built by
     tools/build_topplays.py from Rumble Central's play-by-play)."""
@@ -79,7 +99,7 @@ def top_plays(season):
         if p['clip']['id'] in seen:
             continue
         seen.add(p['clip']['id'])
-        out.append({'rank': len(out) + 1, 'title': ('%s %s' % (p['who'], p['label'])).strip(), 'sub': '%s vs %s \u00b7 Wk %d' % ((p['b'], p['a'], p['week']) if p.get('by') == p['b'] else (p['a'], p['b'], p['week'])),
+        out.append({'rank': len(out) + 1, 'title': play_title(p['who'], p['label']), 'sub': '%s vs %s \u00b7 Wk %d' % ((p['b'], p['a'], p['week']) if p.get('by') == p['b'] else (p['a'], p['b'], p['week'])),
                     'managers': [p['a'], p['b']], 'swing': round(p['swing'] * 100), 'from': p.get('from'), 'to': p.get('to'), 'clip': p['clip'], **({'alt': p['alt']} if p.get('alt') else {}), 'et': p.get('et'), **({'sit': p['sit']} if p.get('sit') else {}),
                     'replay': '/SleeperLiveRumbles/rumbles.html?wp=%d.%s.%s%s' % (p['week'], p.get('aid'), p.get('bid'), '&t=%d' % p['rt'] if p.get('rt') is not None else ''),
                     'href': 'https://www.youtube.com/watch?v=%s&t=%ds' % (p['clip']['id'], int(p['clip']['s']))})
