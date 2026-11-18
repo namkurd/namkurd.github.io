@@ -125,13 +125,21 @@
     .grid { gap: clamp(6px, calc(var(--avail) * .012), 14px); --plate: clamp(34px, calc(var(--avail) * .044), 76px); }
     .tile { padding: clamp(6px, calc(var(--avail) * .008), 16px) 10px clamp(6px, calc(var(--avail) * .006), 15px); gap: 3px; } .tile b { font-size: 1rem; margin-top: clamp(2px, calc(var(--avail) * .006), 8px); } .tile .t { display: block; }
   }
-  /* wide screens: the same one-feed-at-a-time view as the phone (tabs, with arrows to cycle), in a roomier centred card */
-  .tnav { display: none; }
+  /* wide screens: two cards, each with its own tabs and one list showing at a time (plays / matchups / Slack, and trades / waivers / free agents).
+     The phone keeps its single tabbed card. Every list has the same fixed height so the cards never change size when you switch tabs. */
+  .panel .tip, .panel .seeall { display: none; }
   @media (min-width: 900px) {
-    .feed { max-width: 880px; margin-left: auto; margin-right: auto; padding: 8px 14px 6px; }
-    .tabs { align-items: center; } .tabs button[data-id] { height: 34px; font-size: .82rem; }
-    .tnav { display: block; flex: none; width: 30px; height: 30px; padding: 0; border: 0; border-radius: 50%; background: none; color: var(--dtf-dim); font-size: 1.3rem; line-height: 1; cursor: pointer; } .tnav:hover { background: color-mix(in srgb, var(--dtf-dim) 18%, transparent); color: var(--dtf-text); }
-    .panel h2 { font-size: .95rem; } .panel .cap { font-size: .76rem; }
+    .feed.two { background: none; border: 0; padding: 0; border-radius: 0; margin-bottom: 8px; }
+    .fcols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .fcol { min-width: 0; background: var(--dtf-panel); border: 1px solid var(--dtf-border); border-radius: 18px; padding: 8px 14px 8px; }
+    .fcol .tabs { margin-bottom: 6px; } .fcol .tabs button { height: 34px; font-size: .86rem; }
+    .panel h2 { display: flex; align-items: center; gap: 8px; font-size: .98rem; margin: 4px 4px 4px; } .panel[data-id="plays"] h2 .ht { flex: 0 0 auto; overflow: visible; }
+    .panel .cap { display: none; }
+    .panel .tip { display: inline-grid; place-items: center; position: relative; flex: none; width: 17px; height: 17px; padding: 0; border-radius: 50%; border: 1px solid color-mix(in srgb, var(--dtf-dim) 60%, transparent); background: none; color: var(--dtf-dim); font: italic 700 .66rem/1 Georgia, serif; text-transform: none; letter-spacing: 0; cursor: help; }
+    .tip:hover, .tip:focus-visible { color: var(--dtf-text); border-color: var(--ac); outline: 0; }
+    .tip:hover::after, .tip:focus-visible::after { content: attr(data-tip); position: absolute; left: -4px; top: 24px; width: 250px; z-index: 30; padding: 8px 10px; border-radius: 10px; background: #0d1117; border: 1px solid var(--dtf-border); box-shadow: 0 10px 28px rgba(0,0,0,.55); color: var(--dtf-text); font-family: inherit; font-weight: 500; font-size: .76rem; line-height: 1.35; font-style: normal; text-align: left; white-space: normal; letter-spacing: 0; text-transform: none; }
+    .panel .seeall { display: inline; margin-left: auto; font-size: .78rem; font-weight: 700; color: var(--ac); text-decoration: none; white-space: nowrap; text-transform: none; letter-spacing: 0; } .panel .seeall:hover { text-decoration: underline; } .ptog + .seeall { margin-left: 12px; }
+    .flist { height: 280px; }
     .row b { font-size: .95rem; } .row small { font-size: .78rem; }
   }
   /* below the tiles: the latest podcast episode (a small embedded player) and this season's Shotguns, both kept short so Home fits one screen */
@@ -384,7 +392,8 @@
   }
   // each list shows three rows (five on a wide screen) and scrolls for the rest
   function fitLists() {
-    var wide = false, n = window.innerWidth >= 900 ? 6 : 3, hs = [];
+    if (window.innerWidth >= 900) { [].forEach.call(document.querySelectorAll('.flist'), function (l) { l.style.maxHeight = ''; }); return; }   // wide: a fixed height from the stylesheet
+    var wide = false, n = 3, hs = [];
     var lists = [].slice.call(document.querySelectorAll('.flist'));
     lists.forEach(function (l) {
       l.style.maxHeight = '';
@@ -526,10 +535,14 @@
     var year = feed ? feed.season : '', want = ls('dtf.homeTab'), on = sections.some(function (s) { return s.id === want; }) ? want : sections[0].id;
     $('tabs').innerHTML = sections.map(function (s) { return '<button role="tab" data-id="' + s.id + '" aria-selected="' + (s.id === on) + '">' + META[s.id].tab + '</button>'; }).join('');
     $('panels').style.setProperty('--n', sections.length);
-    $('tabs').insertAdjacentHTML('afterbegin', '<button type="button" class="tnav" data-go="-1" aria-label="Previous feed">\u2039</button>'); $('tabs').insertAdjacentHTML('beforeend', '<button type="button" class="tnav" data-go="1" aria-label="Next feed">\u203a</button>');
+    // desktop extras: an (i) tooltip in place of the caption, and a link on to the full tool
+    var SEEALL = { plays: ['/SleeperLiveRumbles/rumbles.html', 'See all \u203a'], matchups: ['/SleeperLiveRumbles/rumbles.html', 'See all \u203a'], trades: ['/SleeperTradeNodes/', 'See all \u203a'],
+      waivers: ['/FAB-Management/', 'See all \u203a'], 'free-agents': ['/FAB-Management/', 'See all \u203a'], slack: [(LEAGUE && LEAGUE.slack) || 'https://slack.com/', 'Open Slack \u203a'] };
+    function tipHtml(id, m) { return '<span class="tip" tabindex="0" role="img" aria-label="' + esc(m.cap) + '" data-tip="' + esc(m.cap) + '">i</span>'; }
+    function seeAll(id) { var l = SEEALL[id]; return l ? '<a class="seeall" href="' + esc(l[0]) + '"' + (/^https?:/.test(l[0]) ? ' target="_blank" rel="noopener"' : '') + '>' + l[1] + '</a>' : ''; }
     $('panels').innerHTML = sections.map(function (s) {
       var m = META[s.id];
-      return '<div class="panel' + (s.id === on ? ' on' : '') + '" role="tabpanel" data-id="' + s.id + '" style="--ac:' + m.ac + '"><h2><span class="ht">' + (s.id === 'plays' ? esc(m.title(year)).replace(/ of (\d+)$/, '<span class="yr"> of $1</span>') : esc(m.title(year))) + '</span>' + (s.id === 'plays' ? '<span class="ptog"><span class="seg" data-k="scope" role="group" aria-label="Whose plays"><button type="button" data-v="league">League</button><button type="button" data-v="mine">Mine</button></span><span class="seg" data-k="span" role="group" aria-label="How far back"><button type="button" data-v="season">Season</button><button type="button" data-v="week">Wk</button></span></span>' : '') + '</h2><span class="cap">' + esc(m.cap) + '</span>' +
+      return '<div class="panel' + (s.id === on ? ' on' : '') + '" role="tabpanel" data-id="' + s.id + '" style="--ac:' + m.ac + '"><h2><span class="ht">' + (s.id === 'plays' ? esc(m.title(year)).replace(/ of (\d+)$/, '<span class="yr"> of $1</span>') : esc(m.title(year))) + '</span>' + tipHtml(s.id, m) + (s.id === 'plays' ? '<span class="ptog"><span class="seg" data-k="scope" role="group" aria-label="Whose plays"><button type="button" data-v="league">League</button><button type="button" data-v="mine">Mine</button></span><span class="seg" data-k="span" role="group" aria-label="How far back"><button type="button" data-v="season">Season</button><button type="button" data-v="week">Wk</button></span></span>' : '') + seeAll(s.id) + '</h2><span class="cap">' + esc(m.cap) + '</span>' +
         (s.items.length ? '<div class="flist">' + s.items.map(function (it) { return rowHtml(it, s.id); }).join('') + '</div>' : '<p class="none">Nothing yet this season.</p>') + '</div>';
     }).join('');
     // a play opens in a large overlay: the clip on top, what happened (when, game, quarter, score) under it; the link itself is the fallback
@@ -555,30 +568,55 @@
       document.body.appendChild(m); document.documentElement.classList.add('pmopen'); document.addEventListener('keydown', onPlayKey);
       m.querySelector('.pclose').focus({ preventScroll: true });
     }
-    $('panels').addEventListener('click', function (e) {
+    $('feed').addEventListener('click', function (e) {
       var tg = e.target.closest('.ptog button'); if (tg) { if (!tg.classList.contains('on')) playsToggle(tg.parentNode.dataset.k, tg.dataset.v); return; }
       var r = e.target.closest('.row.play'); if (!r || e.metaKey || e.ctrlKey || r.classList.contains('yt')) return;   // an orange row is a plain link out to YouTube
       e.preventDefault(); openPlay(r);
     });
-    function goTab(b) {
-      ls('dtf.homeTab', b.dataset.id);
-      [].forEach.call($('tabs').children, function (x) { x.setAttribute('aria-selected', x === b); });
-      [].forEach.call($('panels').children, function (p) { p.classList.toggle('on', p.dataset.id === b.dataset.id); });
+    // wide: two cards (each with its own tabs); phone: one card. The same tab buttons and panels are moved between the two layouts.
+    var GROUPS = [['plays', 'matchups', 'slack'], ['trades', 'waivers', 'free-agents']], FEEDMQ = window.matchMedia('(min-width: 900px)');
+    function setOn(scope, id) {
+      [].forEach.call(scope.querySelectorAll('button[data-id]'), function (b) { b.setAttribute('aria-selected', b.dataset.id === id); });
+      [].forEach.call(scope.querySelectorAll('.panel'), function (p) { p.classList.toggle('on', p.dataset.id === id); });
+    }
+    function layoutFeed() {
+      var feedEl = $('feed'), btns = {}, pans = {}, ids = sections.map(function (x) { return x.id; });
+      [].forEach.call(feedEl.querySelectorAll('button[data-id]'), function (b) { btns[b.dataset.id] = b; });
+      [].forEach.call(feedEl.querySelectorAll('.panel'), function (p) { pans[p.dataset.id] = p; });
+      var old = feedEl.querySelector('.fcols'); if (old) old.remove();
+      function pick(list, key) { var w = ls(key); return list.indexOf(w) >= 0 ? w : list[0]; }
+      if (!FEEDMQ.matches) {
+        feedEl.classList.remove('two'); $('tabs').hidden = false; $('panels').hidden = false;
+        ids.forEach(function (id) { $('tabs').appendChild(btns[id]); $('panels').appendChild(pans[id]); });
+        setOn(feedEl, pick(ids, 'dtf.homeTab'));
+      } else {
+        feedEl.classList.add('two'); $('tabs').hidden = true; $('panels').hidden = true;
+        var cols = document.createElement('div'); cols.className = 'fcols';
+        GROUPS.forEach(function (g, gi) {
+          var gids = g.filter(function (id) { return ids.indexOf(id) >= 0; }); if (!gids.length) return;
+          var col = document.createElement('div'), t = document.createElement('div'), pn = document.createElement('div');
+          col.className = 'fcol'; col.dataset.g = gi; t.className = 'tabs'; t.setAttribute('role', 'tablist'); pn.className = 'panels';
+          gids.forEach(function (id) { t.appendChild(btns[id]); pn.appendChild(pans[id]); });
+          col.appendChild(t); col.appendChild(pn); cols.appendChild(col); setOn(col, pick(gids, 'dtf.homeTab.' + gi));
+        });
+        feedEl.insertBefore(cols, $('tabs'));
+      }
       fitAll();
     }
-    function cycleTab(d) {
-      var bs = [].slice.call($('tabs').querySelectorAll('button[data-id]')), at = bs.findIndex(function (x) { return x.getAttribute('aria-selected') === 'true'; });
-      if (bs.length) goTab(bs[(at + d + bs.length) % bs.length]);
-    }
-    $('tabs').addEventListener('keydown', function (e) { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); cycleTab(e.key === 'ArrowRight' ? 1 : -1); } });
-    $('tabs').addEventListener('click', function (e) {
-      var nv = e.target.closest('.tnav'); if (nv) { cycleTab(Number(nv.dataset.go)); return; }
-      var b = e.target.closest('button[data-id]'); if (!b) return;
-      ls('dtf.homeTab', b.dataset.id);
-      [].forEach.call($('tabs').children, function (x) { x.setAttribute('aria-selected', x === b); });
-      [].forEach.call($('panels').children, function (p) { p.classList.toggle('on', p.dataset.id === b.dataset.id); });
-      fitAll();
+    $('feed').addEventListener('keydown', function (e) {
+      var t = e.target.closest('.tabs'); if (!t || (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft')) return;
+      e.preventDefault();
+      var bs = [].slice.call(t.querySelectorAll('button[data-id]')), at = bs.findIndex(function (x) { return x.getAttribute('aria-selected') === 'true'; }), nb = bs[(at + (e.key === 'ArrowRight' ? 1 : -1) + bs.length) % bs.length];
+      if (nb) { nb.click(); nb.focus(); }
     });
+    $('feed').addEventListener('click', function (e) {
+      var b = e.target.closest('.tabs button[data-id]'); if (!b) return;
+      var col = b.closest('.fcol');
+      ls(col ? 'dtf.homeTab.' + col.dataset.g : 'dtf.homeTab', b.dataset.id);
+      setOn(col || $('feed'), b.dataset.id); fitAll();
+    });
+    layoutFeed();
+    (FEEDMQ.addEventListener ? FEEDMQ.addEventListener('change', layoutFeed) : FEEDMQ.addListener(layoutFeed));
     var gen = feed && feed.generatedAt, old = gen && (Date.now() - Date.parse(gen)) > 2 * 864e5;
     $('meta').innerHTML = gen ? ('updated ' + ago(gen) + (old ? ' <span class="old">· may be out of date</span>' : '')) : '';
     $('feed').hidden = false;

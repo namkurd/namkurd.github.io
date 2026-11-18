@@ -2,6 +2,8 @@
  "windowDays": 7,
  "gapMinutes": 180,
  "minMessages": 8,
+ "floorMessages": 5,
+ "minShow": 6,
  "topN": 10,
  "dedupeHours": 36,
  "autoJoin": true,
