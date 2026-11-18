@@ -16,6 +16,11 @@
 "id": "If1wDuhaB40",
 "s": 0,
 "e": 12
+},
+"alt": {
+"id": "FWt7UFjYdIY",
+"s": 36,
+"e": 50.5
 }
 },
 {
@@ -31,6 +36,11 @@
 "id": "VNkXxLcw7FM",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "RdAfqtkwmMs",
+"s": 325,
+"e": 353.5
 }
 },
 {
@@ -46,6 +56,11 @@
 "id": "AaZff8yGimU",
 "s": 0,
 "e": 12
+},
+"alt": {
+"id": "Zvb6ALLifO0",
+"s": 1,
+"e": 22.5
 }
 },
 {
@@ -76,6 +91,11 @@
 "id": "pvQGzepIbv8",
 "s": 0,
 "e": 12
+},
+"alt": {
+"id": "gQqsCIx6xOs",
+"s": 51,
+"e": 67.5
 }
 },
 {
@@ -106,6 +126,11 @@
 "id": "ChxNQT-0MF4",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "YGqkAT6rm98",
+"s": 602,
+"e": 615
 }
 },
 {
@@ -121,6 +146,11 @@
 "id": "uQEB7gZcMsA",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "kOWGLEJxeeM",
+"s": 69,
+"e": 90.5
 }
 },
 {
@@ -136,6 +166,11 @@
 "id": "NslPnJtelQo",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "ZsFQvMJWER0",
+"s": 75,
+"e": 88.5
 }
 },
 {
@@ -181,6 +216,46 @@
 "id": "UXo3ORWBvqI",
 "s": 0,
 "e": 14
+},
+"alt": {
+"id": "oNlvj_XajyU",
+"s": 140,
+"e": 156.5
+}
+},
+{
+"week": 1,
+"a": "Jake",
+"b": "Kaitlyn",
+"who": "J. Coker",
+"label": "8 yd TD catch",
+"swing": 0.141,
+"from": 70,
+"to": 84,
+"clip": {
+"id": "FWt7UFjYdIY",
+"s": 145,
+"e": 159
+}
+},
+{
+"week": 1,
+"a": "Haan",
+"b": "Steven",
+"who": "J. Johnson",
+"label": "9 yd TD catch",
+"swing": 0.139,
+"from": 37,
+"to": 51,
+"clip": {
+"id": "-yS7xFbinRs",
+"s": 0,
+"e": 15
+},
+"alt": {
+"id": "BSRDZ8bF5rY",
+"s": 63,
+"e": 77.5
 }
 }
 ],
@@ -198,6 +273,11 @@
 "id": "JYluk14PmYo",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "PTkCmmEi0bw",
+"s": 167,
+"e": 181
 }
 },
 {
@@ -243,6 +323,11 @@
 "id": "TF-KoVf-I24",
 "s": 0,
 "e": 13
+},
+"alt": {
+"id": "JJefZ8x6iCg",
+"s": 195,
+"e": 215.5
 }
 },
 {
@@ -318,6 +403,11 @@
 "id": "3iegLwaeeog",
 "s": 0,
 "e": 14
+},
+"alt": {
+"id": "JJefZ8x6iCg",
+"s": 318,
+"e": 331.5
 }
 },
 {
@@ -348,6 +438,11 @@
 "id": "FyLtVtF7l-w",
 "s": 0,
 "e": 10
+},
+"alt": {
+"id": "WAxMDGc0yP8",
+"s": 67,
+"e": 78.5
 }
 },
 {
@@ -363,6 +458,41 @@
 "id": "mW6ImJsO9so",
 "s": 1,
 "e": 11.5
+}
+},
+{
+"week": 2,
+"a": "Alex",
+"b": "Christian",
+"who": "J. Cook",
+"label": "1 yd TD run",
+"swing": 0.097,
+"from": 40,
+"to": 50,
+"clip": {
+"id": "t6d2wZB2bkE",
+"s": 0,
+"e": 15
+},
+"alt": {
+"id": "mhI-ayRt9MI",
+"s": 409,
+"e": 422.5
+}
+},
+{
+"week": 2,
+"a": "Ben",
+"b": "Ryan",
+"who": "A. St. Brown",
+"label": "27 yd TD catch",
+"swing": 0.091,
+"from": 67,
+"to": 76,
+"clip": {
+"id": "bJbOikQERbA",
+"s": 212,
+"e": 225
 }
 }
 ],
@@ -425,6 +555,11 @@
 "id": "GqZ81kf-g_A",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "doDgovJvUNE",
+"s": 32,
+"e": 45.5
 }
 },
 {
@@ -440,6 +575,11 @@
 "id": "DSQNDW6CJcc",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "vNfi9qqAovs",
+"s": 42,
+"e": 65.5
 }
 },
 {
@@ -485,6 +625,11 @@
 "id": "zyuTb9EtcJU",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "yZesMgkfo2I",
+"s": 202,
+"e": 211.5
 }
 },
 {
@@ -500,6 +645,11 @@
 "id": "qDvvYOW-nvA",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "PGYFDYbni90",
+"s": 41,
+"e": 51.5
 }
 },
 {
@@ -515,6 +665,11 @@
 "id": "ovcbnvZosW4",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "fDaSVfhPxY0",
+"s": 40,
+"e": 50.5
 }
 },
 {
@@ -530,6 +685,11 @@
 "id": "HIaZ6EHH-XA",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "AcIEb41DkRM",
+"s": 458,
+"e": 471.5
 }
 },
 {
@@ -545,6 +705,46 @@
 "id": "3FAj4xs4gNM",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "S-ylSLxCfho",
+"s": 603,
+"e": 613.5
+}
+},
+{
+"week": 3,
+"a": "Joe",
+"b": "Christian",
+"who": "T. Higgins",
+"label": "28 yd TD catch",
+"swing": 0.108,
+"from": 53,
+"to": 64,
+"clip": {
+"id": "xapPRY_z-s8",
+"s": 0,
+"e": 6
+},
+"alt": {
+"id": "ws5e6TKyxFI",
+"s": 42,
+"e": 62.5
+}
+},
+{
+"week": 3,
+"a": "Alex",
+"b": "Ryan",
+"who": "L. Burden",
+"label": "25 yd catch",
+"swing": 0.104,
+"from": 81,
+"to": 92,
+"clip": {
+"id": "doDgovJvUNE",
+"s": 96,
+"e": 120.5
 }
 }
 ],
@@ -577,6 +777,11 @@
 "id": "LPfo5En_My4",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "Krg6Gt16tM4",
+"s": 44,
+"e": 55.5
 }
 },
 {
@@ -592,6 +797,11 @@
 "id": "tS5wCBMH6Dw",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "MasBFBvhti0",
+"s": 196,
+"e": 206.5
 }
 },
 {
@@ -607,6 +817,11 @@
 "id": "97r166YR8gE",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "rtRNFy2-ij0",
+"s": 163,
+"e": 177
 }
 },
 {
@@ -637,6 +852,11 @@
 "id": "TmBRMPPFwCY",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "pSQComGb0nE",
+"s": 21,
+"e": 36.5
 }
 },
 {
@@ -712,6 +932,11 @@
 "id": "wxz0PdfO7jU",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "vCyE1BB7bgo",
+"s": 146,
+"e": 166.5
 }
 },
 {
@@ -727,6 +952,41 @@
 "id": "mG6fiCoC-g4",
 "s": 18,
 "e": 40.5
+}
+},
+{
+"week": 4,
+"a": "Alex",
+"b": "Kaitlyn",
+"who": "S. LaPorta",
+"label": "8 yd TD catch",
+"swing": 0.117,
+"from": 4,
+"to": 15,
+"clip": {
+"id": "u1akVe3bGdc",
+"s": 0,
+"e": 15
+},
+"alt": {
+"id": "3jHTBv9OIaM",
+"s": 181,
+"e": 190.5
+}
+},
+{
+"week": 4,
+"a": "Jake",
+"b": "Joe",
+"who": "M. Hollins",
+"label": "26 yd catch",
+"swing": 0.113,
+"from": 35,
+"to": 46,
+"clip": {
+"id": "-Ls3nMWo8T8",
+"s": 215,
+"e": 232.5
 }
 }
 ],
@@ -808,6 +1068,26 @@
 },
 {
 "week": 5,
+"a": "Haan",
+"b": "Joe",
+"who": "A. Rodgers",
+"label": "17 yd TD pass",
+"swing": 0.173,
+"from": 61,
+"to": 78,
+"clip": {
+"id": "zSTzM9hktE0",
+"s": 0,
+"e": 12
+},
+"alt": {
+"id": "eUhEKCrIyus",
+"s": 480,
+"e": 496.5
+}
+},
+{
+"week": 5,
 "a": "Aidan",
 "b": "Ankit",
 "who": "I. Likely",
@@ -853,6 +1133,26 @@
 },
 {
 "week": 5,
+"a": "Aidan",
+"b": "Ankit",
+"who": "I. Likely",
+"label": "17 yd TD catch",
+"swing": 0.145,
+"from": 78,
+"to": 93,
+"clip": {
+"id": "OmyjtjkYsa0",
+"s": 0,
+"e": 15
+},
+"alt": {
+"id": "Sn3gUf7NcyQ",
+"s": 161,
+"e": 172.5
+}
+},
+{
+"week": 5,
 "a": "Steven",
 "b": "Ryan",
 "who": "T. Higbee",
@@ -879,6 +1179,11 @@
 "id": "83oLZF64_7o",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "ryn5aJFMaVw",
+"s": 101,
+"e": 113.5
 }
 },
 {
@@ -894,6 +1199,11 @@
 "id": "3QETjYOn2uY",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "KPoYs1gUI1o",
+"s": 13,
+"e": 31.5
 }
 },
 {
@@ -926,6 +1236,11 @@
 "id": "1Pun0hMunlM",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "-u1WvfBAkx4",
+"s": 144,
+"e": 158
 }
 },
 {
@@ -941,6 +1256,11 @@
 "id": "DMF-9Y-aI7o",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "_qpe3DyowlU",
+"s": 56,
+"e": 77.5
 }
 },
 {
@@ -956,6 +1276,11 @@
 "id": "KmXVGhNWZ4k",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "FJ5VZmYLGg0",
+"s": 127,
+"e": 138.5
 }
 },
 {
@@ -971,6 +1296,11 @@
 "id": "bIXtXl_JUOE",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "TkMNcgM6BMw",
+"s": 372,
+"e": 390.5
 }
 },
 {
@@ -986,6 +1316,31 @@
 "id": "1nrkRm5Qjk0",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "3z-5iFQwvqc",
+"s": 298,
+"e": 314.5
+}
+},
+{
+"week": 6,
+"a": "Ankit",
+"b": "Christian",
+"who": "C. Olave",
+"label": "18 yd TD catch",
+"swing": 0.136,
+"from": 40,
+"to": 54,
+"clip": {
+"id": "LqwFl-ToAB4",
+"s": 0,
+"e": 9
+},
+"alt": {
+"id": "u_fZeyrqJJ8",
+"s": 73,
+"e": 84.5
 }
 },
 {
@@ -1001,6 +1356,11 @@
 "id": "v6dquWW-qbE",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "i7q4DZPb4qA",
+"s": 102,
+"e": 121.5
 }
 },
 {
@@ -1031,6 +1391,11 @@
 "id": "hZnioq9wcAQ",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "NqNkglSxVxo",
+"s": 60,
+"e": 74.5
 }
 },
 {
@@ -1050,6 +1415,26 @@
 },
 {
 "week": 6,
+"a": "Ben",
+"b": "Kaitlyn",
+"who": "M. Evans",
+"label": "54 yd catch",
+"swing": 0.1,
+"from": 48,
+"to": 58,
+"clip": {
+"id": "OaP-GGyXzEQ",
+"s": 0,
+"e": 15
+},
+"alt": {
+"id": "j1fGz36-iIU",
+"s": 19,
+"e": 43.5
+}
+},
+{
+"week": 6,
 "a": "Haan",
 "b": "Stephanie",
 "who": "T. Tucker",
@@ -1061,6 +1446,11 @@
 "id": "1Pun0hMunlM",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "-u1WvfBAkx4",
+"s": 97,
+"e": 107.5
 }
 },
 {
@@ -1076,6 +1466,11 @@
 "id": "FVfx67OFrAw",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "FNnmXEwVdOQ",
+"s": 643,
+"e": 653.5
 }
 },
 {
@@ -1108,6 +1503,11 @@
 "id": "Z-YMWV6C-kA",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "rFQUbg_qNZ4",
+"s": 233,
+"e": 245
 }
 },
 {
@@ -1123,6 +1523,11 @@
 "id": "gKIIUUfnjc8",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "o7HauxNWESQ",
+"s": 41,
+"e": 53.5
 }
 },
 {
@@ -1153,6 +1558,31 @@
 "id": "eCF9NRTyDZY",
 "s": 0,
 "e": 7
+},
+"alt": {
+"id": "rFQUbg_qNZ4",
+"s": 38,
+"e": 58.5
+}
+},
+{
+"week": 7,
+"a": "Joe",
+"b": "Ryan",
+"who": "J. Williams",
+"label": "10 yd TD catch",
+"swing": 0.214,
+"from": 8,
+"to": 29,
+"clip": {
+"id": "wZrXjs-0iAE",
+"s": 0,
+"e": 14
+},
+"alt": {
+"id": "chvnnzyKu7c",
+"s": 90,
+"e": 103.5
 }
 },
 {
@@ -1183,6 +1613,31 @@
 "id": "zNUiLic14A8",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "J_vS3uZSPzE",
+"s": 267,
+"e": 280
+}
+},
+{
+"week": 7,
+"a": "Alex",
+"b": "Stephanie",
+"who": "L. Burden",
+"label": "24 yd TD catch",
+"swing": 0.146,
+"from": 41,
+"to": 55,
+"clip": {
+"id": "6Pq7oyJG4-s",
+"s": 0,
+"e": 15
+},
+"alt": {
+"id": "pJX_yPIBIlA",
+"s": 82,
+"e": 96
 }
 },
 {
@@ -1243,6 +1698,11 @@
 "id": "GiRURxoPdQ0",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "1IlxRzI1cng",
+"s": 124,
+"e": 142.5
 }
 },
 {
@@ -1258,6 +1718,11 @@
 "id": "hUh0WOq4JGk",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "hbgH_Y_9z64",
+"s": 53,
+"e": 66.5
 }
 },
 {
@@ -1273,6 +1738,11 @@
 "id": "UydspF9yCpc",
 "s": 0,
 "e": 8
+},
+"alt": {
+"id": "bpX1fJI34Ek",
+"s": 138,
+"e": 151.5
 }
 }
 ],
@@ -1290,6 +1760,11 @@
 "id": "uOSpEtl1tec",
 "s": 0,
 "e": 11
+},
+"alt": {
+"id": "gN3H90TSDGY",
+"s": 59,
+"e": 75.5
 }
 },
 {
@@ -1365,6 +1840,11 @@
 "id": "a5GROXIODcs",
 "s": 0,
 "e": 13
+},
+"alt": {
+"id": "ZsHSRTIdoio",
+"s": 296,
+"e": 310
 }
 },
 {
@@ -1425,6 +1905,11 @@
 "id": "mjNoBEZUWCQ",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "ZsHSRTIdoio",
+"s": 194,
+"e": 223.5
 }
 },
 {
@@ -1455,6 +1940,41 @@
 "id": "MzVjjY1T_ww",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "MgXibTT6LVk",
+"s": 295,
+"e": 312.5
+}
+},
+{
+"week": 8,
+"a": "Haan",
+"b": "Alex",
+"who": "C. Ryland",
+"label": "42 yd field goal",
+"swing": 0.09,
+"from": 36,
+"to": 45,
+"clip": {
+"id": "RVkIwnCGhOI",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 8,
+"a": "Haan",
+"b": "Alex",
+"who": "M. Golden",
+"label": "24 yd TD catch",
+"swing": 0.086,
+"from": 49,
+"to": 58,
+"clip": {
+"id": "bEEH_VMn_9g",
+"s": 63,
+"e": 80.5
 }
 }
 ],
@@ -1532,6 +2052,11 @@
 "id": "ayFhw4Wu_Ik",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "vaQrpead72I",
+"s": 82,
+"e": 97.5
 }
 },
 {
@@ -1562,6 +2087,11 @@
 "id": "-o8frKiT4zs",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "CQgWKNrhkQ8",
+"s": 66,
+"e": 74.5
 }
 },
 {
@@ -1638,6 +2168,36 @@
 "s": 17,
 "e": 36.5
 }
+},
+{
+"week": 9,
+"a": "Joe",
+"b": "Alex",
+"who": "K. Walker",
+"label": "7 yd TD catch",
+"swing": 0.071,
+"from": 51,
+"to": 58,
+"clip": {
+"id": "N8pxREW_NkE",
+"s": 64,
+"e": 74.5
+}
+},
+{
+"week": 9,
+"a": "Ben",
+"b": "Ryan",
+"who": "B. Purdy",
+"label": "12 yd TD pass",
+"swing": 0.063,
+"from": 84,
+"to": 90,
+"clip": {
+"id": "3AZ9cLk5u4o",
+"s": 277,
+"e": 291.5
+}
 }
 ],
 "10": [
@@ -1654,6 +2214,11 @@
 "id": "7QsPR86m9k4",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "2GoB1F4TDXE",
+"s": 123,
+"e": 150.5
 }
 },
 {
@@ -1669,6 +2234,11 @@
 "id": "JIS2CjSKZS4",
 "s": 0,
 "e": 14
+},
+"alt": {
+"id": "CmmAl-VLHlY",
+"s": 248,
+"e": 265.5
 }
 },
 {
@@ -1699,6 +2269,11 @@
 "id": "os5dDgbFQHg",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "CmmAl-VLHlY",
+"s": 144,
+"e": 171.5
 }
 },
 {
@@ -1759,6 +2334,11 @@
 "id": "qk5NaIMsxO4",
 "s": 0,
 "e": 15
+},
+"alt": {
+"id": "kB7wd0h7NC0",
+"s": 103,
+"e": 122.5
 }
 },
 {
@@ -1820,336 +2400,39 @@
 "s": 265,
 "e": 285.5
 }
+},
+{
+"week": 10,
+"a": "Aidan",
+"b": "Haan",
+"who": "C. Skattebo",
+"label": "13 yd TD run",
+"swing": 0.108,
+"from": 25,
+"to": 36,
+"clip": {
+"id": "0XeId5YDplE",
+"s": 192,
+"e": 205.5
+}
+},
+{
+"week": 10,
+"a": "Aidan",
+"b": "Haan",
+"who": "M. Stafford",
+"label": "19 yd TD pass",
+"swing": 0.1,
+"from": 54,
+"to": 64,
+"clip": {
+"id": "tYGZlZZjnXg",
+"s": 408,
+"e": 422
+}
 }
 ]
 },
-"embed": {
-"pvQGzepIbv8": true,
-"RpBHz9rhtD4": true,
-"iVF9yIz73CM": true,
-"ecBtXMfUhbg": true,
-"iyEU4eIVpCI": false,
-"9U3efb3SIa8": true,
-"VNkXxLcw7FM": true,
-"eAUO7UejAec": true,
-"-mnSW0xp5Os": true,
-"D65__74mQ5Y": true,
-"k9ZxQnPgoxY": true,
-"z6MgCagk4Z8": false,
-"C6R9hEC_h3U": true,
-"If1wDuhaB40": true,
-"oNlvj_XajyU": true,
-"UXo3ORWBvqI": true,
-"FWt7UFjYdIY": true,
-"yR1iR8WDyaI": true,
-"c6ffjTi6tow": true,
-"AaZff8yGimU": true,
-"Zvb6ALLifO0": true,
-"NslPnJtelQo": true,
-"-yS7xFbinRs": true,
-"Cde_UFrqTL4": true,
-"wRjT0binxYk": true,
-"Rpw0ZTyby9s": true,
-"2SL9_sLO3AA": true,
-"LioUuunR8PM": true,
-"ChxNQT-0MF4": true,
-"uQEB7gZcMsA": true,
-"qqk6CA8z8V0": true,
-"gGrgz387NVY": true,
-"Pin4V7ZK0bw": true,
-"0t--X_Mz22I": true,
-"3rRVosZre6Y": true,
-"XIHr2OzpFHc": true,
-"WebBQ1BzA9A": true,
-"4GD9AigOyLA": true,
-"SO4S9-ZDoPU": true,
-"1axlSwY4nfE": true,
-"5GXsAWgfvY4": true,
-"79xmQky-L0s": true,
-"L3sQlFzCmgQ": true,
-"eoqXlMR7e4Y": true,
-"bJbOikQERbA": true,
-"JVE73tcS2TM": true,
-"zwK2eSwHZ_4": true,
-"9Q_aiuZCjVg": true,
-"FyLtVtF7l-w": true,
-"kVKQwi-7IBo": true,
-"gYb-1oABreo": true,
-"e5O3_0GyOto": true,
-"JYluk14PmYo": true,
-"zlV7lpwL49A": true,
-"PTkCmmEi0bw": true,
-"TF-KoVf-I24": true,
-"qCTskZ9Ccr4": true,
-"mW6ImJsO9so": true,
-"3iegLwaeeog": true,
-"e6yeyk2PcuU": true,
-"V5Eer9K1Eh4": true,
-"Lac3gffPmNk": true,
-"1XjqDPOo95Q": true,
-"t6d2wZB2bkE": true,
-"TbMwDY8ZZhY": true,
-"wk6fz1Bt8M4": true,
-"MExG9MKcaMo": true,
-"mhI-ayRt9MI": true,
-"aVU1II7Wcrg": true,
-"xnOaX9MA7vg": true,
-"X1k7KEZilGc": true,
-"uIOQoJ0nYxk": true,
-"0R2OBmNdj1s": true,
-"hwUOO7T8OsM": true,
-"ynnRirngdmE": true,
-"Bwhhc0GFCic": true,
-"Q6g-k9Q-fq0": true,
-"xI4kXFoFCqs": true,
-"9_x_xyfTyUA": true,
-"E0m0XEI7jzc": true,
-"qDvvYOW-nvA": true,
-"ze_0SVRY-Iw": true,
-"DSQNDW6CJcc": true,
-"xapPRY_z-s8": true,
-"tT6-qk3f_2k": true,
-"JXh_U5yLQY0": true,
-"q-7SspyJcwU": true,
-"yhepXMffaIk": true,
-"RYz1cNokvIo": true,
-"qfdAhZQRziM": true,
-"GqZ81kf-g_A": true,
-"8oRq521nUM0": true,
-"HIaZ6EHH-XA": true,
-"3FAj4xs4gNM": true,
-"doDgovJvUNE": true,
-"Ucqo5u0x1ic": true,
-"5zrocfrvDNw": true,
-"eNxjRyn-VLc": true,
-"JL_zHcWkV3o": true,
-"9OJU2k54QvI": true,
-"zyuTb9EtcJU": true,
-"ovcbnvZosW4": true,
-"-B6MhpnYZZQ": true,
-"VHn7QewC37Y": true,
-"YNSQzZj5Y7o": true,
-"TmBRMPPFwCY": true,
-"530N15lz_9o": true,
-"pSQComGb0nE": true,
-"DJ073Q-BQKg": true,
-"Gk9aQMWQft0": true,
-"tf5ONgwpNgg": true,
-"dFRiDrCbwsQ": true,
-"LPfo5En_My4": true,
-"tS5wCBMH6Dw": true,
-"-Ls3nMWo8T8": true,
-"wxz0PdfO7jU": true,
-"0g9R44ylPmw": true,
-"Krg6Gt16tM4": true,
-"Au-UBkRQObw": true,
-"u1akVe3bGdc": true,
-"X6kzfcmF7mI": true,
-"HSTSq0h201o": true,
-"2CkqTLMwXPY": true,
-"97r166YR8gE": true,
-"AllaVl-Q3TQ": true,
-"3vnvD3oWIGY": true,
-"isE93wzc7Ow": true,
-"x-a0_HVZSZk": true,
-"2Cu-nrdOrrc": true,
-"mG6fiCoC-g4": true,
-"Mb4W32xfZwk": true,
-"7SR0oXMpBGY": true,
-"y1czsA8vQJo": true,
-"8iMJw3MWxok": true,
-"jyal5Eo0XnI": true,
-"Et-NYKEbp4g": true,
-"zqVvLfETzfY": true,
-"Sn3gUf7NcyQ": true,
-"OmyjtjkYsa0": false,
-"3QETjYOn2uY": true,
-"LKl_QyFrA2w": true,
-"QPSN-e7JWT8": true,
-"zSTzM9hktE0": false,
-"83oLZF64_7o": true,
-"KK9RbnggtJo": true,
-"tweu0Xsdmpg": true,
-"hmWHUBS_tOM": true,
-"S5ZL2jQhtzI": true,
-"o337rx-i8UU": true,
-"DDwxnXLC_e8": true,
-"ra1QhjAji_A": true,
-"z2gRfM4I1gE": true,
-"-Ww0deHRbcw": true,
-"_pPt4SjfV7Y": true,
-"zjWM1TnTclU": true,
-"LJNZs_hadO0": true,
-"GAzYvIokV28": true,
-"oNw--gF-ntU": true,
-"4jwaAd_-ZTQ": true,
-"PtJV1ZmLWBk": true,
-"zk85AiCokCM": true,
-"08IM-h1tviM": true,
-"F1lM7ZuqTMs": true,
-"uVg50Z8V-I0": true,
-"eJkoKZnxPj4": true,
-"mgv7-kstMxQ": true,
-"KmXVGhNWZ4k": true,
-"T81SLwEQV3c": true,
-"FVfx67OFrAw": true,
-"S8njRt5gUz0": false,
-"FJ5VZmYLGg0": true,
-"jK3eX1gQjLI": false,
-"e-QTZ3x7Fs0": true,
-"87LvIetL4v4": false,
-"1nrkRm5Qjk0": true,
-"hZnioq9wcAQ": true,
-"OaP-GGyXzEQ": false,
-"KAz0v1WNeNg": true,
-"AS4spvKweLc": false,
-"rXrzIClFaps": true,
-"VBAAz1JrCVo": true,
-"e1QaYpKkz-4": true,
-"e8FoSL_Hspc": true,
-"NOw8_oP2Ghk": true,
-"NdAdaT7k0lw": true,
-"NIMaS9mjgWg": true,
-"s4BfF9vZFuI": true,
-"J4Zw6LnCINc": false,
-"1Pun0hMunlM": true,
-"bIXtXl_JUOE": true,
-"duAYcBx5J8U": true,
-"qzmu5w0PTEs": true,
-"v6dquWW-qbE": true,
-"W6E47EhqBpE": true,
-"uUXUaQZ1i_Q": true,
-"1zk-Wj0ivKM": true,
-"nlpYMXw5Hcc": true,
-"DMF-9Y-aI7o": true,
-"LqwFl-ToAB4": false,
-"XPs3aCMAuI4": true,
-"HuLoj0mAWAU": true,
-"hUh0WOq4JGk": true,
-"hbgH_Y_9z64": true,
-"3ThFmqY0sz4": true,
-"DoT8dVI_RPQ": true,
-"l7Z4p5lS6t8": false,
-"nKyl3johP0Q": true,
-"5CN27QNj86A": true,
-"AElRGlk8qcI": true,
-"UydspF9yCpc": true,
-"ZRYqOyL2RIw": true,
-"SXNgCu6N19s": true,
-"HtTu6bjPggk": true,
-"yC8eWhd4ybs": true,
-"3FNfnsFbZ_s": true,
-"j_8Nxkhuedo": true,
-"2DKruTyNqlw": false,
-"XDNMmC-8oPw": true,
-"FsxROBpW-AA": true,
-"9Zk5yfSBlS8": true,
-"wZrXjs-0iAE": false,
-"c-I5gTEWLyw": true,
-"dNM3qkgz9DM": true,
-"ohyyR_Ts1-M": true,
-"L5L9E7GlC-4": true,
-"gmHR6gzY-Po": false,
-"JorOCZ8jNN0": true,
-"X52ZMJ6Dr5w": true,
-"Uke6vA-hUxM": true,
-"6Pq7oyJG4-s": false,
-"GiRURxoPdQ0": true,
-"bqzsJClrZD4": true,
-"pJX_yPIBIlA": true,
-"pOZcf5OgweY": true,
-"nNSW1BAw5jE": true,
-"Z-YMWV6C-kA": true,
-"gKIIUUfnjc8": true,
-"eCF9NRTyDZY": true,
-"zNUiLic14A8": true,
-"rFQUbg_qNZ4": true,
-"O5ulAM-0KWU": true,
-"UPVOxmzkOZo": true,
-"f3xMAZ0VDc4": true,
-"eRn_u0sVapU": true,
-"XX1DaO-PzVw": true,
-"UF3Ff1Ur5ZY": true,
-"cOi3E8loZR4": true,
-"9CoFbDIEUdk": true,
-"VdSC7_tKl0w": true,
-"a5GROXIODcs": true,
-"mjNoBEZUWCQ": true,
-"6T54xmZh6MU": true,
-"vt0u6Uh0WGc": true,
-"Z6LcyUPePmU": true,
-"jrw9_9_F7N4": true,
-"MzVjjY1T_ww": true,
-"eoi2gL6-K_8": true,
-"wvsNn8n7n20": true,
-"cQG4iD-dkEg": true,
-"uOSpEtl1tec": true,
-"gN3H90TSDGY": true,
-"rW7AI-S-CcU": true,
-"HhYiq3ai6Hk": true,
-"RVkIwnCGhOI": true,
-"bEEH_VMn_9g": true,
-"FYL4Mklv1Ig": true,
-"Ltg2O1pCabU": true,
-"iVOgjQiYyXQ": true,
-"dOVmXvR0xtM": true,
-"tQ6AQLGnQvg": true,
-"2HUpGUhencU": true,
-"m1-Q_tUQ-mU": true,
-"wbN-drr3wcg": true,
-"07wT-L_smGE": true,
-"KOGAJPvE8vo": true,
-"-o8frKiT4zs": true,
-"QAA1UXO5iGk": true,
-"3AZ9cLk5u4o": true,
-"Zpmh27YuLrA": true,
-"2E_Mi4-1NKE": true,
-"o3Fa9VGD8Lk": true,
-"PfgK9FucFIA": true,
-"aYTtuWXkg8M": true,
-"QyqLvZJJYkw": true,
-"7EUbjB7cI-A": true,
-"Thfc8VfUr4A": true,
-"fPW1IQ_h-H8": true,
-"4hSRcYVrw-Y": true,
-"N8pxREW_NkE": true,
-"ZpuGCkVd8mY": true,
-"7v_--nsx3gY": true,
-"ayFhw4Wu_Ik": true,
-"Ql5ebIR8x7Y": true,
-"jowoJNpuv-U": true,
-"J9OJ-bjqoo0": true,
-"8hN2444UQlE": true,
-"7QsPR86m9k4": true,
-"ymxsfIEc-Gw": true,
-"QzmCVesBVL8": true,
-"q91YLcDWnUQ": true,
-"tYGZlZZjnXg": true,
-"2GoB1F4TDXE": true,
-"eUVh4g0yfVU": true,
-"0XeId5YDplE": true,
-"svFx1fWwub0": true,
-"X8lOJ4HdlJs": true,
-"Ch-BN7Y9pgU": true,
-"xbZrPcZqTew": true,
-"i6vWTIgfodA": true,
-"t6ITKm9ImHc": true,
-"hORC-A8SUM0": true,
-"Rnv7Gq352E4": true,
-"5O7qOghL-cQ": true,
-"JIS2CjSKZS4": true,
-"os5dDgbFQHg": true,
-"CmmAl-VLHlY": true,
-"Z7HLnqkfAOs": true,
-"JEd5XM6MQDY": true,
-"qk5NaIMsxO4": true,
-"gbnTRbcmtSk": true,
-"kB7wd0h7NC0": true,
-"oz5Hf3zXcJg": true,
-"o8CLZ4pL2HE": true,
-"yMa5nKS33iQ": true,
-"eONqUWPKNiU": true,
-"2_hXnbsOktw": true
-},
-"updatedAt": "2026-11-18T18:17:07Z"
+"embed": {},
+"updatedAt": "2026-11-18T18:55:22Z"
 }
