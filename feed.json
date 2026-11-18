@@ -51,6 +51,8 @@
       "Ryan"
      ],
      "swing": 70,
+     "from": 1,
+     "to": 71,
      "clip": {
       "id": "zjWM1TnTclU",
       "s": 99,
@@ -67,6 +69,8 @@
       "Ankit"
      ],
      "swing": 60,
+     "from": 34,
+     "to": 93,
      "clip": {
       "id": "JYluk14PmYo",
       "s": 0,
@@ -83,6 +87,8 @@
       "Kaitlyn"
      ],
      "swing": 58,
+     "from": 16,
+     "to": 74,
      "clip": {
       "id": "Z-YMWV6C-kA",
       "s": 0,
@@ -316,5 +322,5 @@
   "violations": [],
   "blocked": []
  },
- "generatedAt": "2026-11-18T18:14:54Z"
+ "generatedAt": "2026-11-18T18:17:07Z"
 }

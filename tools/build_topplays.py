@@ -84,7 +84,7 @@ def scrape(base, season, weeks):
                 print('week %d: not ready' % w, file=sys.stderr); continue
             plays = [x for x in res['plays'] if x.get('clip') and x['clip'].get('id') and embeddable(x['clip']['id'], cache['embed'])]
             plays.sort(key=lambda x: -abs(x['d']))
-            cache['weeks'][str(w)] = [{'week': w, 'a': x['a'], 'b': x['b'], 'who': x['who'], 'label': x['label'], 'swing': round(abs(x['d']), 3),
+            cache['weeks'][str(w)] = [{'week': w, 'a': x['a'], 'b': x['b'], 'who': x['who'], 'label': x['label'], 'swing': round(abs(x['d']), 3), 'from': round((x['p0'] if x['d'] >= 0 else 1 - x['p0']) * 100), 'to': round((x['p1'] if x['d'] >= 0 else 1 - x['p1']) * 100),
                                        'clip': {'id': x['clip']['id'], 's': x['clip']['s'], 'e': x['clip']['e']}} for x in plays[:KEEP]]
             print('week %d: %d plays with clips, best %s' % (w, len(plays), plays[0]['who'] + ' ' + plays[0]['label'] if plays else '-'))
         browser.close()

@@ -10,6 +10,8 @@
 "who": "J. Coker",
 "label": "51 yd TD catch",
 "swing": 0.245,
+"from": 29,
+"to": 53,
 "clip": {
 "id": "If1wDuhaB40",
 "s": 0,
@@ -23,6 +25,8 @@
 "who": "C. Williams",
 "label": "29 yd TD run",
 "swing": 0.241,
+"from": 28,
+"to": 52,
 "clip": {
 "id": "VNkXxLcw7FM",
 "s": 0,
@@ -36,6 +40,8 @@
 "who": "C. Watson",
 "label": "81 yd TD catch",
 "swing": 0.235,
+"from": 57,
+"to": 81,
 "clip": {
 "id": "AaZff8yGimU",
 "s": 0,
@@ -49,6 +55,8 @@
 "who": "A. Jeanty",
 "label": "13 yd TD catch",
 "swing": 0.231,
+"from": 33,
+"to": 56,
 "clip": {
 "id": "oNlvj_XajyU",
 "s": 219,
@@ -62,6 +70,8 @@
 "who": "D. Moore",
 "label": "43 yd TD catch",
 "swing": 0.209,
+"from": 41,
+"to": 62,
 "clip": {
 "id": "pvQGzepIbv8",
 "s": 0,
@@ -75,6 +85,8 @@
 "who": "C. Watson",
 "label": "2 yd TD catch",
 "swing": 0.179,
+"from": 71,
+"to": 89,
 "clip": {
 "id": "Zvb6ALLifO0",
 "s": 97,
@@ -88,6 +100,8 @@
 "who": "B. Mayfield",
 "label": "9 yd TD run",
 "swing": 0.165,
+"from": 70,
+"to": 86,
 "clip": {
 "id": "ChxNQT-0MF4",
 "s": 0,
@@ -101,6 +115,8 @@
 "who": "J. Love",
 "label": "81 yd TD pass",
 "swing": 0.159,
+"from": 72,
+"to": 87,
 "clip": {
 "id": "uQEB7gZcMsA",
 "s": 0,
@@ -114,6 +130,8 @@
 "who": "J. Jefferson",
 "label": "39 yd TD catch",
 "swing": 0.157,
+"from": 14,
+"to": 29,
 "clip": {
 "id": "NslPnJtelQo",
 "s": 0,
@@ -127,6 +145,8 @@
 "who": "B. Hall",
 "label": "4 yd TD run",
 "swing": 0.145,
+"from": 34,
+"to": 48,
 "clip": {
 "id": "RpBHz9rhtD4",
 "s": 262,
@@ -140,6 +160,8 @@
 "who": "Steelers",
 "label": "35 yd interception return TD (T.J. Watt), interception (T.J. Watt)",
 "swing": 0.145,
+"from": 64,
+"to": 78,
 "clip": {
 "id": "eAUO7UejAec",
 "s": 0,
@@ -153,6 +175,8 @@
 "who": "A. Jeanty",
 "label": "13 yd TD catch",
 "swing": 0.144,
+"from": 15,
+"to": 29,
 "clip": {
 "id": "UXo3ORWBvqI",
 "s": 0,
@@ -168,6 +192,8 @@
 "who": "D. Adams",
 "label": "11 yd TD catch",
 "swing": 0.595,
+"from": 34,
+"to": 93,
 "clip": {
 "id": "JYluk14PmYo",
 "s": 0,
@@ -181,6 +207,8 @@
 "who": "D. Prescott",
 "label": "3 yd TD pass",
 "swing": 0.229,
+"from": 43,
+"to": 66,
 "clip": {
 "id": "zlV7lpwL49A",
 "s": 95,
@@ -194,6 +222,8 @@
 "who": "D. Adams",
 "label": "23 yd catch",
 "swing": 0.218,
+"from": 13,
+"to": 35,
 "clip": {
 "id": "PTkCmmEi0bw",
 "s": 153,
@@ -207,6 +237,8 @@
 "who": "J. Taylor",
 "label": "24 yd TD run",
 "swing": 0.216,
+"from": 58,
+"to": 80,
 "clip": {
 "id": "TF-KoVf-I24",
 "s": 0,
@@ -220,6 +252,8 @@
 "who": "M. Willis",
 "label": "77 yd TD pass",
 "swing": 0.158,
+"from": 21,
+"to": 37,
 "clip": {
 "id": "qCTskZ9Ccr4",
 "s": 516,
@@ -233,6 +267,8 @@
 "who": "Panthers",
 "label": "16 yd interception return TD (Devin Lloyd), interception (Devin Lloyd)",
 "swing": 0.148,
+"from": 80,
+"to": 94,
 "clip": {
 "id": "1XjqDPOo95Q",
 "s": 0,
@@ -246,6 +282,8 @@
 "who": "C. Olave",
 "label": "21 yd TD catch",
 "swing": 0.133,
+"from": 38,
+"to": 51,
 "clip": {
 "id": "mW6ImJsO9so",
 "s": 111,
@@ -259,6 +297,8 @@
 "who": "D. Prescott",
 "label": "12 yd TD pass",
 "swing": 0.122,
+"from": 68,
+"to": 80,
 "clip": {
 "id": "zlV7lpwL49A",
 "s": 434,
@@ -272,6 +312,8 @@
 "who": "J. Taylor",
 "label": "5 yd TD run",
 "swing": 0.113,
+"from": 83,
+"to": 94,
 "clip": {
 "id": "3iegLwaeeog",
 "s": 0,
@@ -285,6 +327,8 @@
 "who": "P. Washington",
 "label": "18 yd catch",
 "swing": 0.112,
+"from": 25,
+"to": 36,
 "clip": {
 "id": "e6yeyk2PcuU",
 "s": 134,
@@ -298,6 +342,8 @@
 "who": "J. Chase",
 "label": "32 yd TD catch",
 "swing": 0.11,
+"from": 85,
+"to": 96,
 "clip": {
 "id": "FyLtVtF7l-w",
 "s": 0,
@@ -311,6 +357,8 @@
 "who": "C. Olave",
 "label": "20 yd catch",
 "swing": 0.11,
+"from": 38,
+"to": 49,
 "clip": {
 "id": "mW6ImJsO9so",
 "s": 1,
@@ -326,6 +374,8 @@
 "who": "B. Young",
 "label": "8 yd TD pass",
 "swing": 0.305,
+"from": 35,
+"to": 66,
 "clip": {
 "id": "eNxjRyn-VLc",
 "s": 639,
@@ -339,6 +389,8 @@
 "who": "J. Gibbs",
 "label": "17 yd TD run",
 "swing": 0.272,
+"from": 29,
+"to": 56,
 "clip": {
 "id": "JL_zHcWkV3o",
 "s": 251,
@@ -352,6 +404,8 @@
 "who": "D. Adams",
 "label": "49 yd catch",
 "swing": 0.272,
+"from": 32,
+"to": 59,
 "clip": {
 "id": "9OJU2k54QvI",
 "s": 168,
@@ -365,6 +419,8 @@
 "who": "L. Burden",
 "label": "8 yd TD catch",
 "swing": 0.221,
+"from": 59,
+"to": 81,
 "clip": {
 "id": "GqZ81kf-g_A",
 "s": 0,
@@ -378,6 +434,8 @@
 "who": "T. McLaurin",
 "label": "30 yd TD catch",
 "swing": 0.211,
+"from": 62,
+"to": 83,
 "clip": {
 "id": "DSQNDW6CJcc",
 "s": 0,
@@ -391,6 +449,8 @@
 "who": "K. Walker",
 "label": "5 yd TD catch",
 "swing": 0.206,
+"from": 36,
+"to": 57,
 "clip": {
 "id": "8oRq521nUM0",
 "s": 91,
@@ -404,6 +464,8 @@
 "who": "T. Shough",
 "label": "3 yd TD pass",
 "swing": 0.195,
+"from": 44,
+"to": 64,
 "clip": {
 "id": "E0m0XEI7jzc",
 "s": 274,
@@ -417,6 +479,8 @@
 "who": "C. McCaffrey",
 "label": "1 yd TD run",
 "swing": 0.16,
+"from": 61,
+"to": 77,
 "clip": {
 "id": "zyuTb9EtcJU",
 "s": 0,
@@ -430,6 +494,8 @@
 "who": "M. Evans",
 "label": "23 yd TD catch",
 "swing": 0.14,
+"from": 33,
+"to": 47,
 "clip": {
 "id": "qDvvYOW-nvA",
 "s": 0,
@@ -443,6 +509,8 @@
 "who": "J. Chase",
 "label": "3 yd TD catch",
 "swing": 0.14,
+"from": 52,
+"to": 66,
 "clip": {
 "id": "ovcbnvZosW4",
 "s": 0,
@@ -456,6 +524,8 @@
 "who": "A. Rodgers",
 "label": "6 yd TD pass",
 "swing": 0.123,
+"from": 72,
+"to": 84,
 "clip": {
 "id": "HIaZ6EHH-XA",
 "s": 0,
@@ -469,6 +539,8 @@
 "who": "K. Cousins",
 "label": "4 yd TD pass",
 "swing": 0.112,
+"from": 30,
+"to": 41,
 "clip": {
 "id": "3FAj4xs4gNM",
 "s": 0,
@@ -484,6 +556,8 @@
 "who": "C. Lamb",
 "label": "12 yd TD catch",
 "swing": 0.222,
+"from": 66,
+"to": 88,
 "clip": {
 "id": "Au-UBkRQObw",
 "s": 365,
@@ -497,6 +571,8 @@
 "who": "P. Nacua",
 "label": "2 yd TD run",
 "swing": 0.215,
+"from": 42,
+"to": 64,
 "clip": {
 "id": "LPfo5En_My4",
 "s": 0,
@@ -510,6 +586,8 @@
 "who": "J. Williams",
 "label": "8 yd TD run",
 "swing": 0.192,
+"from": 55,
+"to": 74,
 "clip": {
 "id": "tS5wCBMH6Dw",
 "s": 0,
@@ -523,6 +601,8 @@
 "who": "B. Bowers",
 "label": "20 yd TD catch",
 "swing": 0.187,
+"from": 39,
+"to": 58,
 "clip": {
 "id": "97r166YR8gE",
 "s": 0,
@@ -536,6 +616,8 @@
 "who": "J. Burrow",
 "label": "1 yd TD run",
 "swing": 0.183,
+"from": 58,
+"to": 77,
 "clip": {
 "id": "YNSQzZj5Y7o",
 "s": 956,
@@ -549,6 +631,8 @@
 "who": "N. Collins",
 "label": "7 yd TD catch",
 "swing": 0.161,
+"from": 39,
+"to": 55,
 "clip": {
 "id": "TmBRMPPFwCY",
 "s": 0,
@@ -562,6 +646,8 @@
 "who": "J. Waddle",
 "label": "13 yd TD catch",
 "swing": 0.159,
+"from": 44,
+"to": 60,
 "clip": {
 "id": "AllaVl-Q3TQ",
 "s": 62,
@@ -575,6 +661,8 @@
 "who": "D. Maye",
 "label": "2 yd TD pass",
 "swing": 0.15,
+"from": 74,
+"to": 89,
 "clip": {
 "id": "-Ls3nMWo8T8",
 "s": 473,
@@ -588,6 +676,8 @@
 "who": "J. Hurts",
 "label": "18 yd TD pass",
 "swing": 0.138,
+"from": 70,
+"to": 84,
 "clip": {
 "id": "DJ073Q-BQKg",
 "s": 266,
@@ -601,6 +691,8 @@
 "who": "C. McCaffrey",
 "label": "1 yd TD run",
 "swing": 0.125,
+"from": 34,
+"to": 46,
 "clip": {
 "id": "3vnvD3oWIGY",
 "s": 247,
@@ -614,6 +706,8 @@
 "who": "J. Love",
 "label": "2 yd TD pass",
 "swing": 0.122,
+"from": 52,
+"to": 64,
 "clip": {
 "id": "wxz0PdfO7jU",
 "s": 0,
@@ -627,6 +721,8 @@
 "who": "C. Olave",
 "label": "44 yd catch",
 "swing": 0.122,
+"from": 15,
+"to": 27,
 "clip": {
 "id": "mG6fiCoC-g4",
 "s": 18,
@@ -642,6 +738,8 @@
 "who": "T. Higbee",
 "label": "30 yd catch",
 "swing": 0.704,
+"from": 1,
+"to": 71,
 "clip": {
 "id": "zjWM1TnTclU",
 "s": 99,
@@ -655,6 +753,8 @@
 "who": "M. Golden",
 "label": "50 yd catch",
 "swing": 0.444,
+"from": 40,
+"to": 84,
 "clip": {
 "id": "o337rx-i8UU",
 "s": 161,
@@ -668,6 +768,8 @@
 "who": "J. Brissett",
 "label": "9 yd TD pass",
 "swing": 0.381,
+"from": 8,
+"to": 46,
 "clip": {
 "id": "LKl_QyFrA2w",
 "s": 784,
@@ -681,6 +783,8 @@
 "who": "M. Stafford",
 "label": "2 yd TD pass",
 "swing": 0.332,
+"from": 48,
+"to": 81,
 "clip": {
 "id": "Et-NYKEbp4g",
 "s": 602,
@@ -694,6 +798,8 @@
 "who": "T. Huntley",
 "label": "7 yd TD pass",
 "swing": 0.177,
+"from": 22,
+"to": 39,
 "clip": {
 "id": "zqVvLfETzfY",
 "s": 524,
@@ -707,6 +813,8 @@
 "who": "I. Likely",
 "label": "3 yd TD catch",
 "swing": 0.163,
+"from": 46,
+"to": 63,
 "clip": {
 "id": "Sn3gUf7NcyQ",
 "s": 129,
@@ -720,6 +828,8 @@
 "who": "J. Smith-Njigba",
 "label": "16 yd TD catch",
 "swing": 0.162,
+"from": 8,
+"to": 24,
 "clip": {
 "id": "QPSN-e7JWT8",
 "s": 63,
@@ -733,6 +843,8 @@
 "who": "J. Smith-Njigba",
 "label": "35 yd catch",
 "swing": 0.16,
+"from": 34,
+"to": 50,
 "clip": {
 "id": "QPSN-e7JWT8",
 "s": 98,
@@ -746,6 +858,8 @@
 "who": "T. Higbee",
 "label": "28 yd catch",
 "swing": 0.126,
+"from": 1,
+"to": 14,
 "clip": {
 "id": "zjWM1TnTclU",
 "s": 81,
@@ -759,6 +873,8 @@
 "who": "J. Jefferson",
 "label": "15 yd TD catch",
 "swing": 0.117,
+"from": 60,
+"to": 72,
 "clip": {
 "id": "83oLZF64_7o",
 "s": 0,
@@ -772,6 +888,8 @@
 "who": "P. Washington",
 "label": "51 yd TD catch",
 "swing": 0.115,
+"from": 56,
+"to": 68,
 "clip": {
 "id": "3QETjYOn2uY",
 "s": 0,
@@ -785,6 +903,8 @@
 "who": "T. Huntley",
 "label": "18 yd TD pass",
 "swing": 0.111,
+"from": 26,
+"to": 38,
 "clip": {
 "id": "zqVvLfETzfY",
 "s": 370,
@@ -800,6 +920,8 @@
 "who": "T. Tucker",
 "label": "44 yd TD catch",
 "swing": 0.341,
+"from": 17,
+"to": 51,
 "clip": {
 "id": "1Pun0hMunlM",
 "s": 0,
@@ -813,6 +935,8 @@
 "who": "K. Coleman",
 "label": "12 yd TD catch",
 "swing": 0.26,
+"from": 27,
+"to": 53,
 "clip": {
 "id": "DMF-9Y-aI7o",
 "s": 0,
@@ -826,6 +950,8 @@
 "who": "I. Likely",
 "label": "24 yd TD catch",
 "swing": 0.249,
+"from": 14,
+"to": 38,
 "clip": {
 "id": "KmXVGhNWZ4k",
 "s": 0,
@@ -839,6 +965,8 @@
 "who": "J. Taylor",
 "label": "4 yd TD run",
 "swing": 0.173,
+"from": 75,
+"to": 92,
 "clip": {
 "id": "bIXtXl_JUOE",
 "s": 0,
@@ -852,6 +980,8 @@
 "who": "J. Allen",
 "label": "9 yd TD pass",
 "swing": 0.147,
+"from": 54,
+"to": 69,
 "clip": {
 "id": "1nrkRm5Qjk0",
 "s": 0,
@@ -865,6 +995,8 @@
 "who": "B. Corum",
 "label": "15 yd TD catch",
 "swing": 0.119,
+"from": 68,
+"to": 80,
 "clip": {
 "id": "v6dquWW-qbE",
 "s": 0,
@@ -878,6 +1010,8 @@
 "who": "M. Nabers",
 "label": "46 yd catch",
 "swing": 0.109,
+"from": 61,
+"to": 72,
 "clip": {
 "id": "T81SLwEQV3c",
 "s": 220,
@@ -891,6 +1025,8 @@
 "who": "S. Diggs",
 "label": "1 yd TD catch",
 "swing": 0.108,
+"from": 89,
+"to": 100,
 "clip": {
 "id": "hZnioq9wcAQ",
 "s": 0,
@@ -904,6 +1040,8 @@
 "who": "J. Coker",
 "label": "19 yd catch",
 "swing": 0.104,
+"from": 74,
+"to": 85,
 "clip": {
 "id": "e8FoSL_Hspc",
 "s": 1,
@@ -917,6 +1055,8 @@
 "who": "T. Tucker",
 "label": "11 yd TD catch",
 "swing": 0.099,
+"from": 5,
+"to": 15,
 "clip": {
 "id": "1Pun0hMunlM",
 "s": 0,
@@ -930,6 +1070,8 @@
 "who": "K. Cousins",
 "label": "11 yd TD pass",
 "swing": 0.098,
+"from": 85,
+"to": 95,
 "clip": {
 "id": "FVfx67OFrAw",
 "s": 0,
@@ -943,6 +1085,8 @@
 "who": "B. Bowers",
 "label": "29 yd catch",
 "swing": 0.096,
+"from": 9,
+"to": 18,
 "clip": {
 "id": "W6E47EhqBpE",
 "s": 126,
@@ -958,6 +1102,8 @@
 "who": "C. Lamb",
 "label": "16 yd TD catch",
 "swing": 0.576,
+"from": 16,
+"to": 74,
 "clip": {
 "id": "Z-YMWV6C-kA",
 "s": 0,
@@ -971,6 +1117,8 @@
 "who": "G. Pickens",
 "label": "21 yd TD catch",
 "swing": 0.317,
+"from": 48,
+"to": 80,
 "clip": {
 "id": "gKIIUUfnjc8",
 "s": 0,
@@ -984,6 +1132,8 @@
 "who": "Chiefs",
 "label": "interception (Nohl Williams)",
 "swing": 0.299,
+"from": 31,
+"to": 61,
 "clip": {
 "id": "Uke6vA-hUxM",
 "s": 0,
@@ -997,6 +1147,8 @@
 "who": "C. Lamb",
 "label": "9 yd TD catch",
 "swing": 0.241,
+"from": 37,
+"to": 61,
 "clip": {
 "id": "eCF9NRTyDZY",
 "s": 0,
@@ -1010,6 +1162,8 @@
 "who": "J. Williams",
 "label": "34 yd run",
 "swing": 0.198,
+"from": 80,
+"to": 99,
 "clip": {
 "id": "j_8Nxkhuedo",
 "s": 231,
@@ -1023,6 +1177,8 @@
 "who": "A. Jeanty",
 "label": "15 yd TD catch",
 "swing": 0.17,
+"from": 36,
+"to": 53,
 "clip": {
 "id": "zNUiLic14A8",
 "s": 0,
@@ -1036,6 +1192,8 @@
 "who": "C. Lamb",
 "label": "30 yd catch",
 "swing": 0.142,
+"from": 13,
+"to": 27,
 "clip": {
 "id": "rFQUbg_qNZ4",
 "s": 155,
@@ -1049,6 +1207,8 @@
 "who": "B. Bowers",
 "label": "18 yd catch",
 "swing": 0.131,
+"from": 42,
+"to": 55,
 "clip": {
 "id": "O5ulAM-0KWU",
 "s": 144,
@@ -1062,6 +1222,8 @@
 "who": "G. Smith",
 "label": "3 yd TD pass",
 "swing": 0.129,
+"from": 67,
+"to": 80,
 "clip": {
 "id": "UPVOxmzkOZo",
 "s": 319,
@@ -1075,6 +1237,8 @@
 "who": "R. Stevenson",
 "label": "48 yd TD catch",
 "swing": 0.122,
+"from": 55,
+"to": 67,
 "clip": {
 "id": "GiRURxoPdQ0",
 "s": 0,
@@ -1088,6 +1252,8 @@
 "who": "T. Pollard",
 "label": "36 yd TD run",
 "swing": 0.119,
+"from": 46,
+"to": 58,
 "clip": {
 "id": "hUh0WOq4JGk",
 "s": 0,
@@ -1101,6 +1267,8 @@
 "who": "K. Black",
 "label": "30 yd TD run",
 "swing": 0.117,
+"from": 33,
+"to": 45,
 "clip": {
 "id": "UydspF9yCpc",
 "s": 0,
@@ -1116,6 +1284,8 @@
 "who": "L. Burden",
 "label": "1 yd TD catch",
 "swing": 0.531,
+"from": 15,
+"to": 68,
 "clip": {
 "id": "uOSpEtl1tec",
 "s": 0,
@@ -1129,6 +1299,8 @@
 "who": "L. Burden",
 "label": "23 yd catch",
 "swing": 0.316,
+"from": 29,
+"to": 60,
 "clip": {
 "id": "gN3H90TSDGY",
 "s": 100,
@@ -1142,6 +1314,8 @@
 "who": "J. Burrow",
 "label": "9 yd TD run",
 "swing": 0.24,
+"from": 34,
+"to": 58,
 "clip": {
 "id": "rW7AI-S-CcU",
 "s": 0,
@@ -1155,6 +1329,8 @@
 "who": "Jaguars",
 "label": "92 yd interception return TD (Rayuan Lane III), interception (Rayuan Lane III)",
 "swing": 0.169,
+"from": 14,
+"to": 31,
 "clip": {
 "id": "FYL4Mklv1Ig",
 "s": 0,
@@ -1168,6 +1344,8 @@
 "who": "T. Lawrence",
 "label": "31 yd TD pass",
 "swing": 0.167,
+"from": 69,
+"to": 85,
 "clip": {
 "id": "jrw9_9_F7N4",
 "s": 153,
@@ -1181,6 +1359,8 @@
 "who": "B. Tuten",
 "label": "25 yd TD catch",
 "swing": 0.145,
+"from": 32,
+"to": 46,
 "clip": {
 "id": "a5GROXIODcs",
 "s": 0,
@@ -1194,6 +1374,8 @@
 "who": "D. Kincaid",
 "label": "23 yd TD catch",
 "swing": 0.143,
+"from": 12,
+"to": 26,
 "clip": {
 "id": "HhYiq3ai6Hk",
 "s": 106,
@@ -1207,6 +1389,8 @@
 "who": "J. Warren",
 "label": "1 yd TD run",
 "swing": 0.141,
+"from": 78,
+"to": 92,
 "clip": {
 "id": "2HUpGUhencU",
 "s": 198,
@@ -1220,6 +1404,8 @@
 "who": "B. Strange",
 "label": "46 yd catch",
 "swing": 0.119,
+"from": 50,
+"to": 62,
 "clip": {
 "id": "jrw9_9_F7N4",
 "s": 1,
@@ -1233,6 +1419,8 @@
 "who": "B. Tuten",
 "label": "39 yd TD run",
 "swing": 0.102,
+"from": 38,
+"to": 49,
 "clip": {
 "id": "mjNoBEZUWCQ",
 "s": 0,
@@ -1246,6 +1434,8 @@
 "who": "J. Williams",
 "label": "46 yd catch",
 "swing": 0.1,
+"from": 67,
+"to": 77,
 "clip": {
 "id": "XX1DaO-PzVw",
 "s": 1,
@@ -1259,6 +1449,8 @@
 "who": "J. Gibbs",
 "label": "30 yd TD run",
 "swing": 0.099,
+"from": 11,
+"to": 20,
 "clip": {
 "id": "MzVjjY1T_ww",
 "s": 0,
@@ -1274,6 +1466,8 @@
 "who": "K. Concepcion",
 "label": "64 yd TD catch",
 "swing": 0.177,
+"from": 13,
+"to": 31,
 "clip": {
 "id": "o3Fa9VGD8Lk",
 "s": 0,
@@ -1287,6 +1481,8 @@
 "who": "K. Walker",
 "label": "2 yd TD run",
 "swing": 0.145,
+"from": 68,
+"to": 82,
 "clip": {
 "id": "N8pxREW_NkE",
 "s": 277,
@@ -1300,6 +1496,8 @@
 "who": "C. Lamb",
 "label": "44 yd TD catch",
 "swing": 0.13,
+"from": 18,
+"to": 31,
 "clip": {
 "id": "PfgK9FucFIA",
 "s": 0,
@@ -1313,6 +1511,8 @@
 "who": "P. Nacua",
 "label": "7 yd TD catch",
 "swing": 0.101,
+"from": 76,
+"to": 86,
 "clip": {
 "id": "aYTtuWXkg8M",
 "s": 259,
@@ -1326,6 +1526,8 @@
 "who": "P. Washington",
 "label": "50 yd TD catch",
 "swing": 0.101,
+"from": 39,
+"to": 49,
 "clip": {
 "id": "ayFhw4Wu_Ik",
 "s": 0,
@@ -1339,6 +1541,8 @@
 "who": "K. Walker",
 "label": "25 yd TD catch",
 "swing": 0.095,
+"from": 62,
+"to": 71,
 "clip": {
 "id": "N8pxREW_NkE",
 "s": 87,
@@ -1352,6 +1556,8 @@
 "who": "T. Kelce",
 "label": "1 yd TD run",
 "swing": 0.084,
+"from": 22,
+"to": 31,
 "clip": {
 "id": "-o8frKiT4zs",
 "s": 0,
@@ -1365,6 +1571,8 @@
 "who": "A. St. Brown",
 "label": "16 yd catch",
 "swing": 0.081,
+"from": 80,
+"to": 88,
 "clip": {
 "id": "QAA1UXO5iGk",
 "s": 15,
@@ -1378,6 +1586,8 @@
 "who": "S. Sanders",
 "label": "64 yd TD pass",
 "swing": 0.081,
+"from": 82,
+"to": 90,
 "clip": {
 "id": "ZpuGCkVd8mY",
 "s": 0,
@@ -1391,6 +1601,8 @@
 "who": "D. Maye",
 "label": "30 yd TD pass",
 "swing": 0.08,
+"from": 78,
+"to": 86,
 "clip": {
 "id": "QyqLvZJJYkw",
 "s": 248,
@@ -1404,6 +1616,8 @@
 "who": "J. Williams",
 "label": "1 yd TD run",
 "swing": 0.077,
+"from": 62,
+"to": 70,
 "clip": {
 "id": "7EUbjB7cI-A",
 "s": 0,
@@ -1417,6 +1631,8 @@
 "who": "B. Allen",
 "label": "19 yd catch",
 "swing": 0.075,
+"from": 59,
+"to": 67,
 "clip": {
 "id": "Thfc8VfUr4A",
 "s": 17,
@@ -1432,6 +1648,8 @@
 "who": "D. Samuel",
 "label": "70 yd TD run",
 "swing": 0.309,
+"from": 37,
+"to": 68,
 "clip": {
 "id": "7QsPR86m9k4",
 "s": 0,
@@ -1445,6 +1663,8 @@
 "who": "C. McCaffrey",
 "label": "66 yd TD catch",
 "swing": 0.282,
+"from": 32,
+"to": 60,
 "clip": {
 "id": "JIS2CjSKZS4",
 "s": 0,
@@ -1458,6 +1678,8 @@
 "who": "I. Likely",
 "label": "66 yd TD catch",
 "swing": 0.238,
+"from": 37,
+"to": 61,
 "clip": {
 "id": "ymxsfIEc-Gw",
 "s": 178,
@@ -1471,6 +1693,8 @@
 "who": "C. McCaffrey",
 "label": "74 yd TD catch",
 "swing": 0.178,
+"from": 22,
+"to": 40,
 "clip": {
 "id": "os5dDgbFQHg",
 "s": 0,
@@ -1484,6 +1708,8 @@
 "who": "J. Price",
 "label": "12 yd TD run",
 "swing": 0.166,
+"from": 39,
+"to": 56,
 "clip": {
 "id": "QzmCVesBVL8",
 "s": 87,
@@ -1497,6 +1723,8 @@
 "who": "C. Hubbard",
 "label": "1 yd TD run",
 "swing": 0.157,
+"from": 30,
+"to": 46,
 "clip": {
 "id": "q91YLcDWnUQ",
 "s": 445,
@@ -1510,6 +1738,8 @@
 "who": "M. Stafford",
 "label": "22 yd TD pass",
 "swing": 0.153,
+"from": 34,
+"to": 49,
 "clip": {
 "id": "tYGZlZZjnXg",
 "s": 361,
@@ -1523,6 +1753,8 @@
 "who": "G. Pickens",
 "label": "35 yd TD catch",
 "swing": 0.151,
+"from": 81,
+"to": 96,
 "clip": {
 "id": "qk5NaIMsxO4",
 "s": 0,
@@ -1536,6 +1768,8 @@
 "who": "D. Samuel",
 "label": "11 yd TD catch",
 "swing": 0.146,
+"from": 50,
+"to": 65,
 "clip": {
 "id": "2GoB1F4TDXE",
 "s": 59,
@@ -1549,6 +1783,8 @@
 "who": "D. Prescott",
 "label": "11 yd TD pass",
 "swing": 0.13,
+"from": 73,
+"to": 86,
 "clip": {
 "id": "eUVh4g0yfVU",
 "s": 667,
@@ -1562,6 +1798,8 @@
 "who": "C. McCaffrey",
 "label": "16 yd TD run",
 "swing": 0.122,
+"from": 20,
+"to": 32,
 "clip": {
 "id": "CmmAl-VLHlY",
 "s": 232,
@@ -1575,6 +1813,8 @@
 "who": "D. Prescott",
 "label": "39 yd TD pass",
 "swing": 0.113,
+"from": 51,
+"to": 62,
 "clip": {
 "id": "eUVh4g0yfVU",
 "s": 265,
@@ -1911,5 +2151,5 @@
 "eONqUWPKNiU": true,
 "2_hXnbsOktw": true
 },
-"updatedAt": "2026-11-18T18:13:31Z"
+"updatedAt": "2026-11-18T18:17:07Z"
 }
