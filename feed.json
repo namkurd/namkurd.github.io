@@ -39,6 +39,60 @@
    ]
   },
   {
+   "id": "plays",
+   "title": "Plays",
+   "items": [
+    {
+     "rank": 1,
+     "title": "T. Higbee 30 yd catch",
+     "sub": "Steven vs Ryan · Wk 5",
+     "managers": [
+      "Steven",
+      "Ryan"
+     ],
+     "swing": 70,
+     "clip": {
+      "id": "zjWM1TnTclU",
+      "s": 99,
+      "e": 113
+     },
+     "href": "https://www.youtube.com/watch?v=zjWM1TnTclU&t=99s"
+    },
+    {
+     "rank": 2,
+     "title": "D. Adams 11 yd TD catch",
+     "sub": "Haan vs Ankit · Wk 2",
+     "managers": [
+      "Haan",
+      "Ankit"
+     ],
+     "swing": 60,
+     "clip": {
+      "id": "JYluk14PmYo",
+      "s": 0,
+      "e": 15
+     },
+     "href": "https://www.youtube.com/watch?v=JYluk14PmYo&t=0s"
+    },
+    {
+     "rank": 3,
+     "title": "C. Lamb 16 yd TD catch",
+     "sub": "Steven vs Kaitlyn · Wk 7",
+     "managers": [
+      "Steven",
+      "Kaitlyn"
+     ],
+     "swing": 58,
+     "clip": {
+      "id": "Z-YMWV6C-kA",
+      "s": 0,
+      "e": 15
+     },
+     "href": "https://www.youtube.com/watch?v=Z-YMWV6C-kA&t=0s"
+    }
+   ]
+  },
+  {
    "id": "trades",
    "title": "Trades",
    "items": [
@@ -262,5 +316,5 @@
   "violations": [],
   "blocked": []
  },
- "generatedAt": "2026-11-17T14:37:01Z"
+ "generatedAt": "2026-11-18T18:14:54Z"
 }

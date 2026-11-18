@@ -1,0 +1,1915 @@
+{
+"schema": 1,
+"season": 2026,
+"weeks": {
+"1": [
+{
+"week": 1,
+"a": "Jake",
+"b": "Kaitlyn",
+"who": "J. Coker",
+"label": "51 yd TD catch",
+"swing": 0.245,
+"clip": {
+"id": "If1wDuhaB40",
+"s": 0,
+"e": 12
+}
+},
+{
+"week": 1,
+"a": "Ben",
+"b": "Alex",
+"who": "C. Williams",
+"label": "29 yd TD run",
+"swing": 0.241,
+"clip": {
+"id": "VNkXxLcw7FM",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 1,
+"a": "Haan",
+"b": "Steven",
+"who": "C. Watson",
+"label": "81 yd TD catch",
+"swing": 0.235,
+"clip": {
+"id": "AaZff8yGimU",
+"s": 0,
+"e": 12
+}
+},
+{
+"week": 1,
+"a": "Jake",
+"b": "Kaitlyn",
+"who": "A. Jeanty",
+"label": "13 yd TD catch",
+"swing": 0.231,
+"clip": {
+"id": "oNlvj_XajyU",
+"s": 219,
+"e": 236.5
+}
+},
+{
+"week": 1,
+"a": "Aidan",
+"b": "Ankit",
+"who": "D. Moore",
+"label": "43 yd TD catch",
+"swing": 0.209,
+"clip": {
+"id": "pvQGzepIbv8",
+"s": 0,
+"e": 12
+}
+},
+{
+"week": 1,
+"a": "Haan",
+"b": "Steven",
+"who": "C. Watson",
+"label": "2 yd TD catch",
+"swing": 0.179,
+"clip": {
+"id": "Zvb6ALLifO0",
+"s": 97,
+"e": 108.5
+}
+},
+{
+"week": 1,
+"a": "Joe",
+"b": "Stephanie",
+"who": "B. Mayfield",
+"label": "9 yd TD run",
+"swing": 0.165,
+"clip": {
+"id": "ChxNQT-0MF4",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 1,
+"a": "Joe",
+"b": "Stephanie",
+"who": "J. Love",
+"label": "81 yd TD pass",
+"swing": 0.159,
+"clip": {
+"id": "uQEB7gZcMsA",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 1,
+"a": "Haan",
+"b": "Steven",
+"who": "J. Jefferson",
+"label": "39 yd TD catch",
+"swing": 0.157,
+"clip": {
+"id": "NslPnJtelQo",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 1,
+"a": "Aidan",
+"b": "Ankit",
+"who": "B. Hall",
+"label": "4 yd TD run",
+"swing": 0.145,
+"clip": {
+"id": "RpBHz9rhtD4",
+"s": 262,
+"e": 273.5
+}
+},
+{
+"week": 1,
+"a": "Ben",
+"b": "Alex",
+"who": "Steelers",
+"label": "35 yd interception return TD (T.J. Watt), interception (T.J. Watt)",
+"swing": 0.145,
+"clip": {
+"id": "eAUO7UejAec",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 1,
+"a": "Jake",
+"b": "Kaitlyn",
+"who": "A. Jeanty",
+"label": "13 yd TD catch",
+"swing": 0.144,
+"clip": {
+"id": "UXo3ORWBvqI",
+"s": 0,
+"e": 14
+}
+}
+],
+"2": [
+{
+"week": 2,
+"a": "Haan",
+"b": "Ankit",
+"who": "D. Adams",
+"label": "11 yd TD catch",
+"swing": 0.595,
+"clip": {
+"id": "JYluk14PmYo",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 2,
+"a": "Haan",
+"b": "Ankit",
+"who": "D. Prescott",
+"label": "3 yd TD pass",
+"swing": 0.229,
+"clip": {
+"id": "zlV7lpwL49A",
+"s": 95,
+"e": 106.5
+}
+},
+{
+"week": 2,
+"a": "Haan",
+"b": "Ankit",
+"who": "D. Adams",
+"label": "23 yd catch",
+"swing": 0.218,
+"clip": {
+"id": "PTkCmmEi0bw",
+"s": 153,
+"e": 165.5
+}
+},
+{
+"week": 2,
+"a": "Haan",
+"b": "Ankit",
+"who": "J. Taylor",
+"label": "24 yd TD run",
+"swing": 0.216,
+"clip": {
+"id": "TF-KoVf-I24",
+"s": 0,
+"e": 13
+}
+},
+{
+"week": 2,
+"a": "Haan",
+"b": "Ankit",
+"who": "M. Willis",
+"label": "77 yd TD pass",
+"swing": 0.158,
+"clip": {
+"id": "qCTskZ9Ccr4",
+"s": 516,
+"e": 530
+}
+},
+{
+"week": 2,
+"a": "Alex",
+"b": "Christian",
+"who": "Panthers",
+"label": "16 yd interception return TD (Devin Lloyd), interception (Devin Lloyd)",
+"swing": 0.148,
+"clip": {
+"id": "1XjqDPOo95Q",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 2,
+"a": "Haan",
+"b": "Ankit",
+"who": "C. Olave",
+"label": "21 yd TD catch",
+"swing": 0.133,
+"clip": {
+"id": "mW6ImJsO9so",
+"s": 111,
+"e": 126.5
+}
+},
+{
+"week": 2,
+"a": "Haan",
+"b": "Ankit",
+"who": "D. Prescott",
+"label": "12 yd TD pass",
+"swing": 0.122,
+"clip": {
+"id": "zlV7lpwL49A",
+"s": 434,
+"e": 443.5
+}
+},
+{
+"week": 2,
+"a": "Haan",
+"b": "Ankit",
+"who": "J. Taylor",
+"label": "5 yd TD run",
+"swing": 0.113,
+"clip": {
+"id": "3iegLwaeeog",
+"s": 0,
+"e": 14
+}
+},
+{
+"week": 2,
+"a": "Haan",
+"b": "Ankit",
+"who": "P. Washington",
+"label": "18 yd catch",
+"swing": 0.112,
+"clip": {
+"id": "e6yeyk2PcuU",
+"s": 134,
+"e": 144.5
+}
+},
+{
+"week": 2,
+"a": "Jake",
+"b": "Stephanie",
+"who": "J. Chase",
+"label": "32 yd TD catch",
+"swing": 0.11,
+"clip": {
+"id": "FyLtVtF7l-w",
+"s": 0,
+"e": 10
+}
+},
+{
+"week": 2,
+"a": "Haan",
+"b": "Ankit",
+"who": "C. Olave",
+"label": "20 yd catch",
+"swing": 0.11,
+"clip": {
+"id": "mW6ImJsO9so",
+"s": 1,
+"e": 11.5
+}
+}
+],
+"3": [
+{
+"week": 3,
+"a": "Ankit",
+"b": "Stephanie",
+"who": "B. Young",
+"label": "8 yd TD pass",
+"swing": 0.305,
+"clip": {
+"id": "eNxjRyn-VLc",
+"s": 639,
+"e": 651.5
+}
+},
+{
+"week": 3,
+"a": "Ankit",
+"b": "Stephanie",
+"who": "J. Gibbs",
+"label": "17 yd TD run",
+"swing": 0.272,
+"clip": {
+"id": "JL_zHcWkV3o",
+"s": 251,
+"e": 268.5
+}
+},
+{
+"week": 3,
+"a": "Ankit",
+"b": "Stephanie",
+"who": "D. Adams",
+"label": "49 yd catch",
+"swing": 0.272,
+"clip": {
+"id": "9OJU2k54QvI",
+"s": 168,
+"e": 183.5
+}
+},
+{
+"week": 3,
+"a": "Alex",
+"b": "Ryan",
+"who": "L. Burden",
+"label": "8 yd TD catch",
+"swing": 0.221,
+"clip": {
+"id": "GqZ81kf-g_A",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 3,
+"a": "Joe",
+"b": "Christian",
+"who": "T. McLaurin",
+"label": "30 yd TD catch",
+"swing": 0.211,
+"clip": {
+"id": "DSQNDW6CJcc",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 3,
+"a": "Alex",
+"b": "Ryan",
+"who": "K. Walker",
+"label": "5 yd TD catch",
+"swing": 0.206,
+"clip": {
+"id": "8oRq521nUM0",
+"s": 91,
+"e": 99.5
+}
+},
+{
+"week": 3,
+"a": "Haan",
+"b": "Kaitlyn",
+"who": "T. Shough",
+"label": "3 yd TD pass",
+"swing": 0.195,
+"clip": {
+"id": "E0m0XEI7jzc",
+"s": 274,
+"e": 287.5
+}
+},
+{
+"week": 3,
+"a": "Ankit",
+"b": "Stephanie",
+"who": "C. McCaffrey",
+"label": "1 yd TD run",
+"swing": 0.16,
+"clip": {
+"id": "zyuTb9EtcJU",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 3,
+"a": "Haan",
+"b": "Kaitlyn",
+"who": "M. Evans",
+"label": "23 yd TD catch",
+"swing": 0.14,
+"clip": {
+"id": "qDvvYOW-nvA",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 3,
+"a": "Ankit",
+"b": "Stephanie",
+"who": "J. Chase",
+"label": "3 yd TD catch",
+"swing": 0.14,
+"clip": {
+"id": "ovcbnvZosW4",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 3,
+"a": "Alex",
+"b": "Ryan",
+"who": "A. Rodgers",
+"label": "6 yd TD pass",
+"swing": 0.123,
+"clip": {
+"id": "HIaZ6EHH-XA",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 3,
+"a": "Alex",
+"b": "Ryan",
+"who": "K. Cousins",
+"label": "4 yd TD pass",
+"swing": 0.112,
+"clip": {
+"id": "3FAj4xs4gNM",
+"s": 0,
+"e": 15
+}
+}
+],
+"4": [
+{
+"week": 4,
+"a": "Alex",
+"b": "Kaitlyn",
+"who": "C. Lamb",
+"label": "12 yd TD catch",
+"swing": 0.222,
+"clip": {
+"id": "Au-UBkRQObw",
+"s": 365,
+"e": 376
+}
+},
+{
+"week": 4,
+"a": "Jake",
+"b": "Joe",
+"who": "P. Nacua",
+"label": "2 yd TD run",
+"swing": 0.215,
+"clip": {
+"id": "LPfo5En_My4",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 4,
+"a": "Jake",
+"b": "Joe",
+"who": "J. Williams",
+"label": "8 yd TD run",
+"swing": 0.192,
+"clip": {
+"id": "tS5wCBMH6Dw",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 4,
+"a": "Steven",
+"b": "Stephanie",
+"who": "B. Bowers",
+"label": "20 yd TD catch",
+"swing": 0.187,
+"clip": {
+"id": "97r166YR8gE",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 4,
+"a": "Aidan",
+"b": "Haan",
+"who": "J. Burrow",
+"label": "1 yd TD run",
+"swing": 0.183,
+"clip": {
+"id": "YNSQzZj5Y7o",
+"s": 956,
+"e": 967.5
+}
+},
+{
+"week": 4,
+"a": "Aidan",
+"b": "Haan",
+"who": "N. Collins",
+"label": "7 yd TD catch",
+"swing": 0.161,
+"clip": {
+"id": "TmBRMPPFwCY",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 4,
+"a": "Steven",
+"b": "Stephanie",
+"who": "J. Waddle",
+"label": "13 yd TD catch",
+"swing": 0.159,
+"clip": {
+"id": "AllaVl-Q3TQ",
+"s": 62,
+"e": 80.5
+}
+},
+{
+"week": 4,
+"a": "Jake",
+"b": "Joe",
+"who": "D. Maye",
+"label": "2 yd TD pass",
+"swing": 0.15,
+"clip": {
+"id": "-Ls3nMWo8T8",
+"s": 473,
+"e": 486.5
+}
+},
+{
+"week": 4,
+"a": "Ben",
+"b": "Christian",
+"who": "J. Hurts",
+"label": "18 yd TD pass",
+"swing": 0.138,
+"clip": {
+"id": "DJ073Q-BQKg",
+"s": 266,
+"e": 280.5
+}
+},
+{
+"week": 4,
+"a": "Steven",
+"b": "Stephanie",
+"who": "C. McCaffrey",
+"label": "1 yd TD run",
+"swing": 0.125,
+"clip": {
+"id": "3vnvD3oWIGY",
+"s": 247,
+"e": 257.5
+}
+},
+{
+"week": 4,
+"a": "Jake",
+"b": "Joe",
+"who": "J. Love",
+"label": "2 yd TD pass",
+"swing": 0.122,
+"clip": {
+"id": "wxz0PdfO7jU",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 4,
+"a": "Ankit",
+"b": "Ryan",
+"who": "C. Olave",
+"label": "44 yd catch",
+"swing": 0.122,
+"clip": {
+"id": "mG6fiCoC-g4",
+"s": 18,
+"e": 40.5
+}
+}
+],
+"5": [
+{
+"week": 5,
+"a": "Steven",
+"b": "Ryan",
+"who": "T. Higbee",
+"label": "30 yd catch",
+"swing": 0.704,
+"clip": {
+"id": "zjWM1TnTclU",
+"s": 99,
+"e": 113
+}
+},
+{
+"week": 5,
+"a": "Alex",
+"b": "Christian",
+"who": "M. Golden",
+"label": "50 yd catch",
+"swing": 0.444,
+"clip": {
+"id": "o337rx-i8UU",
+"s": 161,
+"e": 181.5
+}
+},
+{
+"week": 5,
+"a": "Ben",
+"b": "Jake",
+"who": "J. Brissett",
+"label": "9 yd TD pass",
+"swing": 0.381,
+"clip": {
+"id": "LKl_QyFrA2w",
+"s": 784,
+"e": 796
+}
+},
+{
+"week": 5,
+"a": "Aidan",
+"b": "Ankit",
+"who": "M. Stafford",
+"label": "2 yd TD pass",
+"swing": 0.332,
+"clip": {
+"id": "Et-NYKEbp4g",
+"s": 602,
+"e": 611.5
+}
+},
+{
+"week": 5,
+"a": "Aidan",
+"b": "Ankit",
+"who": "T. Huntley",
+"label": "7 yd TD pass",
+"swing": 0.177,
+"clip": {
+"id": "zqVvLfETzfY",
+"s": 524,
+"e": 533.5
+}
+},
+{
+"week": 5,
+"a": "Aidan",
+"b": "Ankit",
+"who": "I. Likely",
+"label": "3 yd TD catch",
+"swing": 0.163,
+"clip": {
+"id": "Sn3gUf7NcyQ",
+"s": 129,
+"e": 142.5
+}
+},
+{
+"week": 5,
+"a": "Ben",
+"b": "Jake",
+"who": "J. Smith-Njigba",
+"label": "16 yd TD catch",
+"swing": 0.162,
+"clip": {
+"id": "QPSN-e7JWT8",
+"s": 63,
+"e": 80.5
+}
+},
+{
+"week": 5,
+"a": "Ben",
+"b": "Jake",
+"who": "J. Smith-Njigba",
+"label": "35 yd catch",
+"swing": 0.16,
+"clip": {
+"id": "QPSN-e7JWT8",
+"s": 98,
+"e": 112.5
+}
+},
+{
+"week": 5,
+"a": "Steven",
+"b": "Ryan",
+"who": "T. Higbee",
+"label": "28 yd catch",
+"swing": 0.126,
+"clip": {
+"id": "zjWM1TnTclU",
+"s": 81,
+"e": 97.5
+}
+},
+{
+"week": 5,
+"a": "Haan",
+"b": "Joe",
+"who": "J. Jefferson",
+"label": "15 yd TD catch",
+"swing": 0.117,
+"clip": {
+"id": "83oLZF64_7o",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 5,
+"a": "Aidan",
+"b": "Ankit",
+"who": "P. Washington",
+"label": "51 yd TD catch",
+"swing": 0.115,
+"clip": {
+"id": "3QETjYOn2uY",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 5,
+"a": "Aidan",
+"b": "Ankit",
+"who": "T. Huntley",
+"label": "18 yd TD pass",
+"swing": 0.111,
+"clip": {
+"id": "zqVvLfETzfY",
+"s": 370,
+"e": 389.5
+}
+}
+],
+"6": [
+{
+"week": 6,
+"a": "Haan",
+"b": "Stephanie",
+"who": "T. Tucker",
+"label": "44 yd TD catch",
+"swing": 0.341,
+"clip": {
+"id": "1Pun0hMunlM",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 6,
+"a": "Ankit",
+"b": "Christian",
+"who": "K. Coleman",
+"label": "12 yd TD catch",
+"swing": 0.26,
+"clip": {
+"id": "DMF-9Y-aI7o",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 6,
+"a": "Aidan",
+"b": "Ryan",
+"who": "I. Likely",
+"label": "24 yd TD catch",
+"swing": 0.249,
+"clip": {
+"id": "KmXVGhNWZ4k",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 6,
+"a": "Haan",
+"b": "Stephanie",
+"who": "J. Taylor",
+"label": "4 yd TD run",
+"swing": 0.173,
+"clip": {
+"id": "bIXtXl_JUOE",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 6,
+"a": "Ben",
+"b": "Kaitlyn",
+"who": "J. Allen",
+"label": "9 yd TD pass",
+"swing": 0.147,
+"clip": {
+"id": "1nrkRm5Qjk0",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 6,
+"a": "Joe",
+"b": "Steven",
+"who": "B. Corum",
+"label": "15 yd TD catch",
+"swing": 0.119,
+"clip": {
+"id": "v6dquWW-qbE",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 6,
+"a": "Aidan",
+"b": "Ryan",
+"who": "M. Nabers",
+"label": "46 yd catch",
+"swing": 0.109,
+"clip": {
+"id": "T81SLwEQV3c",
+"s": 220,
+"e": 232.5
+}
+},
+{
+"week": 6,
+"a": "Ben",
+"b": "Kaitlyn",
+"who": "S. Diggs",
+"label": "1 yd TD catch",
+"swing": 0.108,
+"clip": {
+"id": "hZnioq9wcAQ",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 6,
+"a": "Jake",
+"b": "Alex",
+"who": "J. Coker",
+"label": "19 yd catch",
+"swing": 0.104,
+"clip": {
+"id": "e8FoSL_Hspc",
+"s": 1,
+"e": 15.5
+}
+},
+{
+"week": 6,
+"a": "Haan",
+"b": "Stephanie",
+"who": "T. Tucker",
+"label": "11 yd TD catch",
+"swing": 0.099,
+"clip": {
+"id": "1Pun0hMunlM",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 6,
+"a": "Aidan",
+"b": "Ryan",
+"who": "K. Cousins",
+"label": "11 yd TD pass",
+"swing": 0.098,
+"clip": {
+"id": "FVfx67OFrAw",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 6,
+"a": "Joe",
+"b": "Steven",
+"who": "B. Bowers",
+"label": "29 yd catch",
+"swing": 0.096,
+"clip": {
+"id": "W6E47EhqBpE",
+"s": 126,
+"e": 142.5
+}
+}
+],
+"7": [
+{
+"week": 7,
+"a": "Steven",
+"b": "Kaitlyn",
+"who": "C. Lamb",
+"label": "16 yd TD catch",
+"swing": 0.576,
+"clip": {
+"id": "Z-YMWV6C-kA",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 7,
+"a": "Steven",
+"b": "Kaitlyn",
+"who": "G. Pickens",
+"label": "21 yd TD catch",
+"swing": 0.317,
+"clip": {
+"id": "gKIIUUfnjc8",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 7,
+"a": "Alex",
+"b": "Stephanie",
+"who": "Chiefs",
+"label": "interception (Nohl Williams)",
+"swing": 0.299,
+"clip": {
+"id": "Uke6vA-hUxM",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 7,
+"a": "Steven",
+"b": "Kaitlyn",
+"who": "C. Lamb",
+"label": "9 yd TD catch",
+"swing": 0.241,
+"clip": {
+"id": "eCF9NRTyDZY",
+"s": 0,
+"e": 7
+}
+},
+{
+"week": 7,
+"a": "Jake",
+"b": "Haan",
+"who": "J. Williams",
+"label": "34 yd run",
+"swing": 0.198,
+"clip": {
+"id": "j_8Nxkhuedo",
+"s": 231,
+"e": 254.5
+}
+},
+{
+"week": 7,
+"a": "Steven",
+"b": "Kaitlyn",
+"who": "A. Jeanty",
+"label": "15 yd TD catch",
+"swing": 0.17,
+"clip": {
+"id": "zNUiLic14A8",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 7,
+"a": "Steven",
+"b": "Kaitlyn",
+"who": "C. Lamb",
+"label": "30 yd catch",
+"swing": 0.142,
+"clip": {
+"id": "rFQUbg_qNZ4",
+"s": 155,
+"e": 168.5
+}
+},
+{
+"week": 7,
+"a": "Steven",
+"b": "Kaitlyn",
+"who": "B. Bowers",
+"label": "18 yd catch",
+"swing": 0.131,
+"clip": {
+"id": "O5ulAM-0KWU",
+"s": 144,
+"e": 158
+}
+},
+{
+"week": 7,
+"a": "Steven",
+"b": "Kaitlyn",
+"who": "G. Smith",
+"label": "3 yd TD pass",
+"swing": 0.129,
+"clip": {
+"id": "UPVOxmzkOZo",
+"s": 319,
+"e": 328.5
+}
+},
+{
+"week": 7,
+"a": "Alex",
+"b": "Stephanie",
+"who": "R. Stevenson",
+"label": "48 yd TD catch",
+"swing": 0.122,
+"clip": {
+"id": "GiRURxoPdQ0",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 7,
+"a": "Aidan",
+"b": "Christian",
+"who": "T. Pollard",
+"label": "36 yd TD run",
+"swing": 0.119,
+"clip": {
+"id": "hUh0WOq4JGk",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 7,
+"a": "Ben",
+"b": "Ankit",
+"who": "K. Black",
+"label": "30 yd TD run",
+"swing": 0.117,
+"clip": {
+"id": "UydspF9yCpc",
+"s": 0,
+"e": 8
+}
+}
+],
+"8": [
+{
+"week": 8,
+"a": "Haan",
+"b": "Alex",
+"who": "L. Burden",
+"label": "1 yd TD catch",
+"swing": 0.531,
+"clip": {
+"id": "uOSpEtl1tec",
+"s": 0,
+"e": 11
+}
+},
+{
+"week": 8,
+"a": "Haan",
+"b": "Alex",
+"who": "L. Burden",
+"label": "23 yd catch",
+"swing": 0.316,
+"clip": {
+"id": "gN3H90TSDGY",
+"s": 100,
+"e": 118.5
+}
+},
+{
+"week": 8,
+"a": "Haan",
+"b": "Alex",
+"who": "J. Burrow",
+"label": "9 yd TD run",
+"swing": 0.24,
+"clip": {
+"id": "rW7AI-S-CcU",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 8,
+"a": "Christian",
+"b": "Stephanie",
+"who": "Jaguars",
+"label": "92 yd interception return TD (Rayuan Lane III), interception (Rayuan Lane III)",
+"swing": 0.169,
+"clip": {
+"id": "FYL4Mklv1Ig",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 8,
+"a": "Jake",
+"b": "Ankit",
+"who": "T. Lawrence",
+"label": "31 yd TD pass",
+"swing": 0.167,
+"clip": {
+"id": "jrw9_9_F7N4",
+"s": 153,
+"e": 172.5
+}
+},
+{
+"week": 8,
+"a": "Ben",
+"b": "Steven",
+"who": "B. Tuten",
+"label": "25 yd TD catch",
+"swing": 0.145,
+"clip": {
+"id": "a5GROXIODcs",
+"s": 0,
+"e": 13
+}
+},
+{
+"week": 8,
+"a": "Haan",
+"b": "Alex",
+"who": "D. Kincaid",
+"label": "23 yd TD catch",
+"swing": 0.143,
+"clip": {
+"id": "HhYiq3ai6Hk",
+"s": 106,
+"e": 120
+}
+},
+{
+"week": 8,
+"a": "Ryan",
+"b": "Kaitlyn",
+"who": "J. Warren",
+"label": "1 yd TD run",
+"swing": 0.141,
+"clip": {
+"id": "2HUpGUhencU",
+"s": 198,
+"e": 207.5
+}
+},
+{
+"week": 8,
+"a": "Ryan",
+"b": "Kaitlyn",
+"who": "B. Strange",
+"label": "46 yd catch",
+"swing": 0.119,
+"clip": {
+"id": "jrw9_9_F7N4",
+"s": 1,
+"e": 22.5
+}
+},
+{
+"week": 8,
+"a": "Ben",
+"b": "Steven",
+"who": "B. Tuten",
+"label": "39 yd TD run",
+"swing": 0.102,
+"clip": {
+"id": "mjNoBEZUWCQ",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 8,
+"a": "Aidan",
+"b": "Joe",
+"who": "J. Williams",
+"label": "46 yd catch",
+"swing": 0.1,
+"clip": {
+"id": "XX1DaO-PzVw",
+"s": 1,
+"e": 17.5
+}
+},
+{
+"week": 8,
+"a": "Jake",
+"b": "Ankit",
+"who": "J. Gibbs",
+"label": "30 yd TD run",
+"swing": 0.099,
+"clip": {
+"id": "MzVjjY1T_ww",
+"s": 0,
+"e": 15
+}
+}
+],
+"9": [
+{
+"week": 9,
+"a": "Jake",
+"b": "Kaitlyn",
+"who": "K. Concepcion",
+"label": "64 yd TD catch",
+"swing": 0.177,
+"clip": {
+"id": "o3Fa9VGD8Lk",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 9,
+"a": "Joe",
+"b": "Alex",
+"who": "K. Walker",
+"label": "2 yd TD run",
+"swing": 0.145,
+"clip": {
+"id": "N8pxREW_NkE",
+"s": 277,
+"e": 289.5
+}
+},
+{
+"week": 9,
+"a": "Jake",
+"b": "Kaitlyn",
+"who": "C. Lamb",
+"label": "44 yd TD catch",
+"swing": 0.13,
+"clip": {
+"id": "PfgK9FucFIA",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 9,
+"a": "Jake",
+"b": "Kaitlyn",
+"who": "P. Nacua",
+"label": "7 yd TD catch",
+"swing": 0.101,
+"clip": {
+"id": "aYTtuWXkg8M",
+"s": 259,
+"e": 270.5
+}
+},
+{
+"week": 9,
+"a": "Steven",
+"b": "Ankit",
+"who": "P. Washington",
+"label": "50 yd TD catch",
+"swing": 0.101,
+"clip": {
+"id": "ayFhw4Wu_Ik",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 9,
+"a": "Joe",
+"b": "Alex",
+"who": "K. Walker",
+"label": "25 yd TD catch",
+"swing": 0.095,
+"clip": {
+"id": "N8pxREW_NkE",
+"s": 87,
+"e": 101.5
+}
+},
+{
+"week": 9,
+"a": "Ben",
+"b": "Ryan",
+"who": "T. Kelce",
+"label": "1 yd TD run",
+"swing": 0.084,
+"clip": {
+"id": "-o8frKiT4zs",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 9,
+"a": "Ben",
+"b": "Ryan",
+"who": "A. St. Brown",
+"label": "16 yd catch",
+"swing": 0.081,
+"clip": {
+"id": "QAA1UXO5iGk",
+"s": 15,
+"e": 35.5
+}
+},
+{
+"week": 9,
+"a": "Joe",
+"b": "Alex",
+"who": "S. Sanders",
+"label": "64 yd TD pass",
+"swing": 0.081,
+"clip": {
+"id": "ZpuGCkVd8mY",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 9,
+"a": "Jake",
+"b": "Kaitlyn",
+"who": "D. Maye",
+"label": "30 yd TD pass",
+"swing": 0.08,
+"clip": {
+"id": "QyqLvZJJYkw",
+"s": 248,
+"e": 267.5
+}
+},
+{
+"week": 9,
+"a": "Jake",
+"b": "Kaitlyn",
+"who": "J. Williams",
+"label": "1 yd TD run",
+"swing": 0.077,
+"clip": {
+"id": "7EUbjB7cI-A",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 9,
+"a": "Jake",
+"b": "Kaitlyn",
+"who": "B. Allen",
+"label": "19 yd catch",
+"swing": 0.075,
+"clip": {
+"id": "Thfc8VfUr4A",
+"s": 17,
+"e": 36.5
+}
+}
+],
+"10": [
+{
+"week": 10,
+"a": "Aidan",
+"b": "Haan",
+"who": "D. Samuel",
+"label": "70 yd TD run",
+"swing": 0.309,
+"clip": {
+"id": "7QsPR86m9k4",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 10,
+"a": "Joe",
+"b": "Stephanie",
+"who": "C. McCaffrey",
+"label": "66 yd TD catch",
+"swing": 0.282,
+"clip": {
+"id": "JIS2CjSKZS4",
+"s": 0,
+"e": 14
+}
+},
+{
+"week": 10,
+"a": "Aidan",
+"b": "Haan",
+"who": "I. Likely",
+"label": "66 yd TD catch",
+"swing": 0.238,
+"clip": {
+"id": "ymxsfIEc-Gw",
+"s": 178,
+"e": 192
+}
+},
+{
+"week": 10,
+"a": "Joe",
+"b": "Stephanie",
+"who": "C. McCaffrey",
+"label": "74 yd TD catch",
+"swing": 0.178,
+"clip": {
+"id": "os5dDgbFQHg",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 10,
+"a": "Aidan",
+"b": "Haan",
+"who": "J. Price",
+"label": "12 yd TD run",
+"swing": 0.166,
+"clip": {
+"id": "QzmCVesBVL8",
+"s": 87,
+"e": 108.5
+}
+},
+{
+"week": 10,
+"a": "Aidan",
+"b": "Haan",
+"who": "C. Hubbard",
+"label": "1 yd TD run",
+"swing": 0.157,
+"clip": {
+"id": "q91YLcDWnUQ",
+"s": 445,
+"e": 455.5
+}
+},
+{
+"week": 10,
+"a": "Aidan",
+"b": "Haan",
+"who": "M. Stafford",
+"label": "22 yd TD pass",
+"swing": 0.153,
+"clip": {
+"id": "tYGZlZZjnXg",
+"s": 361,
+"e": 376.5
+}
+},
+{
+"week": 10,
+"a": "Alex",
+"b": "Steven",
+"who": "G. Pickens",
+"label": "35 yd TD catch",
+"swing": 0.151,
+"clip": {
+"id": "qk5NaIMsxO4",
+"s": 0,
+"e": 15
+}
+},
+{
+"week": 10,
+"a": "Aidan",
+"b": "Haan",
+"who": "D. Samuel",
+"label": "11 yd TD catch",
+"swing": 0.146,
+"clip": {
+"id": "2GoB1F4TDXE",
+"s": 59,
+"e": 76.5
+}
+},
+{
+"week": 10,
+"a": "Aidan",
+"b": "Haan",
+"who": "D. Prescott",
+"label": "11 yd TD pass",
+"swing": 0.13,
+"clip": {
+"id": "eUVh4g0yfVU",
+"s": 667,
+"e": 678.5
+}
+},
+{
+"week": 10,
+"a": "Joe",
+"b": "Stephanie",
+"who": "C. McCaffrey",
+"label": "16 yd TD run",
+"swing": 0.122,
+"clip": {
+"id": "CmmAl-VLHlY",
+"s": 232,
+"e": 246.5
+}
+},
+{
+"week": 10,
+"a": "Aidan",
+"b": "Haan",
+"who": "D. Prescott",
+"label": "39 yd TD pass",
+"swing": 0.113,
+"clip": {
+"id": "eUVh4g0yfVU",
+"s": 265,
+"e": 285.5
+}
+}
+]
+},
+"embed": {
+"pvQGzepIbv8": true,
+"RpBHz9rhtD4": true,
+"iVF9yIz73CM": true,
+"ecBtXMfUhbg": true,
+"iyEU4eIVpCI": false,
+"9U3efb3SIa8": true,
+"VNkXxLcw7FM": true,
+"eAUO7UejAec": true,
+"-mnSW0xp5Os": true,
+"D65__74mQ5Y": true,
+"k9ZxQnPgoxY": true,
+"z6MgCagk4Z8": false,
+"C6R9hEC_h3U": true,
+"If1wDuhaB40": true,
+"oNlvj_XajyU": true,
+"UXo3ORWBvqI": true,
+"FWt7UFjYdIY": true,
+"yR1iR8WDyaI": true,
+"c6ffjTi6tow": true,
+"AaZff8yGimU": true,
+"Zvb6ALLifO0": true,
+"NslPnJtelQo": true,
+"-yS7xFbinRs": true,
+"Cde_UFrqTL4": true,
+"wRjT0binxYk": true,
+"Rpw0ZTyby9s": true,
+"2SL9_sLO3AA": true,
+"LioUuunR8PM": true,
+"ChxNQT-0MF4": true,
+"uQEB7gZcMsA": true,
+"qqk6CA8z8V0": true,
+"gGrgz387NVY": true,
+"Pin4V7ZK0bw": true,
+"0t--X_Mz22I": true,
+"3rRVosZre6Y": true,
+"XIHr2OzpFHc": true,
+"WebBQ1BzA9A": true,
+"4GD9AigOyLA": true,
+"SO4S9-ZDoPU": true,
+"1axlSwY4nfE": true,
+"5GXsAWgfvY4": true,
+"79xmQky-L0s": true,
+"L3sQlFzCmgQ": true,
+"eoqXlMR7e4Y": true,
+"bJbOikQERbA": true,
+"JVE73tcS2TM": true,
+"zwK2eSwHZ_4": true,
+"9Q_aiuZCjVg": true,
+"FyLtVtF7l-w": true,
+"kVKQwi-7IBo": true,
+"gYb-1oABreo": true,
+"e5O3_0GyOto": true,
+"JYluk14PmYo": true,
+"zlV7lpwL49A": true,
+"PTkCmmEi0bw": true,
+"TF-KoVf-I24": true,
+"qCTskZ9Ccr4": true,
+"mW6ImJsO9so": true,
+"3iegLwaeeog": true,
+"e6yeyk2PcuU": true,
+"V5Eer9K1Eh4": true,
+"Lac3gffPmNk": true,
+"1XjqDPOo95Q": true,
+"t6d2wZB2bkE": true,
+"TbMwDY8ZZhY": true,
+"wk6fz1Bt8M4": true,
+"MExG9MKcaMo": true,
+"mhI-ayRt9MI": true,
+"aVU1II7Wcrg": true,
+"xnOaX9MA7vg": true,
+"X1k7KEZilGc": true,
+"uIOQoJ0nYxk": true,
+"0R2OBmNdj1s": true,
+"hwUOO7T8OsM": true,
+"ynnRirngdmE": true,
+"Bwhhc0GFCic": true,
+"Q6g-k9Q-fq0": true,
+"xI4kXFoFCqs": true,
+"9_x_xyfTyUA": true,
+"E0m0XEI7jzc": true,
+"qDvvYOW-nvA": true,
+"ze_0SVRY-Iw": true,
+"DSQNDW6CJcc": true,
+"xapPRY_z-s8": true,
+"tT6-qk3f_2k": true,
+"JXh_U5yLQY0": true,
+"q-7SspyJcwU": true,
+"yhepXMffaIk": true,
+"RYz1cNokvIo": true,
+"qfdAhZQRziM": true,
+"GqZ81kf-g_A": true,
+"8oRq521nUM0": true,
+"HIaZ6EHH-XA": true,
+"3FAj4xs4gNM": true,
+"doDgovJvUNE": true,
+"Ucqo5u0x1ic": true,
+"5zrocfrvDNw": true,
+"eNxjRyn-VLc": true,
+"JL_zHcWkV3o": true,
+"9OJU2k54QvI": true,
+"zyuTb9EtcJU": true,
+"ovcbnvZosW4": true,
+"-B6MhpnYZZQ": true,
+"VHn7QewC37Y": true,
+"YNSQzZj5Y7o": true,
+"TmBRMPPFwCY": true,
+"530N15lz_9o": true,
+"pSQComGb0nE": true,
+"DJ073Q-BQKg": true,
+"Gk9aQMWQft0": true,
+"tf5ONgwpNgg": true,
+"dFRiDrCbwsQ": true,
+"LPfo5En_My4": true,
+"tS5wCBMH6Dw": true,
+"-Ls3nMWo8T8": true,
+"wxz0PdfO7jU": true,
+"0g9R44ylPmw": true,
+"Krg6Gt16tM4": true,
+"Au-UBkRQObw": true,
+"u1akVe3bGdc": true,
+"X6kzfcmF7mI": true,
+"HSTSq0h201o": true,
+"2CkqTLMwXPY": true,
+"97r166YR8gE": true,
+"AllaVl-Q3TQ": true,
+"3vnvD3oWIGY": true,
+"isE93wzc7Ow": true,
+"x-a0_HVZSZk": true,
+"2Cu-nrdOrrc": true,
+"mG6fiCoC-g4": true,
+"Mb4W32xfZwk": true,
+"7SR0oXMpBGY": true,
+"y1czsA8vQJo": true,
+"8iMJw3MWxok": true,
+"jyal5Eo0XnI": true,
+"Et-NYKEbp4g": true,
+"zqVvLfETzfY": true,
+"Sn3gUf7NcyQ": true,
+"OmyjtjkYsa0": false,
+"3QETjYOn2uY": true,
+"LKl_QyFrA2w": true,
+"QPSN-e7JWT8": true,
+"zSTzM9hktE0": false,
+"83oLZF64_7o": true,
+"KK9RbnggtJo": true,
+"tweu0Xsdmpg": true,
+"hmWHUBS_tOM": true,
+"S5ZL2jQhtzI": true,
+"o337rx-i8UU": true,
+"DDwxnXLC_e8": true,
+"ra1QhjAji_A": true,
+"z2gRfM4I1gE": true,
+"-Ww0deHRbcw": true,
+"_pPt4SjfV7Y": true,
+"zjWM1TnTclU": true,
+"LJNZs_hadO0": true,
+"GAzYvIokV28": true,
+"oNw--gF-ntU": true,
+"4jwaAd_-ZTQ": true,
+"PtJV1ZmLWBk": true,
+"zk85AiCokCM": true,
+"08IM-h1tviM": true,
+"F1lM7ZuqTMs": true,
+"uVg50Z8V-I0": true,
+"eJkoKZnxPj4": true,
+"mgv7-kstMxQ": true,
+"KmXVGhNWZ4k": true,
+"T81SLwEQV3c": true,
+"FVfx67OFrAw": true,
+"S8njRt5gUz0": false,
+"FJ5VZmYLGg0": true,
+"jK3eX1gQjLI": false,
+"e-QTZ3x7Fs0": true,
+"87LvIetL4v4": false,
+"1nrkRm5Qjk0": true,
+"hZnioq9wcAQ": true,
+"OaP-GGyXzEQ": false,
+"KAz0v1WNeNg": true,
+"AS4spvKweLc": false,
+"rXrzIClFaps": true,
+"VBAAz1JrCVo": true,
+"e1QaYpKkz-4": true,
+"e8FoSL_Hspc": true,
+"NOw8_oP2Ghk": true,
+"NdAdaT7k0lw": true,
+"NIMaS9mjgWg": true,
+"s4BfF9vZFuI": true,
+"J4Zw6LnCINc": false,
+"1Pun0hMunlM": true,
+"bIXtXl_JUOE": true,
+"duAYcBx5J8U": true,
+"qzmu5w0PTEs": true,
+"v6dquWW-qbE": true,
+"W6E47EhqBpE": true,
+"uUXUaQZ1i_Q": true,
+"1zk-Wj0ivKM": true,
+"nlpYMXw5Hcc": true,
+"DMF-9Y-aI7o": true,
+"LqwFl-ToAB4": false,
+"XPs3aCMAuI4": true,
+"HuLoj0mAWAU": true,
+"hUh0WOq4JGk": true,
+"hbgH_Y_9z64": true,
+"3ThFmqY0sz4": true,
+"DoT8dVI_RPQ": true,
+"l7Z4p5lS6t8": false,
+"nKyl3johP0Q": true,
+"5CN27QNj86A": true,
+"AElRGlk8qcI": true,
+"UydspF9yCpc": true,
+"ZRYqOyL2RIw": true,
+"SXNgCu6N19s": true,
+"HtTu6bjPggk": true,
+"yC8eWhd4ybs": true,
+"3FNfnsFbZ_s": true,
+"j_8Nxkhuedo": true,
+"2DKruTyNqlw": false,
+"XDNMmC-8oPw": true,
+"FsxROBpW-AA": true,
+"9Zk5yfSBlS8": true,
+"wZrXjs-0iAE": false,
+"c-I5gTEWLyw": true,
+"dNM3qkgz9DM": true,
+"ohyyR_Ts1-M": true,
+"L5L9E7GlC-4": true,
+"gmHR6gzY-Po": false,
+"JorOCZ8jNN0": true,
+"X52ZMJ6Dr5w": true,
+"Uke6vA-hUxM": true,
+"6Pq7oyJG4-s": false,
+"GiRURxoPdQ0": true,
+"bqzsJClrZD4": true,
+"pJX_yPIBIlA": true,
+"pOZcf5OgweY": true,
+"nNSW1BAw5jE": true,
+"Z-YMWV6C-kA": true,
+"gKIIUUfnjc8": true,
+"eCF9NRTyDZY": true,
+"zNUiLic14A8": true,
+"rFQUbg_qNZ4": true,
+"O5ulAM-0KWU": true,
+"UPVOxmzkOZo": true,
+"f3xMAZ0VDc4": true,
+"eRn_u0sVapU": true,
+"XX1DaO-PzVw": true,
+"UF3Ff1Ur5ZY": true,
+"cOi3E8loZR4": true,
+"9CoFbDIEUdk": true,
+"VdSC7_tKl0w": true,
+"a5GROXIODcs": true,
+"mjNoBEZUWCQ": true,
+"6T54xmZh6MU": true,
+"vt0u6Uh0WGc": true,
+"Z6LcyUPePmU": true,
+"jrw9_9_F7N4": true,
+"MzVjjY1T_ww": true,
+"eoi2gL6-K_8": true,
+"wvsNn8n7n20": true,
+"cQG4iD-dkEg": true,
+"uOSpEtl1tec": true,
+"gN3H90TSDGY": true,
+"rW7AI-S-CcU": true,
+"HhYiq3ai6Hk": true,
+"RVkIwnCGhOI": true,
+"bEEH_VMn_9g": true,
+"FYL4Mklv1Ig": true,
+"Ltg2O1pCabU": true,
+"iVOgjQiYyXQ": true,
+"dOVmXvR0xtM": true,
+"tQ6AQLGnQvg": true,
+"2HUpGUhencU": true,
+"m1-Q_tUQ-mU": true,
+"wbN-drr3wcg": true,
+"07wT-L_smGE": true,
+"KOGAJPvE8vo": true,
+"-o8frKiT4zs": true,
+"QAA1UXO5iGk": true,
+"3AZ9cLk5u4o": true,
+"Zpmh27YuLrA": true,
+"2E_Mi4-1NKE": true,
+"o3Fa9VGD8Lk": true,
+"PfgK9FucFIA": true,
+"aYTtuWXkg8M": true,
+"QyqLvZJJYkw": true,
+"7EUbjB7cI-A": true,
+"Thfc8VfUr4A": true,
+"fPW1IQ_h-H8": true,
+"4hSRcYVrw-Y": true,
+"N8pxREW_NkE": true,
+"ZpuGCkVd8mY": true,
+"7v_--nsx3gY": true,
+"ayFhw4Wu_Ik": true,
+"Ql5ebIR8x7Y": true,
+"jowoJNpuv-U": true,
+"J9OJ-bjqoo0": true,
+"8hN2444UQlE": true,
+"7QsPR86m9k4": true,
+"ymxsfIEc-Gw": true,
+"QzmCVesBVL8": true,
+"q91YLcDWnUQ": true,
+"tYGZlZZjnXg": true,
+"2GoB1F4TDXE": true,
+"eUVh4g0yfVU": true,
+"0XeId5YDplE": true,
+"svFx1fWwub0": true,
+"X8lOJ4HdlJs": true,
+"Ch-BN7Y9pgU": true,
+"xbZrPcZqTew": true,
+"i6vWTIgfodA": true,
+"t6ITKm9ImHc": true,
+"hORC-A8SUM0": true,
+"Rnv7Gq352E4": true,
+"5O7qOghL-cQ": true,
+"JIS2CjSKZS4": true,
+"os5dDgbFQHg": true,
+"CmmAl-VLHlY": true,
+"Z7HLnqkfAOs": true,
+"JEd5XM6MQDY": true,
+"qk5NaIMsxO4": true,
+"gbnTRbcmtSk": true,
+"kB7wd0h7NC0": true,
+"oz5Hf3zXcJg": true,
+"o8CLZ4pL2HE": true,
+"yMa5nKS33iQ": true,
+"eONqUWPKNiU": true,
+"2_hXnbsOktw": true
+},
+"updatedAt": "2026-11-18T18:13:31Z"
+}

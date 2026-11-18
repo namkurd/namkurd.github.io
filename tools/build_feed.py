@@ -66,6 +66,27 @@ def top_matchups(season):
     return out
 
 
+# ---------------------------------------------------------------- plays
+def top_plays(season):
+    """The season's biggest head-to-head win-probability swings that have an embeddable clip (data/topplays.json, built by
+    tools/build_topplays.py from Rumble Central's play-by-play)."""
+    c = json.load(open(os.path.join(HUB, 'data', 'topplays.json'), encoding='utf-8'))
+    if c.get('season') != season:
+        return []
+    rows = sorted((p for lst in c['weeks'].values() for p in lst), key=lambda p: -p['swing'])
+    out, seen = [], set()
+    for p in rows:
+        if p['clip']['id'] in seen:
+            continue
+        seen.add(p['clip']['id'])
+        out.append({'rank': len(out) + 1, 'title': ('%s %s' % (p['who'], p['label'])).strip(), 'sub': '%s vs %s \u00b7 Wk %d' % (p['a'], p['b'], p['week']),
+                    'managers': [p['a'], p['b']], 'swing': round(p['swing'] * 100), 'clip': p['clip'],
+                    'href': 'https://www.youtube.com/watch?v=%s&t=%ds' % (p['clip']['id'], int(p['clip']['s']))})
+        if len(out) == 3:
+            break
+    return out
+
+
 # ---------------------------------------------------------------- trades
 def top_trades(data, season):
     """Biggest trades of the season by total value moved. Winner = who gained more lineup value, the Trade Network's own "Net" column
@@ -172,6 +193,12 @@ def main():
     except Exception as e:
         print('matchups: %s' % e, file=sys.stderr)
     try:
+        items = top_plays(season)
+        if items:
+            sections.append({'id': 'plays', 'title': 'Plays', 'items': items})
+    except Exception as e:
+        print('plays: %s' % e, file=sys.stderr)
+    try:
         sections.append({'id': 'trades', 'title': 'Trades', 'items': top_trades(source(args.src, 'SleeperTradeNodes', 'data.json'), season)})
     except Exception as e:
         print('trades: %s' % e, file=sys.stderr)
@@ -185,7 +212,7 @@ def main():
     for s in old_feed.get('sections', []):   # a source that failed this run keeps its last good section
         if s['id'] not in have:
             sections.append(s)
-    order = ['matchups', 'trades', 'waivers', 'free-agents']
+    order = ['matchups', 'plays', 'trades', 'waivers', 'free-agents']
     sections.sort(key=lambda s: order.index(s['id']) if s['id'] in order else 99)
     ir = old_feed.get('ir')   # keep the last status if the check couldn't run (offseason, Sleeper down)
     try:

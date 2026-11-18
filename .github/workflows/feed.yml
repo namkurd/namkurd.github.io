@@ -32,6 +32,14 @@ jobs:
           pip install playwright
           python -m playwright install --with-deps chromium
           python3 tools/build_matchups.py
+      # Top plays: the biggest head-to-head win-probability swings with an embeddable clip, read from the same page (once per finished week)
+      - id: playcheck
+        run: python3 tools/build_topplays.py --check
+      - if: steps.playcheck.outputs.needed == 'true'
+        run: |
+          pip install playwright
+          python -m playwright install --with-deps chromium
+          python3 tools/build_topplays.py
       # IR eligibility: run the FAB tool's own check (it only reads the Sleeper API); if it can't (offseason) the last status is kept
       - uses: actions/checkout@v4
         with:
@@ -47,5 +55,5 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add feed.json league.json managers.json data/matchups.json shotguns.json shotguns_all.json
+          git add feed.json league.json managers.json data/matchups.json data/topplays.json shotguns.json shotguns_all.json
           if git diff --cached --quiet; then echo "no change"; else git commit -m "Update Home feed" && git pull --rebase origin main && git push; fi
