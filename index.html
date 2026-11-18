@@ -505,8 +505,24 @@
   var PL = { scope: ls('dtf.plays.scope') === 'mine' ? 'mine' : 'league', span: ls('dtf.plays.span') === 'week' ? 'week' : 'season', feed: [], data: null, want: false };
   function playsLoad() { return PL.data ? Promise.resolve(PL.data) : get('/data/topplays.json').then(function (d) { PL.data = d; return d; }, function () { return null; }); }
   function playsLast() { var w = PL.data ? Object.keys(PL.data.weeks).map(Number) : []; return w.length ? Math.max.apply(null, w) : null; }
+  // a team defense's long label becomes "Steelers 35 yd pick-6 (T.J. Watt)" (the same rule as play_title() in tools/build_feed.py)
+  function playTitle(who, label) {
+    who = (who || '').trim(); label = (label || '').trim();
+    var m = /\(([^)]+)\)/.exec(label);
+    if (!m || /^[A-Z]\.?\s/.test(who)) return (who + ' ' + label).trim();
+    var low = label.toLowerCase(), y = /^(\d+) yd/.exec(label), yd = y ? y[1] + ' yd ' : '', core;
+    if (low.indexOf('interception return td') >= 0) core = yd + 'pick-6';
+    else if (low.indexOf('fumble') >= 0 && low.indexOf('return td') >= 0) core = yd + 'fumble-6';
+    else if (low.indexOf('interception') >= 0) core = 'interception';
+    else if (low.indexOf('fumble recovery') >= 0 && low.indexOf('sack') >= 0) core = 'sack + fumble recovery';
+    else if (low.indexOf('fumble recovery') >= 0) core = 'fumble recovery';
+    else if (low.indexOf('safety') >= 0) core = 'safety';
+    else if (low.indexOf('sack') >= 0) core = 'sack';
+    else core = label.split(',')[0].replace(/\s*\([^)]*\)/g, '').trim() || 'play';
+    return who + ' ' + core + ' (' + m[1] + ')';
+  }
   function mapPlay(p) {
-    return { title: (p.who + ' ' + p.label).trim(), sub: (p.by === p.b ? p.b + ' vs ' + p.a : p.a + ' vs ' + p.b) + ' \u00b7 Wk ' + p.week, managers: [p.a, p.b], from: p.from, to: p.to, clip: p.clip, alt: p.alt, et: p.et, sit: p.sit,
+    return { title: playTitle(p.who, p.label), sub: (p.by === p.b ? p.b + ' vs ' + p.a : p.a + ' vs ' + p.b) + ' \u00b7 Wk ' + p.week, managers: [p.a, p.b], from: p.from, to: p.to, clip: p.clip, alt: p.alt, et: p.et, sit: p.sit,
       replay: '/SleeperLiveRumbles/rumbles.html?wp=' + p.week + '.' + p.aid + '.' + p.bid + (p.rt != null ? '&t=' + p.rt : ''), href: 'https://www.youtube.com/watch?v=' + p.clip.id + '&t=' + Math.floor(p.clip.s) + 's', swing: p.swing };
   }
   function playsItems() {
