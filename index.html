@@ -87,14 +87,20 @@
   .row.play .pp { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 1.7em; height: 1.7em; padding-left: .12em; box-sizing: border-box; border-radius: 50%; font-size: .7rem; color: #2ecc71; background: color-mix(in srgb, #2ecc71 16%, transparent); border: 1px solid color-mix(in srgb, #2ecc71 70%, transparent); text-shadow: 0 0 6px #2ecc71; box-shadow: 0 0 8px 1px color-mix(in srgb, #2ecc71 55%, transparent); animation: pglow 2.4s ease-in-out infinite; }
   .row.play:hover .pp, .row.play.open .pp { background: color-mix(in srgb, #2ecc71 28%, transparent); box-shadow: 0 0 12px 3px color-mix(in srgb, #2ecc71 80%, transparent); }
   .row.play.pend { display: none; }
+  .row.play.yt .pp { color: #ff8a3d; background: color-mix(in srgb, #ff8a3d 16%, transparent); border-color: color-mix(in srgb, #ff8a3d 70%, transparent); text-shadow: 0 0 6px #ff8a3d; box-shadow: 0 0 8px 1px color-mix(in srgb, #ff8a3d 55%, transparent); animation-name: pglowo; }
+  .row.play.yt .pd { color: #ff8a3d; }
+  @keyframes pglowo { 0%, 100% { box-shadow: 0 0 6px 0 color-mix(in srgb, #ff8a3d 45%, transparent); } 50% { box-shadow: 0 0 12px 3px color-mix(in srgb, #ff8a3d 75%, transparent); } }
   .row.play .pd { font-size: .7rem; font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; color: #2ecc71; }
   @keyframes pglow { 0%, 100% { box-shadow: 0 0 6px 0 color-mix(in srgb, #2ecc71 45%, transparent); } 50% { box-shadow: 0 0 12px 3px color-mix(in srgb, #2ecc71 75%, transparent); } }
   @media (prefers-reduced-motion: reduce) { .row.play .pp { animation: none; } }
   /* every feed list holds ten and scrolls inside its panel (fitLists sizes it to three rows, five on a wide screen) so Home still fits one screen */
   .flist { overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; -webkit-overflow-scrolling: touch; } .flist.has-open { max-height: none !important; overflow: visible; }
   .panel[data-id="plays"] h2 { display: flex; align-items: center; gap: 6px; min-width: 0; } .panel[data-id="plays"] h2 .ht { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .ptog { flex: none; display: inline-flex; gap: 4px; margin-left: auto; } .ptog button { height: 18px; padding: 0 8px; border-radius: 9px; border: 1px solid color-mix(in srgb, var(--ac) 55%, transparent); background: none; color: var(--dtf-dim); font-weight: 700; font-size: .64rem; line-height: 1; font-family: inherit; text-transform: none; letter-spacing: 0; cursor: pointer; white-space: nowrap; -webkit-tap-highlight-color: transparent; }
-  .ptog button.on { background: color-mix(in srgb, var(--ac) 22%, transparent); color: var(--ac); }
+  /* two real switches: both choices are always visible and the current one is lit */
+  .ptog { flex: none; display: inline-flex; gap: 6px; margin-left: auto; }
+  .ptog .seg { display: inline-flex; padding: 2px; border-radius: 10px; background: color-mix(in srgb, var(--dtf-bg) 60%, #000); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--dtf-dim) 35%, transparent); }
+  .ptog button { height: 16px; padding: 0 7px; border: 0; border-radius: 8px; background: none; color: var(--dtf-dim); font-weight: 700; font-size: .62rem; line-height: 1; font-family: inherit; text-transform: none; letter-spacing: 0; cursor: pointer; white-space: nowrap; -webkit-tap-highlight-color: transparent; }
+  .ptog button.on { background: var(--ac); color: #06210f; box-shadow: 0 1px 3px rgba(0,0,0,.4); }
   .pembed { container-type: inline-size; }
   /* the video takes the full width; what and when sits in one compact strip under it */
   .pembed .pbody { display: block; } .pembed .pinfo { display: flex; flex-wrap: wrap; align-items: center; gap: 1px 10px; padding: 5px 9px; font-size: .64rem; line-height: 1.25; color: #cfe9d8; background: #0b1f12; }
@@ -445,7 +451,7 @@
   var PVTOK = 0;
   function verifyPlays() {
     var list = document.querySelector('.panel[data-id="plays"] .flist'); if (!list) return;
-    var tok = ++PVTOK, rows = [].slice.call(list.querySelectorAll('.row.play')), shown = 0, MAX = 10, note = document.createElement('p');
+    var tok = ++PVTOK, rows = [].slice.call(list.querySelectorAll('.row.play')), shown = 0, MAX = 10, note = document.createElement('p'), blocked = [];
     if (!rows.length) return;
     note.className = 'none'; note.textContent = 'Checking which clips play here\u2026'; list.appendChild(note);
     function show(r, which) {
@@ -460,9 +466,15 @@
     rows.reduce(function (q, r) {
       return q.then(function () {
         if (shown >= MAX || tok !== PVTOK) return;
-        return tryRow(r, 1).then(function (ok) { if (ok === false) return tryRow(r, 2); });
+        return tryRow(r, 1).then(function (ok) { if (ok === false) return tryRow(r, 2); return ok; }).then(function (ok) { if (ok !== true && tok === PVTOK) blocked.push(r); });
       });
-    }, Promise.resolve()).then(function () { if (tok !== PVTOK) return; if (!shown) { note.hidden = false; note.textContent = 'No clips that play here yet.'; } else note.remove(); fitAll(); });
+    }, Promise.resolve()).then(function () {
+      if (tok !== PVTOK) return;
+      // not enough that play here: fill the list with the ones that open on YouTube instead, marked with an orange button (the same signal Rumble Central uses)
+      blocked.slice(0, Math.max(0, MAX - shown)).forEach(function (r) { r.classList.add('yt'); r.classList.remove('pend'); r.querySelector('.rk').textContent = ++shown; r.title = 'Opens on YouTube (the video can\u2019t be played here)'; });
+      if (!shown) { note.hidden = false; note.textContent = 'No clips yet.'; } else note.remove();
+      fitAll();
+    });
   }
   // Plays views: League / Mine and Season / last finished week. The feed carries the league's season list; the rest comes from data/topplays.json.
   var PL = { scope: ls('dtf.plays.scope') === 'mine' ? 'mine' : 'league', span: ls('dtf.plays.span') === 'week' ? 'week' : 'season', feed: [], data: null, want: false };
@@ -485,22 +497,25 @@
   }
   function paintPlays() {
     var panel = document.querySelector('.panel[data-id="plays"]'); if (!panel) return;
-    var sc = panel.querySelector('[data-k="scope"]'), sp = panel.querySelector('[data-k="span"]'), last = playsLast();
-    sc.textContent = PL.scope === 'mine' ? 'Mine' : 'League'; sp.textContent = PL.span === 'week' && last ? 'Wk ' + last : 'Season';
-    sc.classList.toggle('on', PL.scope === 'mine'); sp.classList.toggle('on', PL.span === 'week');
+    var last = playsLast();
+    [].forEach.call(panel.querySelectorAll('.seg button'), function (b) {
+      var k = b.parentNode.dataset.k, on = PL[k] === b.dataset.v;
+      b.classList.toggle('on', on); b.setAttribute('aria-pressed', on);
+      if (k === 'span' && b.dataset.v === 'week') b.textContent = last ? 'Wk ' + last : 'Wk';
+    });
     var items = playsItems(), list = panel.querySelector('.flist');
     list.classList.remove('has-open'); list.scrollTop = 0;
     list.innerHTML = items.length ? items.map(function (it) { return rowHtml(it, 'plays'); }).join('') : '<p class="none">' + (PL.scope === 'mine' ? (PL.span === 'week' ? 'None of your plays last week.' : 'None of your plays yet.') : 'Nothing yet.') + '</p>';
     ++PVTOK; markMine(); fitAll(); verifyPlays();
   }
   function playsSet(k, v) { PL[k] = v; ls('dtf.plays.' + k, v); playsLoad().then(paintPlays); }
-  function playsToggle(k) {
+  function playsToggle(k, v) {
     if (k === 'scope') {
-      if (PL.scope === 'mine') return playsSet('scope', 'league');
+      if (v === 'league') return playsSet('scope', 'league');
       if (!meName()) { PL.want = true; if (window.DTF && DTF.pickMe) DTF.pickMe(); return; }   // no manager picked yet: ask who you are, then show yours
       return playsSet('scope', 'mine');
     }
-    playsSet('span', PL.span === 'week' ? 'season' : 'week');
+    playsSet('span', v === 'week' ? 'week' : 'season');
   }
   window.addEventListener('dtf:me', function () { if (PL.want && meName()) { PL.want = false; playsSet('scope', 'mine'); } else if (PL.scope === 'mine') { if (!meName()) PL.scope = 'league'; paintPlays(); } });
   Promise.allSettled([get('/feed.json'), get('/slack.json')]).then(function (res) {
@@ -516,13 +531,13 @@
     $('panels').style.setProperty('--n', sections.length);
     $('panels').innerHTML = sections.map(function (s) {
       var m = META[s.id];
-      return '<div class="panel' + (s.id === on ? ' on' : '') + '" role="tabpanel" data-id="' + s.id + '" style="--ac:' + m.ac + '"><h2><span class="ht">' + (s.id === 'plays' ? esc(m.title(year)).replace(/ of (\d+)$/, '<span class="yr"> of $1</span>') : esc(m.title(year))) + '</span>' + (s.id === 'plays' ? '<span class="ptog"><button type="button" data-k="scope">League</button><button type="button" data-k="span">Season</button></span>' : '') + '</h2><span class="cap">' + esc(m.cap) + '</span>' +
+      return '<div class="panel' + (s.id === on ? ' on' : '') + '" role="tabpanel" data-id="' + s.id + '" style="--ac:' + m.ac + '"><h2><span class="ht">' + (s.id === 'plays' ? esc(m.title(year)).replace(/ of (\d+)$/, '<span class="yr"> of $1</span>') : esc(m.title(year))) + '</span>' + (s.id === 'plays' ? '<span class="ptog"><span class="seg" data-k="scope" role="group" aria-label="Whose plays"><button type="button" data-v="league">League</button><button type="button" data-v="mine">Mine</button></span><span class="seg" data-k="span" role="group" aria-label="How far back"><button type="button" data-v="season">Season</button><button type="button" data-v="week">Wk</button></span></span>' : '') + '</h2><span class="cap">' + esc(m.cap) + '</span>' +
         (s.items.length ? '<div class="flist">' + s.items.map(function (it) { return rowHtml(it, s.id); }).join('') + '</div>' : '<p class="none">Nothing yet this season.</p>') + '</div>';
     }).join('');
     // a play opens its clip right under it (one at a time); the link itself is the fallback (no script, or a video that won't embed)
     $('panels').addEventListener('click', function (e) {
-      var tg = e.target.closest('.ptog button'); if (tg) { playsToggle(tg.dataset.k); return; }
-      var r = e.target.closest('.row.play'); if (!r || e.metaKey || e.ctrlKey) return;
+      var tg = e.target.closest('.ptog button'); if (tg) { if (!tg.classList.contains('on')) playsToggle(tg.parentNode.dataset.k, tg.dataset.v); return; }
+      var r = e.target.closest('.row.play'); if (!r || e.metaKey || e.ctrlKey || r.classList.contains('yt')) return;   // an orange row is a plain link out to YouTube
       e.preventDefault();
       var was = r.classList.contains('open');
       [].forEach.call(document.querySelectorAll('.pembed'), function (x) { x.previousElementSibling.classList.remove('open'); x.remove(); });
