@@ -197,7 +197,7 @@
     <button type="button" id="suno-b" class="sb" aria-label="Play the theme song"><span class="se" aria-hidden="true">&#127930;</span><span class="sp" aria-hidden="true"></span><small>Theme Song</small></button>
   </section>
   <section class="card sg" id="sg" hidden aria-label="Shotguns this season">
-    <div class="sgh"><a class="k" href="/Recordbook/?r=most-shotguns-in-a-season-team" title="Shotgun records in the Record Book">Shotguns</a><b id="sg-t"></b><small id="sg-m"></small></div>
+    <div class="sgh"><a class="k" id="sg-a" href="/FAB-Management/shotguns.html" title="Every Shotgun, by manager and week">Shotguns</a><b id="sg-t"></b><small id="sg-m"></small></div>
     <div id="sg-l"></div>
   </section>
 </div>
@@ -439,6 +439,8 @@
       return '<div class="sgrow' + (m.name === me ? ' mine' : '') + '"><span class="n">' + m.count + '</span><span class="who">' + esc(m.name) + (m.name === me ? '<span class="you">YOU</span>' : '') + '</span><span class="sgp">' +
         m.shots.map(function (s) { return '<span class="' + (s.done ? 'done' : '') + '" title="' + esc(s.full) + ', week ' + s.week + ': ' + s.pts + ' pts">' + esc(s.player) + '<i>' + s.week + '</i></span>'; }).join(', ') + '</span></div>';
     }).join('') : '<p class="none">No shotguns yet this season.</p>') + (clean.length && withAny.length ? '<p class="sgclean">Clean so far: ' + clean.map(function (m) { return esc(m.name); }).join(', ') + '</p>' : '');
+    var href = '/FAB-Management/shotguns.html' + (d.season ? '?season=' + encodeURIComponent(d.season) : ''); $('sg-a').href = href;
+    var card = $('sg'); if (!card._go) { card._go = 1; card.style.cursor = 'pointer'; card.addEventListener('click', function (e) { if (!e.target.closest('a')) location.href = $('sg-a').href; }); }   // the whole card opens the Shotguns tab
     $('sg').hidden = false; fitHome();
   }
   get('/shotguns.json').then(function (d) { if (d && d.managers) paintShotguns(d); }).catch(function () {});
