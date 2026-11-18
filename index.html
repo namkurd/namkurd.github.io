@@ -93,11 +93,10 @@
   /* every feed list holds ten and scrolls inside its panel (fitLists sizes it to three rows, five on a wide screen) so Home still fits one screen */
   .flist { overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; -webkit-overflow-scrolling: touch; } .flist.has-open { max-height: none !important; overflow: visible; }
   .pembed { container-type: inline-size; }
-  .pembed .pbody { display: block; } .pembed .pinfo { display: flex; flex-direction: column; gap: 2px; padding: 6px 9px 7px; font-size: .72rem; color: #cfe9d8; background: #0b1f12; }
-  .pembed .pinfo b { color: #fff; font-size: .78rem; } .pembed .pinfo .ps { font-weight: 700; color: #fff; } .pembed .pinfo .ps i { font-style: normal; color: #86efac; }
-  .pembed .pinfo a.prp { margin-top: 3px; padding: 0; background: none; color: #86efac; font-weight: 700; }
-  @container (min-width: 300px) { .pembed .pbody { display: grid; grid-template-columns: minmax(0, 1fr) 86px; align-items: stretch; } .pembed .pinfo { justify-content: center; gap: 3px; padding: 5px 7px; font-size: .6rem; line-height: 1.2; } .pembed .pinfo b { font-size: .64rem; } .pembed .pinfo > * { white-space: nowrap; } }
-  .pembed { margin: 0 0 6px; border-radius: 10px; overflow: hidden; background: #000; }
+  /* the video takes the full width; what and when sits in one compact strip under it */
+  .pembed .pbody { display: block; } .pembed .pinfo { display: flex; flex-wrap: wrap; align-items: center; gap: 1px 10px; padding: 5px 9px; font-size: .64rem; line-height: 1.25; color: #cfe9d8; background: #0b1f12; }
+  .pembed .pinfo b { color: #fff; font-size: .68rem; } .pembed .pinfo > * { white-space: nowrap; } .pembed .pinfo .ps { font-weight: 700; color: #fff; } .pembed .pinfo i { font-style: normal; color: #86efac; }
+  .pembed .pinfo a.prp { margin-left: auto; padding: 0; background: none; color: #86efac; font-weight: 700; text-decoration: underline; }
   .pembed .pw { position: relative; aspect-ratio: 16 / 9; } .pembed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
   .pembed a.pyt { display: block; padding: 5px 8px; font-size: .7rem; color: #86efac; text-decoration: none; background: #0b1f12; }
   .none { margin: 8px 4px; color: var(--dtf-dim); font-size: .8rem; }
