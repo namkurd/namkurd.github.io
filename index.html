@@ -219,6 +219,8 @@
     .lower .pod { grid-column: 1; grid-row: 1; } .lower .suno { grid-column: 1; grid-row: 2; } .lower .sg { grid-column: 2; grid-row: 1 / span 2; }   /* wide: the song sits under the episode; Shotguns stays on the right */
     .suno .sb { flex-direction: row; justify-content: flex-start; gap: 12px; padding: 0 16px; min-height: 56px; } .suno .sb small { font-size: .76rem; }
     .pb b { font-size: .92rem; } .pb small { font-size: .74rem; } .sgrow .who, .sgp, .sgrow .n { font-size: .74rem; }
+    /* the Shotguns card is as tall as the episode and the song together, its rows spread to fill it */
+    .lower .sg { align-self: stretch; display: flex; flex-direction: column; } #sg-l { flex: 1; display: flex; flex-direction: column; justify-content: space-evenly; }
   }
   .skel { height: 96px; border-radius: 20px; background: var(--dtf-panel); border: 1px solid var(--dtf-border); opacity: .6; }
 </style>
@@ -573,7 +575,7 @@
     $('tabs').innerHTML = sections.map(function (s) { return '<button role="tab" data-id="' + s.id + '" aria-selected="' + (s.id === on) + '">' + META[s.id].tab + '</button>'; }).join('');
     $('panels').style.setProperty('--n', sections.length);
     // desktop extras: an (i) tooltip in place of the caption, and a link on to the full tool
-    var SEEALL = { plays: ['/SleeperLiveRumbles/rumbles.html', 'See all \u203a'], matchups: ['/SleeperLiveRumbles/rumbles.html', 'See all \u203a'], trades: ['/SleeperTradeNodes/', 'See all \u203a'],
+    var SEEALL = { matchups: ['/SleeperLiveRumbles/rumbles.html', 'See all \u203a'], trades: ['/SleeperTradeNodes/', 'See all \u203a'],
       waivers: ['/FAB-Management/', 'See all \u203a'], 'free-agents': ['/FAB-Management/', 'See all \u203a'], slack: [(LEAGUE && LEAGUE.slack) || 'https://slack.com/', 'Open Slack \u203a'] };
     function tipHtml(id, m) { return '<span class="tip" tabindex="0" role="img" aria-label="' + esc(m.cap) + '" data-tip="' + esc(m.cap) + '">i</span>'; }
     function seeAll(id) { var l = SEEALL[id]; return l ? '<a class="seeall" href="' + esc(l[0]) + '"' + (/^https?:/.test(l[0]) ? ' target="_blank" rel="noopener"' : '') + '>' + l[1] + '</a>' : ''; }
