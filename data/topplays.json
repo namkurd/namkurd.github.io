@@ -10,6 +10,19 @@
 "who": "J. Coker",
 "label": "51 yd TD catch",
 "swing": 0.245,
+"aid": 3,
+"bid": 11,
+"rt": 322624,
+"et": "Sun 2:00 PM",
+"sit": {
+"team": "CAR",
+"opp": "CHI",
+"at": "",
+"q": 2,
+"clock": "12:49",
+"tm": 13,
+"op": 21
+},
 "from": 29,
 "to": 53,
 "clip": {
@@ -30,6 +43,19 @@
 "who": "C. Williams",
 "label": "29 yd TD run",
 "swing": 0.241,
+"aid": 2,
+"bid": 6,
+"rt": 325049,
+"et": "Sun 2:40 PM",
+"sit": {
+"team": "CHI",
+"opp": "CAR",
+"at": "@",
+"q": 2,
+"clock": "0:32",
+"tm": 24,
+"op": 24
+},
 "from": 28,
 "to": 52,
 "clip": {
@@ -50,6 +76,19 @@
 "who": "C. Watson",
 "label": "81 yd TD catch",
 "swing": 0.235,
+"aid": 4,
+"bid": 7,
+"rt": 332596,
+"et": "Sun 4:46 PM",
+"sit": {
+"team": "GB",
+"opp": "MIN",
+"at": "@",
+"q": 1,
+"clock": "7:54",
+"tm": 9,
+"op": 0
+},
 "from": 57,
 "to": 81,
 "clip": {
@@ -70,6 +109,19 @@
 "who": "A. Jeanty",
 "label": "13 yd TD catch",
 "swing": 0.231,
+"aid": 3,
+"bid": 11,
+"rt": 337927,
+"et": "Sun 6:15 PM",
+"sit": {
+"team": "LV",
+"opp": "MIA",
+"at": "",
+"q": 3,
+"clock": "10:06",
+"tm": 23,
+"op": 13
+},
 "from": 33,
 "to": 56,
 "clip": {
@@ -85,6 +137,19 @@
 "who": "D. Moore",
 "label": "43 yd TD catch",
 "swing": 0.209,
+"aid": 1,
+"bid": 8,
+"rt": 324053,
+"et": "Sun 2:24 PM",
+"sit": {
+"team": "BUF",
+"opp": "HOU",
+"at": "@",
+"q": 2,
+"clock": "1:39",
+"tm": 23,
+"op": 14
+},
 "from": 41,
 "to": 62,
 "clip": {
@@ -105,6 +170,19 @@
 "who": "C. Watson",
 "label": "2 yd TD catch",
 "swing": 0.179,
+"aid": 4,
+"bid": 7,
+"rt": 336940,
+"et": "Sun 5:59 PM",
+"sit": {
+"team": "GB",
+"opp": "MIN",
+"at": "@",
+"q": 2,
+"clock": "0:18",
+"tm": 12,
+"op": 10
+},
 "from": 71,
 "to": 89,
 "clip": {
@@ -120,6 +198,19 @@
 "who": "B. Mayfield",
 "label": "9 yd TD run",
 "swing": 0.165,
+"aid": 5,
+"bid": 12,
+"rt": 329479,
+"et": "Sun 3:54 PM",
+"sit": {
+"team": "TB",
+"opp": "CIN",
+"at": "@",
+"q": 4,
+"clock": "3:25",
+"tm": 26,
+"op": 33
+},
 "from": 70,
 "to": 86,
 "clip": {
@@ -140,6 +231,19 @@
 "who": "J. Love",
 "label": "81 yd TD pass",
 "swing": 0.159,
+"aid": 5,
+"bid": 12,
+"rt": 332596,
+"et": "Sun 4:46 PM",
+"sit": {
+"team": "GB",
+"opp": "MIN",
+"at": "@",
+"q": 1,
+"clock": "7:54",
+"tm": 9,
+"op": 0
+},
 "from": 72,
 "to": 87,
 "clip": {
@@ -160,6 +264,19 @@
 "who": "J. Jefferson",
 "label": "39 yd TD catch",
 "swing": 0.157,
+"aid": 4,
+"bid": 7,
+"rt": 336482,
+"et": "Sun 5:51 PM",
+"sit": {
+"team": "MIN",
+"opp": "GB",
+"at": "",
+"q": 2,
+"clock": "2:02",
+"tm": 9,
+"op": 12
+},
 "from": 14,
 "to": 29,
 "clip": {
@@ -180,6 +297,19 @@
 "who": "B. Hall",
 "label": "4 yd TD run",
 "swing": 0.145,
+"aid": 1,
+"bid": 8,
+"rt": 325956,
+"et": "Sun 2:55 PM",
+"sit": {
+"team": "NYJ",
+"opp": "TEN",
+"at": "@",
+"q": 3,
+"clock": "9:44",
+"tm": 16,
+"op": 3
+},
 "from": 34,
 "to": 48,
 "clip": {
@@ -195,6 +325,19 @@
 "who": "Steelers",
 "label": "35 yd interception return TD (T.J. Watt), interception (T.J. Watt)",
 "swing": 0.145,
+"aid": 2,
+"bid": 6,
+"rt": 328440,
+"et": "Sun 3:37 PM",
+"sit": {
+"team": "PIT",
+"opp": "ATL",
+"at": "",
+"q": 4,
+"clock": "14:16",
+"tm": 13,
+"op": 10
+},
 "from": 64,
 "to": 78,
 "clip": {
@@ -210,6 +353,19 @@
 "who": "A. Jeanty",
 "label": "13 yd TD catch",
 "swing": 0.144,
+"aid": 3,
+"bid": 11,
+"rt": 335550,
+"et": "Sun 5:35 PM",
+"sit": {
+"team": "LV",
+"opp": "MIA",
+"at": "",
+"q": 2,
+"clock": "1:12",
+"tm": 10,
+"op": 3
+},
 "from": 15,
 "to": 29,
 "clip": {
@@ -230,6 +386,19 @@
 "who": "J. Coker",
 "label": "8 yd TD catch",
 "swing": 0.141,
+"aid": 3,
+"bid": 11,
+"rt": 331019,
+"et": "Sun 4:20 PM",
+"sit": {
+"team": "CAR",
+"opp": "CHI",
+"at": "",
+"q": 4,
+"clock": "4:05",
+"tm": 37,
+"op": 52
+},
 "from": 70,
 "to": 84,
 "clip": {
@@ -245,6 +414,19 @@
 "who": "J. Johnson",
 "label": "9 yd TD catch",
 "swing": 0.139,
+"aid": 4,
+"bid": 7,
+"rt": 330473,
+"et": "Sun 4:11 PM",
+"sit": {
+"team": "NO",
+"opp": "DET",
+"at": "@",
+"q": 4,
+"clock": "1:13",
+"tm": 23,
+"op": 24
+},
 "from": 37,
 "to": 51,
 "clip": {
@@ -267,6 +449,19 @@
 "who": "D. Adams",
 "label": "11 yd TD catch",
 "swing": 0.595,
+"aid": 4,
+"bid": 8,
+"rt": 352806,
+"et": "Mon 10:17 PM",
+"sit": {
+"team": "LAR",
+"opp": "NYG",
+"at": "",
+"q": 3,
+"clock": "6:25",
+"tm": 20,
+"op": 3
+},
 "from": 34,
 "to": 93,
 "clip": {
@@ -287,6 +482,19 @@
 "who": "D. Prescott",
 "label": "3 yd TD pass",
 "swing": 0.229,
+"aid": 4,
+"bid": 8,
+"rt": 245775,
+"et": "Sun 4:33 PM",
+"sit": {
+"team": "DAL",
+"opp": "WAS",
+"at": "",
+"q": 1,
+"clock": "10:04",
+"tm": 6,
+"op": 0
+},
 "from": 43,
 "to": 66,
 "clip": {
@@ -302,6 +510,19 @@
 "who": "D. Adams",
 "label": "23 yd catch",
 "swing": 0.218,
+"aid": 4,
+"bid": 8,
+"rt": 352639,
+"et": "Mon 10:14 PM",
+"sit": {
+"team": "LAR",
+"opp": "NYG",
+"at": "",
+"q": 3,
+"clock": "7:43",
+"tm": 14,
+"op": 3
+},
 "from": 13,
 "to": 35,
 "clip": {
@@ -317,6 +538,19 @@
 "who": "J. Taylor",
 "label": "24 yd TD run",
 "swing": 0.216,
+"aid": 4,
+"bid": 8,
+"rt": 264359,
+"et": "Sun 9:43 PM",
+"sit": {
+"team": "IND",
+"opp": "KC",
+"at": "@",
+"q": 2,
+"clock": "1:04",
+"tm": 19,
+"op": 17
+},
 "from": 58,
 "to": 80,
 "clip": {
@@ -337,6 +571,19 @@
 "who": "M. Willis",
 "label": "77 yd TD pass",
 "swing": 0.158,
+"aid": 4,
+"bid": 8,
+"rt": 254896,
+"et": "Sun 7:05 PM",
+"sit": {
+"team": "MIA",
+"opp": "SF",
+"at": "@",
+"q": 4,
+"clock": "2:41",
+"tm": 12,
+"op": 35
+},
 "from": 21,
 "to": 37,
 "clip": {
@@ -352,6 +599,19 @@
 "who": "Panthers",
 "label": "16 yd interception return TD (Devin Lloyd), interception (Devin Lloyd)",
 "swing": 0.148,
+"aid": 6,
+"bid": 9,
+"rt": 241723,
+"et": "Sun 3:26 PM",
+"sit": {
+"team": "CAR",
+"opp": "ATL",
+"at": "@",
+"q": 3,
+"clock": "3:08",
+"tm": 33,
+"op": 3
+},
 "from": 80,
 "to": 94,
 "clip": {
@@ -367,6 +627,19 @@
 "who": "C. Olave",
 "label": "21 yd TD catch",
 "swing": 0.133,
+"aid": 4,
+"bid": 8,
+"rt": 241484,
+"et": "Sun 3:22 PM",
+"sit": {
+"team": "NO",
+"opp": "BAL",
+"at": "@",
+"q": 4,
+"clock": "9:47",
+"tm": 15,
+"op": 17
+},
 "from": 38,
 "to": 51,
 "clip": {
@@ -382,6 +655,19 @@
 "who": "D. Prescott",
 "label": "12 yd TD pass",
 "swing": 0.122,
+"aid": 4,
+"bid": 8,
+"rt": 253088,
+"et": "Sun 6:35 PM",
+"sit": {
+"team": "DAL",
+"opp": "WAS",
+"at": "",
+"q": 3,
+"clock": "6:37",
+"tm": 26,
+"op": 13
+},
 "from": 68,
 "to": 80,
 "clip": {
@@ -397,6 +683,19 @@
 "who": "J. Taylor",
 "label": "5 yd TD run",
 "swing": 0.113,
+"aid": 4,
+"bid": 8,
+"rt": 268872,
+"et": "Sun 10:58 PM",
+"sit": {
+"team": "IND",
+"opp": "KC",
+"at": "@",
+"q": 4,
+"clock": "5:41",
+"tm": 26,
+"op": 27
+},
 "from": 83,
 "to": 94,
 "clip": {
@@ -417,6 +716,19 @@
 "who": "P. Washington",
 "label": "18 yd catch",
 "swing": 0.112,
+"aid": 4,
+"bid": 8,
+"rt": 249032,
+"et": "Sun 5:28 PM",
+"sit": {
+"team": "JAX",
+"opp": "DEN",
+"at": "@",
+"q": 2,
+"clock": "1:00",
+"tm": 7,
+"op": 3
+},
 "from": 25,
 "to": 36,
 "clip": {
@@ -432,6 +744,19 @@
 "who": "J. Chase",
 "label": "32 yd TD catch",
 "swing": 0.11,
+"aid": 3,
+"bid": 12,
+"rt": 237247,
+"et": "Sun 2:11 PM",
+"sit": {
+"team": "CIN",
+"opp": "HOU",
+"at": "@",
+"q": 2,
+"clock": "3:37",
+"tm": 6,
+"op": 0
+},
 "from": 85,
 "to": 96,
 "clip": {
@@ -452,6 +777,19 @@
 "who": "C. Olave",
 "label": "20 yd catch",
 "swing": 0.11,
+"aid": 4,
+"bid": 8,
+"rt": 234584,
+"et": "Sun 1:27 PM",
+"sit": {
+"team": "NO",
+"opp": "BAL",
+"at": "@",
+"q": 1,
+"clock": "2:20",
+"tm": 0,
+"op": 7
+},
 "from": 38,
 "to": 49,
 "clip": {
@@ -467,6 +805,19 @@
 "who": "J. Cook",
 "label": "1 yd TD run",
 "swing": 0.097,
+"aid": 6,
+"bid": 9,
+"rt": 10663,
+"et": "Thu 11:15 PM",
+"sit": {
+"team": "BUF",
+"opp": "DET",
+"at": "",
+"q": 4,
+"clock": "2:53",
+"tm": 40,
+"op": 24
+},
 "from": 40,
 "to": 50,
 "clip": {
@@ -487,6 +838,19 @@
 "who": "A. St. Brown",
 "label": "27 yd TD catch",
 "swing": 0.091,
+"aid": 2,
+"bid": 10,
+"rt": 11168,
+"et": "Thu 11:23 PM",
+"sit": {
+"team": "DET",
+"opp": "BUF",
+"at": "@",
+"q": 4,
+"clock": "1:48",
+"tm": 24,
+"op": 41
+},
 "from": 67,
 "to": 76,
 "clip": {
@@ -504,6 +868,19 @@
 "who": "B. Young",
 "label": "8 yd TD pass",
 "swing": 0.305,
+"aid": 8,
+"bid": 12,
+"rt": 243589,
+"et": "Sun 3:55 PM",
+"sit": {
+"team": "CAR",
+"opp": "CLE",
+"at": "@",
+"q": 4,
+"clock": "4:29",
+"tm": 18,
+"op": 13
+},
 "from": 35,
 "to": 66,
 "clip": {
@@ -519,6 +896,19 @@
 "who": "J. Gibbs",
 "label": "17 yd TD run",
 "swing": 0.272,
+"aid": 8,
+"bid": 12,
+"rt": 239022,
+"et": "Sun 2:39 PM",
+"sit": {
+"team": "DET",
+"opp": "NYJ",
+"at": "",
+"q": 3,
+"clock": "11:06",
+"tm": 16,
+"op": 7
+},
 "from": 29,
 "to": 56,
 "clip": {
@@ -534,6 +924,19 @@
 "who": "D. Adams",
 "label": "49 yd catch",
 "swing": 0.272,
+"aid": 8,
+"bid": 12,
+"rt": 269911,
+"et": "Sun 11:14 PM",
+"sit": {
+"team": "LAR",
+"opp": "DEN",
+"at": "@",
+"q": 4,
+"clock": "7:03",
+"tm": 19,
+"op": 16
+},
 "from": 32,
 "to": 59,
 "clip": {
@@ -549,6 +952,19 @@
 "who": "L. Burden",
 "label": "8 yd TD catch",
 "swing": 0.221,
+"aid": 6,
+"bid": 10,
+"rt": 346323,
+"et": "Mon 8:27 PM",
+"sit": {
+"team": "CHI",
+"opp": "PHI",
+"at": "",
+"q": 1,
+"clock": "8:56",
+"tm": 6,
+"op": 0
+},
 "from": 59,
 "to": 81,
 "clip": {
@@ -569,6 +985,19 @@
 "who": "T. McLaurin",
 "label": "30 yd TD catch",
 "swing": 0.211,
+"aid": 5,
+"bid": 9,
+"rt": 241133,
+"et": "Sun 3:14 PM",
+"sit": {
+"team": "WAS",
+"opp": "SEA",
+"at": "",
+"q": 3,
+"clock": "10:50",
+"tm": 23,
+"op": 10
+},
 "from": 62,
 "to": 83,
 "clip": {
@@ -589,6 +1018,19 @@
 "who": "K. Walker",
 "label": "5 yd TD catch",
 "swing": 0.206,
+"aid": 6,
+"bid": 10,
+"rt": 235831,
+"et": "Sun 1:46 PM",
+"sit": {
+"team": "KC",
+"opp": "MIA",
+"at": "@",
+"q": 2,
+"clock": "13:02",
+"tm": 7,
+"op": 7
+},
 "from": 36,
 "to": 57,
 "clip": {
@@ -604,6 +1046,19 @@
 "who": "T. Shough",
 "label": "3 yd TD pass",
 "swing": 0.195,
+"aid": 4,
+"bid": 11,
+"rt": 249752,
+"et": "Sun 5:38 PM",
+"sit": {
+"team": "NO",
+"opp": "LV",
+"at": "",
+"q": 2,
+"clock": "1:57",
+"tm": 12,
+"op": 13
+},
 "from": 44,
 "to": 64,
 "clip": {
@@ -619,6 +1074,19 @@
 "who": "C. McCaffrey",
 "label": "1 yd TD run",
 "swing": 0.16,
+"aid": 8,
+"bid": 12,
+"rt": 251256,
+"et": "Sun 6:03 PM",
+"sit": {
+"team": "SF",
+"opp": "ARI",
+"at": "",
+"q": 3,
+"clock": "11:10",
+"tm": 23,
+"op": 6
+},
 "from": 61,
 "to": 77,
 "clip": {
@@ -639,6 +1107,19 @@
 "who": "M. Evans",
 "label": "23 yd TD catch",
 "swing": 0.14,
+"aid": 4,
+"bid": 11,
+"rt": 246714,
+"et": "Sun 4:47 PM",
+"sit": {
+"team": "SF",
+"opp": "ARI",
+"at": "",
+"q": 2,
+"clock": "15:00",
+"tm": 13,
+"op": 0
+},
 "from": 33,
 "to": 47,
 "clip": {
@@ -659,6 +1140,19 @@
 "who": "J. Chase",
 "label": "3 yd TD catch",
 "swing": 0.14,
+"aid": 8,
+"bid": 12,
+"rt": 234499,
+"et": "Sun 1:23 PM",
+"sit": {
+"team": "CIN",
+"opp": "PIT",
+"at": "@",
+"q": 1,
+"clock": "5:54",
+"tm": 6,
+"op": 7
+},
 "from": 52,
 "to": 66,
 "clip": {
@@ -679,6 +1173,19 @@
 "who": "A. Rodgers",
 "label": "6 yd TD pass",
 "swing": 0.123,
+"aid": 6,
+"bid": 10,
+"rt": 241261,
+"et": "Sun 3:16 PM",
+"sit": {
+"team": "PIT",
+"opp": "CIN",
+"at": "",
+"q": 3,
+"clock": "2:48",
+"tm": 23,
+"op": 20
+},
 "from": 72,
 "to": 84,
 "clip": {
@@ -699,6 +1206,19 @@
 "who": "K. Cousins",
 "label": "4 yd TD pass",
 "swing": 0.112,
+"aid": 6,
+"bid": 10,
+"rt": 255891,
+"et": "Sun 7:20 PM",
+"sit": {
+"team": "LV",
+"opp": "NO",
+"at": "@",
+"q": 4,
+"clock": "6:28",
+"tm": 34,
+"op": 27
+},
 "from": 30,
 "to": 41,
 "clip": {
@@ -719,6 +1239,19 @@
 "who": "T. Higgins",
 "label": "28 yd TD catch",
 "swing": 0.108,
+"aid": 5,
+"bid": 9,
+"rt": 238644,
+"et": "Sun 2:32 PM",
+"sit": {
+"team": "CIN",
+"opp": "PIT",
+"at": "@",
+"q": 2,
+"clock": "0:39",
+"tm": 10,
+"op": 17
+},
 "from": 53,
 "to": 64,
 "clip": {
@@ -739,6 +1272,19 @@
 "who": "L. Burden",
 "label": "25 yd catch",
 "swing": 0.104,
+"aid": 6,
+"bid": 10,
+"rt": 349325,
+"et": "Mon 9:17 PM",
+"sit": {
+"team": "CHI",
+"opp": "PHI",
+"at": "",
+"q": 2,
+"clock": "6:14",
+"tm": 7,
+"op": 0
+},
 "from": 81,
 "to": 92,
 "clip": {
@@ -756,6 +1302,19 @@
 "who": "C. Lamb",
 "label": "12 yd TD catch",
 "swing": 0.222,
+"aid": 6,
+"bid": 11,
+"rt": 244337,
+"et": "Sun 4:07 PM",
+"sit": {
+"team": "DAL",
+"opp": "HOU",
+"at": "@",
+"q": 4,
+"clock": "0:43",
+"tm": 33,
+"op": 30
+},
 "from": 66,
 "to": 88,
 "clip": {
@@ -771,6 +1330,19 @@
 "who": "P. Nacua",
 "label": "2 yd TD run",
 "swing": 0.215,
+"aid": 3,
+"bid": 5,
+"rt": 237833,
+"et": "Sun 2:19 PM",
+"sit": {
+"team": "LAR",
+"opp": "PHI",
+"at": "@",
+"q": 2,
+"clock": "2:00",
+"tm": 9,
+"op": 13
+},
 "from": 42,
 "to": 64,
 "clip": {
@@ -791,6 +1363,19 @@
 "who": "J. Williams",
 "label": "8 yd TD run",
 "swing": 0.192,
+"aid": 3,
+"bid": 5,
+"rt": 239561,
+"et": "Sun 2:48 PM",
+"sit": {
+"team": "DAL",
+"opp": "HOU",
+"at": "@",
+"q": 3,
+"clock": "13:00",
+"tm": 12,
+"op": 16
+},
 "from": 55,
 "to": 74,
 "clip": {
@@ -811,6 +1396,19 @@
 "who": "B. Bowers",
 "label": "20 yd TD catch",
 "swing": 0.187,
+"aid": 7,
+"bid": 12,
+"rt": 256454,
+"et": "Sun 7:29 PM",
+"sit": {
+"team": "LV",
+"opp": "KC",
+"at": "",
+"q": 4,
+"clock": "1:54",
+"tm": 25,
+"op": 30
+},
 "from": 39,
 "to": 58,
 "clip": {
@@ -831,6 +1429,19 @@
 "who": "J. Burrow",
 "label": "1 yd TD run",
 "swing": 0.183,
+"aid": 1,
+"bid": 4,
+"rt": 243565,
+"et": "Sun 3:55 PM",
+"sit": {
+"team": "CIN",
+"opp": "JAX",
+"at": "",
+"q": 4,
+"clock": "3:33",
+"tm": 16,
+"op": 22
+},
 "from": 58,
 "to": 77,
 "clip": {
@@ -846,6 +1457,19 @@
 "who": "N. Collins",
 "label": "7 yd TD catch",
 "swing": 0.161,
+"aid": 1,
+"bid": 4,
+"rt": 233825,
+"et": "Sun 1:12 PM",
+"sit": {
+"team": "HOU",
+"opp": "DAL",
+"at": "",
+"q": 1,
+"clock": "10:06",
+"tm": 6,
+"op": 0
+},
 "from": 39,
 "to": 55,
 "clip": {
@@ -866,6 +1490,19 @@
 "who": "J. Waddle",
 "label": "13 yd TD catch",
 "swing": 0.159,
+"aid": 7,
+"bid": 12,
+"rt": 255549,
+"et": "Sun 7:14 PM",
+"sit": {
+"team": "DEN",
+"opp": "SF",
+"at": "@",
+"q": 4,
+"clock": "4:10",
+"tm": 12,
+"op": 17
+},
 "from": 44,
 "to": 60,
 "clip": {
@@ -881,6 +1518,19 @@
 "who": "D. Maye",
 "label": "2 yd TD pass",
 "swing": 0.15,
+"aid": 3,
+"bid": 5,
+"rt": 240272,
+"et": "Sun 3:00 PM",
+"sit": {
+"team": "NE",
+"opp": "BUF",
+"at": "@",
+"q": 3,
+"clock": "8:18",
+"tm": 20,
+"op": 17
+},
 "from": 74,
 "to": 89,
 "clip": {
@@ -896,6 +1546,19 @@
 "who": "J. Hurts",
 "label": "18 yd TD pass",
 "swing": 0.138,
+"aid": 2,
+"bid": 9,
+"rt": 237102,
+"et": "Sun 2:07 PM",
+"sit": {
+"team": "PHI",
+"opp": "LAR",
+"at": "",
+"q": 2,
+"clock": "5:51",
+"tm": 12,
+"op": 3
+},
 "from": 70,
 "to": 84,
 "clip": {
@@ -911,6 +1574,19 @@
 "who": "C. McCaffrey",
 "label": "1 yd TD run",
 "swing": 0.125,
+"aid": 7,
+"bid": 12,
+"rt": 255056,
+"et": "Sun 7:06 PM",
+"sit": {
+"team": "SF",
+"opp": "DEN",
+"at": "",
+"q": 4,
+"clock": "8:55",
+"tm": 16,
+"op": 6
+},
 "from": 34,
 "to": 46,
 "clip": {
@@ -926,6 +1602,19 @@
 "who": "J. Love",
 "label": "2 yd TD pass",
 "swing": 0.122,
+"aid": 3,
+"bid": 5,
+"rt": 235348,
+"et": "Sun 1:38 PM",
+"sit": {
+"team": "GB",
+"opp": "TB",
+"at": "@",
+"q": 2,
+"clock": "12:58",
+"tm": 0,
+"op": 0
+},
 "from": 52,
 "to": 64,
 "clip": {
@@ -946,6 +1635,19 @@
 "who": "C. Olave",
 "label": "44 yd catch",
 "swing": 0.122,
+"aid": 8,
+"bid": 10,
+"rt": 348708,
+"et": "Mon 9:07 PM",
+"sit": {
+"team": "NO",
+"opp": "ATL",
+"at": "",
+"q": 1,
+"clock": "0:44",
+"tm": 0,
+"op": 14
+},
 "from": 15,
 "to": 27,
 "clip": {
@@ -961,6 +1663,19 @@
 "who": "S. LaPorta",
 "label": "8 yd TD catch",
 "swing": 0.117,
+"aid": 6,
+"bid": 11,
+"rt": 270674,
+"et": "Sun 11:26 PM",
+"sit": {
+"team": "DET",
+"opp": "CAR",
+"at": "@",
+"q": 4,
+"clock": "3:42",
+"tm": 25,
+"op": 32
+},
 "from": 4,
 "to": 15,
 "clip": {
@@ -981,6 +1696,19 @@
 "who": "M. Hollins",
 "label": "26 yd catch",
 "swing": 0.113,
+"aid": 3,
+"bid": 5,
+"rt": 236105,
+"et": "Sun 1:50 PM",
+"sit": {
+"team": "NE",
+"opp": "BUF",
+"at": "@",
+"q": 2,
+"clock": "8:17",
+"tm": 7,
+"op": 7
+},
 "from": 35,
 "to": 46,
 "clip": {
@@ -998,6 +1726,19 @@
 "who": "T. Higbee",
 "label": "30 yd catch",
 "swing": 0.704,
+"aid": 7,
+"bid": 10,
+"rt": 355136,
+"et": "Mon 10:54 PM",
+"sit": {
+"team": "LAR",
+"opp": "BUF",
+"at": "",
+"q": 4,
+"clock": "9:38",
+"tm": 20,
+"op": 27
+},
 "from": 1,
 "to": 71,
 "clip": {
@@ -1013,6 +1754,19 @@
 "who": "M. Golden",
 "label": "50 yd catch",
 "swing": 0.444,
+"aid": 6,
+"bid": 9,
+"rt": 242185,
+"et": "Sun 3:32 PM",
+"sit": {
+"team": "GB",
+"opp": "CHI",
+"at": "",
+"q": 4,
+"clock": "12:49",
+"tm": 31,
+"op": 7
+},
 "from": 40,
 "to": 84,
 "clip": {
@@ -1028,6 +1782,19 @@
 "who": "J. Brissett",
 "label": "9 yd TD pass",
 "swing": 0.381,
+"aid": 2,
+"bid": 3,
+"rt": 255942,
+"et": "Sun 7:21 PM",
+"sit": {
+"team": "ARI",
+"opp": "DET",
+"at": "",
+"q": 4,
+"clock": "2:17",
+"tm": 20,
+"op": 45
+},
 "from": 8,
 "to": 46,
 "clip": {
@@ -1043,6 +1810,19 @@
 "who": "M. Stafford",
 "label": "2 yd TD pass",
 "swing": 0.332,
+"aid": 1,
+"bid": 8,
+"rt": 354284,
+"et": "Mon 10:40 PM",
+"sit": {
+"team": "LAR",
+"opp": "BUF",
+"at": "",
+"q": 4,
+"clock": "14:20",
+"tm": 20,
+"op": 19
+},
 "from": 48,
 "to": 81,
 "clip": {
@@ -1058,6 +1838,19 @@
 "who": "T. Huntley",
 "label": "7 yd TD pass",
 "swing": 0.177,
+"aid": 1,
+"bid": 8,
+"rt": 270174,
+"et": "Sun 11:18 PM",
+"sit": {
+"team": "BAL",
+"opp": "ATL",
+"at": "@",
+"q": 4,
+"clock": "0:44",
+"tm": 15,
+"op": 23
+},
 "from": 22,
 "to": 39,
 "clip": {
@@ -1073,6 +1866,19 @@
 "who": "A. Rodgers",
 "label": "17 yd TD pass",
 "swing": 0.173,
+"aid": 4,
+"bid": 5,
+"rt": 242690,
+"et": "Sun 3:40 PM",
+"sit": {
+"team": "PIT",
+"opp": "IND",
+"at": "",
+"q": 4,
+"clock": "6:40",
+"tm": 30,
+"op": 22
+},
 "from": 61,
 "to": 78,
 "clip": {
@@ -1093,6 +1899,19 @@
 "who": "I. Likely",
 "label": "3 yd TD catch",
 "swing": 0.163,
+"aid": 1,
+"bid": 8,
+"rt": 241676,
+"et": "Sun 3:23 PM",
+"sit": {
+"team": "NYG",
+"opp": "WAS",
+"at": "@",
+"q": 3,
+"clock": "0:47",
+"tm": 12,
+"op": 19
+},
 "from": 46,
 "to": 63,
 "clip": {
@@ -1108,6 +1927,19 @@
 "who": "J. Smith-Njigba",
 "label": "16 yd TD catch",
 "swing": 0.162,
+"aid": 2,
+"bid": 3,
+"rt": 253523,
+"et": "Sun 6:41 PM",
+"sit": {
+"team": "SEA",
+"opp": "SF",
+"at": "",
+"q": 3,
+"clock": "5:59",
+"tm": 22,
+"op": 21
+},
 "from": 8,
 "to": 24,
 "clip": {
@@ -1123,6 +1955,19 @@
 "who": "J. Smith-Njigba",
 "label": "35 yd catch",
 "swing": 0.16,
+"aid": 2,
+"bid": 3,
+"rt": 256709,
+"et": "Sun 7:34 PM",
+"sit": {
+"team": "SEA",
+"opp": "SF",
+"at": "",
+"q": 4,
+"clock": "1:51",
+"tm": 29,
+"op": 32
+},
 "from": 34,
 "to": 50,
 "clip": {
@@ -1138,6 +1983,19 @@
 "who": "I. Likely",
 "label": "17 yd TD catch",
 "swing": 0.145,
+"aid": 1,
+"bid": 8,
+"rt": 243447,
+"et": "Sun 3:53 PM",
+"sit": {
+"team": "NYG",
+"opp": "WAS",
+"at": "@",
+"q": 4,
+"clock": "7:24",
+"tm": 13,
+"op": 27
+},
 "from": 78,
 "to": 93,
 "clip": {
@@ -1158,6 +2016,19 @@
 "who": "T. Higbee",
 "label": "28 yd catch",
 "swing": 0.126,
+"aid": 7,
+"bid": 10,
+"rt": 353718,
+"et": "Mon 10:31 PM",
+"sit": {
+"team": "LAR",
+"opp": "BUF",
+"at": "",
+"q": 3,
+"clock": "1:57",
+"tm": 14,
+"op": 19
+},
 "from": 1,
 "to": 14,
 "clip": {
@@ -1173,6 +2044,19 @@
 "who": "J. Jefferson",
 "label": "15 yd TD catch",
 "swing": 0.117,
+"aid": 4,
+"bid": 5,
+"rt": 239080,
+"et": "Sun 2:40 PM",
+"sit": {
+"team": "MIN",
+"opp": "NO",
+"at": "@",
+"q": 3,
+"clock": "12:13",
+"tm": 12,
+"op": 7
+},
 "from": 60,
 "to": 72,
 "clip": {
@@ -1193,6 +2077,19 @@
 "who": "P. Washington",
 "label": "51 yd TD catch",
 "swing": 0.115,
+"aid": 1,
+"bid": 8,
+"rt": 222368,
+"et": "Sun 10:02 AM",
+"sit": {
+"team": "JAX",
+"opp": "PHI",
+"at": "",
+"q": 1,
+"clock": "5:36",
+"tm": 6,
+"op": 0
+},
 "from": 56,
 "to": 68,
 "clip": {
@@ -1213,6 +2110,19 @@
 "who": "T. Huntley",
 "label": "18 yd TD pass",
 "swing": 0.111,
+"aid": 1,
+"bid": 8,
+"rt": 266687,
+"et": "Sun 10:20 PM",
+"sit": {
+"team": "BAL",
+"opp": "ATL",
+"at": "@",
+"q": 3,
+"clock": "7:01",
+"tm": 15,
+"op": 17
+},
 "from": 26,
 "to": 38,
 "clip": {
@@ -1230,6 +2140,19 @@
 "who": "T. Tucker",
 "label": "44 yd TD catch",
 "swing": 0.341,
+"aid": 4,
+"bid": 12,
+"rt": 256369,
+"et": "Sun 7:28 PM",
+"sit": {
+"team": "LV",
+"opp": "BUF",
+"at": "",
+"q": 4,
+"clock": "1:39",
+"tm": 29,
+"op": 33
+},
 "from": 17,
 "to": 51,
 "clip": {
@@ -1250,6 +2173,19 @@
 "who": "K. Coleman",
 "label": "12 yd TD catch",
 "swing": 0.26,
+"aid": 8,
+"bid": 9,
+"rt": 252675,
+"et": "Sun 6:27 PM",
+"sit": {
+"team": "BUF",
+"opp": "LV",
+"at": "@",
+"q": 3,
+"clock": "6:30",
+"tm": 22,
+"op": 13
+},
 "from": 27,
 "to": 53,
 "clip": {
@@ -1270,6 +2206,19 @@
 "who": "I. Likely",
 "label": "24 yd TD catch",
 "swing": 0.249,
+"aid": 1,
+"bid": 10,
+"rt": 243950,
+"et": "Sun 4:01 PM",
+"sit": {
+"team": "NYG",
+"opp": "NO",
+"at": "",
+"q": 4,
+"clock": "5:11",
+"tm": 24,
+"op": 34
+},
 "from": 14,
 "to": 38,
 "clip": {
@@ -1290,6 +2239,19 @@
 "who": "J. Taylor",
 "label": "4 yd TD run",
 "swing": 0.173,
+"aid": 4,
+"bid": 12,
+"rt": 242975,
+"et": "Sun 3:45 PM",
+"sit": {
+"team": "IND",
+"opp": "TEN",
+"at": "",
+"q": 4,
+"clock": "5:36",
+"tm": 19,
+"op": 20
+},
 "from": 75,
 "to": 92,
 "clip": {
@@ -1310,6 +2272,19 @@
 "who": "J. Allen",
 "label": "9 yd TD pass",
 "swing": 0.147,
+"aid": 2,
+"bid": 11,
+"rt": 248340,
+"et": "Sun 5:14 PM",
+"sit": {
+"team": "BUF",
+"opp": "LV",
+"at": "@",
+"q": 2,
+"clock": "7:17",
+"tm": 12,
+"op": 7
+},
 "from": 54,
 "to": 69,
 "clip": {
@@ -1330,6 +2305,19 @@
 "who": "C. Olave",
 "label": "18 yd TD catch",
 "swing": 0.136,
+"aid": 8,
+"bid": 9,
+"rt": 242641,
+"et": "Sun 3:39 PM",
+"sit": {
+"team": "NO",
+"opp": "NYG",
+"at": "@",
+"q": 4,
+"clock": "11:36",
+"tm": 33,
+"op": 10
+},
 "from": 40,
 "to": 54,
 "clip": {
@@ -1350,6 +2338,19 @@
 "who": "B. Corum",
 "label": "15 yd TD catch",
 "swing": 0.119,
+"aid": 5,
+"bid": 7,
+"rt": 247246,
+"et": "Sun 4:56 PM",
+"sit": {
+"team": "LAR",
+"opp": "ARI",
+"at": "",
+"q": 2,
+"clock": "8:29",
+"tm": 9,
+"op": 6
+},
 "from": 68,
 "to": 80,
 "clip": {
@@ -1370,6 +2371,19 @@
 "who": "M. Nabers",
 "label": "46 yd catch",
 "swing": 0.109,
+"aid": 1,
+"bid": 10,
+"rt": 244354,
+"et": "Sun 4:08 PM",
+"sit": {
+"team": "NYG",
+"opp": "NO",
+"at": "",
+"q": 4,
+"clock": "3:29",
+"tm": 24,
+"op": 34
+},
 "from": 61,
 "to": 72,
 "clip": {
@@ -1385,6 +2399,19 @@
 "who": "S. Diggs",
 "label": "1 yd TD catch",
 "swing": 0.108,
+"aid": 2,
+"bid": 11,
+"rt": 353411,
+"et": "Mon 10:26 PM",
+"sit": {
+"team": "WAS",
+"opp": "SF",
+"at": "@",
+"q": 3,
+"clock": "0:18",
+"tm": 9,
+"op": 23
+},
 "from": 89,
 "to": 100,
 "clip": {
@@ -1405,6 +2432,19 @@
 "who": "J. Coker",
 "label": "19 yd catch",
 "swing": 0.104,
+"aid": 3,
+"bid": 6,
+"rt": 235378,
+"et": "Sun 1:38 PM",
+"sit": {
+"team": "CAR",
+"opp": "PHI",
+"at": "@",
+"q": 1,
+"clock": "3:53",
+"tm": 3,
+"op": 0
+},
 "from": 74,
 "to": 85,
 "clip": {
@@ -1420,6 +2460,19 @@
 "who": "M. Evans",
 "label": "54 yd catch",
 "swing": 0.1,
+"aid": 2,
+"bid": 11,
+"rt": 346598,
+"et": "Mon 8:32 PM",
+"sit": {
+"team": "SF",
+"opp": "WAS",
+"at": "",
+"q": 1,
+"clock": "8:43",
+"tm": 7,
+"op": 3
+},
 "from": 48,
 "to": 58,
 "clip": {
@@ -1440,6 +2493,19 @@
 "who": "T. Tucker",
 "label": "11 yd TD catch",
 "swing": 0.099,
+"aid": 4,
+"bid": 12,
+"rt": 254821,
+"et": "Sun 7:02 PM",
+"sit": {
+"team": "LV",
+"opp": "BUF",
+"at": "",
+"q": 4,
+"clock": "8:13",
+"tm": 22,
+"op": 23
+},
 "from": 5,
 "to": 15,
 "clip": {
@@ -1460,6 +2526,19 @@
 "who": "K. Cousins",
 "label": "11 yd TD pass",
 "swing": 0.098,
+"aid": 1,
+"bid": 10,
+"rt": 254821,
+"et": "Sun 7:02 PM",
+"sit": {
+"team": "LV",
+"opp": "BUF",
+"at": "",
+"q": 4,
+"clock": "8:13",
+"tm": 22,
+"op": 23
+},
 "from": 85,
 "to": 95,
 "clip": {
@@ -1480,6 +2559,19 @@
 "who": "B. Bowers",
 "label": "29 yd catch",
 "swing": 0.096,
+"aid": 5,
+"bid": 7,
+"rt": 254641,
+"et": "Sun 6:59 PM",
+"sit": {
+"team": "LV",
+"opp": "BUF",
+"at": "",
+"q": 4,
+"clock": "9:33",
+"tm": 16,
+"op": 23
+},
 "from": 9,
 "to": 18,
 "clip": {
@@ -1497,6 +2589,19 @@
 "who": "C. Lamb",
 "label": "16 yd TD catch",
 "swing": 0.576,
+"aid": 7,
+"bid": 11,
+"rt": 353582,
+"et": "Mon 10:28 PM",
+"sit": {
+"team": "DAL",
+"opp": "PHI",
+"at": "@",
+"q": 3,
+"clock": "1:36",
+"tm": 26,
+"op": 21
+},
 "from": 16,
 "to": 74,
 "clip": {
@@ -1517,6 +2622,19 @@
 "who": "G. Pickens",
 "label": "21 yd TD catch",
 "swing": 0.317,
+"aid": 7,
+"bid": 11,
+"rt": 349211,
+"et": "Mon 9:15 PM",
+"sit": {
+"team": "DAL",
+"opp": "PHI",
+"at": "@",
+"q": 2,
+"clock": "5:44",
+"tm": 16,
+"op": 14
+},
 "from": 48,
 "to": 80,
 "clip": {
@@ -1537,6 +2655,19 @@
 "who": "Chiefs",
 "label": "interception (Nohl Williams)",
 "swing": 0.299,
+"aid": 6,
+"bid": 12,
+"rt": 264320,
+"et": "Sun 9:41 PM",
+"sit": {
+"team": "KC",
+"opp": "SEA",
+"at": "@",
+"q": 2,
+"clock": "0:23",
+"tm": 0,
+"op": 10
+},
 "from": 31,
 "to": 61,
 "clip": {
@@ -1552,6 +2683,19 @@
 "who": "C. Lamb",
 "label": "9 yd TD catch",
 "swing": 0.241,
+"aid": 7,
+"bid": 11,
+"rt": 347143,
+"et": "Mon 8:41 PM",
+"sit": {
+"team": "DAL",
+"opp": "PHI",
+"at": "@",
+"q": 1,
+"clock": "5:37",
+"tm": 9,
+"op": 7
+},
 "from": 37,
 "to": 61,
 "clip": {
@@ -1572,6 +2716,19 @@
 "who": "J. Williams",
 "label": "10 yd TD catch",
 "swing": 0.214,
+"aid": 5,
+"bid": 10,
+"rt": 252430,
+"et": "Sun 6:22 PM",
+"sit": {
+"team": "DET",
+"opp": "GB",
+"at": "",
+"q": 3,
+"clock": "6:40",
+"tm": 16,
+"op": 14
+},
 "from": 8,
 "to": 29,
 "clip": {
@@ -1592,6 +2749,19 @@
 "who": "J. Williams",
 "label": "34 yd run",
 "swing": 0.198,
+"aid": 3,
+"bid": 4,
+"rt": 354385,
+"et": "Mon 10:42 PM",
+"sit": {
+"team": "DAL",
+"opp": "PHI",
+"at": "@",
+"q": 4,
+"clock": "13:28",
+"tm": 28,
+"op": 21
+},
 "from": 80,
 "to": 99,
 "clip": {
@@ -1607,6 +2777,19 @@
 "who": "A. Jeanty",
 "label": "15 yd TD catch",
 "swing": 0.17,
+"aid": 7,
+"bid": 11,
+"rt": 254777,
+"et": "Sun 7:02 PM",
+"sit": {
+"team": "LV",
+"opp": "LAR",
+"at": "",
+"q": 4,
+"clock": "13:18",
+"tm": 18,
+"op": 28
+},
 "from": 36,
 "to": 53,
 "clip": {
@@ -1627,6 +2810,19 @@
 "who": "L. Burden",
 "label": "24 yd TD catch",
 "swing": 0.146,
+"aid": 6,
+"bid": 12,
+"rt": 5196,
+"et": "Thu 9:42 PM",
+"sit": {
+"team": "CHI",
+"opp": "NE",
+"at": "",
+"q": 2,
+"clock": "0:21",
+"tm": 13,
+"op": 7
+},
 "from": 41,
 "to": 55,
 "clip": {
@@ -1647,6 +2843,19 @@
 "who": "C. Lamb",
 "label": "30 yd catch",
 "swing": 0.142,
+"aid": 7,
+"bid": 11,
+"rt": 351661,
+"et": "Mon 9:56 PM",
+"sit": {
+"team": "DAL",
+"opp": "PHI",
+"at": "@",
+"q": 2,
+"clock": "0:19",
+"tm": 17,
+"op": 14
+},
 "from": 13,
 "to": 27,
 "clip": {
@@ -1662,6 +2871,19 @@
 "who": "B. Bowers",
 "label": "18 yd catch",
 "swing": 0.131,
+"aid": 7,
+"bid": 11,
+"rt": 255981,
+"et": "Sun 7:22 PM",
+"sit": {
+"team": "LV",
+"opp": "LAR",
+"at": "",
+"q": 4,
+"clock": "4:53",
+"tm": 18,
+"op": 35
+},
 "from": 42,
 "to": 55,
 "clip": {
@@ -1677,6 +2899,19 @@
 "who": "G. Smith",
 "label": "3 yd TD pass",
 "swing": 0.129,
+"aid": 7,
+"bid": 11,
+"rt": 240171,
+"et": "Sun 2:58 PM",
+"sit": {
+"team": "NYJ",
+"opp": "MIA",
+"at": "",
+"q": 3,
+"clock": "5:53",
+"tm": 13,
+"op": 21
+},
 "from": 67,
 "to": 80,
 "clip": {
@@ -1692,6 +2927,19 @@
 "who": "R. Stevenson",
 "label": "48 yd TD catch",
 "swing": 0.122,
+"aid": 6,
+"bid": 12,
+"rt": 6002,
+"et": "Thu 9:55 PM",
+"sit": {
+"team": "NE",
+"opp": "CHI",
+"at": "@",
+"q": 2,
+"clock": "0:03",
+"tm": 7,
+"op": 20
+},
 "from": 55,
 "to": 67,
 "clip": {
@@ -1712,6 +2960,19 @@
 "who": "T. Pollard",
 "label": "36 yd TD run",
 "swing": 0.119,
+"aid": 1,
+"bid": 9,
+"rt": 233684,
+"et": "Sun 1:10 PM",
+"sit": {
+"team": "TEN",
+"opp": "CLE",
+"at": "",
+"q": 1,
+"clock": "13:04",
+"tm": 6,
+"op": 0
+},
 "from": 46,
 "to": 58,
 "clip": {
@@ -1732,6 +2993,19 @@
 "who": "K. Black",
 "label": "30 yd TD run",
 "swing": 0.117,
+"aid": 2,
+"bid": 8,
+"rt": 235512,
+"et": "Sun 1:40 PM",
+"sit": {
+"team": "SF",
+"opp": "ATL",
+"at": "@",
+"q": 2,
+"clock": "15:00",
+"tm": 13,
+"op": 3
+},
 "from": 33,
 "to": 45,
 "clip": {
@@ -1754,6 +3028,19 @@
 "who": "L. Burden",
 "label": "1 yd TD catch",
 "swing": 0.531,
+"aid": 4,
+"bid": 6,
+"rt": 350332,
+"et": "Mon 8:34 PM",
+"sit": {
+"team": "CHI",
+"opp": "SEA",
+"at": "@",
+"q": 1,
+"clock": "5:30",
+"tm": 6,
+"op": 0
+},
 "from": 15,
 "to": 68,
 "clip": {
@@ -1774,6 +3061,19 @@
 "who": "L. Burden",
 "label": "23 yd catch",
 "swing": 0.316,
+"aid": 4,
+"bid": 6,
+"rt": 352396,
+"et": "Mon 9:08 PM",
+"sit": {
+"team": "CHI",
+"opp": "SEA",
+"at": "@",
+"q": 2,
+"clock": "9:34",
+"tm": 7,
+"op": 3
+},
 "from": 29,
 "to": 60,
 "clip": {
@@ -1789,6 +3089,19 @@
 "who": "J. Burrow",
 "label": "9 yd TD run",
 "swing": 0.24,
+"aid": 4,
+"bid": 6,
+"rt": 249586,
+"et": "Sun 4:35 PM",
+"sit": {
+"team": "CIN",
+"opp": "TEN",
+"at": "",
+"q": 5,
+"clock": "7:07",
+"tm": 42,
+"op": 36
+},
 "from": 34,
 "to": 58,
 "clip": {
@@ -1804,6 +3117,19 @@
 "who": "Jaguars",
 "label": "92 yd interception return TD (Rayuan Lane III), interception (Rayuan Lane III)",
 "swing": 0.169,
+"aid": 9,
+"bid": 12,
+"rt": 242168,
+"et": "Sun 2:31 PM",
+"sit": {
+"team": "JAX",
+"opp": "IND",
+"at": "",
+"q": 2,
+"clock": "0:25",
+"tm": 21,
+"op": 0
+},
 "from": 14,
 "to": 31,
 "clip": {
@@ -1819,6 +3145,19 @@
 "who": "T. Lawrence",
 "label": "31 yd TD pass",
 "swing": 0.167,
+"aid": 3,
+"bid": 8,
+"rt": 240466,
+"et": "Sun 2:03 PM",
+"sit": {
+"team": "JAX",
+"opp": "IND",
+"at": "",
+"q": 2,
+"clock": "7:22",
+"tm": 13,
+"op": 0
+},
 "from": 69,
 "to": 85,
 "clip": {
@@ -1834,6 +3173,19 @@
 "who": "B. Tuten",
 "label": "25 yd TD catch",
 "swing": 0.145,
+"aid": 2,
+"bid": 7,
+"rt": 245354,
+"et": "Sun 3:24 PM",
+"sit": {
+"team": "JAX",
+"opp": "IND",
+"at": "",
+"q": 3,
+"clock": "0:06",
+"tm": 41,
+"op": 7
+},
 "from": 32,
 "to": 46,
 "clip": {
@@ -1854,6 +3206,19 @@
 "who": "D. Kincaid",
 "label": "23 yd TD catch",
 "swing": 0.143,
+"aid": 4,
+"bid": 6,
+"rt": 248168,
+"et": "Sun 4:11 PM",
+"sit": {
+"team": "BUF",
+"opp": "BAL",
+"at": "",
+"q": 4,
+"clock": "6:04",
+"tm": 35,
+"op": 10
+},
 "from": 12,
 "to": 26,
 "clip": {
@@ -1869,6 +3234,19 @@
 "who": "J. Warren",
 "label": "1 yd TD run",
 "swing": 0.141,
+"aid": 10,
+"bid": 11,
+"rt": 244196,
+"et": "Sun 3:05 PM",
+"sit": {
+"team": "PIT",
+"opp": "CLE",
+"at": "",
+"q": 3,
+"clock": "9:42",
+"tm": 26,
+"op": 6
+},
 "from": 78,
 "to": 92,
 "clip": {
@@ -1884,6 +3262,19 @@
 "who": "B. Strange",
 "label": "46 yd catch",
 "swing": 0.119,
+"aid": 10,
+"bid": 11,
+"rt": 237424,
+"et": "Sun 1:12 PM",
+"sit": {
+"team": "JAX",
+"opp": "IND",
+"at": "",
+"q": 1,
+"clock": "10:33",
+"tm": 0,
+"op": 0
+},
 "from": 50,
 "to": 62,
 "clip": {
@@ -1899,6 +3290,19 @@
 "who": "B. Tuten",
 "label": "39 yd TD run",
 "swing": 0.102,
+"aid": 2,
+"bid": 7,
+"rt": 241620,
+"et": "Sun 2:22 PM",
+"sit": {
+"team": "JAX",
+"opp": "IND",
+"at": "",
+"q": 2,
+"clock": "2:00",
+"tm": 20,
+"op": 0
+},
 "from": 38,
 "to": 49,
 "clip": {
@@ -1919,6 +3323,19 @@
 "who": "J. Williams",
 "label": "46 yd catch",
 "swing": 0.1,
+"aid": 1,
+"bid": 5,
+"rt": 238543,
+"et": "Sun 1:31 PM",
+"sit": {
+"team": "DET",
+"opp": "MIN",
+"at": "",
+"q": 1,
+"clock": "4:55",
+"tm": 0,
+"op": 0
+},
 "from": 67,
 "to": 77,
 "clip": {
@@ -1934,6 +3351,19 @@
 "who": "J. Gibbs",
 "label": "30 yd TD run",
 "swing": 0.099,
+"aid": 3,
+"bid": 8,
+"rt": 244635,
+"et": "Sun 3:12 PM",
+"sit": {
+"team": "DET",
+"opp": "MIN",
+"at": "",
+"q": 3,
+"clock": "4:50",
+"tm": 12,
+"op": 7
+},
 "from": 11,
 "to": 20,
 "clip": {
@@ -1954,6 +3384,19 @@
 "who": "C. Ryland",
 "label": "42 yd field goal",
 "swing": 0.09,
+"aid": 4,
+"bid": 6,
+"rt": 250222,
+"et": "Sun 4:45 PM",
+"sit": {
+"team": "ARI",
+"opp": "DAL",
+"at": "@",
+"q": 5,
+"clock": "2:58",
+"tm": 30,
+"op": 30
+},
 "from": 36,
 "to": 45,
 "clip": {
@@ -1969,6 +3412,19 @@
 "who": "M. Golden",
 "label": "24 yd TD catch",
 "swing": 0.086,
+"aid": 4,
+"bid": 6,
+"rt": 4791,
+"et": "Thu 9:35 PM",
+"sit": {
+"team": "GB",
+"opp": "CAR",
+"at": "",
+"q": 2,
+"clock": "1:51",
+"tm": 19,
+"op": 10
+},
 "from": 49,
 "to": 58,
 "clip": {
@@ -1986,6 +3442,19 @@
 "who": "K. Concepcion",
 "label": "64 yd TD catch",
 "swing": 0.177,
+"aid": 3,
+"bid": 11,
+"rt": 242514,
+"et": "Sun 3:38 PM",
+"sit": {
+"team": "CLE",
+"opp": "NO",
+"at": "@",
+"q": 4,
+"clock": "5:33",
+"tm": 12,
+"op": 9
+},
 "from": 13,
 "to": 31,
 "clip": {
@@ -2001,6 +3470,19 @@
 "who": "K. Walker",
 "label": "2 yd TD run",
 "swing": 0.145,
+"aid": 5,
+"bid": 6,
+"rt": 241580,
+"et": "Sun 3:23 PM",
+"sit": {
+"team": "KC",
+"opp": "NYJ",
+"at": "",
+"q": 3,
+"clock": "0:15",
+"tm": 27,
+"op": 12
+},
 "from": 68,
 "to": 82,
 "clip": {
@@ -2016,6 +3498,19 @@
 "who": "C. Lamb",
 "label": "44 yd TD catch",
 "swing": 0.13,
+"aid": 3,
+"bid": 11,
+"rt": 238757,
+"et": "Sun 2:35 PM",
+"sit": {
+"team": "DAL",
+"opp": "IND",
+"at": "@",
+"q": 2,
+"clock": "0:28",
+"tm": 10,
+"op": 7
+},
 "from": 18,
 "to": 31,
 "clip": {
@@ -2031,6 +3526,19 @@
 "who": "P. Nacua",
 "label": "7 yd TD catch",
 "swing": 0.101,
+"aid": 3,
+"bid": 11,
+"rt": 241969,
+"et": "Sun 3:29 PM",
+"sit": {
+"team": "LAR",
+"opp": "WAS",
+"at": "@",
+"q": 4,
+"clock": "12:57",
+"tm": 19,
+"op": 13
+},
 "from": 76,
 "to": 86,
 "clip": {
@@ -2046,6 +3554,19 @@
 "who": "P. Washington",
 "label": "50 yd TD catch",
 "swing": 0.101,
+"aid": 7,
+"bid": 8,
+"rt": 4259,
+"et": "Thu 9:27 PM",
+"sit": {
+"team": "JAX",
+"opp": "BAL",
+"at": "@",
+"q": 2,
+"clock": "1:06",
+"tm": 16,
+"op": 3
+},
 "from": 39,
 "to": 49,
 "clip": {
@@ -2066,6 +3587,19 @@
 "who": "K. Walker",
 "label": "25 yd TD catch",
 "swing": 0.095,
+"aid": 5,
+"bid": 6,
+"rt": 236966,
+"et": "Sun 2:06 PM",
+"sit": {
+"team": "KC",
+"opp": "NYJ",
+"at": "",
+"q": 2,
+"clock": "5:45",
+"tm": 13,
+"op": 9
+},
 "from": 62,
 "to": 71,
 "clip": {
@@ -2081,6 +3615,19 @@
 "who": "T. Kelce",
 "label": "1 yd TD run",
 "swing": 0.084,
+"aid": 2,
+"bid": 10,
+"rt": 240055,
+"et": "Sun 2:57 PM",
+"sit": {
+"team": "KC",
+"opp": "NYJ",
+"at": "",
+"q": 3,
+"clock": "10:27",
+"tm": 20,
+"op": 12
+},
 "from": 22,
 "to": 31,
 "clip": {
@@ -2101,6 +3648,19 @@
 "who": "A. St. Brown",
 "label": "16 yd catch",
 "swing": 0.081,
+"aid": 2,
+"bid": 10,
+"rt": 233294,
+"et": "Sun 1:04 PM",
+"sit": {
+"team": "DET",
+"opp": "MIA",
+"at": "@",
+"q": 1,
+"clock": "13:48",
+"tm": 0,
+"op": 0
+},
 "from": 80,
 "to": 88,
 "clip": {
@@ -2116,6 +3676,19 @@
 "who": "S. Sanders",
 "label": "64 yd TD pass",
 "swing": 0.081,
+"aid": 5,
+"bid": 6,
+"rt": 242514,
+"et": "Sun 3:38 PM",
+"sit": {
+"team": "CLE",
+"opp": "NO",
+"at": "@",
+"q": 4,
+"clock": "5:33",
+"tm": 12,
+"op": 9
+},
 "from": 82,
 "to": 90,
 "clip": {
@@ -2131,6 +3704,19 @@
 "who": "D. Maye",
 "label": "30 yd TD pass",
 "swing": 0.08,
+"aid": 3,
+"bid": 11,
+"rt": 248879,
+"et": "Sun 5:24 PM",
+"sit": {
+"team": "NE",
+"opp": "GB",
+"at": "",
+"q": 2,
+"clock": "9:30",
+"tm": 6,
+"op": 17
+},
 "from": 78,
 "to": 86,
 "clip": {
@@ -2146,6 +3732,19 @@
 "who": "J. Williams",
 "label": "1 yd TD run",
 "swing": 0.077,
+"aid": 3,
+"bid": 11,
+"rt": 245499,
+"et": "Sun 4:28 PM",
+"sit": {
+"team": "DAL",
+"opp": "IND",
+"at": "@",
+"q": 4,
+"clock": "1:10",
+"tm": 26,
+"op": 23
+},
 "from": 62,
 "to": 70,
 "clip": {
@@ -2161,6 +3760,19 @@
 "who": "B. Allen",
 "label": "19 yd catch",
 "swing": 0.075,
+"aid": 3,
+"bid": 11,
+"rt": 233574,
+"et": "Sun 1:09 PM",
+"sit": {
+"team": "NYJ",
+"opp": "KC",
+"at": "@",
+"q": 1,
+"clock": "11:10",
+"tm": 0,
+"op": 0
+},
 "from": 59,
 "to": 67,
 "clip": {
@@ -2176,6 +3788,19 @@
 "who": "K. Walker",
 "label": "7 yd TD catch",
 "swing": 0.071,
+"aid": 5,
+"bid": 6,
+"rt": 235608,
+"et": "Sun 1:43 PM",
+"sit": {
+"team": "KC",
+"opp": "NYJ",
+"at": "",
+"q": 2,
+"clock": "15:00",
+"tm": 6,
+"op": 6
+},
 "from": 51,
 "to": 58,
 "clip": {
@@ -2191,6 +3816,19 @@
 "who": "B. Purdy",
 "label": "12 yd TD pass",
 "swing": 0.063,
+"aid": 2,
+"bid": 10,
+"rt": 248718,
+"et": "Sun 5:21 PM",
+"sit": {
+"team": "SF",
+"opp": "LV",
+"at": "",
+"q": 2,
+"clock": "5:20",
+"tm": 20,
+"op": 7
+},
 "from": 84,
 "to": 90,
 "clip": {
@@ -2208,6 +3846,19 @@
 "who": "D. Samuel",
 "label": "70 yd TD run",
 "swing": 0.309,
+"aid": 1,
+"bid": 4,
+"rt": 252948,
+"et": "Sun 6:31 PM",
+"sit": {
+"team": "SF",
+"opp": "DAL",
+"at": "@",
+"q": 3,
+"clock": "7:13",
+"tm": 30,
+"op": 19
+},
 "from": 37,
 "to": 68,
 "clip": {
@@ -2228,6 +3879,19 @@
 "who": "C. McCaffrey",
 "label": "66 yd TD catch",
 "swing": 0.282,
+"aid": 5,
+"bid": 12,
+"rt": 255912,
+"et": "Sun 7:20 PM",
+"sit": {
+"team": "SF",
+"opp": "DAL",
+"at": "@",
+"q": 4,
+"clock": "3:32",
+"tm": 44,
+"op": 32
+},
 "from": 32,
 "to": 60,
 "clip": {
@@ -2248,6 +3912,19 @@
 "who": "I. Likely",
 "label": "66 yd TD catch",
 "swing": 0.238,
+"aid": 1,
+"bid": 4,
+"rt": 8850,
+"et": "Thu 10:43 PM",
+"sit": {
+"team": "NYG",
+"opp": "WAS",
+"at": "",
+"q": 4,
+"clock": "8:24",
+"tm": 20,
+"op": 17
+},
 "from": 37,
 "to": 61,
 "clip": {
@@ -2263,6 +3940,19 @@
 "who": "C. McCaffrey",
 "label": "74 yd TD catch",
 "swing": 0.178,
+"aid": 5,
+"bid": 12,
+"rt": 249724,
+"et": "Sun 5:37 PM",
+"sit": {
+"team": "SF",
+"opp": "DAL",
+"at": "@",
+"q": 2,
+"clock": "2:43",
+"tm": 16,
+"op": 16
+},
 "from": 22,
 "to": 40,
 "clip": {
@@ -2283,6 +3973,19 @@
 "who": "J. Price",
 "label": "12 yd TD run",
 "swing": 0.166,
+"aid": 1,
+"bid": 4,
+"rt": 250378,
+"et": "Sun 5:48 PM",
+"sit": {
+"team": "SEA",
+"opp": "LV",
+"at": "@",
+"q": 3,
+"clock": "9:34",
+"tm": 13,
+"op": 10
+},
 "from": 39,
 "to": 56,
 "clip": {
@@ -2298,6 +4001,19 @@
 "who": "C. Hubbard",
 "label": "1 yd TD run",
 "swing": 0.157,
+"aid": 1,
+"bid": 4,
+"rt": 243827,
+"et": "Sun 3:59 PM",
+"sit": {
+"team": "CAR",
+"opp": "NO",
+"at": "@",
+"q": 4,
+"clock": "1:51",
+"tm": 10,
+"op": 14
+},
 "from": 30,
 "to": 46,
 "clip": {
@@ -2313,6 +4029,19 @@
 "who": "M. Stafford",
 "label": "22 yd TD pass",
 "swing": 0.153,
+"aid": 1,
+"bid": 4,
+"rt": 249235,
+"et": "Sun 5:29 PM",
+"sit": {
+"team": "LAR",
+"opp": "ARI",
+"at": "@",
+"q": 2,
+"clock": "0:20",
+"tm": 10,
+"op": 6
+},
 "from": 34,
 "to": 49,
 "clip": {
@@ -2328,6 +4057,19 @@
 "who": "G. Pickens",
 "label": "35 yd TD catch",
 "swing": 0.151,
+"aid": 6,
+"bid": 7,
+"rt": 247391,
+"et": "Sun 4:58 PM",
+"sit": {
+"team": "DAL",
+"opp": "SF",
+"at": "",
+"q": 1,
+"clock": "1:15",
+"tm": 9,
+"op": 7
+},
 "from": 81,
 "to": 96,
 "clip": {
@@ -2348,6 +4090,19 @@
 "who": "D. Samuel",
 "label": "11 yd TD catch",
 "swing": 0.146,
+"aid": 1,
+"bid": 4,
+"rt": 246674,
+"et": "Sun 4:46 PM",
+"sit": {
+"team": "SF",
+"opp": "DAL",
+"at": "@",
+"q": 1,
+"clock": "7:01",
+"tm": 6,
+"op": 3
+},
 "from": 50,
 "to": 65,
 "clip": {
@@ -2363,6 +4118,19 @@
 "who": "D. Prescott",
 "label": "11 yd TD pass",
 "swing": 0.13,
+"aid": 1,
+"bid": 4,
+"rt": 255670,
+"et": "Sun 7:16 PM",
+"sit": {
+"team": "DAL",
+"opp": "SF",
+"at": "",
+"q": 4,
+"clock": "3:47",
+"tm": 31,
+"op": 38
+},
 "from": 73,
 "to": 86,
 "clip": {
@@ -2378,6 +4146,19 @@
 "who": "C. McCaffrey",
 "label": "16 yd TD run",
 "swing": 0.122,
+"aid": 5,
+"bid": 12,
+"rt": 254349,
+"et": "Sun 6:54 PM",
+"sit": {
+"team": "SF",
+"opp": "DAL",
+"at": "@",
+"q": 4,
+"clock": "11:34",
+"tm": 37,
+"op": 19
+},
 "from": 20,
 "to": 32,
 "clip": {
@@ -2393,6 +4174,19 @@
 "who": "D. Prescott",
 "label": "39 yd TD pass",
 "swing": 0.113,
+"aid": 1,
+"bid": 4,
+"rt": 249390,
+"et": "Sun 5:32 PM",
+"sit": {
+"team": "DAL",
+"opp": "SF",
+"at": "",
+"q": 2,
+"clock": "4:16",
+"tm": 16,
+"op": 10
+},
 "from": 51,
 "to": 62,
 "clip": {
@@ -2408,6 +4202,19 @@
 "who": "C. Skattebo",
 "label": "13 yd TD run",
 "swing": 0.108,
+"aid": 1,
+"bid": 4,
+"rt": 6403,
+"et": "Thu 10:02 PM",
+"sit": {
+"team": "NYG",
+"opp": "WAS",
+"at": "",
+"q": 3,
+"clock": "10:28",
+"tm": 13,
+"op": 10
+},
 "from": 25,
 "to": 36,
 "clip": {
@@ -2423,6 +4230,19 @@
 "who": "M. Stafford",
 "label": "19 yd TD pass",
 "swing": 0.1,
+"aid": 1,
+"bid": 4,
+"rt": 251565,
+"et": "Sun 6:08 PM",
+"sit": {
+"team": "LAR",
+"opp": "ARI",
+"at": "@",
+"q": 3,
+"clock": "6:03",
+"tm": 30,
+"op": 6
+},
 "from": 54,
 "to": 64,
 "clip": {
@@ -2434,5 +4254,5 @@
 ]
 },
 "embed": {},
-"updatedAt": "2026-11-18T18:55:22Z"
+"updatedAt": "2026-11-18T19:27:27Z"
 }
