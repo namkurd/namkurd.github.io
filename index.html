@@ -495,7 +495,8 @@
     }, Promise.resolve()).then(function () {
       if (tok !== PVTOK) return;
       // not enough that play here: fill the list with the ones that open on YouTube instead, marked with an orange button (the same signal Rumble Central uses)
-      blocked.slice(0, Math.max(0, MAX - shown)).forEach(function (r) { r.classList.add('yt'); r.classList.remove('pend'); r.querySelector('.rk').textContent = ++shown; setThumb(r); r.title = 'Opens on YouTube (the video can\u2019t be played here)'; });
+      // the ones that play here come first (best first); these follow, also best first, so move them below the last playable row
+      blocked.slice(0, Math.max(0, MAX - shown)).forEach(function (r) { list.appendChild(r); r.classList.add('yt'); r.classList.remove('pend'); r.querySelector('.rk').textContent = ++shown; setThumb(r); r.title = 'Opens on YouTube (the video can\u2019t be played here)'; });
       if (!shown) { note.hidden = false; note.textContent = 'No clips yet.'; } else note.remove();
       fitAll();
     });
