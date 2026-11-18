@@ -154,7 +154,8 @@
   .sgrow .you { margin-left: 4px; padding: 0 4px; font-size: .52rem; background: var(--dtf-accent); }
   .sgp { font-size: .64rem; color: var(--dtf-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
   .sgp i { font-style: normal; font-size: .86em; opacity: .7; margin-left: 2px; }
-  .sgp .done { color: var(--good, #3fb97a); }
+  .sgp span { color: var(--bad, #f06a80); }   /* a punishment still owed */
+  .sgp .done { color: var(--good, #3fb97a); }   /* served */
   .sgclean { margin: 3px 3px 0; font-size: .62rem; color: var(--dtf-dim); }
   /* spare room on a tall screen is used: fitHome() tries the roomiest layout first and steps down to the first one that fits */
   .loose1 .grid { --plate: clamp(32px, calc(var(--avail) * .056), 70px); gap: clamp(6px, calc(var(--avail) * .01), 12px); } .loose1 .tile b { font-size: .7rem; margin-top: 4px; }
