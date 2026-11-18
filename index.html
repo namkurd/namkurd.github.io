@@ -92,9 +92,14 @@
   @media (prefers-reduced-motion: reduce) { .row.play .pp { animation: none; } }
   /* every feed list holds ten and scrolls inside its panel (fitLists sizes it to three rows, five on a wide screen) so Home still fits one screen */
   .flist { overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; -webkit-overflow-scrolling: touch; } .flist.has-open { max-height: none !important; overflow: visible; }
+  .pembed { container-type: inline-size; }
+  .pembed .pbody { display: block; } .pembed .pinfo { display: flex; flex-direction: column; gap: 2px; padding: 6px 9px 7px; font-size: .72rem; color: #cfe9d8; background: #0b1f12; }
+  .pembed .pinfo b { color: #fff; font-size: .78rem; } .pembed .pinfo .ps { font-weight: 700; color: #fff; } .pembed .pinfo .ps i { font-style: normal; color: #86efac; }
+  .pembed .pinfo a.prp { margin-top: 3px; padding: 0; background: none; color: #86efac; font-weight: 700; }
+  @container (min-width: 300px) { .pembed .pbody { display: grid; grid-template-columns: minmax(0, 1fr) 112px; align-items: stretch; } .pembed .pinfo { justify-content: center; gap: 4px; padding: 6px 8px; font-size: .64rem; } .pembed .pinfo b { font-size: .7rem; } }
   .pembed { margin: 0 0 6px; border-radius: 10px; overflow: hidden; background: #000; }
   .pembed .pw { position: relative; aspect-ratio: 16 / 9; } .pembed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-  .pembed a { display: block; padding: 5px 8px; font-size: .7rem; color: #86efac; text-decoration: none; background: #0b1f12; }
+  .pembed a.pyt { display: block; padding: 5px 8px; font-size: .7rem; color: #86efac; text-decoration: none; background: #0b1f12; }
   .none { margin: 8px 4px; color: var(--dtf-dim); font-size: .8rem; }
   .meta { margin: 2px 4px 0; font-size: .68rem; color: var(--dtf-dim); text-align: right; }
   .meta .old { color: #e0a23a; }
@@ -316,7 +321,7 @@
     slack: { tab: 'Slack', title: function () { return 'Hot in Slack this week'; }, cap: 'The busiest conversations of the past 7 days.', ac: '#e8eaf0' }
   };
   function rowHtml(it, id) {
-    if (id === 'plays') return '<a class="row play pend" data-m="' + esc((it.managers || []).join('|')) + '" data-yt="' + esc(it.clip.id) + '" data-s="' + Math.floor(it.clip.s) + '" data-e="' + Math.ceil(it.clip.e) + '" data-yt2="' + esc(it.alt ? it.alt.id : '') + '" data-s2="' + (it.alt ? Math.floor(it.alt.s) : '') + '" data-e2="' + (it.alt ? Math.ceil(it.alt.e) : '') + '" href="' + esc(it.href) + '" target="_blank" rel="noopener"><span class="rk">' + it.rank + '</span><span><b>' + esc(it.title) + '</b><small>' + esc(it.sub) + '</small></span><span class="pp" aria-hidden="true" title="Watch the play">\u25b6</span>' + (it.from != null ? '<span class="pd" title="Win probability before and after the play">' + it.from + '% \u2192 ' + it.to + '%</span>' : '') + '</a>';
+    if (id === 'plays') return '<a class="row play pend" data-m="' + esc((it.managers || []).join('|')) + '" data-yt="' + esc(it.clip.id) + '" data-s="' + Math.floor(it.clip.s) + '" data-e="' + Math.ceil(it.clip.e) + '" data-info="' + esc(JSON.stringify({ et: it.et || '', sit: it.sit || null, replay: it.replay || '' })) + '" data-yt2="' + esc(it.alt ? it.alt.id : '') + '" data-s2="' + (it.alt ? Math.floor(it.alt.s) : '') + '" data-e2="' + (it.alt ? Math.ceil(it.alt.e) : '') + '" href="' + esc(it.href) + '" target="_blank" rel="noopener"><span class="rk">' + it.rank + '</span><span><b>' + esc(it.title) + '</b><small>' + esc(it.sub) + '</small></span><span class="pp" aria-hidden="true" title="Watch the play">\u25b6</span>' + (it.from != null ? '<span class="pd" title="Win probability before and after the play">' + it.from + '% \u2192 ' + it.to + '%</span>' : '') + '</a>';
     var ext = /^https?:/.test(it.href), mgrs = (it.managers || []).join('|');
     var open = '<a class="row' + (id === 'trades' ? ' trade' : id === 'slack' ? ' slack' : id === 'matchups' ? ' mu' : '') + '" data-m="' + esc(mgrs) + '" href="' + esc(it.href) + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '>' + (id === 'trades' && it.sub ? '<span class="rkc"><span class="rk">' + it.rank + '</span><em class="wkn">' + esc(it.sub) + '</em></span>' : '<span class="rk">' + it.rank + '</span>');
     if (id === 'trades' && it.gets) {
@@ -474,7 +479,12 @@
       r.parentNode.classList.remove('has-open');
       if (was) { fitAll(); return; }
       var d = document.createElement('div'); d.className = 'pembed';
-      d.innerHTML = '<div class="pw"><iframe src="https://www.youtube-nocookie.com/embed/' + r.dataset.yt + '?start=' + r.dataset.s + '&end=' + r.dataset.e + '&autoplay=1&playsinline=1&rel=0&modestbranding=1" title="' + esc(r.querySelector('b').textContent) + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div><a href="' + esc(r.href) + '" target="_blank" rel="noopener">Won\u2019t play? Watch on YouTube \u203a</a>';
+      var inf = {}; try { inf = JSON.parse(r.dataset.info || '{}'); } catch (x) {}
+      var si = inf.sit, ql = si ? (si.q > 4 ? 'OT' : 'Q' + si.q) : '', side = '';
+      if (inf.et) side += '<b>' + esc(inf.et) + ' ET</b>';
+      if (si) side += '<span>' + esc(si.team) + ' ' + (si.at ? '@' : 'vs') + ' ' + esc(si.opp) + '</span><span>' + ql + ' \u00b7 ' + esc(si.clock) + ' left</span><span class="ps"><i>' + esc(si.team) + '</i> ' + si.tm + ' \u2013 ' + si.op + ' <i>' + esc(si.opp) + '</i></span>';
+      if (inf.replay) side += '<a class="prp" href="' + esc(inf.replay) + '">Rumble Central replay \u203a</a>';
+      d.innerHTML = '<div class="pbody"><div class="pw"><iframe src="https://www.youtube-nocookie.com/embed/' + r.dataset.yt + '?start=' + r.dataset.s + '&end=' + r.dataset.e + '&autoplay=1&playsinline=1&rel=0&modestbranding=1" title="' + esc(r.querySelector('b').textContent) + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>' + (side ? '<div class="pinfo">' + side + '</div>' : '') + '</div><a class="pyt" href="' + esc(r.href) + '" target="_blank" rel="noopener">Won\u2019t play? Watch on YouTube \u203a</a>';
       r.classList.add('open'); r.after(d); r.parentNode.classList.add('has-open');
     });
     $('tabs').addEventListener('click', function (e) {

@@ -80,7 +80,8 @@ def top_plays(season):
             continue
         seen.add(p['clip']['id'])
         out.append({'rank': len(out) + 1, 'title': ('%s %s' % (p['who'], p['label'])).strip(), 'sub': '%s vs %s \u00b7 Wk %d' % (p['a'], p['b'], p['week']),
-                    'managers': [p['a'], p['b']], 'swing': round(p['swing'] * 100), 'from': p.get('from'), 'to': p.get('to'), 'clip': p['clip'], **({'alt': p['alt']} if p.get('alt') else {}),
+                    'managers': [p['a'], p['b']], 'swing': round(p['swing'] * 100), 'from': p.get('from'), 'to': p.get('to'), 'clip': p['clip'], **({'alt': p['alt']} if p.get('alt') else {}), 'et': p.get('et'), **({'sit': p['sit']} if p.get('sit') else {}),
+                    'replay': '/SleeperLiveRumbles/rumbles.html?wp=%d.%s.%s%s' % (p['week'], p.get('aid'), p.get('bid'), '&t=%d' % p['rt'] if p.get('rt') is not None else ''),
                     'href': 'https://www.youtube.com/watch?v=%s&t=%ds' % (p['clip']['id'], int(p['clip']['s']))})
         if len(out) == 40:   # candidates: the page keeps the first ten whose clip really plays in a browser
             break
