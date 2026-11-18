@@ -92,6 +92,9 @@
   @media (prefers-reduced-motion: reduce) { .row.play .pp { animation: none; } }
   /* every feed list holds ten and scrolls inside its panel (fitLists sizes it to three rows, five on a wide screen) so Home still fits one screen */
   .flist { overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; -webkit-overflow-scrolling: touch; } .flist.has-open { max-height: none !important; overflow: visible; }
+  .panel[data-id="plays"] h2 { display: flex; align-items: center; gap: 6px; min-width: 0; } .panel[data-id="plays"] h2 .ht { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .ptog { flex: none; display: inline-flex; gap: 4px; margin-left: auto; } .ptog button { height: 18px; padding: 0 8px; border-radius: 9px; border: 1px solid color-mix(in srgb, var(--ac) 55%, transparent); background: none; color: var(--dtf-dim); font-weight: 700; font-size: .64rem; line-height: 1; font-family: inherit; text-transform: none; letter-spacing: 0; cursor: pointer; white-space: nowrap; -webkit-tap-highlight-color: transparent; }
+  .ptog button.on { background: color-mix(in srgb, var(--ac) 22%, transparent); color: var(--ac); }
   .pembed { container-type: inline-size; }
   /* the video takes the full width; what and when sits in one compact strip under it */
   .pembed .pbody { display: block; } .pembed .pinfo { display: flex; flex-wrap: wrap; align-items: center; gap: 1px 10px; padding: 5px 9px; font-size: .64rem; line-height: 1.25; color: #cfe9d8; background: #0b1f12; }
@@ -119,6 +122,8 @@
     .panel, .panel.on { display: block; } .panel h2 { color: var(--ac); text-transform: uppercase; letter-spacing: .06em; font-size: .78rem; }
     .row { align-items: start; padding: 2px 4px; } .row .rk { margin-top: 2px; } .row .go { margin-top: 4px; }
     .row b { font-size: .88rem; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+    .panel[data-id="plays"] h2 { flex-wrap: wrap; row-gap: 3px; } .panel[data-id="plays"] h2 .ht { flex: 1 1 100%; white-space: normal; } .ptog { margin-left: 0; }   /* narrow columns: the toggles take their own line under the title */
+    .trade .gl { flex-wrap: wrap; row-gap: 1px; } .trade .gl .gets { flex: 1 1 100%; } .trade .gl .win, .trade .gl .youslot { margin-left: auto; }
     .row.mu b, .row.play b { display: block; white-space: nowrap; overflow: hidden; text-overflow: clip; }
     .row.play { grid-template-columns: 20px minmax(0, 1fr) auto; gap: 0 6px; } .row.play .rk { grid-row: 1 / span 2; align-self: center; } .row.play > span:nth-child(2) { grid-row: 1 / span 2; } .row.play .pp { grid-column: 3; grid-row: 1; justify-self: center; font-size: .62rem; } .row.play .pd { grid-column: 3; grid-row: 2; font-size: .58rem; } .row.play b { font-size: .72rem; } .row.play:not(.trade) small { font-size: .62rem; }
     .row.slack b { -webkit-line-clamp: 3; font-size: .8rem; }   /* the Slack column is the shortest: let summaries use three lines instead of shrinking to nothing */
@@ -376,15 +381,19 @@
   }
   // each list shows three rows (five on a wide screen) and scrolls for the rest
   function fitLists() {
-    var n = window.innerWidth >= 1100 ? 5 : 3;
-    [].forEach.call(document.querySelectorAll('.flist'), function (l) {
+    var wide = window.innerWidth >= 1100, n = wide ? 5 : 3, hs = [];
+    var lists = [].slice.call(document.querySelectorAll('.flist'));
+    lists.forEach(function (l) {
       l.style.maxHeight = '';
       var rows = [].slice.call(l.children).filter(function (c) { return c.classList.contains('row') && !c.classList.contains('pend'); });
+      l._h = 0;
       if (!l.offsetWidth || rows.length <= n) return;
-      var last = rows[n - 1], first = rows[0];
-      var h = last.getBoundingClientRect().bottom - first.getBoundingClientRect().top;
-      l.style.maxHeight = Math.round(h) + 'px';
+      l._h = Math.round(rows[n - 1].getBoundingClientRect().bottom - rows[0].getBoundingClientRect().top);
+      hs.push(l._h);
     });
+    // wide: the columns sit side by side, so they all share the height of the shortest list's five rows
+    var cap = wide && hs.length ? Math.min.apply(null, hs) : 0;
+    lists.forEach(function (l) { if (l._h) l.style.maxHeight = (cap || l._h) + 'px'; });
   }
   function fitAll() { fitGets(); fitText(); fitLists(); fitHome(); fitTiles(); }
   // Home is meant to fit one screen: if the content is taller than the space between the bars it is tightened in steps (the lower cards
@@ -433,9 +442,11 @@
       });
     }, function () { return null; });
   }
+  var PVTOK = 0;
   function verifyPlays() {
     var list = document.querySelector('.panel[data-id="plays"] .flist'); if (!list) return;
-    var rows = [].slice.call(list.querySelectorAll('.row.play')), shown = 0, MAX = 10, note = document.createElement('p');
+    var tok = ++PVTOK, rows = [].slice.call(list.querySelectorAll('.row.play')), shown = 0, MAX = 10, note = document.createElement('p');
+    if (!rows.length) return;
     note.className = 'none'; note.textContent = 'Checking which clips play here\u2026'; list.appendChild(note);
     function show(r, which) {
       if (which === 2) { r.dataset.yt = r.dataset.yt2; r.dataset.s = r.dataset.s2; r.dataset.e = r.dataset.e2; r.href = 'https://www.youtube.com/watch?v=' + r.dataset.yt + '&t=' + r.dataset.s + 's'; }
@@ -444,18 +455,57 @@
     function tryRow(r, which) {
       var id = which === 2 ? r.dataset.yt2 : r.dataset.yt;
       if (!id) return Promise.resolve(false);
-      return probe(id).then(function (ok) { if (ok) { show(r, which); return true; } return ok === null ? null : false; });
+      return probe(id).then(function (ok) { if (tok !== PVTOK) return null; if (ok) { show(r, which); return true; } return ok === null ? null : false; });
     }
     rows.reduce(function (q, r) {
       return q.then(function () {
-        if (shown >= MAX) return;
+        if (shown >= MAX || tok !== PVTOK) return;
         return tryRow(r, 1).then(function (ok) { if (ok === false) return tryRow(r, 2); });
       });
-    }, Promise.resolve()).then(function () { if (!shown) { note.hidden = false; note.textContent = 'No clips that play here yet.'; } else note.remove(); fitAll(); });
+    }, Promise.resolve()).then(function () { if (tok !== PVTOK) return; if (!shown) { note.hidden = false; note.textContent = 'No clips that play here yet.'; } else note.remove(); fitAll(); });
   }
+  // Plays views: League / Mine and Season / last finished week. The feed carries the league's season list; the rest comes from data/topplays.json.
+  var PL = { scope: ls('dtf.plays.scope') === 'mine' ? 'mine' : 'league', span: ls('dtf.plays.span') === 'week' ? 'week' : 'season', feed: [], data: null, want: false };
+  function playsLoad() { return PL.data ? Promise.resolve(PL.data) : get('/data/topplays.json').then(function (d) { PL.data = d; return d; }, function () { return null; }); }
+  function playsLast() { var w = PL.data ? Object.keys(PL.data.weeks).map(Number) : []; return w.length ? Math.max.apply(null, w) : null; }
+  function mapPlay(p) {
+    return { title: (p.who + ' ' + p.label).trim(), sub: p.a + ' vs ' + p.b + ' \u00b7 Wk ' + p.week, managers: [p.a, p.b], from: p.from, to: p.to, clip: p.clip, alt: p.alt, et: p.et, sit: p.sit,
+      replay: '/SleeperLiveRumbles/rumbles.html?wp=' + p.week + '.' + p.aid + '.' + p.bid + (p.rt != null ? '&t=' + p.rt : ''), href: 'https://www.youtube.com/watch?v=' + p.clip.id + '&t=' + Math.floor(p.clip.s) + 's', swing: p.swing };
+  }
+  function playsItems() {
+    if (PL.scope === 'league' && PL.span === 'season') return PL.feed;
+    if (!PL.data) return [];
+    var me = meName(), last = playsLast(), all = [];
+    Object.keys(PL.data.weeks).forEach(function (w) { PL.data.weeks[w].forEach(function (p) { all.push(p); }); });
+    all = all.filter(function (p) { return (PL.span === 'season' || p.week === last) && (PL.scope === 'league' || (p.by === me && p.help !== false)); });
+    all.sort(function (a, b) { return b.swing - a.swing; });
+    var seen = {}, out = [];
+    all.forEach(function (p) { if (!seen[p.clip.id] && out.length < 40) { seen[p.clip.id] = 1; var it = mapPlay(p); it.rank = out.length + 1; out.push(it); } });
+    return out;
+  }
+  function paintPlays() {
+    var panel = document.querySelector('.panel[data-id="plays"]'); if (!panel) return;
+    var sc = panel.querySelector('[data-k="scope"]'), sp = panel.querySelector('[data-k="span"]'), last = playsLast();
+    sc.textContent = PL.scope === 'mine' ? 'Mine' : 'League'; sp.textContent = PL.span === 'week' && last ? 'Wk ' + last : 'Season';
+    sc.classList.toggle('on', PL.scope === 'mine'); sp.classList.toggle('on', PL.span === 'week');
+    var items = playsItems(), list = panel.querySelector('.flist');
+    list.classList.remove('has-open'); list.scrollTop = 0;
+    list.innerHTML = items.length ? items.map(function (it) { return rowHtml(it, 'plays'); }).join('') : '<p class="none">' + (PL.scope === 'mine' ? (PL.span === 'week' ? 'None of your plays last week.' : 'None of your plays yet.') : 'Nothing yet.') + '</p>';
+    ++PVTOK; markMine(); fitAll(); verifyPlays();
+  }
+  function playsSet(k, v) { PL[k] = v; ls('dtf.plays.' + k, v); playsLoad().then(paintPlays); }
+  function playsToggle(k) {
+    if (k === 'scope') {
+      if (PL.scope === 'mine') return playsSet('scope', 'league');
+      if (!meName()) { PL.want = true; if (window.DTF && DTF.pickMe) DTF.pickMe(); return; }   // no manager picked yet: ask who you are, then show yours
+      return playsSet('scope', 'mine');
+    }
+    playsSet('span', PL.span === 'week' ? 'season' : 'week');
+  }
+  window.addEventListener('dtf:me', function () { if (PL.want && meName()) { PL.want = false; playsSet('scope', 'mine'); } else if (PL.scope === 'mine') { if (!meName()) PL.scope = 'league'; paintPlays(); } });
   Promise.allSettled([get('/feed.json'), get('/slack.json')]).then(function (res) {
     var sections = [], feed = res[0].status === 'fulfilled' ? res[0].value : null, slack = res[1].status === 'fulfilled' ? res[1].value : null;
-    if (feed) { STANDINGS = feed.standings || []; feed.sections.forEach(function (s) { if (META[s.id]) sections.push({ id: s.id, items: s.items }); }); paintNext(); }
+    if (feed) { STANDINGS = feed.standings || []; feed.sections.forEach(function (s) { if (META[s.id]) sections.push({ id: s.id, items: s.items }); if (s.id === 'plays') PL.feed = s.items; }); paintNext(); }
     if (slack && slack.topics && slack.topics.length && (Date.now() - Date.parse(slack.generatedAt)) < 10 * 864e5) {
       sections.push({ id: 'slack', items: slack.topics.map(function (t, i) { return { rank: i + 1, title: t.title, sub: '#' + t.channel + ' · ' + t.messages + ' messages', href: t.href }; }) });
     }
@@ -466,11 +516,12 @@
     $('panels').style.setProperty('--n', sections.length);
     $('panels').innerHTML = sections.map(function (s) {
       var m = META[s.id];
-      return '<div class="panel' + (s.id === on ? ' on' : '') + '" role="tabpanel" data-id="' + s.id + '" style="--ac:' + m.ac + '"><h2>' + esc(m.title(year)) + '</h2><span class="cap">' + esc(m.cap) + '</span>' +
+      return '<div class="panel' + (s.id === on ? ' on' : '') + '" role="tabpanel" data-id="' + s.id + '" style="--ac:' + m.ac + '"><h2><span class="ht">' + (s.id === 'plays' ? esc(m.title(year)).replace(/ of (\d+)$/, '<span class="yr"> of $1</span>') : esc(m.title(year))) + '</span>' + (s.id === 'plays' ? '<span class="ptog"><button type="button" data-k="scope">League</button><button type="button" data-k="span">Season</button></span>' : '') + '</h2><span class="cap">' + esc(m.cap) + '</span>' +
         (s.items.length ? '<div class="flist">' + s.items.map(function (it) { return rowHtml(it, s.id); }).join('') + '</div>' : '<p class="none">Nothing yet this season.</p>') + '</div>';
     }).join('');
     // a play opens its clip right under it (one at a time); the link itself is the fallback (no script, or a video that won't embed)
     $('panels').addEventListener('click', function (e) {
+      var tg = e.target.closest('.ptog button'); if (tg) { playsToggle(tg.dataset.k); return; }
       var r = e.target.closest('.row.play'); if (!r || e.metaKey || e.ctrlKey) return;
       e.preventDefault();
       var was = r.classList.contains('open');
@@ -496,7 +547,8 @@
     var gen = feed && feed.generatedAt, old = gen && (Date.now() - Date.parse(gen)) > 2 * 864e5;
     $('meta').innerHTML = gen ? ('updated ' + ago(gen) + (old ? ' <span class="old">· may be out of date</span>' : '')) : '';
     $('feed').hidden = false;
-    markMine(); fitAll(); verifyPlays();
+    markMine(); fitAll();
+    playsLoad().then(function () { if (PL.scope === 'mine' && !meName()) PL.scope = 'league'; if (PL.scope !== 'league' || PL.span !== 'season') paintPlays(); else { paintPlays(); } });
   });
   // ---- latest podcast episode: the last YouTube link posted in #podcast (podcast.json, built by the Slack job)
   get('/podcast.json').then(function (p) {

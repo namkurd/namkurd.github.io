@@ -3,112 +3,6 @@
  "season": 2026,
  "sections": [
   {
-   "id": "matchups",
-   "title": "Matchups",
-   "items": [
-    {
-     "rank": 1,
-     "title": "Ankit 169.4 – 166.5 Haan",
-     "sub": "Week 2 · H2H · 4 lead changes",
-     "managers": [
-      "Ankit",
-      "Haan"
-     ],
-     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=2.8.4"
-    },
-    {
-     "rank": 2,
-     "title": "Kaitlyn 155.7 – 155.5 Steven",
-     "sub": "Week 7 · H2H · 5 lead changes",
-     "managers": [
-      "Kaitlyn",
-      "Steven"
-     ],
-     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=7.11.7"
-    },
-    {
-     "rank": 3,
-     "title": "Haan 150.6 – 150.0 Alex",
-     "sub": "Week 8 · H2H · 5 lead changes",
-     "managers": [
-      "Haan",
-      "Alex"
-     ],
-     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=8.4.6"
-    },
-    {
-     "rank": 4,
-     "title": "Aidan 174.5 – 171.8 Ankit",
-     "sub": "Week 5 · H2H · 5 lead changes",
-     "managers": [
-      "Aidan",
-      "Ankit"
-     ],
-     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=5.1.8"
-    },
-    {
-     "rank": 5,
-     "title": "Steven 192.9 – 192.8 Alex",
-     "sub": "Week 9 · vs. field · 4 lead changes",
-     "managers": [
-      "Steven",
-      "Alex"
-     ],
-     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=9.7.6"
-    },
-    {
-     "rank": 6,
-     "title": "Stephanie 128.6 – 125.0 Alex",
-     "sub": "Week 7 · H2H · 4 lead changes",
-     "managers": [
-      "Stephanie",
-      "Alex"
-     ],
-     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=7.12.6"
-    },
-    {
-     "rank": 7,
-     "title": "Ben 219.0 – 218.5 Stephanie",
-     "sub": "Week 2 · vs. field · 2 lead changes",
-     "managers": [
-      "Ben",
-      "Stephanie"
-     ],
-     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=2.2.12"
-    },
-    {
-     "rank": 8,
-     "title": "Aidan 174.5 – 171.8 Joe",
-     "sub": "Week 5 · vs. field · 4 lead changes",
-     "managers": [
-      "Aidan",
-      "Joe"
-     ],
-     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=5.1.5"
-    },
-    {
-     "rank": 9,
-     "title": "Aidan 119.8 – 117.7 Ryan",
-     "sub": "Week 9 · vs. field · 3 lead changes",
-     "managers": [
-      "Aidan",
-      "Ryan"
-     ],
-     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=9.1.10"
-    },
-    {
-     "rank": 10,
-     "title": "Haan 131.4 – 121.6 Kaitlyn",
-     "sub": "Week 3 · H2H · 2 lead changes",
-     "managers": [
-      "Haan",
-      "Kaitlyn"
-     ],
-     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=3.4.11"
-    }
-   ]
-  },
-  {
    "id": "plays",
    "title": "Plays",
    "items": [
@@ -1380,6 +1274,112 @@
    ]
   },
   {
+   "id": "matchups",
+   "title": "Matchups",
+   "items": [
+    {
+     "rank": 1,
+     "title": "Ankit 169.4 – 166.5 Haan",
+     "sub": "Week 2 · H2H · 4 lead changes",
+     "managers": [
+      "Ankit",
+      "Haan"
+     ],
+     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=2.8.4"
+    },
+    {
+     "rank": 2,
+     "title": "Kaitlyn 155.7 – 155.5 Steven",
+     "sub": "Week 7 · H2H · 5 lead changes",
+     "managers": [
+      "Kaitlyn",
+      "Steven"
+     ],
+     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=7.11.7"
+    },
+    {
+     "rank": 3,
+     "title": "Haan 150.6 – 150.0 Alex",
+     "sub": "Week 8 · H2H · 5 lead changes",
+     "managers": [
+      "Haan",
+      "Alex"
+     ],
+     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=8.4.6"
+    },
+    {
+     "rank": 4,
+     "title": "Aidan 174.5 – 171.8 Ankit",
+     "sub": "Week 5 · H2H · 5 lead changes",
+     "managers": [
+      "Aidan",
+      "Ankit"
+     ],
+     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=5.1.8"
+    },
+    {
+     "rank": 5,
+     "title": "Steven 192.9 – 192.8 Alex",
+     "sub": "Week 9 · vs. field · 4 lead changes",
+     "managers": [
+      "Steven",
+      "Alex"
+     ],
+     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=9.7.6"
+    },
+    {
+     "rank": 6,
+     "title": "Stephanie 128.6 – 125.0 Alex",
+     "sub": "Week 7 · H2H · 4 lead changes",
+     "managers": [
+      "Stephanie",
+      "Alex"
+     ],
+     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=7.12.6"
+    },
+    {
+     "rank": 7,
+     "title": "Ben 219.0 – 218.5 Stephanie",
+     "sub": "Week 2 · vs. field · 2 lead changes",
+     "managers": [
+      "Ben",
+      "Stephanie"
+     ],
+     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=2.2.12"
+    },
+    {
+     "rank": 8,
+     "title": "Aidan 174.5 – 171.8 Joe",
+     "sub": "Week 5 · vs. field · 4 lead changes",
+     "managers": [
+      "Aidan",
+      "Joe"
+     ],
+     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=5.1.5"
+    },
+    {
+     "rank": 9,
+     "title": "Aidan 119.8 – 117.7 Ryan",
+     "sub": "Week 9 · vs. field · 3 lead changes",
+     "managers": [
+      "Aidan",
+      "Ryan"
+     ],
+     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=9.1.10"
+    },
+    {
+     "rank": 10,
+     "title": "Haan 131.4 – 121.6 Kaitlyn",
+     "sub": "Week 3 · H2H · 2 lead changes",
+     "managers": [
+      "Haan",
+      "Kaitlyn"
+     ],
+     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=3.4.11"
+    }
+   ]
+  },
+  {
    "id": "trades",
    "title": "Trades",
    "items": [
@@ -1913,5 +1913,5 @@
    }
   ]
  },
- "generatedAt": "2026-11-18T19:27:28Z"
+ "generatedAt": "2026-11-18T19:45:24Z"
 }

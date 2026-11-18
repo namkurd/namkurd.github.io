@@ -213,7 +213,7 @@ def main():
     for s in old_feed.get('sections', []):   # a source that failed this run keeps its last good section
         if s['id'] not in have:
             sections.append(s)
-    order = ['matchups', 'plays', 'trades', 'waivers', 'free-agents']
+    order = ['plays', 'matchups', 'trades', 'waivers', 'free-agents']
     sections.sort(key=lambda s: order.index(s['id']) if s['id'] in order else 99)
     ir = old_feed.get('ir')   # keep the last status if the check couldn't run (offseason, Sleeper down)
     try:
