@@ -87,9 +87,8 @@
   .row.play .pd { font-size: .7rem; font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; color: #2ecc71; }
   @keyframes pglow { 0%, 100% { box-shadow: 0 0 6px 0 color-mix(in srgb, #2ecc71 45%, transparent); } 50% { box-shadow: 0 0 12px 3px color-mix(in srgb, #2ecc71 75%, transparent); } }
   @media (prefers-reduced-motion: reduce) { .row.play .pp { animation: none; } }
-  /* ten plays, three showing: the list scrolls so Home still fits one screen */
-  .plist { max-height: calc(3 * clamp(36px, calc(var(--avail) * .05), 42px) + 6px); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; -webkit-overflow-scrolling: touch; } .plist.has-open { max-height: none; overflow: visible; }
-  @media (min-width: 1100px) { .plist { max-height: 250px; } }
+  /* every feed list holds ten and scrolls inside its panel (fitLists sizes it to three rows, five on a wide screen) so Home still fits one screen */
+  .flist { overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; -webkit-overflow-scrolling: touch; } .flist.has-open { max-height: none !important; overflow: visible; }
   .pembed { margin: 0 0 6px; border-radius: 10px; overflow: hidden; background: #000; }
   .pembed .pv { position: relative; aspect-ratio: 16 / 9; } .pembed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
   .pembed a { display: block; padding: 5px 8px; font-size: .7rem; color: #86efac; text-decoration: none; background: #0b1f12; }
@@ -367,7 +366,19 @@
     var size = parseFloat(getComputedStyle(bs[0]).fontSize), min = 8, over = function () { return bs.some(function (b) { return b.scrollWidth > b.clientWidth + 0.5 || b.scrollWidth > b.parentNode.clientWidth - 6; }); };
     while (over() && size > min) { size -= 0.25; bs.forEach(function (b) { b.style.fontSize = size + 'px'; }); }
   }
-  function fitAll() { fitGets(); fitText(); fitHome(); fitTiles(); }
+  // each list shows three rows (five on a wide screen) and scrolls for the rest
+  function fitLists() {
+    var n = window.innerWidth >= 1100 ? 5 : 3;
+    [].forEach.call(document.querySelectorAll('.flist'), function (l) {
+      l.style.maxHeight = '';
+      var rows = [].slice.call(l.children).filter(function (c) { return c.classList.contains('row'); });
+      if (!l.offsetWidth || rows.length <= n) return;
+      var last = rows[n - 1], first = rows[0];
+      var h = last.getBoundingClientRect().bottom - first.getBoundingClientRect().top;
+      l.style.maxHeight = Math.round(h) + 'px';
+    });
+  }
+  function fitAll() { fitGets(); fitText(); fitLists(); fitHome(); fitTiles(); }
   // Home is meant to fit one screen: if the content is taller than the space between the bars it is tightened in steps (the lower cards
   // shrink, the feed loses its caption, the tiles get smaller) and stops as soon as it fits; below the last step the page just scrolls
   // [Shotguns zoom, player width %, layout]: negative layouts are roomier (loose1, loose2), positive ones tighter (tight1, tight2). The roomiest that fits wins.
@@ -380,7 +391,7 @@
       sg.style.zoom = st[0] === 1 ? '' : st[0]; lo.style.setProperty('--pw', st[1] + '%');
       root.classList.toggle('loose2', st[2] <= -2); root.classList.toggle('loose1', st[2] <= -1);
       root.classList.toggle('tight1', st[2] >= 1); root.classList.toggle('tight2', st[2] >= 2); root.classList.toggle('tight3', st[2] >= 3);
-      fitTiles();
+      fitTiles(); fitLists();
       if (!over()) break;
     }
   }
@@ -400,7 +411,7 @@
     $('panels').innerHTML = sections.map(function (s) {
       var m = META[s.id];
       return '<div class="panel' + (s.id === on ? ' on' : '') + '" role="tabpanel" data-id="' + s.id + '" style="--ac:' + m.ac + '"><h2>' + esc(m.title(year)) + '</h2><span class="cap">' + esc(m.cap) + '</span>' +
-        (s.items.length ? (s.id === 'plays' ? '<div class="plist">' : '') + s.items.map(function (it) { return rowHtml(it, s.id); }).join('') + (s.id === 'plays' ? '</div>' : '') : '<p class="none">Nothing yet this season.</p>') + '</div>';
+        (s.items.length ? '<div class="flist">' + s.items.map(function (it) { return rowHtml(it, s.id); }).join('') + '</div>' : '<p class="none">Nothing yet this season.</p>') + '</div>';
     }).join('');
     // a play opens its clip right under it (one at a time); the link itself is the fallback (no script, or a video that won't embed)
     $('panels').addEventListener('click', function (e) {
