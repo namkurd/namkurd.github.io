@@ -89,6 +89,41 @@ def build(facts, names, managers, season, done, out_qbs=frozenset()):
             'generatedAt': dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}
 
 
+def build_all(facts, names, season, done, out_qbs):
+    """-> shotguns_all.json content: every season in the Record Book's cache, by roster id, for the Shotguns tab in FAB & Sit/Start (which joins the
+    roster ids to managers itself). Only this season has an in-game injury log, so only it gets the ruled-out exemption."""
+    seasons = {}
+    for key, wk in facts['weeks'].items():
+        s, w = (int(x) for x in key.split('-'))
+        sx = seasons.setdefault(str(s), {'through': 0, 'rosters': {}})
+        sx['through'] = max(sx['through'], w)
+        for rid, t in wk['teams'].items():
+            for pid, pts in t.get('shot') or []:
+                if pid == '0' or (len(pid) <= 3 and pid.isalpha()):
+                    continue
+                if s == season and (w, int(rid), pid) in out_qbs:
+                    continue
+                nm, pos = (names.get(pid) or [pid, ''])[:2]
+                k = '%d-%d-%s-%s' % (s, w, pid, rid)
+                sx['rosters'].setdefault(str(int(rid)), []).append({'week': w, 'player': short(nm), 'full': nm, 'pos': pos, 'pts': round(float(pts), 2), 'done': k in done})
+    for sx in seasons.values():
+        for shots in sx['rosters'].values():
+            shots.sort(key=lambda x: (x['week'], x['player']))
+    return {'schema': 1, 'season': season, 'seasons': seasons, 'generatedAt': dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}
+
+
+def write_if_changed(path, out, label):
+    try:
+        old = json.load(open(path, encoding='utf-8'))
+        strip = lambda o: {k: v for k, v in o.items() if k != 'generatedAt'}
+        if strip(old) == strip(out):
+            print('%s: no change' % label); return False
+    except Exception:
+        pass
+    json.dump(out, open(path, 'w', encoding='utf-8'), separators=(',', ':'), ensure_ascii=False); open(path, 'a').write('\n')
+    return True
+
+
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument('--src'); args = ap.parse_args()
     try:
@@ -105,7 +140,10 @@ def main():
             out_qbs = ruled_out(fetch_rc('rumbles_history.json', args.src), soft('live_injury_captures.json'), soft('injury_overrides.json'))
         except Exception as e:
             print('injury data unavailable (%s); counting every 0-or-less starter who played' % e, file=sys.stderr); out_qbs = frozenset()
-        out = build(fetch('facts.json', args.src), fetch('names.json', args.src), managers, season, done, out_qbs)
+        facts, names = fetch('facts.json', args.src), fetch('names.json', args.src)
+        out = build(facts, names, managers, season, done, out_qbs)
+        if write_if_changed(os.path.join(HUB, 'shotguns_all.json'), build_all(facts, names, season, done, out_qbs), 'shotguns_all'):
+            print('shotguns_all: written')
     except Exception as e:
         print('shotguns: %s; keeping shotguns.json' % e, file=sys.stderr); return
     path = os.path.join(HUB, 'shotguns.json')
