@@ -101,13 +101,18 @@
   .ptog .seg { display: inline-flex; padding: 2px; border-radius: 10px; background: color-mix(in srgb, var(--dtf-bg) 60%, #000); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--dtf-dim) 35%, transparent); }
   .ptog button { height: 16px; padding: 0 7px; border: 0; border-radius: 8px; background: none; color: var(--dtf-dim); font-weight: 700; font-size: .62rem; line-height: 1; font-family: inherit; text-transform: none; letter-spacing: 0; cursor: pointer; white-space: nowrap; -webkit-tap-highlight-color: transparent; }
   .ptog button.on { background: var(--ac); color: #06210f; box-shadow: 0 1px 3px rgba(0,0,0,.4); }
-  .pembed { container-type: inline-size; }
-  /* the video takes the full width; what and when sits in one compact strip under it */
-  .pembed .pbody { display: block; } .pembed .pinfo { display: flex; flex-wrap: wrap; align-items: center; gap: 1px 10px; padding: 5px 9px; font-size: .64rem; line-height: 1.25; color: #cfe9d8; background: #0b1f12; }
-  .pembed .pinfo b { color: #fff; font-size: .68rem; } .pembed .pinfo > * { white-space: nowrap; } .pembed .pinfo .ps { font-weight: 700; color: #fff; } .pembed .pinfo i { font-style: normal; color: #86efac; }
-  .pembed .pinfo a.prp { margin-left: auto; padding: 0; background: none; color: #86efac; font-weight: 700; text-decoration: underline; }
-  .pembed .pw { position: relative; aspect-ratio: 16 / 9; } .pembed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-  .pembed a.pyt { display: block; padding: 5px 8px; font-size: .7rem; color: #86efac; text-decoration: none; background: #0b1f12; }
+  /* the play overlay: big clip, the facts under it */
+  .pmopen { overflow: hidden; }
+  #pmodal { position: fixed; inset: 0; z-index: 400; display: grid; place-items: center; padding: 12px; background: rgba(0,0,0,.84); }
+  #pmodal .pcard { width: min(100%, calc((100dvh - 200px) * 16 / 9), 1200px); min-width: min(100%, 320px); background: #0b1410; border-radius: 14px; box-shadow: 0 20px 60px rgba(0,0,0,.7), 0 0 0 1px rgba(34,197,94,.35); overflow: hidden; }
+  #pmodal .ptop { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: linear-gradient(180deg, #16a34a, #15803d); color: #fff; }
+  #pmodal .ptop > span { flex: 1 1 auto; min-width: 0; } #pmodal .ptop b { display: block; font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } #pmodal .ptop small { display: block; font-size: .78rem; color: rgba(255,255,255,.85); }
+  #pmodal .ppd { flex: none; font-style: normal; font-weight: 800; font-size: .85rem; background: rgba(0,0,0,.25); padding: 3px 9px; border-radius: 10px; }
+  #pmodal .pclose { flex: none; width: 32px; height: 32px; border-radius: 50%; border: 0; background: rgba(0,0,0,.28); color: #fff; font-size: 1.4rem; line-height: 1; cursor: pointer; }
+  #pmodal .pw { position: relative; aspect-ratio: 16 / 9; background: #000; } #pmodal iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  #pmodal .pfoot { padding: 12px 14px 14px; color: #d1fae5; }
+  #pmodal .pfacts { display: flex; flex-wrap: wrap; gap: 8px 22px; } #pmodal .pf { display: flex; flex-direction: column; font-size: 1.05rem; font-weight: 700; color: #fff; white-space: nowrap; } #pmodal .pf i { font-style: normal; font-weight: 600; font-size: .64rem; letter-spacing: .08em; text-transform: uppercase; color: #86efac; }
+  #pmodal .pacts { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 10px; } #pmodal .pacts a { color: #86efac; font-size: .85rem; font-weight: 700; text-decoration: none; } #pmodal .pacts a:hover { text-decoration: underline; }
   .none { margin: 8px 4px; color: var(--dtf-dim); font-size: .8rem; }
   .meta { margin: 2px 4px 0; font-size: .68rem; color: var(--dtf-dim); text-align: right; }
   .meta .old { color: #e0a23a; }
@@ -534,23 +539,33 @@
       return '<div class="panel' + (s.id === on ? ' on' : '') + '" role="tabpanel" data-id="' + s.id + '" style="--ac:' + m.ac + '"><h2><span class="ht">' + (s.id === 'plays' ? esc(m.title(year)).replace(/ of (\d+)$/, '<span class="yr"> of $1</span>') : esc(m.title(year))) + '</span>' + (s.id === 'plays' ? '<span class="ptog"><span class="seg" data-k="scope" role="group" aria-label="Whose plays"><button type="button" data-v="league">League</button><button type="button" data-v="mine">Mine</button></span><span class="seg" data-k="span" role="group" aria-label="How far back"><button type="button" data-v="season">Season</button><button type="button" data-v="week">Wk</button></span></span>' : '') + '</h2><span class="cap">' + esc(m.cap) + '</span>' +
         (s.items.length ? '<div class="flist">' + s.items.map(function (it) { return rowHtml(it, s.id); }).join('') + '</div>' : '<p class="none">Nothing yet this season.</p>') + '</div>';
     }).join('');
-    // a play opens its clip right under it (one at a time); the link itself is the fallback (no script, or a video that won't embed)
+    // a play opens in a large overlay: the clip on top, what happened (when, game, quarter, score) under it; the link itself is the fallback
+    function closePlay() {
+      var m = $('pmodal'); if (!m) return;
+      m.remove(); document.documentElement.classList.remove('pmopen'); document.removeEventListener('keydown', onPlayKey);
+      if (PLFOCUS && PLFOCUS.focus) { try { PLFOCUS.focus({ preventScroll: true }); } catch (x) {} } PLFOCUS = null;
+    }
+    var PLFOCUS = null;
+    function onPlayKey(e) { if (e.key === 'Escape') closePlay(); }
+    function openPlay(r) {
+      closePlay(); PLFOCUS = r;
+      var inf = {}; try { inf = JSON.parse(r.dataset.info || '{}'); } catch (x) {}
+      var si = inf.sit, ql = si ? (si.q > 4 ? 'OT' : 'Q' + si.q) : '', facts = '';
+      if (inf.et) facts += '<span class="pf"><i>When</i>' + esc(inf.et.replace(/ ([AP])M$/, function (m, x) { return x.toLowerCase(); })) + ' ET</span>';
+      if (si) facts += '<span class="pf"><i>Game</i>' + esc(si.team) + ' ' + (si.at ? '@' : 'vs') + ' ' + esc(si.opp) + '</span><span class="pf"><i>Clock</i>' + ql + ' ' + esc(si.clock) + '</span><span class="pf"><i>Score</i>' + si.tm + ' \u2013 ' + si.op + '</span>';
+      var pd = r.querySelector('.pd');
+      var m = document.createElement('div'); m.id = 'pmodal'; m.setAttribute('role', 'dialog'); m.setAttribute('aria-modal', 'true'); m.setAttribute('aria-label', r.querySelector('b').textContent);
+      m.innerHTML = '<div class="pcard"><div class="ptop"><span><b>' + esc(r.querySelector('b').textContent) + '</b><small>' + esc(r.querySelector('small').textContent) + '</small></span>' + (pd ? '<em class="ppd">' + esc(pd.textContent) + '</em>' : '') + '<button type="button" class="pclose" aria-label="Close">&times;</button></div>' +
+        '<div class="pw"><iframe src="https://www.youtube-nocookie.com/embed/' + r.dataset.yt + '?start=' + r.dataset.s + '&end=' + r.dataset.e + '&autoplay=1&playsinline=1&rel=0&modestbranding=1" title="' + esc(r.querySelector('b').textContent) + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>' +
+        '<div class="pfoot">' + (facts ? '<div class="pfacts">' + facts + '</div>' : '') + '<div class="pacts">' + (inf.replay ? '<a href="' + esc(inf.replay) + '">Rumble replay \u203a</a>' : '') + '<a href="' + esc(r.href) + '" target="_blank" rel="noopener">Won\u2019t play? Watch on YouTube \u203a</a></div></div></div>';
+      m.addEventListener('click', function (e) { if (e.target === m || e.target.closest('.pclose')) closePlay(); });
+      document.body.appendChild(m); document.documentElement.classList.add('pmopen'); document.addEventListener('keydown', onPlayKey);
+      m.querySelector('.pclose').focus({ preventScroll: true });
+    }
     $('panels').addEventListener('click', function (e) {
       var tg = e.target.closest('.ptog button'); if (tg) { if (!tg.classList.contains('on')) playsToggle(tg.parentNode.dataset.k, tg.dataset.v); return; }
       var r = e.target.closest('.row.play'); if (!r || e.metaKey || e.ctrlKey || r.classList.contains('yt')) return;   // an orange row is a plain link out to YouTube
-      e.preventDefault();
-      var was = r.classList.contains('open');
-      [].forEach.call(document.querySelectorAll('.pembed'), function (x) { x.previousElementSibling.classList.remove('open'); x.remove(); });
-      r.parentNode.classList.remove('has-open');
-      if (was) { fitAll(); return; }
-      var d = document.createElement('div'); d.className = 'pembed';
-      var inf = {}; try { inf = JSON.parse(r.dataset.info || '{}'); } catch (x) {}
-      var si = inf.sit, ql = si ? (si.q > 4 ? 'OT' : 'Q' + si.q) : '', side = '';
-      if (inf.et) side += '<b>' + esc(inf.et.replace(/ ([AP])M$/, function (m, x) { return x.toLowerCase(); })) + ' ET</b>';
-      if (si) side += '<span>' + (si.at ? '@' : 'vs') + ' <i>' + esc(si.opp) + '</i> \u00b7 ' + ql + ' ' + esc(si.clock) + '</span><span class="ps">' + si.tm + ' \u2013 ' + si.op + '</span>';
-      if (inf.replay) side += '<a class="prp" href="' + esc(inf.replay) + '">Rumble replay</a>';
-      d.innerHTML = '<div class="pbody"><div class="pw"><iframe src="https://www.youtube-nocookie.com/embed/' + r.dataset.yt + '?start=' + r.dataset.s + '&end=' + r.dataset.e + '&autoplay=1&playsinline=1&rel=0&modestbranding=1" title="' + esc(r.querySelector('b').textContent) + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>' + (side ? '<div class="pinfo">' + side + '</div>' : '') + '</div><a class="pyt" href="' + esc(r.href) + '" target="_blank" rel="noopener">Won\u2019t play? Watch on YouTube \u203a</a>';
-      r.classList.add('open'); r.after(d); r.parentNode.classList.add('has-open');
+      e.preventDefault(); openPlay(r);
     });
     $('tabs').addEventListener('click', function (e) {
       var b = e.target.closest('button[data-id]'); if (!b) return;
