@@ -40,7 +40,7 @@ def rank(by_channel, cfg=CFG):
     for cid, ch in by_channel.items():
         for run in conversations(ch['messages'], cfg['gapMinutes'] * 60):
             people = {m['user'] for m in run if m.get('user')}
-            if len(run) < cfg['minMessages'] or len(people) < 2:
+            if len(run) < min(cfg['minMessages'], cfg.get('floorMessages', cfg['minMessages'])) or len(people) < 2:
                 continue
             out.append({'channel_id': cid, 'channel': ch['name'], 'messages': len(run), 'people': len(people), 'first': run[0], 'run': run,
                         'score': len(run) * math.sqrt(len(people))})
@@ -48,12 +48,28 @@ def rank(by_channel, cfg=CFG):
     picked = []
     near = cfg.get('dedupeHours', 36) * 3600
     for c in out:   # one saga = one topic: skip a lower-ranked conversation in the same channel right before/after a chosen one
+        if len(c['run']) < cfg['minMessages']:
+            continue   # smaller ones only ever top the list up (below)
         s0, s1 = c['run'][0]['ts'], c['run'][-1]['ts']
         if any(p['channel_id'] == c['channel_id'] and s0 < p['run'][-1]['ts'] + near and s1 > p['run'][0]['ts'] - near for p in picked):
             continue
         picked.append(c)
         if len(picked) == cfg['topN']:
             break
+    # a quiet week: top the list up to minShow with the next-best smaller conversations (even beside a chosen one in the same channel),
+    # so the Home feed's Slack tab isn't a lot shorter than the other tabs
+    if len(picked) < cfg.get('minShow', 0):
+        taken = {id(p) for p in picked}
+        for c in out:
+            if len(picked) >= cfg['minShow']:
+                break
+            if id(c) in taken or len(c['run']) < cfg.get('floorMessages', cfg['minMessages']):
+                continue
+            s0, s1 = c['run'][0]['ts'], c['run'][-1]['ts']
+            if any(p['channel_id'] == c['channel_id'] and s0 <= p['run'][-1]['ts'] and s1 >= p['run'][0]['ts'] for p in picked):
+                continue   # never the same stretch twice
+            picked.append(c)
+        picked.sort(key=lambda c: -c['score'])
     return picked
 
 
