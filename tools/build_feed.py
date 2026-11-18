@@ -80,9 +80,9 @@ def top_plays(season):
             continue
         seen.add(p['clip']['id'])
         out.append({'rank': len(out) + 1, 'title': ('%s %s' % (p['who'], p['label'])).strip(), 'sub': '%s vs %s \u00b7 Wk %d' % (p['a'], p['b'], p['week']),
-                    'managers': [p['a'], p['b']], 'swing': round(p['swing'] * 100), 'from': p.get('from'), 'to': p.get('to'), 'clip': p['clip'],
+                    'managers': [p['a'], p['b']], 'swing': round(p['swing'] * 100), 'from': p.get('from'), 'to': p.get('to'), 'clip': p['clip'], **({'alt': p['alt']} if p.get('alt') else {}),
                     'href': 'https://www.youtube.com/watch?v=%s&t=%ds' % (p['clip']['id'], int(p['clip']['s']))})
-        if len(out) == 10:
+        if len(out) == 40:   # candidates: the page keeps the first ten whose clip really plays in a browser
             break
     return out
 
@@ -98,8 +98,8 @@ def top_trades(data, season):
         winner = t['a'] if (net or 0) > 0.05 else t['b'] if (net or 0) < -0.05 else None
         out.append({'rank': i, 'title': '%s \u21c4 %s' % (t['a'], t['b']), 'sub': 'Wk %d' % t['w'], 'managers': [t['a'], t['b']],
                     'winner': winner, 'edge': round(abs(net or 0), 1),
-                    'gets': [{'m': t['a'], 'players': [short_player(x['n']) for x in t['bg']]},     # A receives what B gave
-                             {'m': t['b'], 'players': [short_player(x['n']) for x in t['ag']]}],
+                    'gets': [{'m': t['a'], 'players': [short_player(x['n']) for x in t['bg']], 'v': t.get('vb')},     # A receives what B gave (value vb)
+                             {'m': t['b'], 'players': [short_player(x['n']) for x in t['ag']], 'v': t.get('va')}],
                     'href': '/SleeperTradeNodes/?season=%d&manager=%s' % (season, urllib.request.quote(winner or t['a']))})
     return out
 

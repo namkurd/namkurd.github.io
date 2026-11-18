@@ -70,6 +70,8 @@
   .win.even { background: color-mix(in srgb, var(--dtf-dim) 20%, transparent); color: var(--dtf-dim); }
   .trade .gets { display: block; white-space: nowrap; overflow: hidden; text-overflow: clip; font-size: .72rem; color: var(--dtf-dim); }
   .trade .gets i { font-style: normal; color: var(--dtf-text); }
+  .trade .gets .tv { font-style: normal; font-weight: 700; color: var(--ac); margin-left: 2px; }
+  .gl { display: flex; align-items: center; gap: 6px; } .gl .gets { flex: 1 1 auto; min-width: 0; } .gl .win { padding: 0 6px; font-size: .62rem; line-height: 1.5; } .gl .you { flex: none; }
   .trade .gets.wrap { white-space: normal; }
   .dtf-wrap a.row { color: var(--dtf-text); }
   .row { display: grid; grid-template-columns: 22px minmax(0, 1fr) 12px; align-items: center; gap: 9px; min-height: clamp(34px, calc(var(--avail) * .05), 40px); padding: 2px 4px; border-radius: 10px; text-decoration: none; color: var(--dtf-text); -webkit-tap-highlight-color: transparent; }
@@ -84,6 +86,7 @@
   .row.play { grid-template-columns: 22px minmax(0, 1fr) auto auto; gap: 8px; min-height: clamp(34px, calc(var(--avail) * .05), 40px); cursor: pointer; }
   .row.play .pp { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 1.7em; height: 1.7em; padding-left: .12em; box-sizing: border-box; border-radius: 50%; font-size: .7rem; color: #2ecc71; background: color-mix(in srgb, #2ecc71 16%, transparent); border: 1px solid color-mix(in srgb, #2ecc71 70%, transparent); text-shadow: 0 0 6px #2ecc71; box-shadow: 0 0 8px 1px color-mix(in srgb, #2ecc71 55%, transparent); animation: pglow 2.4s ease-in-out infinite; }
   .row.play:hover .pp, .row.play.open .pp { background: color-mix(in srgb, #2ecc71 28%, transparent); box-shadow: 0 0 12px 3px color-mix(in srgb, #2ecc71 80%, transparent); }
+  .row.play.pend { display: none; }
   .row.play .pd { font-size: .7rem; font-weight: 800; font-variant-numeric: tabular-nums; white-space: nowrap; color: #2ecc71; }
   @keyframes pglow { 0%, 100% { box-shadow: 0 0 6px 0 color-mix(in srgb, #2ecc71 45%, transparent); } 50% { box-shadow: 0 0 12px 3px color-mix(in srgb, #2ecc71 75%, transparent); } }
   @media (prefers-reduced-motion: reduce) { .row.play .pp { animation: none; } }
@@ -118,8 +121,6 @@
     .row:not(.trade) small { white-space: nowrap; }   /* one line: with five columns the sublines would otherwise wrap and push the page past one screen */
     .trade small { white-space: normal; }
     .trade b { display: block; -webkit-line-clamp: unset; }
-    .trade .tline { flex-direction: column; align-items: flex-start; gap: 3px; }   /* columns are narrow: title, then its winner tag, on every trade */
-    .trade .tline b { max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   }
   /* below the tiles: the latest podcast episode (a small embedded player) and this season's Shotguns, both kept short so Home fits one screen */
   .lower { display: grid; gap: clamp(4px, calc(var(--avail) * .008), 10px); margin-top: clamp(4px, calc(var(--avail) * .008), 10px); }
@@ -315,13 +316,16 @@
     slack: { tab: 'Slack', title: function () { return 'Hot in Slack this week'; }, cap: 'The busiest conversations of the past 7 days.', ac: '#e8eaf0' }
   };
   function rowHtml(it, id) {
-    if (id === 'plays') return '<a class="row play" data-m="' + esc((it.managers || []).join('|')) + '" data-yt="' + esc(it.clip.id) + '" data-s="' + Math.floor(it.clip.s) + '" data-e="' + Math.ceil(it.clip.e) + '" href="' + esc(it.href) + '" target="_blank" rel="noopener"><span class="rk">' + it.rank + '</span><span><b>' + esc(it.title) + '</b><small>' + esc(it.sub) + '</small></span><span class="pp" aria-hidden="true" title="Watch the play">\u25b6</span>' + (it.from != null ? '<span class="pd" title="Win probability before and after the play">' + it.from + '% \u2192 ' + it.to + '%</span>' : '') + '</a>';
+    if (id === 'plays') return '<a class="row play pend" data-m="' + esc((it.managers || []).join('|')) + '" data-yt="' + esc(it.clip.id) + '" data-s="' + Math.floor(it.clip.s) + '" data-e="' + Math.ceil(it.clip.e) + '" data-yt2="' + esc(it.alt ? it.alt.id : '') + '" data-s2="' + (it.alt ? Math.floor(it.alt.s) : '') + '" data-e2="' + (it.alt ? Math.ceil(it.alt.e) : '') + '" href="' + esc(it.href) + '" target="_blank" rel="noopener"><span class="rk">' + it.rank + '</span><span><b>' + esc(it.title) + '</b><small>' + esc(it.sub) + '</small></span><span class="pp" aria-hidden="true" title="Watch the play">\u25b6</span>' + (it.from != null ? '<span class="pd" title="Win probability before and after the play">' + it.from + '% \u2192 ' + it.to + '%</span>' : '') + '</a>';
     var ext = /^https?:/.test(it.href), mgrs = (it.managers || []).join('|');
     var open = '<a class="row' + (id === 'trades' ? ' trade' : id === 'slack' ? ' slack' : id === 'matchups' ? ' mu' : '') + '" data-m="' + esc(mgrs) + '" href="' + esc(it.href) + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '>' + (id === 'trades' && it.sub ? '<span class="rkc"><span class="rk">' + it.rank + '</span><em class="wkn">' + esc(it.sub) + '</em></span>' : '<span class="rk">' + it.rank + '</span>');
     if (id === 'trades' && it.gets) {
       var win = it.winner ? '<span class="win">▲ ' + esc(it.winner) + ' +' + it.edge.toFixed(1) + '</span>' : '<span class="win even">Even</span>';
-      var gets = it.gets.map(function (g) { return '<small class="gets"><i>' + esc(g.m) + '</i> gets ' + esc(g.players.join(', ')) + '</small>'; }).join('');
-      return open + '<span><span class="tline"><b>' + esc(it.title) + '<span class="youslot"></span></b>' + win + '</span>' + gets + '</span><span class="go" aria-hidden="true">›</span></a>';
+      var gets = it.gets.map(function (g, i) {
+        var tv = g.v != null ? ' <em class="tv">' + Number(g.v).toFixed(1) + '</em>' : '';
+        return '<span class="gl"><small class="gets"><i>' + esc(g.m) + '</i> gets ' + esc(g.players.join(', ')) + tv + '</small>' + (i ? win : '<span class="youslot"></span>') + '</span>';
+      }).join('');
+      return open + '<span>' + gets + '</span><span class="go" aria-hidden="true">›</span></a>';
     }
     return open + '<span><b>' + esc(it.title) + '<span class="youslot"></span></b><small>' + esc(it.sub) + '</small></span><span class="go" aria-hidden="true">›</span></a>';
   }
@@ -371,7 +375,7 @@
     var n = window.innerWidth >= 1100 ? 5 : 3;
     [].forEach.call(document.querySelectorAll('.flist'), function (l) {
       l.style.maxHeight = '';
-      var rows = [].slice.call(l.children).filter(function (c) { return c.classList.contains('row'); });
+      var rows = [].slice.call(l.children).filter(function (c) { return c.classList.contains('row') && !c.classList.contains('pend'); });
       if (!l.offsetWidth || rows.length <= n) return;
       var last = rows[n - 1], first = rows[0];
       var h = last.getBoundingClientRect().bottom - first.getBoundingClientRect().top;
@@ -397,6 +401,54 @@
   }
   window.addEventListener('resize', fitAll);
   window.addEventListener('load', function () { setTimeout(fitHome, 150); setTimeout(fitHome, 900); });   // fonts, the player and late data settle after the first fit
+  // Plays: only clips that really embed. Each candidate (its clip, else its alternate) is tried once in a hidden YouTube player, the way Rumble Central does it
+  // (an owner who blocks embedding answers with an error); answers are kept in the same localStorage key Rumble Central uses. The first ten that play are shown.
+  var EMB = (function () { try { return JSON.parse(ls('rumbles.embed') || '{}') || {}; } catch (e) { return {}; } })(), YTAPI = null;
+  function ytLoad() {
+    return YTAPI || (YTAPI = new Promise(function (res, rej) {
+      if (window.YT && YT.Player) return res(window.YT);
+      var prev = window.onYouTubeIframeAPIReady; window.onYouTubeIframeAPIReady = function () { if (prev) prev(); res(window.YT); };
+      var sc = document.createElement('script'); sc.src = 'https://www.youtube.com/iframe_api'; sc.onerror = rej; document.head.appendChild(sc); setTimeout(rej, 12000);
+    }));
+  }
+  function probe(id) {   // -> true (embeds) / false (blocked) / null (couldn't tell)
+    if (EMB[id] != null) return Promise.resolve(EMB[id] === 1);
+    return ytLoad().then(function (YT) {
+      return new Promise(function (resolve) {
+        var holder = document.createElement('div'), slot = document.createElement('div'), pl = null, done = false, timer;
+        holder.style.cssText = 'position:fixed;left:-400px;top:0;width:160px;height:90px;overflow:hidden;pointer-events:none;opacity:0'; holder.appendChild(slot); document.body.appendChild(holder);
+        function end(ok) {
+          if (done) return; done = true; clearTimeout(timer);
+          if (ok != null) { EMB[id] = ok ? 1 : 0; ls('rumbles.embed', JSON.stringify(EMB)); }
+          try { if (pl) pl.destroy(); } catch (x) {} if (holder.parentNode) holder.parentNode.removeChild(holder);
+          resolve(ok);
+        }
+        timer = setTimeout(function () { end(null); }, 8000);
+        pl = new YT.Player(slot, { host: 'https://www.youtube-nocookie.com', videoId: id, width: '160', height: '90', playerVars: { autoplay: 0, playsinline: 1 },
+          events: { onReady: function () { setTimeout(function () { end(true); }, 1500); }, onError: function () { end(false); } } });
+      });
+    }, function () { return null; });
+  }
+  function verifyPlays() {
+    var list = document.querySelector('.panel[data-id="plays"] .flist'); if (!list) return;
+    var rows = [].slice.call(list.querySelectorAll('.row.play')), shown = 0, MAX = 10, note = document.createElement('p');
+    note.className = 'none'; note.textContent = 'Checking which clips play here\u2026'; list.appendChild(note);
+    function show(r, which) {
+      if (which === 2) { r.dataset.yt = r.dataset.yt2; r.dataset.s = r.dataset.s2; r.dataset.e = r.dataset.e2; r.href = 'https://www.youtube.com/watch?v=' + r.dataset.yt + '&t=' + r.dataset.s + 's'; }
+      r.classList.remove('pend'); r.querySelector('.rk').textContent = ++shown; note.hidden = true; fitAll();
+    }
+    function tryRow(r, which) {
+      var id = which === 2 ? r.dataset.yt2 : r.dataset.yt;
+      if (!id) return Promise.resolve(false);
+      return probe(id).then(function (ok) { if (ok) { show(r, which); return true; } return ok === null ? null : false; });
+    }
+    rows.reduce(function (q, r) {
+      return q.then(function () {
+        if (shown >= MAX) return;
+        return tryRow(r, 1).then(function (ok) { if (ok === false) return tryRow(r, 2); });
+      });
+    }, Promise.resolve()).then(function () { if (!shown) { note.hidden = false; note.textContent = 'No clips that play here yet.'; } else note.remove(); fitAll(); });
+  }
   Promise.allSettled([get('/feed.json'), get('/slack.json')]).then(function (res) {
     var sections = [], feed = res[0].status === 'fulfilled' ? res[0].value : null, slack = res[1].status === 'fulfilled' ? res[1].value : null;
     if (feed) { STANDINGS = feed.standings || []; feed.sections.forEach(function (s) { if (META[s.id]) sections.push({ id: s.id, items: s.items }); }); paintNext(); }
@@ -435,7 +487,7 @@
     var gen = feed && feed.generatedAt, old = gen && (Date.now() - Date.parse(gen)) > 2 * 864e5;
     $('meta').innerHTML = gen ? ('updated ' + ago(gen) + (old ? ' <span class="old">· may be out of date</span>' : '')) : '';
     $('feed').hidden = false;
-    markMine(); fitAll();
+    markMine(); fitAll(); verifyPlays();
   });
   // ---- latest podcast episode: the last YouTube link posted in #podcast (podcast.json, built by the Slack job)
   get('/podcast.json').then(function (p) {
