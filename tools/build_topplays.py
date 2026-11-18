@@ -109,7 +109,7 @@ def main():
     cache = scrape(args.base, season, missing)
     cache['updatedAt'] = dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
     os.makedirs(os.path.dirname(CACHE), exist_ok=True)
-    json.dump(cache, open(CACHE, 'w', encoding='utf-8'), indent=0, ensure_ascii=False); open(CACHE, 'a').write('\n')
+    json.dump(cache, open(CACHE, 'w', encoding='utf-8'), separators=(',', ':'), ensure_ascii=False); open(CACHE, 'a').write('\n')
     print('wrote', CACHE)
 
 
