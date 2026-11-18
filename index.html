@@ -93,7 +93,7 @@
   /* every feed list holds ten and scrolls inside its panel (fitLists sizes it to three rows, five on a wide screen) so Home still fits one screen */
   .flist { overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; -webkit-overflow-scrolling: touch; } .flist.has-open { max-height: none !important; overflow: visible; }
   .pembed { margin: 0 0 6px; border-radius: 10px; overflow: hidden; background: #000; }
-  .pembed .pv { position: relative; aspect-ratio: 16 / 9; } .pembed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .pembed .pw { position: relative; aspect-ratio: 16 / 9; } .pembed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
   .pembed a { display: block; padding: 5px 8px; font-size: .7rem; color: #86efac; text-decoration: none; background: #0b1f12; }
   .none { margin: 8px 4px; color: var(--dtf-dim); font-size: .8rem; }
   .meta { margin: 2px 4px 0; font-size: .68rem; color: var(--dtf-dim); text-align: right; }
@@ -474,7 +474,7 @@
       r.parentNode.classList.remove('has-open');
       if (was) { fitAll(); return; }
       var d = document.createElement('div'); d.className = 'pembed';
-      d.innerHTML = '<div class="pv"><iframe src="https://www.youtube-nocookie.com/embed/' + r.dataset.yt + '?start=' + r.dataset.s + '&end=' + r.dataset.e + '&autoplay=1&playsinline=1&rel=0&modestbranding=1" title="' + esc(r.querySelector('b').textContent) + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div><a href="' + esc(r.href) + '" target="_blank" rel="noopener">Won\u2019t play? Watch on YouTube \u203a</a>';
+      d.innerHTML = '<div class="pw"><iframe src="https://www.youtube-nocookie.com/embed/' + r.dataset.yt + '?start=' + r.dataset.s + '&end=' + r.dataset.e + '&autoplay=1&playsinline=1&rel=0&modestbranding=1" title="' + esc(r.querySelector('b').textContent) + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div><a href="' + esc(r.href) + '" target="_blank" rel="noopener">Won\u2019t play? Watch on YouTube \u203a</a>';
       r.classList.add('open'); r.after(d); r.parentNode.classList.add('has-open');
     });
     $('tabs').addEventListener('click', function (e) {
