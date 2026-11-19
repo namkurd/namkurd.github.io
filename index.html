@@ -100,6 +100,7 @@
   .ptog { flex: none; display: inline-flex; gap: 6px; margin-left: auto; }
   .ptog .seg { display: inline-flex; padding: 2px; border-radius: 10px; background: color-mix(in srgb, var(--dtf-bg) 60%, #000); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--dtf-dim) 35%, transparent); }
   .ptog button { height: 16px; padding: 0 7px; border: 0; border-radius: 8px; background: none; color: var(--dtf-dim); font-weight: 700; font-size: .62rem; line-height: 1; font-family: inherit; text-transform: none; letter-spacing: 0; cursor: pointer; white-space: nowrap; -webkit-tap-highlight-color: transparent; }
+  .ptog .pwk { height: 20px; padding: 0 20px 0 9px; border: 0; border-radius: 10px; background-color: #0b0f14; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%2322c55e'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 7px center; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ac) 60%, transparent); color: var(--ac); font: 700 .64rem/1 inherit; font-family: inherit; -webkit-appearance: none; appearance: none; cursor: pointer; color-scheme: dark; }
   .ptog button.on { background: var(--ac); color: #06210f; box-shadow: 0 1px 3px rgba(0,0,0,.4); }
   /* the play overlay: one dark-green bar on top (play, the facts in the middle, links), then as much video as the screen allows */
   .pmopen { overflow: hidden; }
@@ -526,7 +527,7 @@
   }
   // Plays views: League / Mine and Season / last finished week. The feed carries the league's season list; the rest comes from data/topplays.json.
   var PLYEAR = '';
-  var PL = { scope: ls('dtf.plays.scope') === 'mine' ? 'mine' : 'league', span: ls('dtf.plays.span') === 'week' ? 'week' : 'season', feed: [], data: null, want: false };
+  var PL = { scope: ls('dtf.plays.scope') === 'mine' ? 'mine' : 'league', span: (/^(season|week|\d+)$/.test(ls('dtf.plays.span') || '') ? ls('dtf.plays.span') : 'season'), feed: [], data: null, want: false };
   function playsLoad() { return PL.data ? Promise.resolve(PL.data) : get('/data/topplays.json').then(function (d) { PL.data = d; return d; }, function () { return null; }); }
   function playsLast() { var w = PL.data ? Object.keys(PL.data.weeks).map(Number) : []; return w.length ? Math.max.apply(null, w) : null; }
   // a team defense's long label becomes "Steelers 35 yd pick-6 (T.J. Watt)" (the same rule as play_title() in tools/build_feed.py)
@@ -552,9 +553,10 @@
   function playsItems() {
     if (PL.scope === 'league' && PL.span === 'season') return PL.feed;
     if (!PL.data) return [];
-    var me = meName(), last = playsLast(), all = [];
+    if (PL.span === 'week') PL.span = String(playsLast() || 'season');   // an older saved choice: the last finished week
+    var me = meName(), all = [];
     Object.keys(PL.data.weeks).forEach(function (w) { PL.data.weeks[w].forEach(function (p) { all.push(p); }); });
-    all = all.filter(function (p) { return (PL.span === 'season' || p.week === last) && (PL.scope === 'league' || (p.by === me && p.help !== false)); });
+    all = all.filter(function (p) { return (PL.span === 'season' || p.week === Number(PL.span)) && (PL.scope === 'league' || (p.by === me && p.help !== false)); });
     all.sort(function (a, b) { return b.swing - a.swing; });
     var seen = {}, out = [];
     all.forEach(function (p) { if (!seen[p.clip.id] && out.length < 40) { seen[p.clip.id] = 1; var it = mapPlay(p); it.rank = out.length + 1; out.push(it); } });
@@ -563,25 +565,28 @@
   function paintPlays() {
     var panel = document.querySelector('.panel[data-id="plays"]'); if (!panel) return;
     var last = playsLast();
-    var ht = panel.querySelector('.ht'); if (ht) ht.textContent = (PL.scope === 'mine' ? 'My top plays' : 'Top plays') + ' of ' + (PL.span === 'week' && last ? 'week ' + last : PLYEAR);
+    if (PL.span === 'week') PL.span = String(last || 'season');
+    var ht = panel.querySelector('.ht'); if (ht) ht.textContent = (PL.scope === 'mine' ? 'My top plays' : 'Top plays') + ' of ' + (PL.span === 'season' ? PLYEAR : 'week ' + PL.span);
     [].forEach.call(panel.querySelectorAll('.seg button'), function (b) {
-      var k = b.parentNode.dataset.k, on = PL[k] === b.dataset.v;
-      b.classList.toggle('on', on); b.setAttribute('aria-pressed', on);
-      if (k === 'span' && b.dataset.v === 'week') b.textContent = last ? 'Wk ' + last : 'Wk';
+      var on = PL.scope === b.dataset.v; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on);
     });
+    var sel = panel.querySelector('.pwk');
+    if (sel) {   // Season, then each finished week, newest first
+      var wks = PL.data ? Object.keys(PL.data.weeks).map(Number).sort(function (x, y) { return y - x; }) : [];
+      var want = '<option value="season">Season</option>' + wks.map(function (w) { return '<option value="' + w + '">Week ' + w + '</option>'; }).join('');
+      if (sel.dataset.opts !== want) { sel.innerHTML = want; sel.dataset.opts = want; }
+      sel.value = PL.span;
+    }
     var items = playsItems(), list = panel.querySelector('.flist');
     list.classList.remove('has-open'); list.scrollTop = 0;
-    list.innerHTML = items.length ? items.map(function (it) { return rowHtml(it, 'plays'); }).join('') : '<p class="none">' + (PL.scope === 'mine' ? (PL.span === 'week' ? 'None of your plays last week.' : 'None of your plays yet.') : 'Nothing yet.') + '</p>';
+    list.innerHTML = items.length ? items.map(function (it) { return rowHtml(it, 'plays'); }).join('') : '<p class="none">' + (PL.scope === 'mine' ? (PL.span === 'season' ? 'None of your plays yet.' : 'None of your plays in week ' + PL.span + '.') : 'Nothing yet.') + '</p>';
     ++PVTOK; markMine(); fitAll(); verifyPlays();
   }
   function playsSet(k, v) { PL[k] = v; ls('dtf.plays.' + k, v); playsLoad().then(paintPlays); }
   function playsToggle(k, v) {
-    if (k === 'scope') {
-      if (v === 'league') return playsSet('scope', 'league');
-      if (!meName()) { PL.want = true; if (window.DTF && DTF.pickMe) DTF.pickMe(); return; }   // no manager picked yet: ask who you are, then show yours
-      return playsSet('scope', 'mine');
-    }
-    playsSet('span', v === 'week' ? 'week' : 'season');
+    if (v === 'league') return playsSet('scope', 'league');
+    if (!meName()) { PL.want = true; if (window.DTF && DTF.pickMe) DTF.pickMe(); return; }   // no manager picked yet: ask who you are, then show yours
+    return playsSet('scope', 'mine');
   }
   window.addEventListener('dtf:me', function () { if (PL.want && meName()) { PL.want = false; playsSet('scope', 'mine'); } else if (PL.scope === 'mine') { if (!meName()) PL.scope = 'league'; paintPlays(); } });
   Promise.allSettled([get('/feed.json'), get('/slack.json')]).then(function (res) {
@@ -602,7 +607,7 @@
     function seeAll(id) { var l = SEEALL[id]; return l ? '<a class="seeall" href="' + esc(l[0]) + '"' + (/^https?:/.test(l[0]) ? ' target="_blank" rel="noopener"' : '') + '>' + l[1] + '</a>' : ''; }
     $('panels').innerHTML = sections.map(function (s) {
       var m = META[s.id];
-      return '<div class="panel' + (s.id === on ? ' on' : '') + '" role="tabpanel" data-id="' + s.id + '" style="--ac:' + m.ac + '"><h2><span class="ht">' + (s.id === 'plays' ? esc(m.title(year)).replace(/ of (\d+)$/, '<span class="yr"> of $1</span>') : esc(m.title(year))) + '</span>' + tipHtml(s.id, m) + (s.id === 'plays' ? '<span class="ptog"><span class="seg" data-k="scope" role="group" aria-label="Whose plays"><button type="button" data-v="league">League</button><button type="button" data-v="mine">Mine</button></span><span class="seg" data-k="span" role="group" aria-label="How far back"><button type="button" data-v="season">Season</button><button type="button" data-v="week">Wk</button></span></span>' : '') + seeAll(s.id) + '</h2><span class="cap">' + esc(m.cap) + '</span>' +
+      return '<div class="panel' + (s.id === on ? ' on' : '') + '" role="tabpanel" data-id="' + s.id + '" style="--ac:' + m.ac + '"><h2><span class="ht">' + (s.id === 'plays' ? esc(m.title(year)).replace(/ of (\d+)$/, '<span class="yr"> of $1</span>') : esc(m.title(year))) + '</span>' + tipHtml(s.id, m) + (s.id === 'plays' ? '<span class="ptog"><span class="seg" data-k="scope" role="group" aria-label="Whose plays"><button type="button" data-v="league">League</button><button type="button" data-v="mine">Mine</button></span><select class="pwk" aria-label="Season or a single week"><option value="season">Season</option></select></span>' : '') + seeAll(s.id) + '</h2><span class="cap">' + esc(m.cap) + '</span>' +
         (s.items.length ? '<div class="flist">' + s.items.map(function (it) { return rowHtml(it, s.id); }).join('') + '</div>' : '<p class="none">Nothing yet this season.</p>') + '</div>';
     }).join('');
     // a play opens in a large overlay: the clip on top, what happened (when, game, quarter, score) under it; the link itself is the fallback
@@ -635,6 +640,7 @@
       document.body.appendChild(m); document.documentElement.classList.add('pmopen'); document.addEventListener('keydown', onPlayKey);
       m.querySelector('.pclose').focus({ preventScroll: true });
     }
+    $('feed').addEventListener('change', function (e) { var w = e.target.closest('.pwk'); if (w) playsSet('span', w.value); });
     $('feed').addEventListener('click', function (e) {
       var tg = e.target.closest('.ptog button'); if (tg) { if (!tg.classList.contains('on')) playsToggle(tg.parentNode.dataset.k, tg.dataset.v); return; }
       var r = e.target.closest('.row.play'); if (!r || e.metaKey || e.ctrlKey || r.classList.contains('yt')) return;   // an orange row is a plain link out to YouTube
