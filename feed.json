@@ -23,6 +23,12 @@
       "e": 113
      },
      "et": "Mon 10:54 PM",
+     "fant": {
+      "m": "Ryan",
+      "o": "Steven",
+      "ms": 182.69,
+      "os": 186.57
+     },
      "sit": {
       "team": "LAR",
       "opp": "BUF",
@@ -57,6 +63,12 @@
       "e": 181
      },
      "et": "Mon 10:17 PM",
+     "fant": {
+      "m": "Ankit",
+      "o": "Haan",
+      "ms": 169.4,
+      "os": 166.54
+     },
      "sit": {
       "team": "LAR",
       "opp": "NYG",
@@ -91,6 +103,12 @@
       "e": 245
      },
      "et": "Mon 10:28 PM",
+     "fant": {
+      "m": "Kaitlyn",
+      "o": "Steven",
+      "ms": 155.68,
+      "os": 154.96
+     },
      "sit": {
       "team": "DAL",
       "opp": "PHI",
@@ -125,6 +143,12 @@
       "e": 75.5
      },
      "et": "Mon 8:34 PM",
+     "fant": {
+      "m": "Alex",
+      "o": "Haan",
+      "ms": 150.0,
+      "os": 150.6
+     },
      "sit": {
       "team": "CHI",
       "opp": "SEA",
@@ -154,6 +178,12 @@
       "e": 181.5
      },
      "et": "Sun 3:32 PM",
+     "fant": {
+      "m": "Alex",
+      "o": "Christian",
+      "ms": 153.64,
+      "os": 95.94
+     },
      "sit": {
       "team": "GB",
       "opp": "CHI",
@@ -183,6 +213,12 @@
       "e": 796
      },
      "et": "Sun 7:21 PM",
+     "fant": {
+      "m": "Ben",
+      "o": "Jake",
+      "ms": 150.87,
+      "os": 177.69
+     },
      "sit": {
       "team": "ARI",
       "opp": "DET",
@@ -217,6 +253,12 @@
       "e": 158
      },
      "et": "Sun 7:28 PM",
+     "fant": {
+      "m": "Stephanie",
+      "o": "Haan",
+      "ms": 164.55,
+      "os": 138.09
+     },
      "sit": {
       "team": "LV",
       "opp": "BUF",
@@ -246,6 +288,12 @@
       "e": 611.5
      },
      "et": "Mon 10:40 PM",
+     "fant": {
+      "m": "Aidan",
+      "o": "Ankit",
+      "ms": 174.5,
+      "os": 171.82
+     },
      "sit": {
       "team": "LAR",
       "opp": "BUF",
@@ -280,6 +328,12 @@
       "e": 53.5
      },
      "et": "Mon 9:15 PM",
+     "fant": {
+      "m": "Steven",
+      "o": "Kaitlyn",
+      "ms": 154.96,
+      "os": 155.68
+     },
      "sit": {
       "team": "DAL",
       "opp": "PHI",
@@ -309,6 +363,12 @@
       "e": 118.5
      },
      "et": "Mon 9:08 PM",
+     "fant": {
+      "m": "Alex",
+      "o": "Haan",
+      "ms": 150.0,
+      "os": 150.6
+     },
      "sit": {
       "team": "CHI",
       "opp": "SEA",
@@ -343,6 +403,12 @@
       "e": 150.5
      },
      "et": "Sun 6:31 PM",
+     "fant": {
+      "m": "Haan",
+      "o": "Aidan",
+      "ms": 200.16,
+      "os": 168.91
+     },
      "sit": {
       "team": "SF",
       "opp": "DAL",
@@ -372,6 +438,12 @@
       "e": 651.5
      },
      "et": "Sun 3:55 PM",
+     "fant": {
+      "m": "Stephanie",
+      "o": "Ankit",
+      "ms": 151.11,
+      "os": 155.7
+     },
      "sit": {
       "team": "CAR",
       "opp": "CLE",
@@ -401,6 +473,12 @@
       "e": 15
      },
      "et": "Sun 9:41 PM",
+     "fant": {
+      "m": "Alex",
+      "o": "Stephanie",
+      "ms": 124.98,
+      "os": 128.56
+     },
      "sit": {
       "team": "KC",
       "opp": "SEA",
@@ -435,6 +513,12 @@
       "e": 265.5
      },
      "et": "Sun 7:20 PM",
+     "fant": {
+      "m": "Stephanie",
+      "o": "Joe",
+      "ms": 161.21,
+      "os": 152.34
+     },
      "sit": {
       "team": "SF",
       "opp": "DAL",
@@ -464,6 +548,12 @@
       "e": 268.5
      },
      "et": "Sun 2:39 PM",
+     "fant": {
+      "m": "Ankit",
+      "o": "Stephanie",
+      "ms": 155.7,
+      "os": 151.11
+     },
      "sit": {
       "team": "DET",
       "opp": "NYJ",
@@ -493,6 +583,12 @@
       "e": 183.5
      },
      "et": "Sun 11:14 PM",
+     "fant": {
+      "m": "Ankit",
+      "o": "Stephanie",
+      "ms": 155.7,
+      "os": 151.11
+     },
      "sit": {
       "team": "LAR",
       "opp": "DEN",
@@ -527,6 +623,12 @@
       "e": 77.5
      },
      "et": "Sun 6:27 PM",
+     "fant": {
+      "m": "Christian",
+      "o": "Ankit",
+      "ms": 103.21,
+      "os": 105.58
+     },
      "sit": {
       "team": "BUF",
       "opp": "LV",
@@ -561,6 +663,12 @@
       "e": 138.5
      },
      "et": "Sun 4:01 PM",
+     "fant": {
+      "m": "Aidan",
+      "o": "Ryan",
+      "ms": 130.2,
+      "os": 157.29
+     },
      "sit": {
       "team": "NYG",
       "opp": "NO",
@@ -595,6 +703,12 @@
       "e": 50.5
      },
      "et": "Sun 2:00 PM",
+     "fant": {
+      "m": "Jake",
+      "o": "Kaitlyn",
+      "ms": 167.69,
+      "os": 180.04
+     },
      "sit": {
       "team": "CAR",
       "opp": "CHI",
@@ -629,6 +743,12 @@
       "e": 353.5
      },
      "et": "Sun 2:40 PM",
+     "fant": {
+      "m": "Alex",
+      "o": "Ben",
+      "ms": 160.08,
+      "os": 190.05
+     },
      "sit": {
       "team": "CHI",
       "opp": "CAR",
@@ -663,6 +783,12 @@
       "e": 58.5
      },
      "et": "Mon 8:41 PM",
+     "fant": {
+      "m": "Kaitlyn",
+      "o": "Steven",
+      "ms": 155.68,
+      "os": 154.96
+     },
      "sit": {
       "team": "DAL",
       "opp": "PHI",
@@ -692,6 +818,12 @@
       "e": 15
      },
      "et": "Sun 4:35 PM",
+     "fant": {
+      "m": "Haan",
+      "o": "Alex",
+      "ms": 150.6,
+      "os": 150.0
+     },
      "sit": {
       "team": "CIN",
       "opp": "TEN",
@@ -721,6 +853,12 @@
       "e": 192
      },
      "et": "Thu 10:43 PM",
+     "fant": {
+      "m": "Aidan",
+      "o": "Haan",
+      "ms": 168.91,
+      "os": 200.16
+     },
      "sit": {
       "team": "NYG",
       "opp": "WAS",
@@ -755,6 +893,12 @@
       "e": 22.5
      },
      "et": "Sun 4:46 PM",
+     "fant": {
+      "m": "Steven",
+      "o": "Haan",
+      "ms": 192.21,
+      "os": 175.97
+     },
      "sit": {
       "team": "GB",
       "opp": "MIN",
@@ -784,6 +928,12 @@
       "e": 236.5
      },
      "et": "Sun 6:15 PM",
+     "fant": {
+      "m": "Kaitlyn",
+      "o": "Jake",
+      "ms": 180.04,
+      "os": 167.69
+     },
      "sit": {
       "team": "LV",
       "opp": "MIA",
@@ -813,6 +963,12 @@
       "e": 106.5
      },
      "et": "Sun 4:33 PM",
+     "fant": {
+      "m": "Haan",
+      "o": "Ankit",
+      "ms": 166.54,
+      "os": 169.4
+     },
      "sit": {
       "team": "DAL",
       "opp": "WAS",
@@ -842,6 +998,12 @@
       "e": 376
      },
      "et": "Sun 4:07 PM",
+     "fant": {
+      "m": "Kaitlyn",
+      "o": "Alex",
+      "ms": 181.65,
+      "os": 139.2
+     },
      "sit": {
       "team": "DAL",
       "opp": "HOU",
@@ -876,6 +1038,12 @@
       "e": 45.5
      },
      "et": "Mon 8:27 PM",
+     "fant": {
+      "m": "Alex",
+      "o": "Ryan",
+      "ms": 146.14,
+      "os": 136.32
+     },
      "sit": {
       "team": "CHI",
       "opp": "PHI",
@@ -905,6 +1073,12 @@
       "e": 165.5
      },
      "et": "Mon 10:14 PM",
+     "fant": {
+      "m": "Ankit",
+      "o": "Haan",
+      "ms": 169.4,
+      "os": 166.54
+     },
      "sit": {
       "team": "LAR",
       "opp": "NYG",
@@ -939,6 +1113,12 @@
       "e": 215.5
      },
      "et": "Sun 9:43 PM",
+     "fant": {
+      "m": "Haan",
+      "o": "Ankit",
+      "ms": 166.54,
+      "os": 169.4
+     },
      "sit": {
       "team": "IND",
       "opp": "KC",
@@ -973,6 +1153,12 @@
       "e": 55.5
      },
      "et": "Sun 2:19 PM",
+     "fant": {
+      "m": "Jake",
+      "o": "Joe",
+      "ms": 151.76,
+      "os": 129.62
+     },
      "sit": {
       "team": "LAR",
       "opp": "PHI",
@@ -1007,6 +1193,12 @@
       "e": 103.5
      },
      "et": "Sun 6:22 PM",
+     "fant": {
+      "m": "Joe",
+      "o": "Ryan",
+      "ms": 140.75,
+      "os": 169.14
+     },
      "sit": {
       "team": "DET",
       "opp": "GB",
@@ -1041,6 +1233,12 @@
       "e": 65.5
      },
      "et": "Sun 3:14 PM",
+     "fant": {
+      "m": "Christian",
+      "o": "Joe",
+      "ms": 147.12,
+      "os": 118.5
+     },
      "sit": {
       "team": "WAS",
       "opp": "SEA",
@@ -1075,6 +1273,12 @@
       "e": 67.5
      },
      "et": "Sun 2:24 PM",
+     "fant": {
+      "m": "Aidan",
+      "o": "Ankit",
+      "ms": 140.72,
+      "os": 165.93
+     },
      "sit": {
       "team": "BUF",
       "opp": "HOU",
@@ -1104,6 +1308,12 @@
       "e": 99.5
      },
      "et": "Sun 1:46 PM",
+     "fant": {
+      "m": "Alex",
+      "o": "Ryan",
+      "ms": 146.14,
+      "os": 136.32
+     },
      "sit": {
       "team": "KC",
       "opp": "MIA",
@@ -1133,6 +1343,12 @@
       "e": 254.5
      },
      "et": "Mon 10:42 PM",
+     "fant": {
+      "m": "Jake",
+      "o": "Haan",
+      "ms": 147.0,
+      "os": 132.73
+     },
      "sit": {
       "team": "DAL",
       "opp": "PHI",
@@ -1162,6 +1378,12 @@
       "e": 287.5
      },
      "et": "Sun 5:38 PM",
+     "fant": {
+      "m": "Kaitlyn",
+      "o": "Haan",
+      "ms": 121.62,
+      "os": 131.44
+     },
      "sit": {
       "team": "NO",
       "opp": "LV",
@@ -1196,6 +1418,12 @@
       "e": 206.5
      },
      "et": "Sun 2:48 PM",
+     "fant": {
+      "m": "Jake",
+      "o": "Joe",
+      "ms": 151.76,
+      "os": 129.62
+     },
      "sit": {
       "team": "DAL",
       "opp": "HOU",
@@ -1230,6 +1458,12 @@
       "e": 177
      },
      "et": "Sun 7:29 PM",
+     "fant": {
+      "m": "Steven",
+      "o": "Stephanie",
+      "ms": 166.97,
+      "os": 141.93
+     },
      "sit": {
       "team": "LV",
       "opp": "KC",
@@ -1259,6 +1493,12 @@
       "e": 967.5
      },
      "et": "Sun 3:55 PM",
+     "fant": {
+      "m": "Haan",
+      "o": "Aidan",
+      "ms": 191.18,
+      "os": 128.47
+     },
      "sit": {
       "team": "CIN",
       "opp": "JAX",
@@ -1913,5 +2153,5 @@
    }
   ]
  },
- "generatedAt": "2026-11-18T20:17:26Z"
+ "generatedAt": "2026-11-19T14:57:28Z"
 }

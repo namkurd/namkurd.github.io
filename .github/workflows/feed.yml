@@ -40,6 +40,8 @@ jobs:
           pip install playwright
           python -m playwright install --with-deps chromium
           python3 tools/build_topplays.py
+      # fantasy score of each cached play's matchup (no browser needed; also runs when nothing new was scraped)
+      - run: python3 tools/build_topplays.py --scores
       # IR eligibility: run the FAB tool's own check (it only reads the Sleeper API); if it can't (offseason) the last status is kept
       - uses: actions/checkout@v4
         with:
