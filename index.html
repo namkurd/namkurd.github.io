@@ -111,13 +111,15 @@
   #pmodal .ppd { flex: none; font-style: normal; font-weight: 800; font-size: .85rem; color: #4ade80; background: rgba(34,197,94,.14); padding: 3px 9px; border-radius: 10px; }
   #pmodal .pclose { flex: none; width: 30px; height: 30px; border-radius: 50%; border: 0; background: rgba(255,255,255,.1); color: #fff; font-size: 1.35rem; line-height: 1; cursor: pointer; } #pmodal .pclose:hover { background: rgba(255,255,255,.2); }
   #pmodal .pr2 { flex: 1 1 100%; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 2px 16px; }
-  #pmodal .pfant { display: flex; align-items: center; gap: 8px; font-size: .86rem; color: #cfe9d8; } #pmodal .pfant b { color: #86efac; font-weight: 700; } #pmodal .pfant span { color: #fff; font-weight: 700; }
+  #pmodal .pfant { display: flex; align-items: center; gap: 8px; font-size: .86rem; color: #cfe9d8; } #pmodal .pfant b, #pmodal .pfant b span { color: #86efac; font-weight: 700; } #pmodal .pfant span { color: #fff; font-weight: 700; }
   #pmodal .pres { font-style: normal; font-weight: 800; font-size: .66rem; letter-spacing: .06em; text-transform: uppercase; padding: 1px 7px; border-radius: 7px; } #pmodal .pres.win { color: #4ade80; background: rgba(34,197,94,.16); } #pmodal .pres.loss { color: #f87171; background: rgba(224,69,79,.16); } #pmodal .pres.tie { color: #cbd5e1; background: rgba(148,163,184,.18); }
+  #pmodal .sh { display: none; }
   #pmodal .pacts { display: flex; gap: 2px 16px; flex-wrap: wrap; } #pmodal .pacts a { color: #86efac; font-size: .78rem; font-weight: 700; text-decoration: none; white-space: nowrap; } #pmodal .pacts a:hover { text-decoration: underline; }
   #pmodal .pnfl { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px 28px; padding: 7px 12px 8px; background: #0b1f12; border-top: 1px solid rgba(34,197,94,.3); }
   #pmodal .pnfl .pf { display: flex; flex-direction: column; align-items: center; font-size: .9rem; font-weight: 700; color: #fff; white-space: nowrap; line-height: 1.15; } #pmodal .pnfl .pf i { font-style: normal; font-weight: 600; font-size: .56rem; letter-spacing: .09em; text-transform: uppercase; color: #86efac; }
   #pmodal .pw { position: relative; aspect-ratio: 16 / 9; background: #000; } #pmodal iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-  @media (max-width: 700px) { #pmodal .pnfl { gap: 2px 14px; padding: 6px 8px 7px; } }
+  #pmodal .pft { display: none; }
+  @media (max-width: 700px) { #pmodal .pnfl { gap: 2px 14px; padding: 6px 8px 7px; } #pmodal .pr2 .pacts { display: none; } #pmodal .pfant { gap: 6px; font-size: .84rem; min-width: 0; white-space: nowrap; } #pmodal .pft { display: flex; flex: 1 1 100%; justify-content: center; gap: 24px; margin-top: 3px; } #pmodal .pft a { font-size: .8rem; } }
   .none { margin: 8px 4px; color: var(--dtf-dim); font-size: .8rem; }
   .meta { margin: 2px 4px 0; font-size: .68rem; color: var(--dtf-dim); text-align: right; }
   .meta .old { color: #e0a23a; }
@@ -606,15 +608,15 @@
       var wk = (/Wk (\d+)/.exec(r.querySelector('small').textContent) || [])[1], sub = r.querySelector('small').textContent;
       if (fa) {
         var res = fa.ms > fa.os ? 'win' : fa.ms < fa.os ? 'loss' : 'tie';
-        fant = '<div class="pfant"><b>Week ' + esc(wk || '') + '</b><span>' + esc(fa.m) + ' ' + fa.ms.toFixed(1) + ' \u2013 ' + fa.os.toFixed(1) + ' ' + esc(fa.o) + '</span><em class="pres ' + res + '">' + (res === 'win' ? 'Win' : res === 'loss' ? 'Loss' : 'Tie') + '</em></div>';
+        fant = '<div class="pfant"><b><span class="lg">Week</span><span class="sh">Wk</span> ' + esc(wk || '') + '</b><span>' + esc(fa.m) + ' ' + fa.ms.toFixed(1) + ' \u2013 ' + fa.os.toFixed(1) + ' ' + esc(fa.o) + '</span><em class="pres ' + res + '">' + (res === 'win' ? 'Win' : res === 'loss' ? 'Loss' : 'Tie') + '</em></div>';
       } else {
         fant = '<div class="pfant"><span>' + esc(sub) + '</span></div>';
       }
       var pd = r.querySelector('.pd');
       var m = document.createElement('div'); m.id = 'pmodal'; m.setAttribute('role', 'dialog'); m.setAttribute('aria-modal', 'true'); m.setAttribute('aria-label', r.querySelector('b').textContent);
       m.innerHTML = '<div class="pcard"><div class="ptop"><span class="pt">' + esc(r.querySelector('b').textContent) + '</span>' + (pd ? '<em class="ppd">' + esc(pd.textContent) + '</em>' : '') + '<button type="button" class="pclose" aria-label="Close">&times;</button>' +
-        '<div class="pr2">' + fant + '<div class="pacts">' + (inf.replay ? '<a href="' + esc(inf.replay) + '">Rumble replay \u203a</a>' : '') + '<a href="' + esc(r.href) + '" target="_blank" rel="noopener">Watch on YouTube \u203a</a></div></div></div>' +
-        '<div class="pw"><iframe src="https://www.youtube-nocookie.com/embed/' + r.dataset.yt + '?start=' + r.dataset.s + (r.dataset.s === '0' ? '' : '&end=' + r.dataset.e) + '&autoplay=1&playsinline=1&rel=0&modestbranding=1" title="' + esc(r.querySelector('b').textContent) + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>' + (nfl ? '<div class="pnfl">' + nfl + '</div>' : '') + '</div>';
+        '<div class="pr2">' + fant + '<div class="pacts">' + (inf.replay ? '<a href="' + esc(inf.replay) + '"><span class="lg">Rumble replay</span><span class="sh">Replay</span> \u203a</a>' : '') + '<a href="' + esc(r.href) + '" target="_blank" rel="noopener"><span class="lg">Watch on YouTube</span><span class="sh">YouTube</span> \u203a</a></div></div></div>' +
+        '<div class="pw"><iframe src="https://www.youtube-nocookie.com/embed/' + r.dataset.yt + '?start=' + r.dataset.s + (r.dataset.s === '0' ? '' : '&end=' + r.dataset.e) + '&autoplay=1&playsinline=1&rel=0&modestbranding=1" title="' + esc(r.querySelector('b').textContent) + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>' + '<div class="pnfl">' + nfl + '<div class="pacts pft">' + (inf.replay ? '<a href="' + esc(inf.replay) + '">Rumble replay \u203a</a>' : '') + '<a href="' + esc(r.href) + '" target="_blank" rel="noopener">Watch on YouTube \u203a</a></div></div></div>';
       m.addEventListener('click', function (e) { if (e.target === m || e.target.closest('.pclose')) closePlay(); });
       document.body.appendChild(m); document.documentElement.classList.add('pmopen'); document.addEventListener('keydown', onPlayKey);
       m.querySelector('.pclose').focus({ preventScroll: true });
