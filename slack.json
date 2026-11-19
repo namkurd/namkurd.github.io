@@ -3,14 +3,6 @@
  "windowDays": 7,
  "topics": [
   {
-   "title": "Bake shouldn't even be on a roster",
-   "needs_summary": true,
-   "channel": "trade-discussion",
-   "messages": 54,
-   "people": 5,
-   "href": "https://dtf-club.slack.com/archives/C07QP48E83E/p1794415020359869"
-  },
-  {
    "title": "Kiran working on saying \"kirko chains\"",
    "needs_summary": true,
    "channel": "gameday",
@@ -25,7 +17,55 @@
    "messages": 43,
    "people": 2,
    "href": "https://dtf-club.slack.com/archives/CCH72NHC7/p1794541263021599"
+  },
+  {
+   "title": "Points for drawing pass interference",
+   "needs_summary": true,
+   "channel": "league-suggestions",
+   "messages": 23,
+   "people": 4,
+   "href": "https://dtf-club.slack.com/archives/CCG47441Z/p1794572437910819"
+  },
+  {
+   "title": "Aj brown for a rb or wr with a good matchup this week and…",
+   "needs_summary": true,
+   "channel": "trade-block",
+   "messages": 18,
+   "people": 5,
+   "href": "https://dtf-club.slack.com/archives/CCGABM8TX/p1795009629669679"
+  },
+  {
+   "title": "Electric few hours with two championship contenders…",
+   "needs_summary": true,
+   "channel": "trade-discussion",
+   "messages": 16,
+   "people": 5,
+   "href": "https://dtf-club.slack.com/archives/C07QP48E83E/p1794859596861879"
+  },
+  {
+   "title": "great mt rushmore - case is kaits all time fav viking",
+   "needs_summary": true,
+   "channel": "podcast",
+   "messages": 10,
+   "people": 4,
+   "href": "https://dtf-club.slack.com/archives/CCFGS58UQ/p1794515830173659"
+  },
+  {
+   "title": "looking for a QB and a start-able Flex in return",
+   "needs_summary": true,
+   "channel": "trade-block",
+   "messages": 9,
+   "people": 4,
+   "href": "https://dtf-club.slack.com/archives/CCGABM8TX/p1794842178206549"
+  },
+  {
+   "title": "Week 10 Standings *Sent using* Claude",
+   "needs_summary": true,
+   "channel": "standings",
+   "messages": 10,
+   "people": 3,
+   "href": "https://dtf-club.slack.com/archives/C048A37TBA5/p1794915655258059"
   }
  ],
- "generatedAt": "2026-11-16T11:58:50Z"
+ "generatedAt": "2026-11-19T01:26:51Z"
 }
