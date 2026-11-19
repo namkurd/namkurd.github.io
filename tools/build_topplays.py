@@ -8,7 +8,8 @@ embeddable clip are kept; YouTube's oEmbed endpoint says whether a video allows 
     python3 tools/build_topplays.py --check     # needed=true/false: is a finished week missing from the cache?
     python3 tools/build_topplays.py             # scrapes only the missing weeks (finished weeks never change)
 """
-import argparse, datetime as dt, json, os, sys, urllib.error, urllib.parse, urllib.request
+import argparse, datetime as dt, hashlib, json, os, sys, urllib.error, urllib.parse, urllib.request
+PENDING_HASH = {}   # week -> hash of its wp_clips file, set by plan()
 
 HUB = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CACHE = os.path.join(HUB, 'data', 'topplays.json')
@@ -39,13 +40,18 @@ def plan(base):
     except Exception:
         timeline = set()
     done = {int(w) for w in hist.get('weeks_completed', [])}
-    have = set(int(w) for w in load_cache(season)['weeks'])
+    cache = load_cache(season)
+    have = set(int(w) for w in cache['weeks'])
     todo = []
-    for w in sorted((done & timeline) - have):
+    for w in sorted(done & timeline):
         try:
-            get_json('%s/wp_clips/week_%d.json' % (root, w)); todo.append(w)   # a week's plays are only cached once its clips exist
+            raw = urllib.request.urlopen(urllib.request.Request('%s/wp_clips/week_%d.json' % (root, w), headers={'User-Agent': 'dtf-club-hub'}), timeout=60).read()   # a week's plays are only cached once its clips exist
         except Exception:
-            pass
+            continue
+        h = hashlib.md5(raw).hexdigest()[:12]
+        PENDING_HASH[w] = h
+        if w not in have or cache.get('clipsHash', {}).get(str(w)) != h:   # new week, or its clips changed (the audit drops interviews and videos taken down)
+            todo.append(w)
     return season, todo
 
 
@@ -103,6 +109,7 @@ def scrape(base, season, weeks):
                 print('week %d: not ready' % w, file=sys.stderr); continue
             plays = [x for x in res['plays'] if x.get('clip') and x['clip'].get('id')]   # whether a clip embeds is checked in the viewer's browser (an NFL-owned video can refuse only some sites)
             plays.sort(key=lambda x: -abs(x['d']))
+            cache.setdefault('clipsHash', {})[str(w)] = PENDING_HASH.get(w)
             cache['weeks'][str(w)] = [{'week': w, 'a': x['a'], 'b': x['b'], 'who': x['who'], 'label': x['label'], 'swing': round(abs(x['d']), 3), 'by': x.get('by'), 'help': bool(x.get('help', True)), 'aid': x['arid'], 'bid': x['brid'], 'rt': x.get('rt'), 'et': x.get('et'), **({'sit': x['sit']} if x.get('sit') else {}), 'from': round((x['p0'] if x['d'] >= 0 else 1 - x['p0']) * 100), 'to': round((x['p1'] if x['d'] >= 0 else 1 - x['p1']) * 100),
                                        'clip': {'id': x['clip']['id'], 's': x['clip']['s'], 'e': x['clip']['e']},
                                        **({'alt': {'id': x['clip']['x']['id'], 's': x['clip']['x']['s'], 'e': x['clip']['x']['e']}} if x['clip'].get('x') else {})} for x in plays[:KEEP]]
