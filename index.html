@@ -104,15 +104,19 @@
   /* the play overlay: one dark-green bar on top (play, the facts in the middle, links), then as much video as the screen allows */
   .pmopen { overflow: hidden; }
   #pmodal { position: fixed; inset: 0; z-index: 400; display: grid; place-items: center; padding: 10px; background: rgba(0,0,0,.86); }
-  #pmodal .pcard { width: min(100%, calc((100dvh - 96px) * 16 / 9), 1500px); min-width: min(100%, 320px); background: #0b1410; border-radius: 14px; box-shadow: 0 20px 60px rgba(0,0,0,.7), 0 0 0 1px rgba(34,197,94,.35); overflow: hidden; }
+  #pmodal .pcard { width: min(100%, calc((100dvh - 150px) * 16 / 9), 1500px); min-width: min(100%, 320px); background: #0b1410; border-radius: 14px; box-shadow: 0 20px 60px rgba(0,0,0,.7), 0 0 0 1px rgba(34,197,94,.35); overflow: hidden; }
   #pmodal .ptop { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 18px; padding: 8px 12px 8px 16px; background: #0b1f12; border-bottom: 1px solid rgba(34,197,94,.3); color: #fff; }
   #pmodal .pt { flex: 0 1 auto; min-width: 0; } #pmodal .pt b { display: block; font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } #pmodal .pt small { display: block; font-size: .76rem; color: #86efac; }
   #pmodal .pfacts { flex: 1 1 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 2px 22px; } #pmodal .pf { display: flex; flex-direction: column; align-items: center; font-size: .95rem; font-weight: 700; color: #fff; white-space: nowrap; line-height: 1.15; } #pmodal .pf i { font-style: normal; font-weight: 600; font-size: .56rem; letter-spacing: .09em; text-transform: uppercase; color: #86efac; }
   #pmodal .pacts { flex: none; display: flex; flex-direction: column; gap: 1px; } #pmodal .pacts a { color: #86efac; font-size: .74rem; font-weight: 700; text-decoration: none; white-space: nowrap; } #pmodal .pacts a:hover { text-decoration: underline; }
   #pmodal .ppd { flex: none; font-style: normal; font-weight: 800; font-size: .85rem; color: #4ade80; background: rgba(34,197,94,.14); padding: 3px 9px; border-radius: 10px; }
   #pmodal .pclose { flex: none; width: 32px; height: 32px; border-radius: 50%; border: 0; background: rgba(255,255,255,.1); color: #fff; font-size: 1.4rem; line-height: 1; cursor: pointer; margin-left: auto; } #pmodal .pclose:hover { background: rgba(255,255,255,.2); }
+  #pmodal .pres { font-style: normal; font-weight: 800; font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; padding: 2px 8px; border-radius: 8px; margin-left: 10px; align-self: center; } #pmodal .pres.win { color: #4ade80; background: rgba(34,197,94,.16); } #pmodal .pres.loss { color: #f87171; background: rgba(224,69,79,.16); } #pmodal .pres.tie { color: #cbd5e1; background: rgba(148,163,184,.18); }
+  #pmodal .pfacts { align-items: center; }
+  #pmodal .pnfl { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px 28px; padding: 7px 12px 8px; background: #0b1f12; border-top: 1px solid rgba(34,197,94,.3); }
+  #pmodal .pnfl .pf { display: flex; flex-direction: column; align-items: center; font-size: .9rem; font-weight: 700; color: #fff; white-space: nowrap; line-height: 1.15; } #pmodal .pnfl .pf i { font-style: normal; font-weight: 600; font-size: .56rem; letter-spacing: .09em; text-transform: uppercase; color: #86efac; }
   #pmodal .pw { position: relative; aspect-ratio: 16 / 9; background: #000; } #pmodal iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-  @media (max-width: 700px) { #pmodal .pfacts { order: 5; flex: 1 1 100%; justify-content: space-between; gap: 2px 10px; } #pmodal .pacts { order: 6; flex-direction: row; gap: 14px; flex: 1 1 100%; } #pmodal .pclose { order: 2; } #pmodal .ppd { order: 3; } }
+  @media (max-width: 700px) { #pmodal .pnfl { gap: 2px 14px; padding: 6px 8px 7px; } #pmodal .pfacts { order: 5; flex: 1 1 100%; justify-content: space-between; gap: 2px 10px; } #pmodal .pacts { order: 6; flex-direction: row; gap: 14px; flex: 1 1 100%; } #pmodal .pclose { order: 2; } #pmodal .ppd { order: 3; } }
   .none { margin: 8px 4px; color: var(--dtf-dim); font-size: .8rem; }
   .meta { margin: 2px 4px 0; font-size: .68rem; color: var(--dtf-dim); text-align: right; }
   .meta .old { color: #e0a23a; }
@@ -351,7 +355,7 @@
     slack: { tab: 'Slack', title: function () { return 'Hot in Slack this week'; }, cap: 'The busiest conversations of the past 7 days.', ac: '#e8eaf0' }
   };
   function rowHtml(it, id) {
-    if (id === 'plays') return '<a class="row play pend" data-m="' + esc((it.managers || []).join('|')) + '" data-yt="' + esc(it.clip.id) + '" data-s="' + Math.floor(it.clip.s) + '" data-e="' + Math.ceil(it.clip.e) + '" data-info="' + esc(JSON.stringify({ et: it.et || '', sit: it.sit || null, replay: it.replay || '' })) + '" data-yt2="' + esc(it.alt ? it.alt.id : '') + '" data-s2="' + (it.alt ? Math.floor(it.alt.s) : '') + '" data-e2="' + (it.alt ? Math.ceil(it.alt.e) : '') + '" href="' + esc(it.href) + '" target="_blank" rel="noopener"><span class="rk">' + it.rank + '</span><span class="th" aria-hidden="true"><img alt="" decoding="async" referrerpolicy="no-referrer"><span class="tpl">\u25b6</span></span><span><b>' + esc(it.title) + '</b><small>' + esc(it.sub) + '</small></span><span class="pp" aria-hidden="true" title="Watch the play">\u25b6</span>' + (it.from != null ? '<span class="pd" title="Win probability before and after the play">' + it.from + '% \u2192 ' + it.to + '%</span>' : '') + '</a>';
+    if (id === 'plays') return '<a class="row play pend" data-m="' + esc((it.managers || []).join('|')) + '" data-yt="' + esc(it.clip.id) + '" data-s="' + Math.floor(it.clip.s) + '" data-e="' + Math.ceil(it.clip.e) + '" data-info="' + esc(JSON.stringify({ et: it.et || '', sit: it.sit || null, fant: it.fant || null, replay: it.replay || '' })) + '" data-yt2="' + esc(it.alt ? it.alt.id : '') + '" data-s2="' + (it.alt ? Math.floor(it.alt.s) : '') + '" data-e2="' + (it.alt ? Math.ceil(it.alt.e) : '') + '" href="' + esc(it.href) + '" target="_blank" rel="noopener"><span class="rk">' + it.rank + '</span><span class="th" aria-hidden="true"><img alt="" decoding="async" referrerpolicy="no-referrer"><span class="tpl">\u25b6</span></span><span><b>' + esc(it.title) + '</b><small>' + esc(it.sub) + '</small></span><span class="pp" aria-hidden="true" title="Watch the play">\u25b6</span>' + (it.from != null ? '<span class="pd" title="Win probability before and after the play">' + it.from + '% \u2192 ' + it.to + '%</span>' : '') + '</a>';
     var ext = /^https?:/.test(it.href), mgrs = (it.managers || []).join('|');
     var open = '<a class="row' + (id === 'trades' ? ' trade' : id === 'slack' ? ' slack' : id === 'matchups' ? ' mu' : '') + '" data-m="' + esc(mgrs) + '" href="' + esc(it.href) + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '>' + (id === 'trades' && it.sub ? '<span class="rkc"><span class="rk">' + it.rank + '</span><em class="wkn">' + esc(it.sub) + '</em></span>' : '<span class="rk">' + it.rank + '</span>');
     if (id === 'trades' && it.gets) {
@@ -525,7 +529,7 @@
     return who + ' ' + core + ' (' + m[1] + ')';
   }
   function mapPlay(p) {
-    return { title: playTitle(p.who, p.label), sub: (p.by === p.b ? p.b + ' vs ' + p.a : p.a + ' vs ' + p.b) + ' \u00b7 Wk ' + p.week, managers: [p.a, p.b], from: p.from, to: p.to, clip: p.clip, alt: p.alt, et: p.et, sit: p.sit,
+    return { title: playTitle(p.who, p.label), sub: (p.by === p.b ? p.b + ' vs ' + p.a : p.a + ' vs ' + p.b) + ' \u00b7 Wk ' + p.week, managers: [p.a, p.b], from: p.from, to: p.to, clip: p.clip, alt: p.alt, et: p.et, sit: p.sit, fant: p.pa != null && p.pb != null ? (p.by === p.b ? { m: p.b, o: p.a, ms: p.pb, os: p.pa } : { m: p.a, o: p.b, ms: p.pa, os: p.pb }) : null,
       replay: '/SleeperLiveRumbles/rumbles.html?wp=' + p.week + '.' + p.aid + '.' + p.bid + (p.rt != null ? '&t=' + p.rt : ''), href: 'https://www.youtube.com/watch?v=' + p.clip.id + '&t=' + Math.floor(p.clip.s) + 's', swing: p.swing };
   }
   function playsItems() {
@@ -595,14 +599,18 @@
     function openPlay(r) {
       closePlay(); PLFOCUS = r;
       var inf = {}; try { inf = JSON.parse(r.dataset.info || '{}'); } catch (x) {}
-      var si = inf.sit, ql = si ? (si.q > 4 ? 'OT' : 'Q' + si.q) : '', facts = '';
-      if (inf.et) facts += '<span class="pf"><i>When</i>' + esc(inf.et.replace(/ ([AP])M$/, function (m, x) { return x.toLowerCase(); })) + ' ET</span>';
-      if (si) facts += '<span class="pf"><i>Game</i>' + esc(si.team) + ' ' + (si.at ? '@' : 'vs') + ' ' + esc(si.opp) + '</span><span class="pf"><i>Clock</i>' + ql + ' ' + esc(si.clock) + '</span><span class="pf"><i>Score</i>' + si.tm + ' \u2013 ' + si.op + '</span>';
+      var si = inf.sit, ql = si ? (si.q > 4 ? 'OT' : 'Q' + si.q) : '', nfl = '', fant = '', fa = inf.fant;
+      if (inf.et) nfl += '<span class="pf"><i>When</i>' + esc(inf.et.replace(/ ([AP])M$/, function (m, x) { return x.toLowerCase(); })) + ' ET</span>';
+      if (si) nfl += '<span class="pf"><i>Game</i>' + esc(si.team) + ' ' + (si.at ? '@' : 'vs') + ' ' + esc(si.opp) + '</span><span class="pf"><i>Clock</i>' + ql + ' ' + esc(si.clock) + '</span><span class="pf"><i>NFL score</i>' + si.tm + ' \u2013 ' + si.op + '</span>';
+      if (fa) {
+        var res = fa.ms > fa.os ? 'win' : fa.ms < fa.os ? 'loss' : 'tie';
+        fant = '<div class="pfacts"><span class="pf"><i>Fantasy matchup</i>' + esc(fa.m) + ' ' + fa.ms.toFixed(1) + ' \u2013 ' + fa.os.toFixed(1) + ' ' + esc(fa.o) + '</span><em class="pres ' + res + '">' + (res === 'win' ? 'Win' : res === 'loss' ? 'Loss' : 'Tie') + '</em></div>';
+      }
       var pd = r.querySelector('.pd');
       var m = document.createElement('div'); m.id = 'pmodal'; m.setAttribute('role', 'dialog'); m.setAttribute('aria-modal', 'true'); m.setAttribute('aria-label', r.querySelector('b').textContent);
-      m.innerHTML = '<div class="pcard"><div class="ptop"><span class="pt"><b>' + esc(r.querySelector('b').textContent) + '</b><small>' + esc(r.querySelector('small').textContent) + '</small></span>' + (facts ? '<div class="pfacts">' + facts + '</div>' : '') +
+      m.innerHTML = '<div class="pcard"><div class="ptop"><span class="pt"><b>' + esc(r.querySelector('b').textContent) + '</b><small>' + esc(r.querySelector('small').textContent) + '</small></span>' + fant +
         '<div class="pacts">' + (inf.replay ? '<a href="' + esc(inf.replay) + '">Rumble replay \u203a</a>' : '') + '<a href="' + esc(r.href) + '" target="_blank" rel="noopener">Watch on YouTube \u203a</a></div>' + (pd ? '<em class="ppd">' + esc(pd.textContent) + '</em>' : '') + '<button type="button" class="pclose" aria-label="Close">&times;</button></div>' +
-        '<div class="pw"><iframe src="https://www.youtube-nocookie.com/embed/' + r.dataset.yt + '?start=' + r.dataset.s + (r.dataset.s === '0' ? '' : '&end=' + r.dataset.e) + '&autoplay=1&playsinline=1&rel=0&modestbranding=1" title="' + esc(r.querySelector('b').textContent) + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div></div>';
+        '<div class="pw"><iframe src="https://www.youtube-nocookie.com/embed/' + r.dataset.yt + '?start=' + r.dataset.s + (r.dataset.s === '0' ? '' : '&end=' + r.dataset.e) + '&autoplay=1&playsinline=1&rel=0&modestbranding=1" title="' + esc(r.querySelector('b').textContent) + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>' + (nfl ? '<div class="pnfl">' + nfl + '</div>' : '') + '</div>';
       m.addEventListener('click', function (e) { if (e.target === m || e.target.closest('.pclose')) closePlay(); });
       document.body.appendChild(m); document.documentElement.classList.add('pmopen'); document.addEventListener('keydown', onPlayKey);
       m.querySelector('.pclose').focus({ preventScroll: true });

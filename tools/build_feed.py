@@ -67,6 +67,15 @@ def top_matchups(season):
 
 
 # ---------------------------------------------------------------- plays
+def fantasy(p):
+    """The head-to-head the play happened in, the manager whose player made it first: {m, o, ms, os} (names and final scores)."""
+    if p.get('pa') is None or p.get('pb') is None:
+        return None
+    if p.get('by') == p['b']:
+        return {'m': p['b'], 'o': p['a'], 'ms': p['pb'], 'os': p['pa']}
+    return {'m': p['a'], 'o': p['b'], 'ms': p['pa'], 'os': p['pb']}
+
+
 def play_title(who, label):
     """'T. Higbee' + '30 yd catch' -> 'T. Higbee 30 yd catch'. A team defense's long label ('35 yd interception return TD (T.J. Watt), interception (T.J. Watt)')
     becomes 'Steelers 35 yd pick-6 (T.J. Watt)': the team, what happened, and the defender. (index.html's playTitle() does the same for the client.)"""
@@ -100,7 +109,7 @@ def top_plays(season):
             continue
         seen.add(p['clip']['id'])
         out.append({'rank': len(out) + 1, 'title': play_title(p['who'], p['label']), 'sub': '%s vs %s \u00b7 Wk %d' % ((p['b'], p['a'], p['week']) if p.get('by') == p['b'] else (p['a'], p['b'], p['week'])),
-                    'managers': [p['a'], p['b']], 'swing': round(p['swing'] * 100), 'from': p.get('from'), 'to': p.get('to'), 'clip': p['clip'], **({'alt': p['alt']} if p.get('alt') else {}), 'et': p.get('et'), **({'sit': p['sit']} if p.get('sit') else {}),
+                    'managers': [p['a'], p['b']], 'swing': round(p['swing'] * 100), 'from': p.get('from'), 'to': p.get('to'), 'clip': p['clip'], **({'alt': p['alt']} if p.get('alt') else {}), 'et': p.get('et'), **({'fant': fantasy(p)} if fantasy(p) else {}), **({'sit': p['sit']} if p.get('sit') else {}),
                     'replay': '/SleeperLiveRumbles/rumbles.html?wp=%d.%s.%s%s' % (p['week'], p.get('aid'), p.get('bid'), '&t=%d' % p['rt'] if p.get('rt') is not None else ''),
                     'href': 'https://www.youtube.com/watch?v=%s&t=%ds' % (p['clip']['id'], int(p['clip']['s']))})
         if len(out) == 40:   # candidates: the page keeps the first ten whose clip really plays in a browser

@@ -49,6 +49,25 @@ def plan(base):
     return season, todo
 
 
+def add_scores(cache, root):
+    """Each play also carries the final fantasy score of its head-to-head (pa = the first-named manager a, pb = b), from Rumble Central's rumbles_history.json.
+    Returns True when something was filled in."""
+    need = [p for w in cache['weeks'].values() for p in w if 'pa' not in p and p.get('aid') is not None]
+    if not need:
+        return False
+    try:
+        weekly = get_json(root + '/rumbles_history.json').get('weekly', {})
+    except Exception as e:
+        print('scores: %s' % e, file=sys.stderr); return False
+    done = False
+    for p in need:
+        wk = weekly.get(str(p['week']), {})
+        a, b = wk.get(str(p['aid'])), wk.get(str(p['bid']))
+        if a and b and a.get('points') is not None and b.get('points') is not None:
+            p['pa'], p['pb'] = round(float(a['points']), 2), round(float(b['points']), 2); done = True
+    return done
+
+
 def embeddable(vid, memo):
     """True/False from YouTube's oEmbed (401/403 = owner disabled embedding, 404 = gone). Network trouble counts as OK."""
     if vid in memo:
@@ -96,7 +115,17 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--base', default=BASE)
     ap.add_argument('--check', action='store_true')
+    ap.add_argument('--scores', action='store_true', help='only fill in the fantasy scores of plays already cached (no browser)')
     args = ap.parse_args()
+    root = args.base.rsplit('/', 1)[0]
+    if args.scores:
+        season = int(get_json(root + '/rumbles_history.json')['season']); cache = load_cache(season)
+        if add_scores(cache, root):
+            cache['updatedAt'] = dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+            json.dump(cache, open(CACHE, 'w', encoding='utf-8'), separators=(',', ':'), ensure_ascii=False); open(CACHE, 'a').write('\n'); print('scores added')
+        else:
+            print('no scores to add')
+        return
     season, missing = plan(args.base)
     if args.check:
         out = 'true' if missing else 'false'
@@ -107,6 +136,7 @@ def main():
     if not missing:
         print('nothing to scrape'); return
     cache = scrape(args.base, season, missing)
+    add_scores(cache, root)
     cache['updatedAt'] = dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
     os.makedirs(os.path.dirname(CACHE), exist_ok=True)
     json.dump(cache, open(CACHE, 'w', encoding='utf-8'), separators=(',', ':'), ensure_ascii=False); open(CACHE, 'a').write('\n')
