@@ -6,7 +6,7 @@
    "title": "*CONTENT BOYS EPISODE #53: THE BILL ROMANOWSKI EPISODE* The…",
    "needs_summary": true,
    "channel": "podcast",
-   "messages": 41,
+   "messages": 42,
    "people": 6,
    "href": "https://dtf-club.slack.com/archives/CCFGS58UQ/p1795090111784609"
   },
@@ -17,14 +17,6 @@
    "messages": 34,
    "people": 8,
    "href": "https://dtf-club.slack.com/archives/CCH72NHC7/p1794751586155759"
-  },
-  {
-   "title": "How did the Ravens refuse to start Likely for so many years",
-   "needs_summary": true,
-   "channel": "gameday",
-   "messages": 43,
-   "people": 2,
-   "href": "https://dtf-club.slack.com/archives/CCH72NHC7/p1794541263021599"
   },
   {
    "title": "Points for drawing pass interference",
@@ -59,6 +51,14 @@
    "href": "https://dtf-club.slack.com/archives/C07QP48E83E/p1794859596861879"
   },
   {
+   "title": "Was there a single shotgun from last year that was not…",
+   "needs_summary": true,
+   "channel": "league-suggestions",
+   "messages": 14,
+   "people": 4,
+   "href": "https://dtf-club.slack.com/archives/CCG47441Z/p1795126515951779"
+  },
+  {
    "title": "looking for a QB and a start-able Flex in return",
    "needs_summary": true,
    "channel": "trade-block",
@@ -75,13 +75,13 @@
    "href": "https://dtf-club.slack.com/archives/C07QP48E83E/p1795121657620259"
   },
   {
-   "title": "Was there a single shotgun from last year that was not…",
+   "title": "Week 10 Standings *Sent using* Claude",
    "needs_summary": true,
-   "channel": "league-suggestions",
+   "channel": "standings",
    "messages": 10,
    "people": 3,
-   "href": "https://dtf-club.slack.com/archives/CCG47441Z/p1795126515951779"
+   "href": "https://dtf-club.slack.com/archives/C048A37TBA5/p1794915655258059"
   }
  ],
- "generatedAt": "2026-11-20T01:25:41Z"
+ "generatedAt": "2026-11-20T12:06:27Z"
 }
