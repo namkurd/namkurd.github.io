@@ -3,6 +3,14 @@
  "windowDays": 7,
  "topics": [
   {
+   "title": "*CONTENT BOYS EPISODE #53: THE BILL ROMANOWSKI EPISODE* The…",
+   "needs_summary": true,
+   "channel": "podcast",
+   "messages": 41,
+   "people": 6,
+   "href": "https://dtf-club.slack.com/archives/CCFGS58UQ/p1795090111784609"
+  },
+  {
    "title": "Kiran working on saying \"kirko chains\"",
    "needs_summary": true,
    "channel": "gameday",
@@ -27,6 +35,14 @@
    "href": "https://dtf-club.slack.com/archives/CCG47441Z/p1794572437910819"
   },
   {
+   "title": "Episode 53 Mount Rushmore: Best League Changes of All Time…",
+   "needs_summary": true,
+   "channel": "mountrushmore",
+   "messages": 18,
+   "people": 6,
+   "href": "https://dtf-club.slack.com/archives/C0CJXBMAYHM/p1795124666281109"
+  },
+  {
    "title": "Aj brown for a rb or wr with a good matchup this week and…",
    "needs_summary": true,
    "channel": "trade-block",
@@ -43,14 +59,6 @@
    "href": "https://dtf-club.slack.com/archives/C07QP48E83E/p1794859596861879"
   },
   {
-   "title": "great mt rushmore - case is kaits all time fav viking",
-   "needs_summary": true,
-   "channel": "podcast",
-   "messages": 10,
-   "people": 4,
-   "href": "https://dtf-club.slack.com/archives/CCFGS58UQ/p1794515830173659"
-  },
-  {
    "title": "looking for a QB and a start-able Flex in return",
    "needs_summary": true,
    "channel": "trade-block",
@@ -59,13 +67,21 @@
    "href": "https://dtf-club.slack.com/archives/CCGABM8TX/p1794842178206549"
   },
   {
-   "title": "Week 10 Standings *Sent using* Claude",
+   "title": "Looks like has to drop him for the morality clause - that’s…",
    "needs_summary": true,
-   "channel": "standings",
+   "channel": "trade-discussion",
+   "messages": 8,
+   "people": 5,
+   "href": "https://dtf-club.slack.com/archives/C07QP48E83E/p1795121657620259"
+  },
+  {
+   "title": "Was there a single shotgun from last year that was not…",
+   "needs_summary": true,
+   "channel": "league-suggestions",
    "messages": 10,
    "people": 3,
-   "href": "https://dtf-club.slack.com/archives/C048A37TBA5/p1794915655258059"
+   "href": "https://dtf-club.slack.com/archives/CCG47441Z/p1795126515951779"
   }
  ],
- "generatedAt": "2026-11-19T01:26:51Z"
+ "generatedAt": "2026-11-20T01:25:41Z"
 }
