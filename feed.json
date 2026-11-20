@@ -2141,9 +2141,17 @@
  ],
  "ir": {
   "week": 11,
-  "state": "clear",
+  "state": "blocked",
   "violations": [],
-  "blocked": []
+  "blocked": [
+   {
+    "m": "Stephanie",
+    "player": "S. McGowan",
+    "pos": "RB",
+    "status": "Out",
+    "how": "waiver"
+   }
+  ]
  },
- "generatedAt": "2026-11-20T03:28:20Z"
+ "generatedAt": "2026-11-20T13:07:39Z"
 }
