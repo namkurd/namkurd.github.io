@@ -2176,9 +2176,17 @@
  ],
  "ir": {
   "week": 11,
-  "state": "clear",
+  "state": "blocked",
   "violations": [],
-  "blocked": []
+  "blocked": [
+   {
+    "m": "Alex",
+    "player": "T. Ferguson",
+    "pos": "TE",
+    "status": "IR",
+    "how": "waiver"
+   }
+  ]
  },
- "generatedAt": "2026-11-21T05:05:11Z"
+ "generatedAt": "2026-11-21T18:06:35Z"
 }
