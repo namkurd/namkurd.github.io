@@ -76,9 +76,18 @@ def fantasy(p):
     return {'m': p['a'], 'o': p['b'], 'ms': p['pa'], 'os': p['pb']}
 
 
-def play_title(who, label):
+def initial_name(name):
+    """'Nohl Williams' -> 'N. Williams'; 'T.J. Watt' stays; 'Rayuan Lane III' -> 'R. Lane III'."""
+    parts = (name or '').split()
+    if len(parts) < 2 or '.' in parts[0]:
+        return name or ''
+    return parts[0][0] + '. ' + ' '.join(parts[1:])
+
+
+def play_title(who, label, sid=None):
     """'T. Higbee' + '30 yd catch' -> 'T. Higbee 30 yd catch'. A team defense's long label ('35 yd interception return TD (T.J. Watt), interception (T.J. Watt)')
-    becomes 'Steelers 35 yd pick-6 (T.J. Watt)': the team, what happened, and the defender. (index.html's playTitle() does the same for the client.)"""
+    becomes the team code, what happened and the defender: 'PIT 35 yd pick-6 (T.J. Watt)', 'KC INT (N. Williams)', 'DEN sack + FR (N. Bonitto)'.
+    (index.html's playTitle() does the same for the client.)"""
     who, label = (who or '').strip(), (label or '').strip()
     m = re.search(r'\(([^)]+)\)', label)
     if not m or re.match(r'^[A-Z]\.?\s', who):        # an offensive player (initial + surname), or no defender named
@@ -87,13 +96,23 @@ def play_title(who, label):
     yd = '%s yd ' % y.group(1) if y else ''
     if 'interception return td' in low: core = yd + 'pick-6'
     elif 'fumble' in low and 'return td' in low: core = yd + 'fumble-6'
-    elif 'interception' in low: core = 'interception'
-    elif 'fumble recovery' in low and 'sack' in low: core = 'sack + fumble recovery'
-    elif 'fumble recovery' in low: core = 'fumble recovery'
+    elif 'interception' in low: core = 'INT'
+    elif 'fumble recovery' in low and 'sack' in low: core = 'sack + FR'
+    elif 'fumble recovery' in low: core = 'FR'
     elif 'safety' in low: core = 'safety'
     elif 'sack' in low: core = 'sack'
     else: core = re.sub(r'\s*\([^)]*\)', '', label.split(',')[0]).strip() or 'play'
-    return '%s %s (%s)' % (who, core, m.group(1))
+    team = sid if sid and re.match(r'^[A-Z]{2,4}$', sid) else who
+    return '%s %s (%s)' % (team, core, initial_name(m.group(1)))
+
+
+def play_sub(p):
+    """'Haan vs Aidan \u00b7 Wk 10 \u00b7 +13.0 pts': the manager whose player made the play first, the week, and everything the play earned him
+    (both players of a QB-to-WR touchdown, or a defense's interception, return yards and touchdown together)."""
+    first, other = (p['b'], p['a']) if p.get('by') == p['b'] else (p['a'], p['b'])
+    pts = p.get('tot') if p.get('tot') is not None else p.get('pts')
+    tail = '' if pts is None else ' \u00b7 %s%.1f pts' % ('+' if pts >= 0 else '\u2212', abs(pts))
+    return '%s vs %s \u00b7 Wk %d%s' % (first, other, p['week'], tail)
 
 
 def top_plays(season):
@@ -108,7 +127,7 @@ def top_plays(season):
         if p['clip']['id'] in seen:
             continue
         seen.add(p['clip']['id'])
-        out.append({'rank': len(out) + 1, 'title': play_title(p['who'], p['label']), 'sub': '%s vs %s \u00b7 Wk %d' % ((p['b'], p['a'], p['week']) if p.get('by') == p['b'] else (p['a'], p['b'], p['week'])),
+        out.append({'rank': len(out) + 1, 'title': play_title(p['who'], p['label'], p.get('sid')), 'sub': play_sub(p),
                     'managers': [p['a'], p['b']], 'swing': round(p['swing'] * 100), 'from': p.get('from'), 'to': p.get('to'), 'clip': p['clip'], **({'alt': p['alt']} if p.get('alt') else {}), 'et': p.get('et'), **({'fant': fantasy(p)} if fantasy(p) else {}), **({'sit': p['sit']} if p.get('sit') else {}),
                     'replay': '/SleeperLiveRumbles/rumbles.html?wp=%d.%s.%s%s' % (p['week'], p.get('aid'), p.get('bid'), '&t=%d' % p['rt'] if p.get('rt') is not None else ''),
                     'href': 'https://www.youtube.com/watch?v=%s&t=%ds' % (p['clip']['id'], int(p['clip']['s']))})

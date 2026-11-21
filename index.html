@@ -96,12 +96,13 @@
   @media (prefers-reduced-motion: reduce) { .row.play .pp { animation: none; } }
   /* every feed list holds ten and scrolls inside its panel (fitLists sizes it to three rows, five on a wide screen) so Home still fits one screen */
   .flist { overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; -webkit-overflow-scrolling: touch; } .flist.has-open { max-height: none !important; overflow: visible; }
-  .panel[data-id="plays"] h2 { display: flex; align-items: center; gap: 6px; min-width: 0; } .panel[data-id="plays"] h2 .ht { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .panel[data-id="plays"] h2 { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; min-width: 0; } .panel[data-id="plays"] h2 .ht { flex: 0 0 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   /* two real switches: both choices are always visible and the current one is lit */
-  .ptog { flex: none; display: inline-flex; gap: 6px; margin-left: auto; }
+  .ptog { flex: none; display: inline-flex; flex-wrap: wrap; gap: 6px; margin-left: auto; justify-content: flex-end; }
   .ptog .seg { display: inline-flex; padding: 2px; border-radius: 10px; background: color-mix(in srgb, var(--dtf-bg) 60%, #000); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--dtf-dim) 35%, transparent); }
   .ptog button { height: 16px; padding: 0 7px; border: 0; border-radius: 8px; background: none; color: var(--dtf-dim); font-weight: 700; font-size: .62rem; line-height: 1; font-family: inherit; text-transform: none; letter-spacing: 0; cursor: pointer; white-space: nowrap; -webkit-tap-highlight-color: transparent; }
-  .ptog .pwk { height: 20px; padding: 0 20px 0 9px; border: 0; border-radius: 10px; background-color: #0b0f14; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%2322c55e'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 7px center; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ac) 60%, transparent); color: var(--ac); font: 700 .64rem/1 inherit; font-family: inherit; -webkit-appearance: none; appearance: none; cursor: pointer; color-scheme: dark; }
+  .ptog .pyr { height: 20px; padding: 0 20px 0 9px; border: 0; border-radius: 10px; background-color: #0b0f14; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%2322c55e'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 7px center; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ac) 60%, transparent); color: var(--ac); font-weight: 700; font-size: .64rem; line-height: 1; font-family: inherit; -webkit-appearance: none; appearance: none; cursor: pointer; color-scheme: dark; }
+  .ptog .pwk { height: 20px; padding: 0 20px 0 9px; border: 0; border-radius: 10px; background-color: #0b0f14; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%2322c55e'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 7px center; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ac) 60%, transparent); color: var(--ac); font-weight: 700; font-size: .64rem; line-height: 1; font-family: inherit; -webkit-appearance: none; appearance: none; cursor: pointer; color-scheme: dark; }
   .ptog button.on { background: var(--ac); color: #06210f; box-shadow: 0 1px 3px rgba(0,0,0,.4); }
   /* the play overlay: one dark-green bar on top (play, the facts in the middle, links), then as much video as the screen allows */
   .pmopen { overflow: hidden; }
@@ -528,35 +529,43 @@
   }
   // Plays views: League / Mine and Season / last finished week. The feed carries the league's season list; the rest comes from data/topplays.json.
   var PLYEAR = '';
-  var PL = { scope: ls('dtf.plays.scope') === 'mine' ? 'mine' : 'league', span: (/^(season|week|\d+)$/.test(ls('dtf.plays.span') || '') ? ls('dtf.plays.span') : 'season'), feed: [], data: null, want: false };
-  function playsLoad() { return PL.data ? Promise.resolve(PL.data) : get('/data/topplays.json').then(function (d) { PL.data = d; return d; }, function () { return null; }); }
-  function playsLast() { var w = PL.data ? Object.keys(PL.data.weeks).map(Number) : []; return w.length ? Math.max.apply(null, w) : null; }
-  // a team defense's long label becomes "Steelers 35 yd pick-6 (T.J. Watt)" (the same rule as play_title() in tools/build_feed.py)
-  function playTitle(who, label) {
+  var PL = { year: '', byYear: {}, scope: ls('dtf.plays.scope') === 'mine' ? 'mine' : 'league', span: (/^(season|week|\d+)$/.test(ls('dtf.plays.span') || '') ? ls('dtf.plays.span') : 'season'), feed: [], data: null, want: false };
+  function playsData() { return PL.year ? PL.byYear[PL.year] : PL.data; }
+  function playsLoad() {   // this season's plays (data/topplays.json) or an archived season's (data/topplays_<year>.json)
+    var y = PL.year;
+    if (y) return PL.byYear[y] ? Promise.resolve(PL.byYear[y]) : get('/data/topplays_' + y + '.json').then(function (d) { PL.byYear[y] = d; return d; }, function () { PL.byYear[y] = { weeks: {} }; return PL.byYear[y]; });
+    return PL.data ? Promise.resolve(PL.data) : get('/data/topplays.json').then(function (d) { PL.data = d; return d; }, function () { return null; });
+  }
+  function playsLast() { var D = playsData(), w = D ? Object.keys(D.weeks).map(Number) : []; return w.length ? Math.max.apply(null, w) : null; }
+  function playTitle(who, label, sid) {   // same rule as play_title() in tools/build_feed.py: "KC INT (N. Williams)", "PIT 35 yd pick-6 (T.J. Watt)"
     who = (who || '').trim(); label = (label || '').trim();
     var m = /\(([^)]+)\)/.exec(label);
     if (!m || /^[A-Z]\.?\s/.test(who)) return (who + ' ' + label).trim();
     var low = label.toLowerCase(), y = /^(\d+) yd/.exec(label), yd = y ? y[1] + ' yd ' : '', core;
     if (low.indexOf('interception return td') >= 0) core = yd + 'pick-6';
     else if (low.indexOf('fumble') >= 0 && low.indexOf('return td') >= 0) core = yd + 'fumble-6';
-    else if (low.indexOf('interception') >= 0) core = 'interception';
-    else if (low.indexOf('fumble recovery') >= 0 && low.indexOf('sack') >= 0) core = 'sack + fumble recovery';
-    else if (low.indexOf('fumble recovery') >= 0) core = 'fumble recovery';
+    else if (low.indexOf('interception') >= 0) core = 'INT';
+    else if (low.indexOf('fumble recovery') >= 0 && low.indexOf('sack') >= 0) core = 'sack + FR';
+    else if (low.indexOf('fumble recovery') >= 0) core = 'FR';
     else if (low.indexOf('safety') >= 0) core = 'safety';
     else if (low.indexOf('sack') >= 0) core = 'sack';
     else core = label.split(',')[0].replace(/\s*\([^)]*\)/g, '').trim() || 'play';
-    return who + ' ' + core + ' (' + m[1] + ')';
+    return (sid && /^[A-Z]{2,4}$/.test(sid) ? sid : who) + ' ' + core + ' (' + initialName(m[1]) + ')';
+  }
+  function playSub(p) {   // "Haan vs Aidan · Wk 10 · +13.0 pts": the manager whose player made the play first, and everything the play earned him
+    var pts = p.tot != null ? p.tot : p.pts, tail = pts == null ? '' : ' \u00b7 ' + (pts >= 0 ? '+' : '\u2212') + Math.abs(pts).toFixed(1) + ' pts';
+    return (p.by === p.b ? p.b + ' vs ' + p.a : p.a + ' vs ' + p.b) + ' \u00b7 Wk ' + p.week + tail;
   }
   function mapPlay(p) {
-    return { title: playTitle(p.who, p.label), sub: (p.by === p.b ? p.b + ' vs ' + p.a : p.a + ' vs ' + p.b) + ' \u00b7 Wk ' + p.week, managers: [p.a, p.b], from: p.from, to: p.to, clip: p.clip, alt: p.alt, et: p.et, sit: p.sit, fant: p.pa != null && p.pb != null ? (p.by === p.b ? { m: p.b, o: p.a, ms: p.pb, os: p.pa } : { m: p.a, o: p.b, ms: p.pa, os: p.pb }) : null,
-      replay: '/SleeperLiveRumbles/rumbles.html?wp=' + p.week + '.' + p.aid + '.' + p.bid + (p.rt != null ? '&t=' + p.rt : ''), href: 'https://www.youtube.com/watch?v=' + p.clip.id + '&t=' + Math.floor(p.clip.s) + 's', swing: p.swing };
+    return { title: playTitle(p.who, p.label, p.sid), sub: playSub(p), managers: [p.a, p.b], from: p.from, to: p.to, clip: p.clip, alt: p.alt, et: p.et, sit: p.sit, fant: p.pa != null && p.pb != null ? (p.by === p.b ? { m: p.b, o: p.a, ms: p.pb, os: p.pa } : { m: p.a, o: p.b, ms: p.pa, os: p.pb }) : null,
+      replay: '/SleeperLiveRumbles/rumbles.html?wp=' + p.week + '.' + p.aid + '.' + p.bid + (p.rt != null ? '&t=' + p.rt : '') + (PL.year ? '&season=' + PL.year : ''), href: 'https://www.youtube.com/watch?v=' + p.clip.id + '&t=' + Math.floor(p.clip.s) + 's', swing: p.swing };
   }
   function playsItems() {
-    if (PL.scope === 'league' && PL.span === 'season') return PL.feed;
-    if (!PL.data) return [];
+    if (!PL.year && PL.scope === 'league' && PL.span === 'season') return PL.feed;
+    var D = playsData(); if (!D) return [];
     if (PL.span === 'week') PL.span = String(playsLast() || 'season');   // an older saved choice: the last finished week
     var me = meName(), all = [];
-    Object.keys(PL.data.weeks).forEach(function (w) { PL.data.weeks[w].forEach(function (p) { all.push(p); }); });
+    Object.keys(D.weeks).forEach(function (w) { D.weeks[w].forEach(function (p) { all.push(p); }); });
     all = all.filter(function (p) { return (PL.span === 'season' || p.week === Number(PL.span)) && (PL.scope === 'league' || (p.by === me && p.help !== false)); });
     all.sort(function (a, b) { return b.swing - a.swing; });
     var seen = {}, out = [];
@@ -567,13 +576,20 @@
     var panel = document.querySelector('.panel[data-id="plays"]'); if (!panel) return;
     var last = playsLast();
     if (PL.span === 'week') PL.span = String(last || 'season');
-    var ht = panel.querySelector('.ht'); if (ht) ht.textContent = (PL.scope === 'mine' ? 'My top plays' : 'Top plays') + ' of ' + (PL.span === 'season' ? PLYEAR : 'week ' + PL.span);
+    var yl = PL.year || PLYEAR, ht = panel.querySelector('.ht'); if (ht) ht.textContent = (PL.scope === 'mine' ? 'My top plays' : 'Top plays') + ' of ' + (PL.span === 'season' ? yl : 'week ' + PL.span + (PL.year ? ', ' + yl : ''));
     [].forEach.call(panel.querySelectorAll('.seg button'), function (b) {
       var on = PL.scope === b.dataset.v; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on);
     });
+    var ysel = panel.querySelector('.pyr');
+    if (ysel) {   // this season, then every archived season back to 2021
+      var cur = Number(PLYEAR) || new Date().getFullYear(), yo = '<option value="">' + cur + '</option>';
+      for (var yy = cur - 1; yy >= 2021; yy--) yo += '<option value="' + yy + '">' + yy + '</option>';
+      if (ysel.dataset.opts !== yo) { ysel.innerHTML = yo; ysel.dataset.opts = yo; }
+      ysel.value = PL.year;
+    }
     var sel = panel.querySelector('.pwk');
     if (sel) {   // Season, then each finished week, newest first
-      var wks = PL.data ? Object.keys(PL.data.weeks).map(Number).sort(function (x, y) { return y - x; }) : [];
+      var D2 = playsData(), wks = D2 ? Object.keys(D2.weeks).map(Number).sort(function (x, y) { return y - x; }) : [];
       var want = '<option value="season">Season</option>' + wks.map(function (w) { return '<option value="' + w + '">Week ' + w + '</option>'; }).join('');
       if (sel.dataset.opts !== want) { sel.innerHTML = want; sel.dataset.opts = want; }
       sel.value = PL.span;
@@ -618,7 +634,7 @@
     function seeAll(id) { var l = SEEALL[id]; return l ? '<a class="seeall" href="' + esc(l[0]) + '"' + (/^https?:/.test(l[0]) ? ' target="_blank" rel="noopener"' : '') + '>' + l[1] + '</a>' : ''; }
     $('panels').innerHTML = sections.map(function (s) {
       var m = META[s.id];
-      return '<div class="panel' + (s.id === on ? ' on' : '') + '" role="tabpanel" data-id="' + s.id + '" style="--ac:' + m.ac + '"><h2><span class="ht">' + (s.id === 'plays' ? esc(m.title(year)).replace(/ of (\d+)$/, '<span class="yr"> of $1</span>') : esc(m.title(year))) + '</span>' + tipHtml(s.id, m) + (s.id === 'plays' ? '<span class="ptog"><span class="seg" data-k="scope" role="group" aria-label="Whose plays"><button type="button" data-v="league">League</button><button type="button" data-v="mine">Mine</button></span><select class="pwk" aria-label="Season or a single week"><option value="season">Season</option></select></span>' : '') + seeAll(s.id) + '</h2><span class="cap">' + esc(m.cap) + '</span>' +
+      return '<div class="panel' + (s.id === on ? ' on' : '') + '" role="tabpanel" data-id="' + s.id + '" style="--ac:' + m.ac + '"><h2><span class="ht">' + (s.id === 'plays' ? esc(m.title(year)).replace(/ of (\d+)$/, '<span class="yr"> of $1</span>') : esc(m.title(year))) + '</span>' + tipHtml(s.id, m) + (s.id === 'plays' ? '<span class="ptog"><span class="seg" data-k="scope" role="group" aria-label="Whose plays"><button type="button" data-v="league">League</button><button type="button" data-v="mine">Mine</button></span><select class="pyr" aria-label="Season year"></select><select class="pwk" aria-label="Season or a single week"><option value="season">Season</option></select></span>' : '') + seeAll(s.id) + '</h2><span class="cap">' + esc(m.cap) + '</span>' +
         (s.items.length ? '<div class="flist">' + s.items.map(function (it) { return rowHtml(it, s.id); }).join('') + '</div>' : '<p class="none">Nothing yet this season.</p>') + '</div>';
     }).join('');
     // a play opens in a large overlay: the clip on top, what happened (when, game, quarter, score) under it; the link itself is the fallback
@@ -652,6 +668,7 @@
       m.querySelector('.pclose').focus({ preventScroll: true });
     }
     $('feed').addEventListener('change', function (e) { var w = e.target.closest('.pwk'); if (w) playsSet('span', w.value); });
+    $('feed').addEventListener('change', function (e) { var y = e.target.closest('.pyr'); if (y) { PL.year = y.value; PL.span = 'season'; ls('dtf.plays.span', 'season'); playsLoad().then(paintPlays); } });
     $('feed').addEventListener('click', function (e) {
       var tg = e.target.closest('.ptog button'); if (tg) { if (!tg.classList.contains('on')) playsToggle(tg.parentNode.dataset.k, tg.dataset.v); return; }
       var r = e.target.closest('.row.play'); if (!r || e.metaKey || e.ctrlKey || r.classList.contains('yt')) return;   // an orange row is a plain link out to YouTube
@@ -709,6 +726,17 @@
     markMine(); fitAll();
     playsLoad().then(function () { if (PL.scope === 'mine' && !meName()) PL.scope = 'league'; if (PL.scope !== 'league' || PL.span !== 'season') paintPlays(); else { paintPlays(); } });
   });
+  // A large overlay player for one YouTube video (the podcast on a phone): a tap on the picture opens it full width, with a link out to YouTube.
+  function openVideo(title, vid, href) {
+    var old = $('pmodal'); if (old) old.remove();
+    var m = document.createElement('div'); m.id = 'pmodal'; m.setAttribute('role', 'dialog'); m.setAttribute('aria-modal', 'true'); m.setAttribute('aria-label', title);
+    m.innerHTML = '<div class="pcard"><div class="ptop"><span class="pt">' + esc(title) + '</span><button type="button" class="pclose" aria-label="Close">&times;</button><div class="pr2"><div class="pfant"><span>DTF Club Podcast</span></div><div class="pacts"><a href="' + esc(href) + '" target="_blank" rel="noopener">Open on YouTube \u203a</a></div></div></div>' +
+      '<div class="pw"><iframe src="https://www.youtube-nocookie.com/embed/' + vid + '?autoplay=1&playsinline=1&rel=0" title="' + esc(title) + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div></div>';
+    function close() { m.remove(); document.documentElement.classList.remove('pmopen'); document.removeEventListener('keydown', key); }
+    function key(e) { if (e.key === 'Escape') close(); }
+    m.addEventListener('click', function (e) { if (e.target === m || e.target.closest('.pclose')) close(); });
+    document.body.appendChild(m); document.documentElement.classList.add('pmopen'); document.addEventListener('keydown', key);
+  }
   // ---- latest podcast episode: the last YouTube link posted in #podcast (podcast.json, built by the Slack job)
   get('/podcast.json').then(function (p) {
     if (!p || !p.videoId) return;
@@ -723,6 +751,7 @@
     pa.addEventListener('click', function (e) {
       if (pa.getAttribute('data-on') === 'fail') return;     // second try: let the link open YouTube
       e.preventDefault();
+      if (window.matchMedia('(max-width: 700px), (pointer: coarse)').matches) { openVideo($('pod-t').textContent, vid, yt); return; }   // phones and touch screens: the big overlay player
       var f = document.createElement('iframe'), ok = false, done = function () { window.removeEventListener('message', onMsg); };
       f.title = 'Latest podcast episode'; f.allowFullscreen = true; f.referrerPolicy = 'strict-origin-when-cross-origin';
       f.allow = 'autoplay; accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
