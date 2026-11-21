@@ -1720,6 +1720,34 @@
     },
     {
      "rank": 3,
+     "title": "Aidan ⇄ Ankit",
+     "sub": "Wk 11",
+     "managers": [
+      "Aidan",
+      "Ankit"
+     ],
+     "winner": null,
+     "edge": 0,
+     "gets": [
+      {
+       "m": "Aidan",
+       "players": [
+        "B. Hall"
+       ],
+       "v": 18.9
+      },
+      {
+       "m": "Ankit",
+       "players": [
+        "G. Kittle"
+       ],
+       "v": 32.5
+      }
+     ],
+     "href": "/SleeperTradeNodes/?season=2026&manager=Aidan"
+    },
+    {
+     "rank": 4,
      "title": "Ben ⇄ Alex",
      "sub": "Wk 4",
      "managers": [
@@ -1748,7 +1776,7 @@
      "href": "/SleeperTradeNodes/?season=2026&manager=Alex"
     },
     {
-     "rank": 4,
+     "rank": 5,
      "title": "Alex ⇄ Ankit",
      "sub": "Wk 8",
      "managers": [
@@ -1778,7 +1806,7 @@
      "href": "/SleeperTradeNodes/?season=2026&manager=Ankit"
     },
     {
-     "rank": 5,
+     "rank": 6,
      "title": "Joe ⇄ Ankit",
      "sub": "Wk 10",
      "managers": [
@@ -1806,7 +1834,7 @@
      "href": "/SleeperTradeNodes/?season=2026&manager=Joe"
     },
     {
-     "rank": 6,
+     "rank": 7,
      "title": "Joe ⇄ Kaitlyn",
      "sub": "Wk 7",
      "managers": [
@@ -1834,7 +1862,35 @@
      "href": "/SleeperTradeNodes/?season=2026&manager=Kaitlyn"
     },
     {
-     "rank": 7,
+     "rank": 8,
+     "title": "Alex ⇄ Steven",
+     "sub": "Wk 11",
+     "managers": [
+      "Alex",
+      "Steven"
+     ],
+     "winner": null,
+     "edge": 0,
+     "gets": [
+      {
+       "m": "Alex",
+       "players": [
+        "K. Monangai"
+       ],
+       "v": 6.3
+      },
+      {
+       "m": "Steven",
+       "players": [
+        "R. Stevenson"
+       ],
+       "v": 9.8
+      }
+     ],
+     "href": "/SleeperTradeNodes/?season=2026&manager=Alex"
+    },
+    {
+     "rank": 9,
      "title": "Ben ⇄ Joe",
      "sub": "Wk 5",
      "managers": [
@@ -1862,7 +1918,7 @@
      "href": "/SleeperTradeNodes/?season=2026&manager=Joe"
     },
     {
-     "rank": 8,
+     "rank": 10,
      "title": "Joe ⇄ Steven",
      "sub": "Wk 3",
      "managers": [
@@ -1888,34 +1944,6 @@
       }
      ],
      "href": "/SleeperTradeNodes/?season=2026&manager=Steven"
-    },
-    {
-     "rank": 9,
-     "title": "Joe ⇄ Alex",
-     "sub": "Wk 5",
-     "managers": [
-      "Joe",
-      "Alex"
-     ],
-     "winner": "Joe",
-     "edge": 6.6,
-     "gets": [
-      {
-       "m": "Joe",
-       "players": [
-        "A. Rodgers"
-       ],
-       "v": 0.8
-      },
-      {
-       "m": "Alex",
-       "players": [
-        "M. Lemon"
-       ],
-       "v": 2.8
-      }
-     ],
-     "href": "/SleeperTradeNodes/?season=2026&manager=Joe"
     }
    ]
   },
@@ -2188,5 +2216,5 @@
    }
   ]
  },
- "generatedAt": "2026-11-21T18:06:35Z"
+ "generatedAt": "2026-11-21T23:27:43Z"
 }
