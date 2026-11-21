@@ -3,6 +3,14 @@
  "windowDays": 7,
  "topics": [
   {
+   "title": "I'd like to pull a Joe",
+   "needs_summary": true,
+   "channel": "news",
+   "messages": 49,
+   "people": 5,
+   "href": "https://dtf-club.slack.com/archives/CCH72430F/p1795195755715409"
+  },
+  {
    "title": "*CONTENT BOYS EPISODE #53: THE BILL ROMANOWSKI EPISODE* The…",
    "needs_summary": true,
    "channel": "podcast",
@@ -17,14 +25,6 @@
    "messages": 34,
    "people": 8,
    "href": "https://dtf-club.slack.com/archives/CCH72NHC7/p1794751586155759"
-  },
-  {
-   "title": "Points for drawing pass interference",
-   "needs_summary": true,
-   "channel": "league-suggestions",
-   "messages": 23,
-   "people": 4,
-   "href": "https://dtf-club.slack.com/archives/CCG47441Z/p1794572437910819"
   },
   {
    "title": "Episode 53 Mount Rushmore: Best League Changes of All Time…",
@@ -59,6 +59,14 @@
    "href": "https://dtf-club.slack.com/archives/CCG47441Z/p1795126515951779"
   },
   {
+   "title": "It felt like the bad teams this year are exceptionally bad…",
+   "needs_summary": true,
+   "channel": "stats",
+   "messages": 10,
+   "people": 4,
+   "href": "https://dtf-club.slack.com/archives/CCP19EKST/p1795216835945079"
+  },
+  {
    "title": "looking for a QB and a start-able Flex in return",
    "needs_summary": true,
    "channel": "trade-block",
@@ -73,15 +81,7 @@
    "messages": 8,
    "people": 5,
    "href": "https://dtf-club.slack.com/archives/C07QP48E83E/p1795121657620259"
-  },
-  {
-   "title": "Week 10 Standings *Sent using* Claude",
-   "needs_summary": true,
-   "channel": "standings",
-   "messages": 10,
-   "people": 3,
-   "href": "https://dtf-club.slack.com/archives/C048A37TBA5/p1794915655258059"
   }
  ],
- "generatedAt": "2026-11-20T12:06:27Z"
+ "generatedAt": "2026-11-21T00:55:56Z"
 }
