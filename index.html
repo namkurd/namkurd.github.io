@@ -102,6 +102,7 @@
   @media (max-width: 380px) { .panel[data-id="plays"] h2 { font-size: .78rem; } }
   .panel[data-id="plays"] h2 .hw { flex: none; color: var(--dtf-text); font-weight: 700; }
   .panel[data-id="plays"] h2 .hs { flex: none; -webkit-appearance: none; appearance: none; border: 0; background-color: transparent; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%2322c55e'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1px center; padding: 2px 11px 2px 2px; margin: 0; color: var(--ac); font-family: inherit; font-weight: 700; font-size: inherit; line-height: 1.2; cursor: pointer; border-radius: 6px; color-scheme: dark; -webkit-tap-highlight-color: transparent; }
+  .panel[data-id="plays"] h2 .hs:disabled { opacity: .5; cursor: default; background-image: none; padding-right: 2px; }
   .panel[data-id="plays"] h2 .hs:hover, .panel[data-id="plays"] h2 .hs:focus-visible { background-color: color-mix(in srgb, var(--ac) 16%, transparent); outline: 0; }
   .panel[data-id="plays"] h2 .tip { flex: none; margin-left: 4px; }
   .panel[data-id="plays"] .flist { min-height: calc(3 * clamp(34px, calc(var(--avail) * .05), 40px) + 8px); }
@@ -544,12 +545,26 @@
   var PLYEAR = '';
   var PL = { year: '', byYear: {}, mode: ls('dtf.plays.mode') === 'biggest' ? 'biggest' : 'impact', scope: ls('dtf.plays.scope') === 'mine' ? 'mine' : 'league', span: (/^(season|week|\d+)$/.test(ls('dtf.plays.span') || '') ? ls('dtf.plays.span') : 'season'), feed: [], data: null, want: false };
   function playsData() { return PL.year ? PL.byYear[PL.year] : PL.data; }
-  function playsLoad() {   // this season's plays (data/topplays.json) or an archived season's (data/topplays_<year>.json)
-    var y = PL.year;
+  function playsLoad() {   // this season's plays (data/topplays.json), an archived season's (data/topplays_<year>.json) or, for All-time, all of them together
+    var y = PL.year, cur = Number(PLYEAR) || new Date().getFullYear();
+    if (y === 'all') {
+      if (PL.byYear.all) return Promise.resolve(PL.byYear.all);
+      var yrs = []; for (var q = cur - 1; q >= 2021; q--) yrs.push(q);
+      return Promise.all([PL.data ? Promise.resolve(PL.data) : get('/data/topplays.json').then(function (d) { PL.data = d; return d; }, function () { return null; })].concat(yrs.map(function (yy) {
+        return get('/data/topplays_' + yy + '.json').then(function (d) { return d; }, function () { return null; });
+      }))).then(function (all) {
+        var weeks = {};
+        all.forEach(function (d, k) {
+          if (!d || !d.weeks) return; var yy = k === 0 ? cur : yrs[k - 1];
+          Object.keys(d.weeks).forEach(function (w) { weeks[yy + '-' + w] = d.weeks[w].map(function (p) { var c = {}; for (var kk in p) c[kk] = p[kk]; c._y = yy; return c; }); });
+        });
+        PL.byYear.all = { weeks: weeks }; return PL.byYear.all;
+      });
+    }
     if (y) return PL.byYear[y] ? Promise.resolve(PL.byYear[y]) : get('/data/topplays_' + y + '.json').then(function (d) { PL.byYear[y] = d; return d; }, function () { PL.byYear[y] = { weeks: {} }; return PL.byYear[y]; });
     return PL.data ? Promise.resolve(PL.data) : get('/data/topplays.json').then(function (d) { PL.data = d; return d; }, function () { return null; });
   }
-  function playsLast() { var D = playsData(), w = D ? Object.keys(D.weeks).map(Number) : []; return w.length ? Math.max.apply(null, w) : null; }
+  function playsLast() { var D = playsData(), w = D && PL.year !== 'all' ? Object.keys(D.weeks).map(Number) : []; return w.length ? Math.max.apply(null, w) : null; }
   function initialName(n) { var q = (n || '').split(' '); return q.length < 2 || q[0].indexOf('.') >= 0 ? (n || '') : q[0].charAt(0) + '. ' + q.slice(1).join(' '); }   // 'Nohl Williams' -> 'N. Williams'; 'T.J. Watt' stays
   function playTitle(who, label, sid, stk, slab) {   // same rule as play_title() in tools/build_feed.py: "KC INT (N. Williams)", "PIT 35 yd pick-6 (T.J. Watt)"
     if (stk && stk.length >= 2 && slab) return stk.join('/') + ' ' + slab;   // a stack: the QB and the receiver he threw to ("C. Williams/L. Burden 1 yd TD pass")
@@ -569,11 +584,11 @@
   }
   function playSub(p) {   // "Haan vs Aidan · Wk 10 · +13.0 pts": the manager whose player made the play first, and everything the play earned him
     var pts = p.tot != null ? p.tot : p.pts, tail = pts == null ? '' : ' \u00b7 ' + (pts >= 0 ? '+' : '\u2212') + Math.abs(pts).toFixed(1) + ' pts';
-    return (p.by === p.b ? p.b + ' vs ' + p.a : p.a + ' vs ' + p.b) + ' \u00b7 Wk ' + p.week + tail;
+    return (p.by === p.b ? p.b + ' vs ' + p.a : p.a + ' vs ' + p.b) + ' \u00b7 ' + (p._y ? p._y + ' ' : '') + 'Wk ' + p.week + tail;
   }
   function mapPlay(p) {
     return { title: playTitle(p.who, p.label, p.sid, p.stk, p.slab), sub: playSub(p), pts: p.tot != null ? p.tot : p.pts, managers: [p.a, p.b], from: p.from, to: p.to, clip: p.clip, alt: p.alt, et: p.et, sit: p.sit, fant: p.pa != null && p.pb != null ? (p.by === p.b ? { m: p.b, o: p.a, ms: p.pb, os: p.pa } : { m: p.a, o: p.b, ms: p.pa, os: p.pb }) : null,
-      replay: '/SleeperLiveRumbles/rumbles.html?wp=' + p.week + '.' + p.aid + '.' + p.bid + (p.rt != null ? '&t=' + p.rt : '') + (PL.year ? '&season=' + PL.year : ''), href: 'https://www.youtube.com/watch?v=' + p.clip.id + '&t=' + Math.floor(p.clip.s) + 's', swing: p.swing };
+      replay: '/SleeperLiveRumbles/rumbles.html?wp=' + p.week + '.' + p.aid + '.' + p.bid + (p.rt != null ? '&t=' + p.rt : '') + ((p._y || PL.year) && String(p._y || PL.year) !== String(PLYEAR) ? '&season=' + (p._y || PL.year) : ''), href: 'https://www.youtube.com/watch?v=' + p.clip.id + '&t=' + Math.floor(p.clip.s) + 's', swing: p.swing };
   }
   function playsItems() {
     if (!PL.year && PL.scope === 'league' && PL.span === 'season' && PL.mode === 'impact') return PL.feed;
@@ -609,6 +624,7 @@
     if (ysel) {   // this season, then every archived season back to 2021
       var cur = Number(PLYEAR) || new Date().getFullYear(), yo = '<option value="">' + cur + '</option>';
       for (var yy = cur - 1; yy >= 2021; yy--) yo += '<option value="' + yy + '">' + yy + '</option>';
+      yo += '<option value="all">All-time</option>';
       if (ysel.dataset.opts !== yo) { ysel.innerHTML = yo; ysel.dataset.opts = yo; }
       ysel.value = PL.year;
     }
@@ -617,7 +633,7 @@
       var D2 = playsData(), wks = D2 ? Object.keys(D2.weeks).map(Number).sort(function (x, y) { return y - x; }) : [];
       var want = '<option value="season">Season</option>' + wks.map(function (w) { return '<option value="' + w + '">Wk ' + w + '</option>'; }).join('');
       if (sel.dataset.opts !== want) { sel.innerHTML = want; sel.dataset.opts = want; }
-      sel.value = PL.span;
+      sel.value = PL.span; sel.disabled = PL.year === 'all';   // All-time is every season at once: no single week to pick
     }
     fitSelects();
     if (opts && opts.keep) { fitAll(); return; }   // the default view's rows are already on screen (and being checked)
@@ -661,7 +677,7 @@
     function seeAll(id) { var l = SEEALL[id]; return l ? '<a class="seeall" href="' + esc(l[0]) + '"' + (/^https?:/.test(l[0]) ? ' target="_blank" rel="noopener"' : '') + '>' + l[1] + '</a>' : ''; }
     $('panels').innerHTML = sections.map(function (s) {
       var m = META[s.id];
-      return '<div class="panel' + (s.id === on ? ' on' : '') + '" role="tabpanel" data-id="' + s.id + '" style="--ac:' + m.ac + '"><h2' + (s.id === 'plays' ? ' class="phd"' : '') + '>' + (s.id === 'plays' ? '<select class="psc hs" aria-label="Whose plays"><option value="league">League</option><option value="mine">Mine</option></select><select class="pmd hs" aria-label="How plays are ranked"><option value="impact">Impact</option><option value="biggest">Biggest</option></select><span class="hw">plays of</span><select class="pwk hs" aria-label="Season or a single week"><option value="season">Season</option></select><span class="hw">\u2013</span><select class="pyr hs" aria-label="Season year"></select>' + tipHtml(s.id, m) : '<span class="ht">' + esc(m.title(year)) + '</span>' + tipHtml(s.id, m)) + seeAll(s.id) + '</h2><span class="cap">' + esc(m.cap) + '</span>' +
+      return '<div class="panel' + (s.id === on ? ' on' : '') + '" role="tabpanel" data-id="' + s.id + '" style="--ac:' + m.ac + '"><h2' + (s.id === 'plays' ? ' class="phd"' : '') + '>' + (s.id === 'plays' ? '<select class="psc hs" aria-label="Whose plays"><option value="league">League</option><option value="mine">My</option></select><select class="pmd hs" aria-label="How plays are ranked"><option value="impact">Impact</option><option value="biggest">Biggest</option></select><span class="hw">plays of</span><select class="pwk hs" aria-label="Season or a single week"><option value="season">Season</option></select><span class="hw">\u2013</span><select class="pyr hs" aria-label="Season year"></select>' + tipHtml(s.id, m) : '<span class="ht">' + esc(m.title(year)) + '</span>' + tipHtml(s.id, m)) + seeAll(s.id) + '</h2><span class="cap">' + esc(m.cap) + '</span>' +
         (s.items.length ? '<div class="flist">' + (s.id === 'plays' && !playsDefault() ? '<p class="none">Loading plays\u2026</p>' : s.items.map(function (it) { return rowHtml(it, s.id); }).join('')) + '</div>' : '<p class="none">Nothing yet this season.</p>') + '</div>';
     }).join('');
     // a play opens in a large overlay: the clip on top, what happened (when, game, quarter, score) under it; the link itself is the fallback
