@@ -88,6 +88,7 @@
   .row.play .pp { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 1.7em; height: 1.7em; padding-left: .12em; box-sizing: border-box; border-radius: 50%; font-size: .7rem; color: #2ecc71; background: color-mix(in srgb, #2ecc71 16%, transparent); border: 1px solid color-mix(in srgb, #2ecc71 70%, transparent); text-shadow: 0 0 6px #2ecc71; box-shadow: 0 0 8px 1px color-mix(in srgb, #2ecc71 55%, transparent); animation: pglow 2.4s ease-in-out infinite; }
   .row.play:hover .pp, .row.play.open .pp { background: color-mix(in srgb, #2ecc71 28%, transparent); box-shadow: 0 0 12px 3px color-mix(in srgb, #2ecc71 80%, transparent); }
   .row.play.pend { display: none; }
+  .row.play small .gp { display: inline; font-size: inherit; white-space: nowrap; overflow: visible; text-overflow: clip; color: #4ade80; font-weight: 800; font-variant-numeric: tabular-nums; text-shadow: 0 0 10px rgba(74,222,128,.35); } .row.play small .gp.neg { color: #f87171; text-shadow: none; }
   .row.play.yt .pp { color: #ff8a3d; background: color-mix(in srgb, #ff8a3d 16%, transparent); border-color: color-mix(in srgb, #ff8a3d 70%, transparent); text-shadow: 0 0 6px #ff8a3d; box-shadow: 0 0 8px 1px color-mix(in srgb, #ff8a3d 55%, transparent); animation-name: pglowo; }
   .row.play.yt .pd { color: #ff8a3d; }
   @keyframes pglowo { 0%, 100% { box-shadow: 0 0 6px 0 color-mix(in srgb, #ff8a3d 45%, transparent); } 50% { box-shadow: 0 0 12px 3px color-mix(in srgb, #ff8a3d 75%, transparent); } }
@@ -96,10 +97,12 @@
   @media (prefers-reduced-motion: reduce) { .row.play .pp { animation: none; } }
   /* every feed list holds ten and scrolls inside its panel (fitLists sizes it to three rows, five on a wide screen) so Home still fits one screen */
   .flist { overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; -webkit-overflow-scrolling: touch; } .flist.has-open { max-height: none !important; overflow: visible; }
-  .panel[data-id="plays"] h2 { display: grid; grid-template-columns: minmax(0, auto) auto 1fr; align-items: center; gap: 4px 8px; min-width: 0; }
-  .panel[data-id="plays"] h2 .ht { grid-column: 1; grid-row: 1; min-height: 20px; line-height: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
-  .panel[data-id="plays"] h2 .tip { grid-column: 2; grid-row: 1; }
-  .panel[data-id="plays"] h2 .ptog { grid-column: 1 / -1; grid-row: 2; justify-self: end; margin-left: 0; min-height: 24px; align-items: center; }
+  .panel[data-id="plays"] h2 { display: flex; flex-wrap: nowrap; align-items: center; gap: 6px; min-width: 0; min-height: 26px; }
+  .panel[data-id="plays"] h2 .ht { flex: 0 1 auto; min-width: 0; line-height: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .panel[data-id="plays"] h2 .tip { flex: none; }
+  @media (max-width: 440px) { .panel[data-id="plays"] h2 .hx { display: none; } }   /* a phone: the year and week dropdowns already say it, so the title is just "Top plays" / "My top plays" and the row never wraps */
+  .panel[data-id="plays"] h2 .ptog { flex: none; margin-left: auto; flex-wrap: nowrap; gap: 5px; }
+  .ptog .seg button { padding: 0 6px; } .ptog .pyr, .ptog .pwk { padding-left: 7px; padding-right: 17px; background-position: right 6px center; }
   .panel[data-id="plays"] .flist { min-height: calc(3 * clamp(34px, calc(var(--avail) * .05), 40px) + 8px); }
   /* two real switches: both choices are always visible and the current one is lit */
   .ptog { flex: none; display: inline-flex; flex-wrap: wrap; gap: 6px; margin-left: auto; justify-content: flex-end; }
@@ -380,7 +383,7 @@
     slack: { tab: 'Slack', title: function () { return 'Hot in Slack this week'; }, cap: 'The busiest conversations of the past 7 days.', ac: '#e8eaf0' }
   };
   function rowHtml(it, id) {
-    if (id === 'plays') return '<a class="row play pend" data-m="' + esc((it.managers || []).join('|')) + '" data-yt="' + esc(it.clip.id) + '" data-s="' + Math.floor(it.clip.s) + '" data-e="' + Math.ceil(it.clip.e) + '" data-info="' + esc(JSON.stringify({ et: it.et || '', sit: it.sit || null, fant: it.fant || null, pts: it.pts != null ? it.pts : null, replay: it.replay || '' })) + '" data-yt2="' + esc(it.alt ? it.alt.id : '') + '" data-s2="' + (it.alt ? Math.floor(it.alt.s) : '') + '" data-e2="' + (it.alt ? Math.ceil(it.alt.e) : '') + '" href="' + esc(it.href) + '" target="_blank" rel="noopener"><span class="rk">' + it.rank + '</span><span class="th" aria-hidden="true"><img alt="" decoding="async" referrerpolicy="no-referrer"><span class="tpl">\u25b6</span></span><span><b>' + esc(it.title) + '</b><small>' + esc(it.sub) + '</small></span><span class="pp" aria-hidden="true" title="Watch the play">\u25b6</span>' + (it.from != null ? '<span class="pd" title="Win probability before and after the play">' + it.from + '% \u2192 ' + it.to + '%</span>' : '') + '</a>';
+    if (id === 'plays') return '<a class="row play pend" data-m="' + esc((it.managers || []).join('|')) + '" data-yt="' + esc(it.clip.id) + '" data-s="' + Math.floor(it.clip.s) + '" data-e="' + Math.ceil(it.clip.e) + '" data-info="' + esc(JSON.stringify({ et: it.et || '', sit: it.sit || null, fant: it.fant || null, pts: it.pts != null ? it.pts : null, replay: it.replay || '' })) + '" data-yt2="' + esc(it.alt ? it.alt.id : '') + '" data-s2="' + (it.alt ? Math.floor(it.alt.s) : '') + '" data-e2="' + (it.alt ? Math.ceil(it.alt.e) : '') + '" href="' + esc(it.href) + '" target="_blank" rel="noopener"><span class="rk">' + it.rank + '</span><span class="th" aria-hidden="true"><img alt="" decoding="async" referrerpolicy="no-referrer"><span class="tpl">\u25b6</span></span><span><b>' + esc(it.title) + '</b><small>' + esc(it.sub).replace(/ \u00b7 ([+\u2212-][\d.]+ pts)$/, function (m0, g) { return ' \u00b7 <b class="gp' + (g.charAt(0) === '+' ? '' : ' neg') + '">' + g + '</b>'; }) + '</small></span><span class="pp" aria-hidden="true" title="Watch the play">\u25b6</span>' + (it.from != null ? '<span class="pd" title="Win probability before and after the play">' + it.from + '% \u2192 ' + it.to + '%</span>' : '') + '</a>';
     var ext = /^https?:/.test(it.href), mgrs = (it.managers || []).join('|');
     var open = '<a class="row' + (id === 'trades' ? ' trade' : id === 'slack' ? ' slack' : id === 'matchups' ? ' mu' : '') + '" data-m="' + esc(mgrs) + '" href="' + esc(it.href) + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '>' + (id === 'trades' && it.sub ? '<span class="rkc"><span class="rk">' + it.rank + '</span><em class="wkn">' + esc(it.sub) + '</em></span>' : '<span class="rk">' + it.rank + '</span>');
     if (id === 'trades' && it.gets) {
@@ -552,7 +555,8 @@
   }
   function playsLast() { var D = playsData(), w = D ? Object.keys(D.weeks).map(Number) : []; return w.length ? Math.max.apply(null, w) : null; }
   function initialName(n) { var q = (n || '').split(' '); return q.length < 2 || q[0].indexOf('.') >= 0 ? (n || '') : q[0].charAt(0) + '. ' + q.slice(1).join(' '); }   // 'Nohl Williams' -> 'N. Williams'; 'T.J. Watt' stays
-  function playTitle(who, label, sid) {   // same rule as play_title() in tools/build_feed.py: "KC INT (N. Williams)", "PIT 35 yd pick-6 (T.J. Watt)"
+  function playTitle(who, label, sid, stk, slab) {   // same rule as play_title() in tools/build_feed.py: "KC INT (N. Williams)", "PIT 35 yd pick-6 (T.J. Watt)"
+    if (stk && stk.length >= 2 && slab) return stk.join('/') + ' ' + slab;   // a stack: the QB and the receiver he threw to ("C. Williams/L. Burden 1 yd TD pass")
     who = (who || '').trim(); label = (label || '').trim();
     var m = /\(([^)]+)\)/.exec(label);
     if (!m || /^[A-Z]\.?\s/.test(who)) return (who + ' ' + label).trim();
@@ -572,7 +576,7 @@
     return (p.by === p.b ? p.b + ' vs ' + p.a : p.a + ' vs ' + p.b) + ' \u00b7 Wk ' + p.week + tail;
   }
   function mapPlay(p) {
-    return { title: playTitle(p.who, p.label, p.sid), sub: playSub(p), pts: p.tot != null ? p.tot : p.pts, managers: [p.a, p.b], from: p.from, to: p.to, clip: p.clip, alt: p.alt, et: p.et, sit: p.sit, fant: p.pa != null && p.pb != null ? (p.by === p.b ? { m: p.b, o: p.a, ms: p.pb, os: p.pa } : { m: p.a, o: p.b, ms: p.pa, os: p.pb }) : null,
+    return { title: playTitle(p.who, p.label, p.sid, p.stk, p.slab), sub: playSub(p), pts: p.tot != null ? p.tot : p.pts, managers: [p.a, p.b], from: p.from, to: p.to, clip: p.clip, alt: p.alt, et: p.et, sit: p.sit, fant: p.pa != null && p.pb != null ? (p.by === p.b ? { m: p.b, o: p.a, ms: p.pb, os: p.pa } : { m: p.a, o: p.b, ms: p.pa, os: p.pb }) : null,
       replay: '/SleeperLiveRumbles/rumbles.html?wp=' + p.week + '.' + p.aid + '.' + p.bid + (p.rt != null ? '&t=' + p.rt : '') + (PL.year ? '&season=' + PL.year : ''), href: 'https://www.youtube.com/watch?v=' + p.clip.id + '&t=' + Math.floor(p.clip.s) + 's', swing: p.swing };
   }
   function playsItems() {
@@ -592,7 +596,7 @@
     var panel = document.querySelector('.panel[data-id="plays"]'); if (!panel) return;
     var last = playsLast();
     if (PL.span === 'week') PL.span = String(last || 'season');
-    var yl = PL.year || PLYEAR, ht = panel.querySelector('.ht'); if (ht) ht.textContent = (PL.scope === 'mine' ? 'My top plays' : 'Top plays') + ' of ' + (PL.span === 'season' ? yl : 'week ' + PL.span + (PL.year ? ', ' + yl : ''));
+    var yl = PL.year || PLYEAR, ht = panel.querySelector('.ht'); if (ht) ht.innerHTML = (PL.scope === 'mine' ? 'My top plays' : 'Top plays') + '<span class="hx"> of ' + (PL.span === 'season' ? yl : 'week ' + PL.span + (PL.year ? ', ' + yl : '')) + '</span>';
     [].forEach.call(panel.querySelectorAll('.seg button'), function (b) {
       var on = PL.scope === b.dataset.v; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on);
     });
@@ -651,7 +655,7 @@
     function seeAll(id) { var l = SEEALL[id]; return l ? '<a class="seeall" href="' + esc(l[0]) + '"' + (/^https?:/.test(l[0]) ? ' target="_blank" rel="noopener"' : '') + '>' + l[1] + '</a>' : ''; }
     $('panels').innerHTML = sections.map(function (s) {
       var m = META[s.id];
-      return '<div class="panel' + (s.id === on ? ' on' : '') + '" role="tabpanel" data-id="' + s.id + '" style="--ac:' + m.ac + '"><h2><span class="ht">' + (s.id === 'plays' ? esc(m.title(year)).replace(/ of (\d+)$/, '<span class="yr"> of $1</span>') : esc(m.title(year))) + '</span>' + tipHtml(s.id, m) + (s.id === 'plays' ? '<span class="ptog"><span class="seg" data-k="scope" role="group" aria-label="Whose plays"><button type="button" data-v="league">League</button><button type="button" data-v="mine">Mine</button></span><select class="pyr" aria-label="Season year"></select><select class="pwk" aria-label="Season or a single week"><option value="season">Season</option></select></span>' : '') + seeAll(s.id) + '</h2><span class="cap">' + esc(m.cap) + '</span>' +
+      return '<div class="panel' + (s.id === on ? ' on' : '') + '" role="tabpanel" data-id="' + s.id + '" style="--ac:' + m.ac + '"><h2><span class="ht">' + (s.id === 'plays' ? esc(m.title(year)).replace(/ of (\d+)$/, '<span class="hx"> of $1</span>') : esc(m.title(year))) + '</span>' + tipHtml(s.id, m) + (s.id === 'plays' ? '<span class="ptog"><span class="seg" data-k="scope" role="group" aria-label="Whose plays"><button type="button" data-v="league">League</button><button type="button" data-v="mine">Mine</button></span><select class="pyr" aria-label="Season year"></select><select class="pwk" aria-label="Season or a single week"><option value="season">Season</option></select></span>' : '') + seeAll(s.id) + '</h2><span class="cap">' + esc(m.cap) + '</span>' +
         (s.items.length ? '<div class="flist">' + (s.id === 'plays' && !playsDefault() ? '<p class="none">Loading plays\u2026</p>' : s.items.map(function (it) { return rowHtml(it, s.id); }).join('')) + '</div>' : '<p class="none">Nothing yet this season.</p>') + '</div>';
     }).join('');
     // a play opens in a large overlay: the clip on top, what happened (when, game, quarter, score) under it; the link itself is the fallback
