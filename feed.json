@@ -10,6 +10,7 @@
      "rank": 1,
      "title": "T. Higbee 30 yd catch",
      "sub": "Ryan vs Steven · Wk 5 · +4.5 pts",
+     "pts": 4.5,
      "managers": [
       "Steven",
       "Ryan"
@@ -45,6 +46,7 @@
      "rank": 2,
      "title": "D. Adams 11 yd TD catch",
      "sub": "Ankit vs Haan · Wk 2 · +8.1 pts",
+     "pts": 8.1,
      "managers": [
       "Haan",
       "Ankit"
@@ -85,6 +87,7 @@
      "rank": 3,
      "title": "C. Lamb 16 yd TD catch",
      "sub": "Kaitlyn vs Steven · Wk 7 · +8.6 pts",
+     "pts": 8.6,
      "managers": [
       "Steven",
       "Kaitlyn"
@@ -125,6 +128,7 @@
      "rank": 4,
      "title": "L. Burden 1 yd TD catch",
      "sub": "Alex vs Haan · Wk 8 · +11.1 pts",
+     "pts": 11.14,
      "managers": [
       "Haan",
       "Alex"
@@ -165,6 +169,7 @@
      "rank": 5,
      "title": "M. Golden 50 yd catch",
      "sub": "Alex vs Christian · Wk 5 · +6.5 pts",
+     "pts": 6.5,
      "managers": [
       "Alex",
       "Christian"
@@ -200,6 +205,7 @@
      "rank": 6,
      "title": "J. Brissett 9 yd TD pass",
      "sub": "Ben vs Jake · Wk 5 · +4.4 pts",
+     "pts": 4.36,
      "managers": [
       "Ben",
       "Jake"
@@ -235,6 +241,7 @@
      "rank": 7,
      "title": "T. Tucker 44 yd TD catch",
      "sub": "Stephanie vs Haan · Wk 6 · +11.4 pts",
+     "pts": 11.4,
      "managers": [
       "Haan",
       "Stephanie"
@@ -275,6 +282,7 @@
      "rank": 8,
      "title": "M. Stafford 2 yd TD pass",
      "sub": "Aidan vs Ankit · Wk 5 · +4.1 pts",
+     "pts": 4.08,
      "managers": [
       "Aidan",
       "Ankit"
@@ -310,6 +318,7 @@
      "rank": 9,
      "title": "G. Pickens 21 yd TD catch",
      "sub": "Steven vs Kaitlyn · Wk 7 · +9.1 pts",
+     "pts": 9.1,
      "managers": [
       "Steven",
       "Kaitlyn"
@@ -350,6 +359,7 @@
      "rank": 10,
      "title": "L. Burden 23 yd catch",
      "sub": "Alex vs Haan · Wk 8 · +4.9 pts",
+     "pts": 4.92,
      "managers": [
       "Haan",
       "Alex"
@@ -385,6 +395,7 @@
      "rank": 11,
      "title": "D. Samuel 70 yd TD run",
      "sub": "Haan vs Aidan · Wk 10 · +13.0 pts",
+     "pts": 13,
      "managers": [
       "Aidan",
       "Haan"
@@ -425,6 +436,7 @@
      "rank": 12,
      "title": "B. Young 8 yd TD pass",
      "sub": "Stephanie vs Ankit · Wk 3 · +4.3 pts",
+     "pts": 4.32,
      "managers": [
       "Ankit",
       "Stephanie"
@@ -460,6 +472,7 @@
      "rank": 13,
      "title": "KC INT (N. Williams)",
      "sub": "Alex vs Stephanie · Wk 7 · +4.6 pts",
+     "pts": 4.6,
      "managers": [
       "Alex",
       "Stephanie"
@@ -495,6 +508,7 @@
      "rank": 14,
      "title": "C. McCaffrey 66 yd TD catch",
      "sub": "Stephanie vs Joe · Wk 10 · +13.6 pts",
+     "pts": 13.6,
      "managers": [
       "Joe",
       "Stephanie"
@@ -535,6 +549,7 @@
      "rank": 15,
      "title": "J. Gibbs 17 yd TD run",
      "sub": "Ankit vs Stephanie · Wk 3 · +7.7 pts",
+     "pts": 7.7,
      "managers": [
       "Ankit",
       "Stephanie"
@@ -570,6 +585,7 @@
      "rank": 16,
      "title": "D. Adams 49 yd catch",
      "sub": "Ankit vs Stephanie · Wk 3 · +6.4 pts",
+     "pts": 6.4,
      "managers": [
       "Ankit",
       "Stephanie"
@@ -605,6 +621,7 @@
      "rank": 17,
      "title": "K. Coleman 12 yd TD catch",
      "sub": "Christian vs Ankit · Wk 6 · +8.2 pts",
+     "pts": 8.2,
      "managers": [
       "Ankit",
       "Christian"
@@ -645,6 +662,7 @@
      "rank": 18,
      "title": "I. Likely 24 yd TD catch",
      "sub": "Aidan vs Ryan · Wk 6 · +9.4 pts",
+     "pts": 9.4,
      "managers": [
       "Aidan",
       "Ryan"
@@ -685,6 +703,7 @@
      "rank": 19,
      "title": "J. Coker 51 yd TD catch",
      "sub": "Jake vs Kaitlyn · Wk 1 · +12.1 pts",
+     "pts": 12.1,
      "managers": [
       "Jake",
       "Kaitlyn"
@@ -725,6 +744,7 @@
      "rank": 20,
      "title": "C. Williams 29 yd TD run",
      "sub": "Alex vs Ben · Wk 1 · +8.9 pts",
+     "pts": 8.9,
      "managers": [
       "Ben",
       "Alex"
@@ -765,6 +785,7 @@
      "rank": 21,
      "title": "C. Lamb 9 yd TD catch",
      "sub": "Kaitlyn vs Steven · Wk 7 · +7.9 pts",
+     "pts": 7.9,
      "managers": [
       "Steven",
       "Kaitlyn"
@@ -805,6 +826,7 @@
      "rank": 22,
      "title": "J. Burrow 9 yd TD run",
      "sub": "Haan vs Alex · Wk 8 · +6.9 pts",
+     "pts": 6.9,
      "managers": [
       "Haan",
       "Alex"
@@ -840,6 +862,7 @@
      "rank": 23,
      "title": "I. Likely 66 yd TD catch",
      "sub": "Aidan vs Haan · Wk 10 · +20.2 pts",
+     "pts": 20.24,
      "managers": [
       "Aidan",
       "Haan"
@@ -875,6 +898,7 @@
      "rank": 24,
      "title": "C. Watson 81 yd TD catch",
      "sub": "Steven vs Haan · Wk 1 · +15.1 pts",
+     "pts": 15.1,
      "managers": [
       "Haan",
       "Steven"
@@ -915,6 +939,7 @@
      "rank": 25,
      "title": "A. Jeanty 13 yd TD catch",
      "sub": "Kaitlyn vs Jake · Wk 1 · +8.3 pts",
+     "pts": 8.3,
      "managers": [
       "Jake",
       "Kaitlyn"
@@ -950,6 +975,7 @@
      "rank": 26,
      "title": "D. Prescott 3 yd TD pass",
      "sub": "Haan vs Ankit · Wk 2 · +4.1 pts",
+     "pts": 4.12,
      "managers": [
       "Haan",
       "Ankit"
@@ -985,6 +1011,7 @@
      "rank": 27,
      "title": "C. Lamb 12 yd TD catch",
      "sub": "Kaitlyn vs Alex · Wk 4 · +8.2 pts",
+     "pts": 8.2,
      "managers": [
       "Alex",
       "Kaitlyn"
@@ -1020,6 +1047,7 @@
      "rank": 28,
      "title": "L. Burden 8 yd TD catch",
      "sub": "Alex vs Ryan · Wk 3 · +7.8 pts",
+     "pts": 7.8,
      "managers": [
       "Alex",
       "Ryan"
@@ -1060,6 +1088,7 @@
      "rank": 29,
      "title": "D. Adams 23 yd catch",
      "sub": "Ankit vs Haan · Wk 2 · +3.8 pts",
+     "pts": 3.8,
      "managers": [
       "Haan",
       "Ankit"
@@ -1095,6 +1124,7 @@
      "rank": 30,
      "title": "J. Taylor 24 yd TD run",
      "sub": "Haan vs Ankit · Wk 2 · +8.4 pts",
+     "pts": 8.4,
      "managers": [
       "Haan",
       "Ankit"
@@ -1135,6 +1165,7 @@
      "rank": 31,
      "title": "P. Nacua 2 yd TD run",
      "sub": "Jake vs Joe · Wk 4 · +6.2 pts",
+     "pts": 6.2,
      "managers": [
       "Jake",
       "Joe"
@@ -1175,6 +1206,7 @@
      "rank": 32,
      "title": "J. Williams 10 yd TD catch",
      "sub": "Joe vs Ryan · Wk 7 · +8.0 pts",
+     "pts": 8,
      "managers": [
       "Joe",
       "Ryan"
@@ -1210,6 +1242,7 @@
      "rank": 33,
      "title": "T. McLaurin 30 yd TD catch",
      "sub": "Christian vs Joe · Wk 3 · +10.0 pts",
+     "pts": 10,
      "managers": [
       "Joe",
       "Christian"
@@ -1250,6 +1283,7 @@
      "rank": 34,
      "title": "D. Moore 43 yd TD catch",
      "sub": "Aidan vs Ankit · Wk 1 · +11.3 pts",
+     "pts": 11.3,
      "managers": [
       "Aidan",
       "Ankit"
@@ -1290,6 +1324,7 @@
      "rank": 35,
      "title": "K. Walker 5 yd TD catch",
      "sub": "Alex vs Ryan · Wk 3 · +7.5 pts",
+     "pts": 7.5,
      "managers": [
       "Alex",
       "Ryan"
@@ -1325,6 +1360,7 @@
      "rank": 36,
      "title": "J. Williams 34 yd run",
      "sub": "Jake vs Haan · Wk 7 · +3.9 pts",
+     "pts": 3.9,
      "managers": [
       "Jake",
       "Haan"
@@ -1360,6 +1396,7 @@
      "rank": 37,
      "title": "T. Shough 3 yd TD pass",
      "sub": "Kaitlyn vs Haan · Wk 3 · +4.1 pts",
+     "pts": 4.12,
      "managers": [
       "Haan",
       "Kaitlyn"
@@ -1395,6 +1432,7 @@
      "rank": 38,
      "title": "J. Williams 8 yd TD run",
      "sub": "Jake vs Joe · Wk 4 · +6.8 pts",
+     "pts": 6.8,
      "managers": [
       "Jake",
       "Joe"
@@ -1435,6 +1473,7 @@
      "rank": 39,
      "title": "B. Bowers 20 yd TD catch",
      "sub": "Steven vs Stephanie · Wk 4 · +9.0 pts",
+     "pts": 9,
      "managers": [
       "Steven",
       "Stephanie"
@@ -1475,6 +1514,7 @@
      "rank": 40,
      "title": "J. Burrow 1 yd TD run",
      "sub": "Haan vs Aidan · Wk 4 · +6.1 pts",
+     "pts": 6.1,
      "managers": [
       "Aidan",
       "Haan"
@@ -2140,5 +2180,5 @@
   "violations": [],
   "blocked": []
  },
- "generatedAt": "2026-11-21T03:28:22Z"
+ "generatedAt": "2026-11-21T04:45:55Z"
 }
