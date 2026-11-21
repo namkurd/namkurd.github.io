@@ -127,7 +127,7 @@ def top_plays(season):
         if p['clip']['id'] in seen:
             continue
         seen.add(p['clip']['id'])
-        out.append({'rank': len(out) + 1, 'title': play_title(p['who'], p['label'], p.get('sid')), 'sub': play_sub(p),
+        out.append({'rank': len(out) + 1, 'title': play_title(p['who'], p['label'], p.get('sid')), 'sub': play_sub(p), 'pts': p.get('tot') if p.get('tot') is not None else p.get('pts'),
                     'managers': [p['a'], p['b']], 'swing': round(p['swing'] * 100), 'from': p.get('from'), 'to': p.get('to'), 'clip': p['clip'], **({'alt': p['alt']} if p.get('alt') else {}), 'et': p.get('et'), **({'fant': fantasy(p)} if fantasy(p) else {}), **({'sit': p['sit']} if p.get('sit') else {}),
                     'replay': '/SleeperLiveRumbles/rumbles.html?wp=%d.%s.%s%s' % (p['week'], p.get('aid'), p.get('bid'), '&t=%d' % p['rt'] if p.get('rt') is not None else ''),
                     'href': 'https://www.youtube.com/watch?v=%s&t=%ds' % (p['clip']['id'], int(p['clip']['s']))})
