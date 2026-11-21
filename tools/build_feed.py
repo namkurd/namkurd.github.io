@@ -84,10 +84,12 @@ def initial_name(name):
     return parts[0][0] + '. ' + ' '.join(parts[1:])
 
 
-def play_title(who, label, sid=None):
+def play_title(who, label, sid=None, stk=None, slab=None):
     """'T. Higbee' + '30 yd catch' -> 'T. Higbee 30 yd catch'. A team defense's long label ('35 yd interception return TD (T.J. Watt), interception (T.J. Watt)')
     becomes the team code, what happened and the defender: 'PIT 35 yd pick-6 (T.J. Watt)', 'KC INT (N. Williams)', 'DEN sack + FR (N. Bonitto)'.
     (index.html's playTitle() does the same for the client.)"""
+    if stk and len(stk) >= 2 and slab:      # a stack: one manager's QB and the receiver he threw to ('C. Williams/L. Burden 1 yd TD pass')
+        return '%s %s' % ('/'.join(stk), slab)
     who, label = (who or '').strip(), (label or '').strip()
     m = re.search(r'\(([^)]+)\)', label)
     if not m or re.match(r'^[A-Z]\.?\s', who):        # an offensive player (initial + surname), or no defender named
@@ -127,7 +129,7 @@ def top_plays(season):
         if p['clip']['id'] in seen:
             continue
         seen.add(p['clip']['id'])
-        out.append({'rank': len(out) + 1, 'title': play_title(p['who'], p['label'], p.get('sid')), 'sub': play_sub(p), 'pts': p.get('tot') if p.get('tot') is not None else p.get('pts'),
+        out.append({'rank': len(out) + 1, 'title': play_title(p['who'], p['label'], p.get('sid'), p.get('stk'), p.get('slab')), 'sub': play_sub(p), 'pts': p.get('tot') if p.get('tot') is not None else p.get('pts'),
                     'managers': [p['a'], p['b']], 'swing': round(p['swing'] * 100), 'from': p.get('from'), 'to': p.get('to'), 'clip': p['clip'], **({'alt': p['alt']} if p.get('alt') else {}), 'et': p.get('et'), **({'fant': fantasy(p)} if fantasy(p) else {}), **({'sit': p['sit']} if p.get('sit') else {}),
                     'replay': '/SleeperLiveRumbles/rumbles.html?wp=%d.%s.%s%s' % (p['week'], p.get('aid'), p.get('bid'), '&t=%d' % p['rt'] if p.get('rt') is not None else ''),
                     'href': 'https://www.youtube.com/watch?v=%s&t=%ds' % (p['clip']['id'], int(p['clip']['s']))})
