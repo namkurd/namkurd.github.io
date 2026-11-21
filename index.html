@@ -97,20 +97,15 @@
   @media (prefers-reduced-motion: reduce) { .row.play .pp { animation: none; } }
   /* every feed list holds ten and scrolls inside its panel (fitLists sizes it to three rows, five on a wide screen) so Home still fits one screen */
   .flist { overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; -webkit-overflow-scrolling: touch; } .flist.has-open { max-height: none !important; overflow: visible; }
-  .panel[data-id="plays"] h2 { display: flex; flex-wrap: nowrap; align-items: center; gap: 6px; min-width: 0; min-height: 26px; }
-  .panel[data-id="plays"] h2 .ht { flex: 0 1 auto; min-width: 0; line-height: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .panel[data-id="plays"] h2 .tip { flex: none; }
-  @media (max-width: 440px) { .panel[data-id="plays"] h2 .hx { display: none; } }   /* a phone: the year and week dropdowns already say it, so the title is just "Top plays" / "My top plays" and the row never wraps */
-  .panel[data-id="plays"] h2 .ptog { flex: none; margin-left: auto; flex-wrap: nowrap; gap: 5px; }
-  .ptog .seg button { padding: 0 6px; } .ptog .pyr, .ptog .pwk { padding-left: 7px; padding-right: 17px; background-position: right 6px center; }
+  /* the Plays heading is a sentence of dropdowns: League | Impact  plays of  Season - 2026 (green = a dropdown) */
+  .panel[data-id="plays"] h2 { display: flex; flex-wrap: nowrap; align-items: center; gap: 4px; min-width: 0; min-height: 26px; font-size: .86rem; }
+  @media (max-width: 380px) { .panel[data-id="plays"] h2 { font-size: .78rem; } }
+  .panel[data-id="plays"] h2 .hw { flex: none; color: var(--dtf-text); font-weight: 700; }
+  .panel[data-id="plays"] h2 .hs { flex: none; -webkit-appearance: none; appearance: none; border: 0; background-color: transparent; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%2322c55e'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1px center; padding: 2px 11px 2px 2px; margin: 0; color: var(--ac); font-family: inherit; font-weight: 700; font-size: inherit; line-height: 1.2; cursor: pointer; border-radius: 6px; color-scheme: dark; -webkit-tap-highlight-color: transparent; }
+  .panel[data-id="plays"] h2 .hs:hover, .panel[data-id="plays"] h2 .hs:focus-visible { background-color: color-mix(in srgb, var(--ac) 16%, transparent); outline: 0; }
+  .panel[data-id="plays"] h2 .tip { flex: none; margin-left: 4px; }
   .panel[data-id="plays"] .flist { min-height: calc(3 * clamp(34px, calc(var(--avail) * .05), 40px) + 8px); }
   /* two real switches: both choices are always visible and the current one is lit */
-  .ptog { flex: none; display: inline-flex; flex-wrap: wrap; gap: 6px; margin-left: auto; justify-content: flex-end; }
-  .ptog .seg { display: inline-flex; padding: 2px; border-radius: 10px; background: color-mix(in srgb, var(--dtf-bg) 60%, #000); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--dtf-dim) 35%, transparent); }
-  .ptog button { height: 16px; padding: 0 7px; border: 0; border-radius: 8px; background: none; color: var(--dtf-dim); font-weight: 700; font-size: .62rem; line-height: 1; font-family: inherit; text-transform: none; letter-spacing: 0; cursor: pointer; white-space: nowrap; -webkit-tap-highlight-color: transparent; }
-  .ptog .pyr { height: 20px; padding: 0 20px 0 9px; border: 0; border-radius: 10px; background-color: #0b0f14; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%2322c55e'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 7px center; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ac) 60%, transparent); color: var(--ac); font-weight: 700; font-size: .64rem; line-height: 1; font-family: inherit; -webkit-appearance: none; appearance: none; cursor: pointer; color-scheme: dark; }
-  .ptog .pwk { height: 20px; padding: 0 20px 0 9px; border: 0; border-radius: 10px; background-color: #0b0f14; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%2322c55e'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 7px center; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ac) 60%, transparent); color: var(--ac); font-weight: 700; font-size: .64rem; line-height: 1; font-family: inherit; -webkit-appearance: none; appearance: none; cursor: pointer; color-scheme: dark; }
-  .ptog button.on { background: var(--ac); color: #06210f; box-shadow: 0 1px 3px rgba(0,0,0,.4); }
   /* the play overlay: one dark-green bar on top (play, the facts in the middle, links), then as much video as the screen allows */
   .pmopen { overflow: hidden; }
   #pmodal { position: fixed; inset: 0; z-index: 400; display: grid; place-items: center; padding: 10px; background: rgba(0,0,0,.86); }
@@ -129,6 +124,7 @@
   #pmodal .pnfl { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px 28px; padding: 7px 12px 8px; background: #0b1f12; border-top: 1px solid rgba(34,197,94,.3); }
   #pmodal .pnfl .pf { display: flex; flex-direction: column; align-items: center; font-size: .9rem; font-weight: 700; color: #fff; white-space: nowrap; line-height: 1.15; } #pmodal .pnfl .pf i { font-style: normal; font-weight: 600; font-size: .56rem; letter-spacing: .09em; text-transform: uppercase; color: #86efac; }
   #pmodal .pw { position: relative; aspect-ratio: 16 / 9; background: #000; } #pmodal iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  #pmodal .ppd2 { display: none; }
   #pmodal .pft { display: none; } #pmodal .pdft { font-weight: 800; color: #4ade80; font-variant-numeric: tabular-nums; }
   /* short, wide screens (a phone held sideways): the card spans the whole screen, the bars are one slim row each and the video takes every pixel of height that is left */
   @media (max-height: 560px) {
@@ -144,7 +140,7 @@
     #pmodal .pr2 .pacts { display: flex; } #pmodal .pft { display: none; }
   }
 
-  @media (max-width: 700px) { #pmodal .pnfl { gap: 2px 14px; padding: 6px 8px 7px; } #pmodal .pr2 .pacts { display: none; } #pmodal .ptop .ppd { display: none; } #pmodal .pft { gap: 14px; align-items: center; } #pmodal .pft a, #pmodal .pdft { font-size: .78rem; } #pmodal .ppts { font-size: .95rem; } #pmodal .pfant { gap: 6px; font-size: .84rem; min-width: 0; white-space: nowrap; } #pmodal .pft { display: flex; flex: 1 1 100%; justify-content: center; gap: 24px; margin-top: 3px; } #pmodal .pft a { font-size: .8rem; } }
+  @media (max-width: 700px) { #pmodal .pnfl { gap: 2px 14px; padding: 6px 8px 7px; } #pmodal .pr2 .pacts { display: none; } #pmodal .ptop > .ppd { display: none; } #pmodal .ppd2 { display: inline-block; margin-left: auto; flex: none; font-size: .78rem; padding: 2px 8px; } #pmodal .pr2 { flex-wrap: nowrap; gap: 8px; } #pmodal .pfant { min-width: 0; flex: 0 1 auto; gap: 5px; font-size: .8rem; } #pmodal .pfant .lg { display: none; } #pmodal .pfant .sh { display: inline; } #pmodal .pfant .pres { font-size: .58rem; padding: 1px 5px; } #pmodal .pfant span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } #pmodal .pft { gap: 14px; align-items: center; } #pmodal .pft a, #pmodal .pdft { font-size: .78rem; } #pmodal .ppts { font-size: .95rem; } #pmodal .pfant { gap: 6px; font-size: .84rem; min-width: 0; white-space: nowrap; } #pmodal .pft { display: flex; flex: 1 1 100%; justify-content: center; gap: 24px; margin-top: 3px; } #pmodal .pft a { font-size: .8rem; } }
   .none { margin: 8px 4px; color: var(--dtf-dim); font-size: .8rem; }
   .meta { margin: 2px 4px 0; font-size: .68rem; color: var(--dtf-dim); text-align: right; }
   .meta .old { color: #e0a23a; }
@@ -546,7 +542,7 @@
   }
   // Plays views: League / Mine and Season / last finished week. The feed carries the league's season list; the rest comes from data/topplays.json.
   var PLYEAR = '';
-  var PL = { year: '', byYear: {}, scope: ls('dtf.plays.scope') === 'mine' ? 'mine' : 'league', span: (/^(season|week|\d+)$/.test(ls('dtf.plays.span') || '') ? ls('dtf.plays.span') : 'season'), feed: [], data: null, want: false };
+  var PL = { year: '', byYear: {}, mode: ls('dtf.plays.mode') === 'biggest' ? 'biggest' : 'impact', scope: ls('dtf.plays.scope') === 'mine' ? 'mine' : 'league', span: (/^(season|week|\d+)$/.test(ls('dtf.plays.span') || '') ? ls('dtf.plays.span') : 'season'), feed: [], data: null, want: false };
   function playsData() { return PL.year ? PL.byYear[PL.year] : PL.data; }
   function playsLoad() {   // this season's plays (data/topplays.json) or an archived season's (data/topplays_<year>.json)
     var y = PL.year;
@@ -580,26 +576,35 @@
       replay: '/SleeperLiveRumbles/rumbles.html?wp=' + p.week + '.' + p.aid + '.' + p.bid + (p.rt != null ? '&t=' + p.rt : '') + (PL.year ? '&season=' + PL.year : ''), href: 'https://www.youtube.com/watch?v=' + p.clip.id + '&t=' + Math.floor(p.clip.s) + 's', swing: p.swing };
   }
   function playsItems() {
-    if (!PL.year && PL.scope === 'league' && PL.span === 'season') return PL.feed;
+    if (!PL.year && PL.scope === 'league' && PL.span === 'season' && PL.mode === 'impact') return PL.feed;
     var D = playsData(); if (!D) return [];
     if (PL.span === 'week') PL.span = String(playsLast() || 'season');   // an older saved choice: the last finished week
     var me = meName(), all = [];
     Object.keys(D.weeks).forEach(function (w) { D.weeks[w].forEach(function (p) { all.push(p); }); });
     all = all.filter(function (p) { return (PL.span === 'season' || p.week === Number(PL.span)) && (PL.scope === 'league' || (p.by === me && p.help !== false)); });
-    all.sort(function (a, b) { return b.swing - a.swing; });
+    var pv = function (p) { return p.tot != null ? p.tot : (p.pts || 0); };
+    if (PL.mode === 'biggest') all = all.filter(function (p) { return pv(p) > 0; });
+    all.sort(PL.mode === 'biggest' ? function (a, b) { return pv(b) - pv(a) || b.swing - a.swing; } : function (a, b) { return b.swing - a.swing; });
     var seen = {}, out = [];
     all.forEach(function (p) { if (!seen[p.clip.id] && out.length < 40) { seen[p.clip.id] = 1; var it = mapPlay(p); it.rank = out.length + 1; out.push(it); } });
     return out;
   }
-  function playsDefault() { return !PL.year && PL.scope === 'league' && PL.span === 'season'; }
+  function playsDefault() { return !PL.year && PL.scope === 'league' && PL.span === 'season' && PL.mode === 'impact'; }
+  // each dropdown in the heading is as wide as the word it shows (a native select is as wide as its longest option)
+  function fitSelects() {
+    [].forEach.call(document.querySelectorAll('.panel[data-id="plays"] h2 .hs'), function (sel) {
+      var o = sel.options[sel.selectedIndex]; if (!o || !sel.offsetParent) return;
+      var cs = getComputedStyle(sel), m = document.createElement('span');
+      m.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;font-weight:' + cs.fontWeight + ';font-size:' + cs.fontSize + ';font-family:' + cs.fontFamily;
+      m.textContent = o.text; document.body.appendChild(m); sel.style.width = Math.ceil(m.getBoundingClientRect().width) + 16 + 'px'; m.remove();
+    });
+  }
   function paintPlays(opts) {
     var panel = document.querySelector('.panel[data-id="plays"]'); if (!panel) return;
     var last = playsLast();
     if (PL.span === 'week') PL.span = String(last || 'season');
-    var yl = PL.year || PLYEAR, ht = panel.querySelector('.ht'); if (ht) ht.innerHTML = (PL.scope === 'mine' ? 'My top plays' : 'Top plays') + '<span class="hx"> of ' + (PL.span === 'season' ? yl : 'week ' + PL.span + (PL.year ? ', ' + yl : '')) + '</span>';
-    [].forEach.call(panel.querySelectorAll('.seg button'), function (b) {
-      var on = PL.scope === b.dataset.v; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on);
-    });
+    var sc = panel.querySelector('.psc'); if (sc) sc.value = PL.scope;
+    var md = panel.querySelector('.pmd'); if (md) md.value = PL.mode;
     var ysel = panel.querySelector('.pyr');
     if (ysel) {   // this season, then every archived season back to 2021
       var cur = Number(PLYEAR) || new Date().getFullYear(), yo = '<option value="">' + cur + '</option>';
@@ -610,10 +615,11 @@
     var sel = panel.querySelector('.pwk');
     if (sel) {   // Season, then each finished week, newest first
       var D2 = playsData(), wks = D2 ? Object.keys(D2.weeks).map(Number).sort(function (x, y) { return y - x; }) : [];
-      var want = '<option value="season">Season</option>' + wks.map(function (w) { return '<option value="' + w + '">Week ' + w + '</option>'; }).join('');
+      var want = '<option value="season">Season</option>' + wks.map(function (w) { return '<option value="' + w + '">Wk ' + w + '</option>'; }).join('');
       if (sel.dataset.opts !== want) { sel.innerHTML = want; sel.dataset.opts = want; }
       sel.value = PL.span;
     }
+    fitSelects();
     if (opts && opts.keep) { fitAll(); return; }   // the default view's rows are already on screen (and being checked)
     var items = playsItems(), list = panel.querySelector('.flist');
     list.classList.remove('has-open'); list.scrollTop = 0;
@@ -655,7 +661,7 @@
     function seeAll(id) { var l = SEEALL[id]; return l ? '<a class="seeall" href="' + esc(l[0]) + '"' + (/^https?:/.test(l[0]) ? ' target="_blank" rel="noopener"' : '') + '>' + l[1] + '</a>' : ''; }
     $('panels').innerHTML = sections.map(function (s) {
       var m = META[s.id];
-      return '<div class="panel' + (s.id === on ? ' on' : '') + '" role="tabpanel" data-id="' + s.id + '" style="--ac:' + m.ac + '"><h2><span class="ht">' + (s.id === 'plays' ? esc(m.title(year)).replace(/ of (\d+)$/, '<span class="hx"> of $1</span>') : esc(m.title(year))) + '</span>' + tipHtml(s.id, m) + (s.id === 'plays' ? '<span class="ptog"><span class="seg" data-k="scope" role="group" aria-label="Whose plays"><button type="button" data-v="league">League</button><button type="button" data-v="mine">Mine</button></span><select class="pyr" aria-label="Season year"></select><select class="pwk" aria-label="Season or a single week"><option value="season">Season</option></select></span>' : '') + seeAll(s.id) + '</h2><span class="cap">' + esc(m.cap) + '</span>' +
+      return '<div class="panel' + (s.id === on ? ' on' : '') + '" role="tabpanel" data-id="' + s.id + '" style="--ac:' + m.ac + '"><h2' + (s.id === 'plays' ? ' class="phd"' : '') + '>' + (s.id === 'plays' ? '<select class="psc hs" aria-label="Whose plays"><option value="league">League</option><option value="mine">Mine</option></select><select class="pmd hs" aria-label="How plays are ranked"><option value="impact">Impact</option><option value="biggest">Biggest</option></select><span class="hw">plays of</span><select class="pwk hs" aria-label="Season or a single week"><option value="season">Season</option></select><span class="hw">\u2013</span><select class="pyr hs" aria-label="Season year"></select>' + tipHtml(s.id, m) : '<span class="ht">' + esc(m.title(year)) + '</span>' + tipHtml(s.id, m)) + seeAll(s.id) + '</h2><span class="cap">' + esc(m.cap) + '</span>' +
         (s.items.length ? '<div class="flist">' + (s.id === 'plays' && !playsDefault() ? '<p class="none">Loading plays\u2026</p>' : s.items.map(function (it) { return rowHtml(it, s.id); }).join('')) + '</div>' : '<p class="none">Nothing yet this season.</p>') + '</div>';
     }).join('');
     // a play opens in a large overlay: the clip on top, what happened (when, game, quarter, score) under it; the link itself is the fallback
@@ -682,13 +688,18 @@
       var pd = r.querySelector('.pd');
       var m = document.createElement('div'); m.id = 'pmodal'; m.setAttribute('role', 'dialog'); m.setAttribute('aria-modal', 'true'); m.setAttribute('aria-label', r.querySelector('b').textContent);
       m.innerHTML = '<div class="pcard"><div class="ptop"><span class="pt">' + esc(r.querySelector('b').textContent) + '</span>' + (inf.pts != null ? '<em class="ppts' + (inf.pts < 0 ? ' neg' : '') + '" title="Fantasy points this play earned">' + (inf.pts >= 0 ? '+' : '\u2212') + Math.abs(inf.pts).toFixed(1) + ' pts</em>' : '') + (pd ? '<em class="ppd">' + esc(pd.textContent) + '</em>' : '') + '<button type="button" class="pclose" aria-label="Close">&times;</button>' +
-        '<div class="pr2">' + fant + '<div class="pacts">' + (inf.replay ? '<a href="' + esc(inf.replay) + '"><span class="lg">Rumble replay</span><span class="sh">Replay</span> \u203a</a>' : '') + '<a href="' + esc(r.href) + '" target="_blank" rel="noopener"><span class="lg">Watch on YouTube</span><span class="sh">YouTube</span> \u203a</a></div></div></div>' +
-        '<div class="pw"><iframe src="https://www.youtube-nocookie.com/embed/' + r.dataset.yt + '?start=' + r.dataset.s + (r.dataset.s === '0' ? '' : '&end=' + r.dataset.e) + '&autoplay=1&playsinline=1&rel=0&modestbranding=1" title="' + esc(r.querySelector('b').textContent) + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>' + '<div class="pnfl">' + nfl + '<div class="pacts pft">' + (pd ? '<span class="pdft">' + esc(pd.textContent) + '</span>' : '') + (inf.replay ? '<a href="' + esc(inf.replay) + '">Rumble replay \u203a</a>' : '') + '<a href="' + esc(r.href) + '" target="_blank" rel="noopener">Watch on YouTube \u203a</a></div></div></div>';
+        '<div class="pr2">' + fant + (pd ? '<em class="ppd ppd2">' + esc(pd.textContent) + '</em>' : '') + '<div class="pacts">' + (inf.replay ? '<a href="' + esc(inf.replay) + '"><span class="lg">Rumble replay</span><span class="sh">Replay</span> \u203a</a>' : '') + '<a href="' + esc(r.href) + '" target="_blank" rel="noopener"><span class="lg">Watch on YouTube</span><span class="sh">YouTube</span> \u203a</a></div></div></div>' +
+        '<div class="pw"><iframe src="https://www.youtube-nocookie.com/embed/' + r.dataset.yt + '?start=' + r.dataset.s + (r.dataset.s === '0' ? '' : '&end=' + r.dataset.e) + '&autoplay=1&playsinline=1&rel=0&modestbranding=1" title="' + esc(r.querySelector('b').textContent) + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>' + '<div class="pnfl">' + nfl + '<div class="pacts pft">' + (inf.replay ? '<a href="' + esc(inf.replay) + '">Rumble replay \u203a</a>' : '') + '<a href="' + esc(r.href) + '" target="_blank" rel="noopener">Watch on YouTube \u203a</a></div></div></div>';
       m.addEventListener('click', function (e) { if (e.target === m || e.target.closest('.pclose')) closePlay(); });
       document.body.appendChild(m); document.documentElement.classList.add('pmopen'); document.addEventListener('keydown', onPlayKey);
       m.querySelector('.pclose').focus({ preventScroll: true });
     }
     $('feed').addEventListener('change', function (e) { var w = e.target.closest('.pwk'); if (w) playsSet('span', w.value); });
+    $('feed').addEventListener('change', function (e) {
+      var c = e.target.closest('.psc'), m = e.target.closest('.pmd');
+      if (c) { playsToggle('scope', c.value); c.value = PL.scope; }   // "Mine" with nobody picked asks who you are first, then switches
+      if (m) playsSet('mode', m.value);
+    });
     $('feed').addEventListener('change', function (e) { var y = e.target.closest('.pyr'); if (y) { PL.year = y.value; PL.span = 'season'; ls('dtf.plays.span', 'season'); playsLoad().then(paintPlays); } });
     $('feed').addEventListener('click', function (e) {
       var tg = e.target.closest('.ptog button'); if (tg) { if (!tg.classList.contains('on')) playsToggle(tg.parentNode.dataset.k, tg.dataset.v); return; }
@@ -739,7 +750,7 @@
     });
     function thumbsAll() { [].forEach.call(document.querySelectorAll('.row.play:not(.pend)'), setThumb); }
     FEEDMQ.addEventListener ? FEEDMQ.addEventListener('change', thumbsAll) : FEEDMQ.addListener(thumbsAll);
-    layoutFeed();
+    layoutFeed(); fitSelects(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitSelects); window.addEventListener('resize', fitSelects);
     (FEEDMQ.addEventListener ? FEEDMQ.addEventListener('change', layoutFeed) : FEEDMQ.addListener(layoutFeed));
     var gen = feed && feed.generatedAt, old = gen && (Date.now() - Date.parse(gen)) > 2 * 864e5;
     $('meta').innerHTML = gen ? ('updated ' + ago(gen) + (old ? ' <span class="old">· may be out of date</span>' : '')) : '';
