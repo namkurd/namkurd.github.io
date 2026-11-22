@@ -38,6 +38,7 @@
   .ir[hidden] { display: none; } #ir:not([hidden]), #ir2:not([hidden]) { display: block; width: fit-content; }
   .ir .tx { display: block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .ir.open .tx { white-space: normal; }
   .ir.bad { border-color: #e5484d; background: color-mix(in srgb, #e5484d 14%, var(--dtf-panel)); } .ir.warn { border-color: #e0a23a; background: color-mix(in srgb, #e0a23a 12%, var(--dtf-panel)); }
+  .ir a.irm { color: inherit; text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 45%, transparent); text-underline-offset: 2px; } .ir[data-one] { cursor: pointer; }
   .ir b { font-weight: 700; } .ir .dim { color: var(--dtf-dim); }
   .tile:active { transform: scale(.97); }
   @media (hover: hover) { .tile:hover { transform: translateY(-2px); box-shadow: 0 16px 30px -14px color-mix(in srgb, var(--c) 80%, transparent); } }
@@ -341,15 +342,22 @@
     var now = new Date(), cut = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 5)); cut.setUTCDate(cut.getUTCDate() - ((cut.getUTCDay() + 5) % 7));
     if (cut > now) cut.setUTCDate(cut.getUTCDate() - 7);
     if (gen && new Date(gen) < cut) return;
-    var v = ir.violations || [], k = ir.blocked || [], who = function (r) { return '<b>' + esc(r.player) + '</b> (' + esc(r.m) + ')'; };
+    var v = ir.violations || [], k = ir.blocked || [], who = function (r) { return '<b>' + esc(r.player) + '</b> (<a class="irm" href="/SleeperLiveRumbles/rumbles.html?card=' + encodeURIComponent(r.m) + '">' + esc(r.m) + '</a>)'; };
     function show(el, cls, html, title) { el.className = 'ir ' + cls; el.title = title; el.innerHTML = '<span class="tx">' + html + '</span>'; el.hidden = false; }
     // two separate lines: a rule being broken right now, and a heads-up about a player who cannot go on IR yet
     if (v.length) show(b, 'bad', '⛔ ' + v.map(who).join(', ') + ' on IR but shouldn’t be', 'IR violation · Week ' + ir.week);
     if (k.length) show(v.length ? b2 : b, 'warn', '🟡 ' + k.map(who).join(', ') + ' not IR eligible until next week', 'IR warning · Week ' + ir.week);
     if (!v.length && !k.length) show(b, '', '✅ <b>IR check · Wk ' + ir.week + '</b> <span class="dim">· all clear</span>', 'IR check · Week ' + ir.week);
   }
-  $('ir2').addEventListener('click', function () { this.classList.toggle('open'); });
-  $('ir').addEventListener('click', function () { this.classList.toggle('open'); });
+  // tapping a manager's name in an alert opens that manager's full card in Rumble Central; tapping anywhere else on the alert expands it
+  function irTap(e) {
+    if (e.target.closest('a.irm')) return;
+    var ms = {}; [].forEach.call(this.querySelectorAll('a.irm'), function (a) { ms[a.getAttribute('href')] = 1; }); ms = Object.keys(ms);
+    if (ms.length === 1) { location.href = ms[0]; return; }   // one manager in the alert: the whole alert is the link
+    this.classList.toggle('open');
+  }
+  $('ir2').addEventListener('click', irTap);
+  $('ir').addEventListener('click', irTap);
 
   // ---- the line under the title: you, your standing, and the next key date (from the Sleeper league settings)
   var LEAGUE = null, STANDINGS = [];
