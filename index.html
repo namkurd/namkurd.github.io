@@ -614,6 +614,15 @@
   function playsDefault() { return !PL.year && PL.scope === 'league' && PL.span === 'season' && PL.mode === 'impact' && PL.type === 'all'; }
   // each dropdown in the heading is as wide as the word it shows (a native select is as wide as its longest option)
   function fitSelects() {
+    var h = document.querySelector('.panel[data-id="plays"] h2');
+    if (h && h.offsetParent) {   // shrink the type a little at a time until the whole heading fits on its row
+      h.style.fontSize = '';
+      var fs = parseFloat(getComputedStyle(h).fontSize);
+      fitSelects1();
+      while (h.scrollWidth > h.clientWidth + 1 && fs > 9) { fs -= .5; h.style.fontSize = fs + 'px'; fitSelects1(); }
+    } else fitSelects1();
+  }
+  function fitSelects1() {
     [].forEach.call(document.querySelectorAll('.panel[data-id="plays"] h2 .hs'), function (sel) {
       var o = sel.options[sel.selectedIndex]; if (!o || !sel.offsetParent) return;
       var cs = getComputedStyle(sel), m = document.createElement('span');
