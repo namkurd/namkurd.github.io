@@ -99,12 +99,15 @@
   .flist { overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; -webkit-overflow-scrolling: touch; } .flist.has-open { max-height: none !important; overflow: visible; }
   /* the Plays heading is a sentence of dropdowns: League | Impact  plays of  Season - 2026 (green = a dropdown) */
   .panel[data-id="plays"] h2 { display: flex; flex-wrap: nowrap; align-items: center; gap: 4px; min-width: 0; min-height: 26px; font-size: .86rem; }
-  @media (max-width: 380px) { .panel[data-id="plays"] h2 { font-size: .78rem; } }
   .panel[data-id="plays"] h2 .hw { flex: none; color: var(--dtf-text); font-weight: 700; }
   .panel[data-id="plays"] h2 .hs { flex: none; -webkit-appearance: none; appearance: none; border: 0; background-color: transparent; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%2322c55e'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1px center; padding: 2px 11px 2px 2px; margin: 0; color: var(--ac); font-family: inherit; font-weight: 700; font-size: inherit; line-height: 1.2; cursor: pointer; border-radius: 6px; color-scheme: dark; -webkit-tap-highlight-color: transparent; }
   .panel[data-id="plays"] h2 .hs:disabled { opacity: .5; cursor: default; background-image: none; padding-right: 2px; }
   .panel[data-id="plays"] h2 .hs:hover, .panel[data-id="plays"] h2 .hs:focus-visible { background-color: color-mix(in srgb, var(--ac) 16%, transparent); outline: 0; }
   .panel[data-id="plays"] h2 .tip { flex: none; margin-left: 4px; }
+  .panel[data-id="plays"] h2 .ptp { margin-left: auto; }
+  @media (max-width: 430px) { .panel[data-id="plays"] h2 { font-size: .78rem; gap: 3px; } }
+  @media (max-width: 380px) { .panel[data-id="plays"] h2 { font-size: .72rem; } }
+  @media (max-width: 365px) { .panel[data-id="plays"] h2 { font-size: .66rem; gap: 2px; } }
   .panel[data-id="plays"] .flist { min-height: calc(3 * clamp(34px, calc(var(--avail) * .05), 40px) + 8px); }
   /* two real switches: both choices are always visible and the current one is lit */
   /* the play overlay: one dark-green bar on top (play, the facts in the middle, links), then as much video as the screen allows */
@@ -543,7 +546,7 @@
   }
   // Plays views: League / Mine and Season / last finished week. The feed carries the league's season list; the rest comes from data/topplays.json.
   var PLYEAR = '';
-  var PL = { year: '', byYear: {}, mode: ls('dtf.plays.mode') === 'biggest' ? 'biggest' : 'impact', scope: ls('dtf.plays.scope') === 'mine' ? 'mine' : 'league', span: (/^(season|week|\d+)$/.test(ls('dtf.plays.span') || '') ? ls('dtf.plays.span') : 'season'), feed: [], data: null, want: false };
+  var PL = { year: '', type: 'all', byYear: {}, mode: ls('dtf.plays.mode') === 'biggest' ? 'biggest' : 'impact', scope: ls('dtf.plays.scope') === 'mine' ? 'mine' : 'league', span: (/^(season|week|\d+)$/.test(ls('dtf.plays.span') || '') ? ls('dtf.plays.span') : 'season'), feed: [], data: null, want: false };
   function playsData() { return PL.year ? PL.byYear[PL.year] : PL.data; }
   function playsLoad() {   // this season's plays (data/topplays.json), an archived season's (data/topplays_<year>.json) or, for All-time, all of them together
     var y = PL.year, cur = Number(PLYEAR) || new Date().getFullYear();
@@ -591,12 +594,16 @@
       replay: '/SleeperLiveRumbles/rumbles.html?wp=' + p.week + '.' + p.aid + '.' + p.bid + (p.rt != null ? '&t=' + p.rt : '') + ((p._y || PL.year) && String(p._y || PL.year) !== String(PLYEAR) ? '&season=' + (p._y || PL.year) : ''), href: 'https://www.youtube.com/watch?v=' + p.clip.id + '&t=' + Math.floor(p.clip.s) + 's', swing: p.swing };
   }
   function playsItems() {
-    if (!PL.year && PL.scope === 'league' && PL.span === 'season' && PL.mode === 'impact') return PL.feed;
+    if (!PL.year && PL.scope === 'league' && PL.span === 'season' && PL.mode === 'impact' && PL.type === 'all') return PL.feed;
     var D = playsData(); if (!D) return [];
     if (PL.span === 'week') PL.span = String(playsLast() || 'season');   // an older saved choice: the last finished week
     var me = meName(), all = [];
     Object.keys(D.weeks).forEach(function (w) { D.weeks[w].forEach(function (p) { all.push(p); }); });
     all = all.filter(function (p) { return (PL.span === 'season' || p.week === Number(PL.span)) && (PL.scope === 'league' || (p.by === me && p.help !== false)); });
+    // type: a stack (a QB and receiver of one manager), an individual play (anything that is not a stack), a team defense, or a kicker
+    var isDef = function (p) { return /^[A-Z]{2,4}$/.test(p.sid || ''); };
+    var kinds = { stack: function (p) { return !!p.stk; }, indiv: function (p) { return !p.stk; }, def: isDef, kick: function (p) { return !isDef(p) && /field goal|extra point/i.test(p.label || ''); } };
+    if (kinds[PL.type]) all = all.filter(kinds[PL.type]);
     var pv = function (p) { return p.tot != null ? p.tot : (p.pts || 0); };
     if (PL.mode === 'biggest') all = all.filter(function (p) { return pv(p) > 0; });
     all.sort(PL.mode === 'biggest' ? function (a, b) { return pv(b) - pv(a) || b.swing - a.swing; } : function (a, b) { return b.swing - a.swing; });
@@ -604,7 +611,7 @@
     all.forEach(function (p) { if (!seen[p.clip.id] && out.length < 40) { seen[p.clip.id] = 1; var it = mapPlay(p); it.rank = out.length + 1; out.push(it); } });
     return out;
   }
-  function playsDefault() { return !PL.year && PL.scope === 'league' && PL.span === 'season' && PL.mode === 'impact'; }
+  function playsDefault() { return !PL.year && PL.scope === 'league' && PL.span === 'season' && PL.mode === 'impact' && PL.type === 'all'; }
   // each dropdown in the heading is as wide as the word it shows (a native select is as wide as its longest option)
   function fitSelects() {
     [].forEach.call(document.querySelectorAll('.panel[data-id="plays"] h2 .hs'), function (sel) {
@@ -620,11 +627,11 @@
     if (PL.span === 'week') PL.span = String(last || 'season');
     var sc = panel.querySelector('.psc'); if (sc) sc.value = PL.scope;
     var md = panel.querySelector('.pmd'); if (md) md.value = PL.mode;
+    var tp = panel.querySelector('.ptp'); if (tp) tp.value = PL.type;
     var ysel = panel.querySelector('.pyr');
     if (ysel) {   // this season, then every archived season back to 2021
-      var cur = Number(PLYEAR) || new Date().getFullYear(), yo = '<option value="">' + cur + '</option>';
+      var cur = Number(PLYEAR) || new Date().getFullYear(), yo = '<option value="all">All-time</option><option value="">' + cur + '</option>';
       for (var yy = cur - 1; yy >= 2021; yy--) yo += '<option value="' + yy + '">' + yy + '</option>';
-      yo += '<option value="all">All-time</option>';
       if (ysel.dataset.opts !== yo) { ysel.innerHTML = yo; ysel.dataset.opts = yo; }
       ysel.value = PL.year;
     }
@@ -639,7 +646,7 @@
     if (opts && opts.keep) { fitAll(); return; }   // the default view's rows are already on screen (and being checked)
     var items = playsItems(), list = panel.querySelector('.flist');
     list.classList.remove('has-open'); list.scrollTop = 0;
-    list.innerHTML = items.length ? items.map(function (it) { return rowHtml(it, 'plays'); }).join('') : '<p class="none">' + (PL.scope === 'mine' ? (PL.span === 'season' ? 'None of your plays yet.' : 'None of your plays in week ' + PL.span + '.') : 'Nothing yet.') + '</p>';
+    list.innerHTML = items.length ? items.map(function (it) { return rowHtml(it, 'plays'); }).join('') : '<p class="none">' + (PL.type !== 'all' ? 'No plays of that type here.' : (PL.scope === 'mine' ? (PL.span === 'season' ? 'None of your plays yet.' : 'None of your plays in week ' + PL.span + '.') : 'Nothing yet.') ) + '</p>';
     ++PVTOK; markMine(); fitAll(); verifyPlays();
   }
   function playsSet(k, v) { PL[k] = v; ls('dtf.plays.' + k, v); playsLoad().then(paintPlays); }
@@ -677,7 +684,7 @@
     function seeAll(id) { var l = SEEALL[id]; return l ? '<a class="seeall" href="' + esc(l[0]) + '"' + (/^https?:/.test(l[0]) ? ' target="_blank" rel="noopener"' : '') + '>' + l[1] + '</a>' : ''; }
     $('panels').innerHTML = sections.map(function (s) {
       var m = META[s.id];
-      return '<div class="panel' + (s.id === on ? ' on' : '') + '" role="tabpanel" data-id="' + s.id + '" style="--ac:' + m.ac + '"><h2' + (s.id === 'plays' ? ' class="phd"' : '') + '>' + (s.id === 'plays' ? '<select class="psc hs" aria-label="Whose plays"><option value="league">League</option><option value="mine">My</option></select><select class="pmd hs" aria-label="How plays are ranked"><option value="impact">Impact</option><option value="biggest">Biggest</option></select><select class="pwk hs" aria-label="Season or a single week"><option value="season">Season</option></select><span class="hw">\u2013</span><select class="pyr hs" aria-label="Season year"></select>' + tipHtml(s.id, m) : '<span class="ht">' + esc(m.title(year)) + '</span>' + tipHtml(s.id, m)) + seeAll(s.id) + '</h2><span class="cap">' + esc(m.cap) + '</span>' +
+      return '<div class="panel' + (s.id === on ? ' on' : '') + '" role="tabpanel" data-id="' + s.id + '" style="--ac:' + m.ac + '"><h2' + (s.id === 'plays' ? ' class="phd"' : '') + '>' + (s.id === 'plays' ? '<select class="psc hs" aria-label="Whose plays"><option value="league">League\u2019s</option><option value="mine">My</option></select><select class="pmd hs" aria-label="How plays are ranked"><option value="impact">Impact</option><option value="biggest">Biggest</option></select><span class="hw">Plays of</span><select class="pwk hs" aria-label="Season or a single week"><option value="season">Season</option></select><span class="hw">\u2013</span><select class="pyr hs" aria-label="Season year"></select><select class="ptp hs" aria-label="Type of play"><option value="all">All</option><option value="stack">Stack</option><option value="indiv">Individual</option><option value="def">Defense</option><option value="kick">Kicking</option></select>' + tipHtml(s.id, m) : '<span class="ht">' + esc(m.title(year)) + '</span>' + tipHtml(s.id, m)) + seeAll(s.id) + '</h2><span class="cap">' + esc(m.cap) + '</span>' +
         (s.items.length ? '<div class="flist">' + (s.id === 'plays' && !playsDefault() ? '<p class="none">Loading plays\u2026</p>' : s.items.map(function (it) { return rowHtml(it, s.id); }).join('')) + '</div>' : '<p class="none">Nothing yet this season.</p>') + '</div>';
     }).join('');
     // a play opens in a large overlay: the clip on top, what happened (when, game, quarter, score) under it; the link itself is the fallback
@@ -715,6 +722,7 @@
       var c = e.target.closest('.psc'), m = e.target.closest('.pmd');
       if (c) { playsToggle('scope', c.value); c.value = PL.scope; }   // "Mine" with nobody picked asks who you are first, then switches
       if (m) playsSet('mode', m.value);
+      var t = e.target.closest('.ptp'); if (t) playsSet('type', t.value);
     });
     $('feed').addEventListener('change', function (e) { var y = e.target.closest('.pyr'); if (y) { PL.year = y.value; PL.span = 'season'; ls('dtf.plays.span', 'season'); playsLoad().then(paintPlays); } });
     $('feed').addEventListener('click', function (e) {
