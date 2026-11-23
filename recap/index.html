@@ -4,73 +4,82 @@
 <title>Weekly Recap</title>
 <link rel="stylesheet" href="/shell/tokens.css">
 <style>
-  /* a late-night sports highlight show: brown-orange studio, black name bars, cream score cells, a red band, box-score panels */
-  :root { --gold: #f2c14e; --cream: #f6e7b9; --ink: #120a04; --red: #b3171a; --win: #1f8a3c;
+  /* a late-night sports highlight show: brown-orange studio, red header bars, black name bars, cream score cells, box-score panels */
+  :root { --gold: #f2c14e; --cream: #f6e7b9; --ink: #120a04; --red: #d02027; --red2: #8f0f14; --win: #1f8a3c;
     --cond: "Arial Narrow", "Roboto Condensed", "Helvetica Neue", "HelveticaNeue-CondensedBold", Impact, system-ui, sans-serif; }
   html, body { height: 100%; }
   body { margin: 0; background: #060403; overflow: hidden; font-family: var(--cond); }
   .app { height: 100dvh; display: flex; align-items: center; justify-content: center; }
   .stage { position: relative; width: min(100vw, 470px); height: min(100dvh, 880px); display: flex; flex-direction: column; color: #fff; overflow: hidden;
-    background: linear-gradient(180deg, #3a1a08 0%, #8a4216 22%, #c9692a 55%, #d9892f 100%); }
-  .stage::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5; background:
+    background: linear-gradient(180deg, #2c1306 0%, #7a3a12 20%, #bb5f26 55%, #cf822e 100%); }
+  .stage::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .45; background:
     repeating-linear-gradient(0deg, transparent 0 3px, #0000000d 3px 4px), radial-gradient(120% 50% at 50% 0%, #ffd78a55, transparent 70%); }
-  @media (min-width: 520px) { .stage { border: 2px solid var(--gold); box-shadow: 0 30px 80px -30px #000; height: min(94dvh, 880px); } }
+  @media (min-width: 520px) { .stage { border: 2px solid var(--red); box-shadow: 0 30px 80px -30px #000, 0 0 0 4px var(--gold); height: min(94dvh, 880px); } }
   .bars { display: flex; gap: 3px; padding: calc(env(safe-area-inset-top) + 8px) 10px 0; flex: none; position: relative; }
   .bars i { flex: 1; height: 4px; background: #00000066; overflow: hidden; }
   .bars i b { display: block; height: 100%; width: 0; background: var(--gold); }
-  .bars i.done b { width: 100%; }
-  .top { position: relative; display: flex; align-items: center; justify-content: space-between; padding: 7px 12px 6px; flex: none; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; }
-  .top a { color: var(--cream); text-decoration: none; font-weight: 700; }
-  .top b { color: var(--gold); font-weight: 800; } .top span { color: var(--cream); font-variant-numeric: tabular-nums; }
+  .bars i.done b { width: 100%; } .bars i.on b { background: #fff; }
+  .top { position: relative; display: flex; align-items: center; gap: 10px; padding: 8px 12px 6px; flex: none; font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; }
+  .top a { color: var(--cream); text-decoration: none; font-weight: 700; flex: none; }
+  .top b { flex: 1; text-align: center; color: var(--gold); font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .top span { color: var(--cream); font-variant-numeric: tabular-nums; flex: none; min-width: 38px; text-align: right; }
   .seg { position: relative; flex: 1; min-height: 0; padding: 4px 12px 8px; display: flex; flex-direction: column; justify-content: center; gap: 10px; animation: segin .35s ease both; }
   @keyframes segin { from { opacity: 0; transform: translateX(26px); } to { opacity: 1; transform: none; } }
   @keyframes slide { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: none; } }
   @keyframes flip { from { transform: rotateX(90deg); opacity: 0; } to { transform: none; opacity: 1; } }
   .in { opacity: 0; animation: slide .4s cubic-bezier(.2,.8,.2,1) forwards; }
   .fl { opacity: 0; animation: flip .35s ease forwards; transform-origin: 50% 50%; }
-  /* the scoreboard: a round mark on the left, a black bar per team with cream score cells */
-  .sb { display: flex; align-items: stretch; gap: 8px; }
-  .logo { flex: none; width: 54px; display: flex; align-items: center; justify-content: center; }
-  .logo i { width: 50px; height: 50px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #ffe08a, #c9871c 60%, #7a4a0a); border: 2px solid #fff3; display: flex; align-items: center; justify-content: center;
-    font-style: normal; font-weight: 900; font-size: 1.15rem; color: var(--ink); letter-spacing: -.05em; box-shadow: 0 3px 8px #0008; }
-  .rows { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
-  .r { display: grid; grid-auto-flow: column; grid-template-columns: 1fr; grid-auto-columns: minmax(52px, auto); align-items: stretch; background: var(--ink); border-bottom: 2px solid var(--gold); }
-  .r .t { padding: 6px 10px; font-size: 1.45rem; font-weight: 800; text-transform: uppercase; letter-spacing: .01em; line-height: 1.1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
-  .r .t.sm { font-size: 1rem; padding: 8px 8px; letter-spacing: 0; }
-  .r .t.w { white-space: normal; font-size: 1.2rem; line-height: 1.15; display: flex; align-items: center; }
-  .r .t small { display: block; font-size: .7rem; font-weight: 700; color: var(--gold); letter-spacing: .1em; line-height: 1; margin-top: 1px; }
-  .r .t em { color: var(--gold); font-style: normal; margin-left: 5px; font-size: 1rem; }
-  .r .c { min-width: 52px; display: flex; align-items: center; justify-content: center; margin: 3px 2px; padding: 0 8px; background: linear-gradient(180deg, #fff6d6, var(--cream) 55%, #e3cf93); color: var(--ink); font-weight: 800; font-size: 1.35rem; font-variant-numeric: tabular-nums; }
-  .r .c.dim { background: linear-gradient(180deg, #d9c9a0, #c9b583); color: #4a3a1c; }
-  .r .c.g { background: linear-gradient(180deg, #6ed28a, var(--win)); color: #fff; } .r .c.rd { background: linear-gradient(180deg, #e25a5a, var(--red)); color: #fff; }
-  .band { height: 20px; background: linear-gradient(180deg, #c42026, var(--red) 60%, #7d0c10); border-top: 2px solid var(--gold); border-bottom: 2px solid var(--gold); display: flex; align-items: center; padding: 0 10px; font-size: .72rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #ffe9b0; }
+  @media (prefers-reduced-motion: reduce) { .in, .fl, .seg { animation: none !important; opacity: 1 !important; } }
+  /* header: every card opens with a red title bar and a one-line explanation */
+  .hdr { background: linear-gradient(180deg, var(--red), var(--red2)); border-top: 2px solid #ff8a8f55; border-bottom: 3px solid var(--gold); box-shadow: 0 6px 16px -8px #000; }
+  .hdr .ht { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 7px 12px 6px; }
+  .hdr b { font-size: 1.5rem; font-weight: 900; text-transform: uppercase; letter-spacing: .03em; line-height: 1.05; text-shadow: 0 2px 0 #0006; }
+  .hdr i { font-style: normal; flex: none; background: var(--ink); color: var(--gold); padding: 2px 9px; font-weight: 800; font-size: .9rem; letter-spacing: .08em; }
+  .hdr .hs { background: var(--ink); color: var(--cream); padding: 4px 12px 5px; font-size: .88rem; letter-spacing: .03em; line-height: 1.25; }
+  /* the scoreboard: a black bar per row with cream score cells */
+  .rows { display: flex; flex-direction: column; gap: 3px; }
+  .r { display: grid; grid-auto-flow: column; grid-template-columns: 1fr; grid-auto-columns: minmax(54px, auto); align-items: stretch; background: var(--ink); border-bottom: 2px solid var(--gold); }
+  .r .t { padding: 6px 10px; font-size: 1.4rem; font-weight: 800; text-transform: uppercase; letter-spacing: .01em; line-height: 1.1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+  .r .t.col { flex-direction: column; align-items: flex-start; gap: 1px; justify-content: center; flex-wrap: nowrap; }
+  .r .t.sm { font-size: 1.05rem; padding: 8px 10px; letter-spacing: 0; }
+  .r .t.w { white-space: normal; font-size: 1.2rem; line-height: 1.15; }
+  .r .t.w.free { text-transform: none; font-size: 1.12rem; font-weight: 700; }
+  .r .t small { display: block; font-size: .78rem; font-weight: 700; color: var(--gold); letter-spacing: .1em; line-height: 1.1; }
+  .chip { font-style: normal; font-size: .78rem; font-weight: 900; letter-spacing: .06em; padding: 1px 6px; line-height: 1.25; } .chip.w { background: var(--win); color: #fff; } .chip.l { background: var(--red); color: #fff; }
+  .r .c { min-width: 54px; display: flex; align-items: center; justify-content: center; margin: 3px 2px; padding: 0 8px; background: linear-gradient(180deg, #fff6d6, var(--cream) 55%, #e3cf93); color: var(--ink); font-weight: 800; font-size: 1.35rem; font-variant-numeric: tabular-nums; }
+  .r .c.dim { background: linear-gradient(180deg, #d9c9a0, #c9b583); color: #3d2f14; }
+  .r .c.g { background: linear-gradient(180deg, #6ed28a, var(--win)); color: #fff; } .r .c.rd { background: linear-gradient(180deg, #ee5a5f, var(--red2)); color: #fff; }
+  .r .c.sm { font-size: 1.05rem; min-width: 50px; }
+  .r.cols { background: none; border: 0; } .r.cols .t { padding: 0 10px; } .r.cols .c { background: none; margin: 0 2px; padding: 0 8px; min-width: 54px; font-size: .74rem; font-weight: 800; letter-spacing: .1em; color: var(--cream); }
   /* box score panels */
-  .box { display: grid; grid-template-columns: 1fr 1fr; background: #00000040; border-top: 2px solid var(--gold); border-bottom: 2px solid var(--gold); }
+  .box { display: grid; grid-template-columns: 1fr 1fr; background: #00000050; border-top: 2px solid var(--gold); border-bottom: 2px solid var(--gold); }
   .box > div { padding: 0 0 6px; border-right: 2px solid var(--gold); min-width: 0; } .box > div:last-child { border-right: 0; }
-  .box h4 { margin: 0 0 6px; display: flex; justify-content: space-between; align-items: center; background: var(--ink); padding: 3px 8px; font-size: 1rem; text-transform: uppercase; letter-spacing: .04em; }
+  .box h4 { margin: 0 0 6px; display: flex; justify-content: space-between; align-items: center; background: var(--ink); padding: 4px 8px; font-size: 1.05rem; text-transform: uppercase; letter-spacing: .04em; }
   .box h4 s { text-decoration: none; background: var(--red); padding: 1px 7px; font-size: .85rem; }
-  .box p { margin: 0; padding: 4px 8px 5px; font-size: .78rem; line-height: 1.2; color: #fff; }
-  .box p b { display: block; color: var(--gold); font-size: .96rem; text-transform: uppercase; letter-spacing: .02em; }
-  .box p u { text-decoration: none; color: #8ff0a5; font-weight: 800; }
-  .notes { background: #00000040; border-top: 2px solid var(--gold); border-bottom: 2px solid var(--gold); padding: 0 0 6px; }
-  .notes h4 { margin: 0 0 4px; background: var(--ink); color: var(--gold); padding: 3px 8px; font-size: .95rem; text-transform: uppercase; letter-spacing: .08em; }
-  .notes p { margin: 0; padding: 3px 9px; font-size: .95rem; line-height: 1.25; } .notes p b { color: var(--gold); text-transform: uppercase; }
-  .notes p.q { font-size: 1.2rem; line-height: 1.3; font-weight: 600; padding: 6px 10px; } .notes small { display: block; padding: 2px 10px; color: var(--cream); opacity: .85; font-size: .74rem; letter-spacing: .04em; text-transform: uppercase; }
+  .box p { margin: 0; padding: 4px 8px 6px; font-size: .86rem; line-height: 1.2; color: #fff; }
+  .box p b { display: block; color: var(--gold); font-size: .98rem; text-transform: uppercase; letter-spacing: .02em; }
+  .box p u { text-decoration: none; color: #9bf5b0; font-weight: 800; }
+  .notes { background: #00000050; border-top: 2px solid var(--gold); border-bottom: 2px solid var(--gold); padding: 0 0 6px; }
+  .notes h4 { margin: 0 0 4px; background: var(--ink); color: var(--gold); padding: 4px 9px; font-size: .95rem; text-transform: uppercase; letter-spacing: .08em; border-left: 4px solid var(--red); }
+  .notes p { margin: 0; padding: 3px 10px; font-size: 1rem; line-height: 1.3; } .notes p b { color: var(--gold); text-transform: uppercase; }
+  .notes p.q { font-size: 1.25rem; line-height: 1.3; font-weight: 600; padding: 6px 10px; } .notes small { display: block; padding: 2px 10px; color: var(--cream); font-size: .8rem; letter-spacing: .04em; text-transform: uppercase; }
   .notes a { color: var(--gold); }
-  /* clips */
-  .vid { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; border: 3px solid var(--gold); box-shadow: 0 8px 22px #0009; box-sizing: border-box; }
+  /* clips and the podcast thumbnail */
+  .vid { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; border: 3px solid var(--gold); box-shadow: 0 8px 22px #0009, 0 0 0 2px var(--red2); box-sizing: border-box; }
   .vid iframe, .vid > div { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-  .links { font-size: .74rem; letter-spacing: .06em; text-transform: uppercase; } .links a { color: var(--cream); margin-right: 14px; }
-  .wp { display: flex; align-items: stretch; gap: 6px; } .wp .l { align-self: center; font-size: .74rem; letter-spacing: .1em; text-transform: uppercase; color: var(--cream); }
+  a.thumb { display: block; position: relative; aspect-ratio: 16 / 9; background: #000 center / cover; border: 3px solid var(--gold); box-shadow: 0 8px 22px #0009, 0 0 0 2px var(--red2); box-sizing: border-box; }
+  a.thumb::after { content: "\25B6"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: #fff; text-shadow: 0 2px 12px #000; background: #0000002e; }
+  .links { font-size: .85rem; letter-spacing: .06em; text-transform: uppercase; } .links a { color: var(--cream); margin-right: 14px; }
+  .wp { display: flex; align-items: stretch; gap: 6px; } .wp .t { font-size: .95rem; white-space: normal; line-height: 1.1; }
   /* controls */
-  .ctl { position: relative; flex: none; display: flex; align-items: center; justify-content: center; gap: 12px; padding: 6px 12px calc(env(safe-area-inset-bottom) + 12px); }
-  .ctl button { width: 46px; height: 38px; border: 2px solid var(--gold); background: var(--ink); color: var(--cream); font-size: .95rem; cursor: pointer; }
-  .ctl button.p { width: 64px; }
-  .cover { position: absolute; inset: 0; z-index: 5; background: linear-gradient(180deg, #2a1206ee, #7a3a12ee 60%, #c9692aee); display: flex; flex-direction: column; justify-content: center; gap: 14px; padding: 24px 18px; }
+  .ctl { position: relative; flex: none; display: flex; align-items: center; justify-content: center; gap: 12px; padding: 8px 12px calc(env(safe-area-inset-bottom) + 12px); border-top: 3px solid var(--red); background: #00000040; }
+  .ctl button { width: 52px; height: 44px; border: 2px solid var(--gold); background: var(--ink); color: var(--cream); font-size: 1rem; cursor: pointer; }
+  .ctl button.p { width: 72px; } .ctl button:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+  .cover { position: absolute; inset: 0; z-index: 5; background: linear-gradient(180deg, #1f0d05f2, #6a300eee 60%, #b9591fee); display: flex; flex-direction: column; justify-content: center; gap: 14px; padding: 24px 14px; }
   .cover[hidden] { display: none; }
-  .cover button { margin-top: 6px; align-self: center; padding: 13px 34px; border: 3px solid var(--gold); background: var(--ink); color: var(--gold); font-family: var(--cond); font-weight: 800; font-size: 1.15rem; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; }
-  .cover button:disabled { opacity: .55; cursor: default; }
-  .cover .st { text-align: center; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--cream); } .cover a { text-align: center; color: var(--cream); font-size: .78rem; }
+  .cover button { margin-top: 6px; align-self: center; padding: 14px 38px; border: 3px solid var(--gold); background: var(--red); color: #fff; font-family: var(--cond); font-weight: 900; font-size: 1.2rem; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; }
+  .cover button:disabled { opacity: .55; cursor: default; background: var(--ink); color: var(--gold); }
+  .cover .st { text-align: center; font-size: .9rem; letter-spacing: .1em; text-transform: uppercase; color: var(--cream); } .cover a { text-align: center; color: var(--cream); font-size: .85rem; }
 </style></head><body class="dtf-page">
 <div class="app"><div class="stage" id="stage">
   <div class="bars" id="bars"></div>
@@ -78,7 +87,8 @@
   <div class="seg" id="seg"></div>
   <div class="ctl"><button id="prev" aria-label="Previous">&#9664;</button><button id="pp" class="p" aria-label="Pause">&#10074;&#10074;</button><button id="next" aria-label="Next">&#9654;</button></div>
   <div class="cover" id="cover">
-    <div class="sb"><div class="logo"><i>RH</i></div><div class="rows"><div class="r"><span class="t">Rumble Hub</span><span class="c" id="cw">&nbsp;</span></div><div class="r"><span class="t" id="ch">Recap</span><span class="c dim" id="cs">&nbsp;</span></div></div></div>
+    <div class="hdr"><div class="ht"><b>Rumble Hub</b><i id="cw">&nbsp;</i></div><div class="hs" id="ch">Weekly recap</div></div>
+    <div class="rows"><div class="r"><span class="t">Run time</span><span class="c dim" id="cs">&nbsp;</span></div></div>
     <div class="st" id="cst">Loading&hellip;</div>
     <button id="go" disabled>&#9654; Watch</button><a href="/">Back to the Hub</a>
   </div>
@@ -170,7 +180,7 @@
       (s.turn ? ok : ok.slice().reverse()).forEach(function (c, j) {
         var p = {}; for (var k in c) p[k] = c[k];
         p.type = 'play'; p.clip = c._ok; p.dur = s.dur;
-        if (s.turn) { p.label = 'Turning point'; p.why = s.why; }
+        if (s.turn) { p.label = 'Turning point'; p.why = s.why; p.turn = 1; }
         else { var rank = ok.length - j; p.rank = rank; p.label = s.label.charAt(0).toUpperCase() + s.label.slice(1); if (rank === 1) p.dur += 3; }
         out.push(p);
       });
@@ -202,7 +212,7 @@
     if (i >= segs.length) { finish(); return; }
     idx = i; cur = segs[i]; elapsed = 0;
     [].forEach.call($('bars').children, function (b, k) { b.className = k < i ? 'done' : ''; b.firstChild.style.width = ''; });
-    $('seg').innerHTML = render(cur); $('seg').style.animation = 'none'; void $('seg').offsetWidth; $('seg').style.animation = '';
+    $('ttl').textContent = NAMES[cur.type] || ('Week ' + D.week + ' recap'); $('seg').innerHTML = render(cur); $('seg').style.animation = 'none'; void $('seg').offsetWidth; $('seg').style.animation = '';
     if (cur.type === 'play') startClip(cur.clip);
     clock();
   }
@@ -221,48 +231,64 @@
     }, function () { if (cur === seg) go(idx + 1); });
   }
   function finish() {
-    ended = true; stopVideo(); [].forEach.call($('bars').children, function (b) { b.className = 'done'; });
-    $('seg').innerHTML = board('See you Tuesday', [{ t: 'Week ' + (D.week + 1), c: [{ v: D.week + 1 }] }], 'RH') + '<div class="notes in"' + ds(4) + '><h4>Keep going</h4><p><a href="#" id="again">↺ Watch again</a></p><p><a href="/">The Rumble Hub</a></p><p><a href="/SleeperLiveRumbles/rumbles.html">Rumble Central</a></p></div>';
+    ended = true; $('ttl').textContent = 'The end'; stopVideo(); [].forEach.call($('bars').children, function (b) { b.className = 'done'; });
+    $('seg').innerHTML = hdr('That\u2019s the week', 'See you Tuesday', 'WK ' + (D.week + 1)) + '<div class="notes in"' + ds(2) + '><h4>Keep going</h4><p><a href="#" id="again">\u21BA Watch again</a></p><p><a href="/">The Rumble Hub</a></p><p><a href="/SleeperLiveRumbles/rumbles.html">Rumble Central</a></p></div>';
     $('again').onclick = function (e) { e.preventDefault(); ended = false; started = true; last = performance.now(); go(0); requestAnimationFrame(tick); };
     $('clock').textContent = '';
   }
   // ---- the building blocks
   function ds(i) { return ' style="animation-delay:' + (i * .09 + .05).toFixed(2) + 's"'; }
-  function board(band, rows, mark) {   // rows: [{t, tag, c:[{v, k}]}] -> a scoreboard with a round mark and a red band under it
-    return '<div class="sb"><div class="logo"><i>' + esc(mark || 'RH') + '</i></div><div class="rows">' + rows.map(function (r, i) {
-      return '<div class="r in"' + ds(i) + '><span class="t' + (r.w ? ' w' : '') + (r.sm ? ' sm' : '') + '">' + esc(r.t) + (r.tag ? '<em>' + esc(r.tag) + '</em>' : '') + (r.sub ? '<small>' + esc(r.sub) + '</small>' : '') + '</span>' + (r.c || []).map(function (c, j) { return '<span class="c fl ' + (c.k || '') + '"' + ds(i + j + 3) + '>' + esc(c.v) + '</span>'; }).join('') + '</div>';
-    }).join('') + '</div></div>' + (band ? '<div class="band">' + esc(band) + '</div>' : '');
+  function hdr(title, sub, chip) {   // every card opens with a red title bar and a plain-words line saying what you are looking at
+    return '<div class="hdr in"><div class="ht"><b>' + esc(title) + '</b>' + (chip ? '<i>' + esc(chip) + '</i>' : '') + '</div>' + (sub ? '<div class="hs">' + esc(sub) + '</div>' : '') + '</div>';
+  }
+  // rows: [{t, tag:'W'|'L', sub, w:1 (wrap), sm:1, c:[{v, k}]}]; cols: labels for the cell columns, shown above them
+  function board(rows, cols) {
+    return '<div class="rows">' + (cols ? '<div class="r cols"><span class="t"></span>' + cols.map(function (c) { return '<span class="c">' + esc(c) + '</span>'; }).join('') + '</div>' : '') + rows.map(function (r, i) {
+      var chip = r.tag ? '<em class="chip ' + (r.tag === 'W' ? 'w' : 'l') + '">' + r.tag + '</em>' : '';
+      return '<div class="r in"' + ds(i) + '><span class="t' + (r.sub ? ' col' : '') + (r.w ? ' w' : '') + (r.free ? ' free' : '') + (r.sm ? ' sm' : '') + '"><span>' + esc(r.t) + (chip ? ' ' + chip : '') + '</span>' + (r.sub ? '<small>' + esc(r.sub) + '</small>' : '') + '</span>' +
+        (r.c || []).map(function (c, j) { return '<span class="c fl ' + (c.k || '') + '"' + ds(i + j + 3) + '>' + esc(c.v) + '</span>'; }).join('') + '</div>';
+    }).join('') + '</div>';
   }
   function f1(n) { return Number(n).toFixed(1); }
   function pts(n) { return (n >= 0 ? '+' : '−') + Math.abs(n).toFixed(1); }
+  var NAMES = { intro: 'Final scores', play: 'Top plays', game: 'Game of the week', pod: 'The podcast', slack: 'League chat', shotguns: 'Shotgun watch', records: 'Record book', lifetime: 'All-time', standings: 'Standings', outro: 'Next up' };
   function render(s) {
-    if (s.type === 'intro') return board('Final scores · week ' + s.week, (s.games || []).reduce(function (a, g) {
-      a.push({ t: g.w, tag: '◄', c: [{ v: f1(g.ws), k: 'g' }] }); a.push({ t: g.l, c: [{ v: f1(g.ls), k: 'dim' }] }); return a; }, []), s.week);
+    if (s.type === 'intro') return hdr('Week ' + s.week + ' final scores', 'Every head-to-head. Winner in green.', 'WK ' + s.week) +
+      board((s.games || []).reduce(function (a, g) { a.push({ t: g.w, tag: 'W', c: [{ v: f1(g.ws), k: 'g' }] }); a.push({ t: g.l, tag: 'L', c: [{ v: f1(g.ls), k: 'dim' }] }); return a; }, []));
     if (s.type === 'play') {
       var fa = s.fant, f = s.from == null ? '–' : s.from + '%', t = s.to == null ? '–' : s.to + '%';
-      return board(s.label, [{ t: s.title, w: 1, c: [{ v: (s.pts == null ? '' : pts(s.pts)), k: 'g' }] }], s.rank ? '#' + s.rank : '↻') + '<div class="vid"></div>' +
-        (fa ? board('', [{ t: fa.m, tag: fa.ms > fa.os ? '◄' : '', c: [{ v: f1(fa.ms), k: fa.ms > fa.os ? 'g' : 'dim' }] }, { t: fa.o, c: [{ v: f1(fa.os), k: 'dim' }] }], 'WK') : '') +
-        '<div class="wp"><div class="r in"' + ds(2) + ' style="flex:1"><span class="t" style="font-size:1.05rem">Win probability' + (s.why ? ' · ' + esc(s.why) : '') + '</span></div>' +
+      return hdr(s.label, s.turn ? s.why : 'Biggest swings in a game’s win probability', s.rank ? '#' + s.rank : '') +
+        board([{ t: s.title, w: 1, c: [{ v: (s.pts == null ? '' : pts(s.pts)), k: 'g' }] }]) + '<div class="vid"></div>' +
+        (fa ? board([{ t: fa.m, tag: fa.ms > fa.os ? 'W' : 'L', c: [{ v: f1(fa.ms), k: fa.ms > fa.os ? 'g' : 'dim' }] }, { t: fa.o, tag: fa.ms > fa.os ? 'L' : 'W', c: [{ v: f1(fa.os), k: 'dim' }] }]) : '') +
+        '<div class="wp"><div class="r in"' + ds(2) + ' style="flex:1"><span class="t sm">' + esc(s.by || 'Win') + '’s chance to win</span></div>' +
         '<div class="r"><span class="c dim fl"' + ds(3) + '>' + f + '</span><span class="c g fl"' + ds(5) + '>' + t + '</span></div></div>' +
         '<div class="links"><a href="' + esc(s.replay) + '">Replay in Rumble Central</a></div>';
     }
-    if (s.type === 'game') return board(s.title + ' · ' + s.why, [{ t: s.w, tag: '◄', c: [{ v: f1(s.ws), k: 'g' }] }, { t: s.l, c: [{ v: f1(s.ls), k: 'dim' }] }], 'G') +
+    if (s.type === 'game') return hdr('Game of the week', s.why, 'WK ' + (D.week)) +
+      board([{ t: s.w, tag: 'W', c: [{ v: f1(s.ws), k: 'g' }] }, { t: s.l, tag: 'L', c: [{ v: f1(s.ls), k: 'dim' }] }]) +
       '<div class="box">' + (s.sides || []).map(function (x, i) { return '<div class="in"' + ds(i + 3) + '><h4>' + esc(x.m) + (x.rec ? '<s>' + esc(x.rec) + '</s>' : '') + '</h4>' +
         (x.lines || []).map(function (l) { return '<p><b>' + esc(l.t) + '</b><u>' + (l.pts == null ? '' : pts(l.pts) + ' pts') + '</u></p>'; }).join('') + '</div>'; }).join('') + '</div>' +
-      (s.flips ? '<div class="notes in"' + ds(8) + '><h4>Notes</h4><p>The lead changed hands <b>' + s.flips + '</b> times.</p></div>' : '');
-    if (s.type === 'shotguns') return board('Shotgun watch', s.items.map(function (x) { return { t: x.m, c: [{ v: '0.0', k: 'rd' }] }; }), '0') +
-      '<div class="notes in"' + ds(4) + '><h4>Notes</h4>' + s.items.map(function (x) { return '<p><b>' + esc(x.m) + '</b> started ' + esc(x.player) + (x.pos ? ' (' + esc(x.pos) + ')' : '') + ' and got a zero.</p>'; }).join('') + '</div>';
-    if (s.type === 'records') return board('Record book', s.items.map(function (x) { return { t: x.holder, c: [{ v: x.new, k: 'g' }] }; }), 'R') +
-      '<div class="notes in"' + ds(4) + '><h4>Notes</h4>' + s.items.map(function (x) { return '<p><b>' + esc(x.name) + '</b>' + (x.old ? ' — was ' + esc(x.old) + (x.prev ? ' (' + esc(x.prev) + ')' : '') : '') + '</p>'; }).join('') + '</div>';
-    if (s.type === 'lifetime') return board('All-time standings · who moved', s.items.map(function (x) { return { t: x.m, sub: x.metric, c: [{ v: (x.delta > 0 ? '▲' : '▼') + Math.abs(x.delta), k: x.delta > 0 ? 'g' : 'rd' }, { v: '#' + x.rank }] }; }), 'ALL');
-    if (s.type === 'pod') return board('From the pod' + (s.ep ? ' · episode ' + s.ep : ''), [{ t: s.name || 'The podcast', c: [{ v: fmt(s.at) }] }], 'PD') +
-      '<div class="notes in"' + ds(3) + '><h4>Overheard</h4><p class="q">“' + esc(s.quote) + '”</p><small>From the episode captions</small><p><a href="' + esc(s.url) + '" target="_blank" rel="noopener">Listen at that moment</a></p></div>';
-    if (s.type === 'standings') return board('Standings after week ' + D.week, s.rows.map(function (r) {
-      var dl = r.prev - r.rank; return { t: r.rank + '  ' + r.m, sm: 1, tag: dl ? (dl > 0 ? '▲' : '▼') + Math.abs(dl) : '', c: [{ v: r.rumbles, k: dl >= 2 ? 'g' : '' }, { v: '+' + r.gain, k: 'dim' }] }; }), 'ST');
+      '<div class="links in"' + ds(8) + '>Red tag = head-to-head record this season</div>';
+    if (s.type === 'pod') return hdr('The podcast', s.name || '', s.ep ? 'EP ' + s.ep : '') +
+      '<a class="thumb in"' + ds(1) + ' href="' + esc(s.url) + '" target="_blank" rel="noopener" style="background-image:url(https://i.ytimg.com/vi/' + esc(s.vid) + '/hqdefault.jpg)" aria-label="Listen to the episode"></a>' +
+      (s.quote ? '<div class="notes in"' + ds(3) + '><h4>Overheard at ' + fmt(s.at) + '</h4><p class="q">“' + esc(s.quote) + '”</p><small>From the episode captions</small></div>' :
+        '<div class="notes in"' + ds(3) + '><h4>This week’s episode</h4><p>' + esc(s.channel || 'The league podcast') + ' · tap the picture to listen.</p></div>');
+    if (s.type === 'slack') return hdr('League chat', 'The busiest conversations of the week', '') +
+      board((s.items || []).map(function (x) { return { t: x.t, sub: '#' + x.ch, w: 1, free: 1, c: [{ v: x.n }, { v: x.p, k: 'dim' }] }; }), ['MSGS', 'PEOPLE']);
+    if (s.type === 'shotguns') return hdr('Shotgun watch', 'Started a player who scored exactly 0.0', '') +
+      board(s.items.map(function (x) { return { t: x.m, sub: x.player + (x.pos ? ' (' + x.pos + ')' : ''), c: [{ v: '0.0', k: 'rd' }] }; }));
+    if (s.type === 'records') return hdr('Record book', 'Records set or tied this week', '') +
+      board(s.items.map(function (x) { return { t: x.holder, sub: x.name, c: [{ v: x.new, k: 'g' }, { v: x.old || '–', k: 'dim' }] }; }), ['NOW', 'WAS']);
+    if (s.type === 'lifetime') return hdr('All-time standings', 'Who moved in the career rankings', '') +
+      board(s.items.map(function (x) { return { t: x.m, sub: x.metric, c: [{ v: (x.delta > 0 ? '▲' : '▼') + Math.abs(x.delta), k: x.delta > 0 ? 'g' : 'rd' }, { v: '#' + x.rank }] }; }), ['MOVE', 'RANK']);
+    if (s.type === 'standings') return hdr('Standings', 'Rumbles after week ' + D.week + ' · ▲▼ spots moved', 'WK ' + D.week) +
+      board(s.rows.map(function (r) {
+        var dl = r.prev - r.rank;
+        return { t: r.rank + '  ' + r.m, sm: 1, c: [{ v: r.rumbles }, { v: '+' + r.gain, k: 'dim' }, { v: dl ? (dl > 0 ? '▲' : '▼') + Math.abs(dl) : '–', k: dl > 0 ? 'g sm' : dl < 0 ? 'rd sm' : 'dim sm' }] };
+      }), ['RUMBLES', 'THIS WK', 'MOVE']);
     if (s.type === 'outro') {
       var n = s.next, when = n ? (n.days === 0 ? 'today' : n.days === 1 ? 'tomorrow' : n.days + ' days') : '';
-      return board('Next up', [{ t: 'Week ' + s.week, c: [{ v: s.week }] }].concat(n ? [{ t: n.label, c: [{ v: when, k: n.days <= 3 ? 'rd' : '' }] }] : []), 'NX') +
-        (s.pod ? '<div class="notes in"' + ds(4) + '><h4>Latest podcast</h4><p><a href="' + esc(s.pod.url) + '" target="_blank" rel="noopener">' + esc(s.pod.title) + '</a></p></div>' : '');
+      return hdr('Next up', 'What’s coming', 'WK ' + s.week) + board([{ t: 'Week ' + s.week, sub: 'Next set of games', c: [{ v: s.week }] }].concat(n ? [{ t: n.label, sub: n.date, c: [{ v: when, k: n.days <= 3 ? 'rd' : '' }] }] : []));
     }
     return '';
   }
