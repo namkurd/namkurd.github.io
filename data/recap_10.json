@@ -1,0 +1,478 @@
+{
+ "schema": 1,
+ "season": 2026,
+ "week": 10,
+ "seconds": 115,
+ "segments": [
+  {
+   "type": "intro",
+   "dur": 5,
+   "week": 10,
+   "season": 2026,
+   "title": "Week 10 recap",
+   "stats": [
+    {
+     "k": "High score",
+     "v": "217.2",
+     "m": "Ben"
+    },
+    {
+     "k": "Most Rumbles",
+     "v": "20",
+     "m": "Ben"
+    },
+    {
+     "k": "Closest game",
+     "v": "8.9",
+     "m": "Stephanie over Joe"
+    }
+   ],
+   "hook": "Biggest swing: D. Samuel 70 yd TD run, 37% → 68%",
+   "id": 0
+  },
+  {
+   "type": "play",
+   "kind": "top",
+   "label": "#4 play of the week",
+   "title": "C. McCaffrey 74 yd TD catch",
+   "sub": "Stephanie vs Joe · Wk 10 · +14.4 pts",
+   "by": "Stephanie",
+   "a": "Joe",
+   "b": "Stephanie",
+   "pts": 14.4,
+   "from": 22,
+   "to": 40,
+   "swing": 18,
+   "clip": {
+    "id": "dCH4N3Vpeu0",
+    "s": 0,
+    "e": 15
+   },
+   "alt": {
+    "id": "CmmAl-VLHlY",
+    "s": 144,
+    "e": 171.5
+   },
+   "et": "Sun 5:37 PM",
+   "sit": {
+    "team": "SF",
+    "opp": "DAL",
+    "at": "@",
+    "q": 2,
+    "clock": "2:43",
+    "tm": 16,
+    "op": 16
+   },
+   "fant": {
+    "m": "Stephanie",
+    "o": "Joe",
+    "ms": 161.21,
+    "os": 152.34
+   },
+   "href": "https://www.youtube.com/watch?v=dCH4N3Vpeu0&t=0s",
+   "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.5.12&t=249724",
+   "dur": 13,
+   "id": 1
+  },
+  {
+   "type": "play",
+   "kind": "top",
+   "label": "#3 play of the week",
+   "title": "J. McCarthy/I. Likely 66 yd TD pass",
+   "sub": "Aidan vs Haan · Wk 10 · +20.2 pts",
+   "by": "Aidan",
+   "a": "Aidan",
+   "b": "Haan",
+   "pts": 20.24,
+   "from": 37,
+   "to": 61,
+   "swing": 24,
+   "clip": {
+    "id": "ymxsfIEc-Gw",
+    "s": 178,
+    "e": 192
+   },
+   "et": "Thu 10:43 PM",
+   "sit": {
+    "team": "NYG",
+    "opp": "WAS",
+    "at": "",
+    "q": 4,
+    "clock": "8:24",
+    "tm": 20,
+    "op": 17
+   },
+   "fant": {
+    "m": "Aidan",
+    "o": "Haan",
+    "ms": 168.91,
+    "os": 200.16
+   },
+   "href": "https://www.youtube.com/watch?v=ymxsfIEc-Gw&t=178s",
+   "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.1.4&t=8850",
+   "dur": 13,
+   "id": 2
+  },
+  {
+   "type": "play",
+   "kind": "top",
+   "label": "#2 play of the week",
+   "title": "C. McCaffrey 66 yd TD catch",
+   "sub": "Stephanie vs Joe · Wk 10 · +13.6 pts",
+   "by": "Stephanie",
+   "a": "Joe",
+   "b": "Stephanie",
+   "pts": 13.6,
+   "from": 32,
+   "to": 60,
+   "swing": 28,
+   "clip": {
+    "id": "JIS2CjSKZS4",
+    "s": 0,
+    "e": 14
+   },
+   "alt": {
+    "id": "CmmAl-VLHlY",
+    "s": 248,
+    "e": 265.5
+   },
+   "et": "Sun 7:20 PM",
+   "sit": {
+    "team": "SF",
+    "opp": "DAL",
+    "at": "@",
+    "q": 4,
+    "clock": "3:32",
+    "tm": 44,
+    "op": 32
+   },
+   "fant": {
+    "m": "Stephanie",
+    "o": "Joe",
+    "ms": 161.21,
+    "os": 152.34
+   },
+   "href": "https://www.youtube.com/watch?v=JIS2CjSKZS4&t=0s",
+   "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.5.12&t=255912",
+   "dur": 13,
+   "id": 3
+  },
+  {
+   "type": "play",
+   "kind": "top",
+   "label": "#1 play of the week",
+   "title": "D. Samuel 70 yd TD run",
+   "sub": "Haan vs Aidan · Wk 10 · +13.0 pts",
+   "by": "Haan",
+   "a": "Aidan",
+   "b": "Haan",
+   "pts": 13,
+   "from": 37,
+   "to": 68,
+   "swing": 31,
+   "clip": {
+    "id": "7QsPR86m9k4",
+    "s": 0,
+    "e": 15
+   },
+   "alt": {
+    "id": "2GoB1F4TDXE",
+    "s": 123,
+    "e": 150.5
+   },
+   "et": "Sun 6:31 PM",
+   "sit": {
+    "team": "SF",
+    "opp": "DAL",
+    "at": "@",
+    "q": 3,
+    "clock": "7:13",
+    "tm": 30,
+    "op": 19
+   },
+   "fant": {
+    "m": "Haan",
+    "o": "Aidan",
+    "ms": 200.16,
+    "os": 168.91
+   },
+   "href": "https://www.youtube.com/watch?v=7QsPR86m9k4&t=0s",
+   "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.1.4&t=252948",
+   "dur": 16,
+   "id": 4
+  },
+  {
+   "type": "game",
+   "dur": 8,
+   "title": "Game of the week",
+   "why": "4 lead changes",
+   "w": "Haan",
+   "l": "Aidan",
+   "ws": 200.16,
+   "ls": 168.91,
+   "flips": 4,
+   "others": [
+    {
+     "w": "Stephanie",
+     "l": "Joe",
+     "ws": 161.21,
+     "ls": 152.34,
+     "margin": 8.87,
+     "flips": 2,
+     "it": 0.501
+    },
+    {
+     "w": "Ryan",
+     "l": "Jake",
+     "ws": 120.13,
+     "ls": 90.07,
+     "margin": 30.06,
+     "flips": 0,
+     "it": 0
+    },
+    {
+     "w": "Steven",
+     "l": "Alex",
+     "ws": 138.05,
+     "ls": 105.51,
+     "margin": 32.54,
+     "flips": 0,
+     "it": 0
+    },
+    {
+     "w": "Ankit",
+     "l": "Kaitlyn",
+     "ws": 184.72,
+     "ls": 123.55,
+     "margin": 61.17,
+     "flips": 0,
+     "it": 0
+    }
+   ],
+   "id": 5
+  },
+  {
+   "type": "play",
+   "kind": "turn",
+   "label": "Turning point",
+   "title": "J. Price 12 yd TD run",
+   "sub": "Aidan vs Haan · Wk 10 · +7.2 pts",
+   "by": "Aidan",
+   "a": "Aidan",
+   "b": "Haan",
+   "pts": 7.2,
+   "from": 39,
+   "to": 56,
+   "swing": 17,
+   "clip": {
+    "id": "QzmCVesBVL8",
+    "s": 87,
+    "e": 108.5
+   },
+   "et": "Sun 5:48 PM",
+   "sit": {
+    "team": "SEA",
+    "opp": "LV",
+    "at": "@",
+    "q": 3,
+    "clock": "9:34",
+    "tm": 13,
+    "op": 10
+   },
+   "fant": {
+    "m": "Aidan",
+    "o": "Haan",
+    "ms": 168.91,
+    "os": 200.16
+   },
+   "href": "https://www.youtube.com/watch?v=QzmCVesBVL8&t=87s",
+   "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.1.4&t=250378",
+   "dur": 14,
+   "why": "Haan vs Aidan · 4 lead changes",
+   "id": 6
+  },
+  {
+   "type": "records",
+   "dur": 6,
+   "title": "New records",
+   "items": [
+    {
+     "name": "Most Trades (Career)",
+     "old": "32 trades",
+     "new": "33 trades",
+     "holder": "Joe",
+     "prev": "Joe"
+    },
+    {
+     "name": "Most Trades with One Partner",
+     "old": "7 trades",
+     "new": "8 trades",
+     "holder": "Ankit & Joe",
+     "prev": "Ankit & Joe"
+    }
+   ],
+   "id": 7
+  },
+  {
+   "type": "lifetime",
+   "dur": 9,
+   "title": "Lifetime standings",
+   "items": [
+    {
+     "m": "Ankit",
+     "metric": "Rumbles",
+     "rank": 5,
+     "delta": 1
+    },
+    {
+     "m": "Joe",
+     "metric": "Rumbles",
+     "rank": 6,
+     "delta": -1
+    },
+    {
+     "m": "Stephanie",
+     "metric": "Points for",
+     "rank": 13,
+     "delta": 3
+    },
+    {
+     "m": "Alex",
+     "metric": "Vs. field record",
+     "rank": 3,
+     "delta": -1
+    },
+    {
+     "m": "Stephanie",
+     "metric": "H2H wins",
+     "rank": 14,
+     "delta": 1
+    }
+   ],
+   "id": 8
+  },
+  {
+   "type": "standings",
+   "dur": 12,
+   "title": "Standings after week 10",
+   "rows": [
+    {
+     "m": "Ben",
+     "rank": 1,
+     "prev": 1,
+     "rumbles": 149,
+     "gain": 20,
+     "pts": 217.23
+    },
+    {
+     "m": "Steven",
+     "rank": 2,
+     "prev": 2,
+     "rumbles": 137,
+     "gain": 13,
+     "pts": 138.05
+    },
+    {
+     "m": "Stephanie",
+     "rank": 3,
+     "prev": 5,
+     "rumbles": 113,
+     "gain": 16,
+     "pts": 161.21
+    },
+    {
+     "m": "Ryan",
+     "rank": 4,
+     "prev": 4,
+     "rumbles": 112,
+     "gain": 11,
+     "pts": 120.13
+    },
+    {
+     "m": "Jake",
+     "rank": 5,
+     "prev": 3,
+     "rumbles": 108,
+     "gain": 0,
+     "pts": 90.07
+    },
+    {
+     "m": "Haan",
+     "rank": 6,
+     "prev": 8,
+     "rumbles": 104,
+     "gain": 19,
+     "pts": 200.16
+    },
+    {
+     "m": "Alex",
+     "rank": 7,
+     "prev": 6,
+     "rumbles": 93,
+     "gain": 1,
+     "pts": 105.51
+    },
+    {
+     "m": "Kaitlyn",
+     "rank": 8,
+     "prev": 7,
+     "rumbles": 91,
+     "gain": 3,
+     "pts": 123.55
+    },
+    {
+     "m": "Ankit",
+     "rank": 9,
+     "prev": 11,
+     "rumbles": 88,
+     "gain": 18,
+     "pts": 184.72
+    },
+    {
+     "m": "Christian",
+     "rank": 10,
+     "prev": 9,
+     "rumbles": 84,
+     "gain": 5,
+     "pts": 143.09
+    },
+    {
+     "m": "Joe",
+     "rank": 11,
+     "prev": 10,
+     "rumbles": 79,
+     "gain": 6,
+     "pts": 152.34
+    },
+    {
+     "m": "Aidan",
+     "rank": 12,
+     "prev": 12,
+     "rumbles": 42,
+     "gain": 8,
+     "pts": 168.91
+    }
+   ],
+   "id": 9
+  },
+  {
+   "type": "outro",
+   "dur": 6,
+   "title": "Next up",
+   "next": {
+    "label": "Trade deadline",
+    "date": "2026-11-26",
+    "days": 8
+   },
+   "week": 11,
+   "pod": {
+    "title": "Episode 53 · The Bill Romanowski Episode",
+    "url": "https://www.youtube.com/watch?v=YbkRrv3n1QQ"
+   },
+   "id": 10
+  }
+ ],
+ "slack": "*Week 10 recap* — 115 seconds, tap to watch (clips play right in the page): https://namkurd.github.io/recap/?week=10\n• Play of the week: D. Samuel 70 yd TD run (Haan vs Aidan · Wk 10 · +13.0 pts)\n• Closest game: Stephanie over Joe by 8.9\n• New record: Most Trades (Career) — 33 trades (Joe)\n• Lifetime: Ankit up 1 spot in all-time Rumbles rank (now #5)\n• Biggest mover: Stephanie up to #3",
+ "link": "https://namkurd.github.io/recap/?week=10",
+ "generatedAt": "2026-11-23T12:17:38Z"
+}
