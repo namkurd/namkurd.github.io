@@ -59,7 +59,9 @@
   .r .c.dim { background: linear-gradient(180deg, #d9c9a0, #c9b583); color: #3d2f14; }
   .r .c.g { background: linear-gradient(180deg, #6ed28a, var(--win)); color: #fff; } .r .c.rd { background: linear-gradient(180deg, #ee5a5f, var(--red2)); color: #fff; }
   .r .c.sm { font-size: 1.1rem; min-width: 50px; }
+  .r .c.xs { font-size: .95rem; min-width: 0; padding: 0 6px; }
   .r.cols { background: none; border: 0; } .r.cols .t { padding: 0 10px; } .r.cols .c { background: none; margin: 0 2px; padding: 0 8px; min-width: 54px; font-size: .8rem; font-weight: 800; letter-spacing: .1em; color: var(--cream); }
+  .r.cut { border-bottom: 4px solid var(--red); margin-bottom: 4px; }
   .r.slim .t { font-size: 1.2rem; padding: 4px 10px; } .r.slim .c { font-size: 1.2rem; }
   /* rundown on the opener */
   .rd { display: flex; flex-direction: column; gap: 8px; }
@@ -78,6 +80,7 @@
   .notes p { margin: 0; padding: 3px 10px; font-size: 1.1rem; line-height: 1.25; }
   .notes p.q { font-size: 1.4rem; line-height: 1.25; font-weight: 600; padding: 6px 10px; }
   .notes a { color: var(--gold); }
+  .notes p.meet { display: flex; justify-content: space-between; gap: 10px; padding: 3px 10px; } .notes p.meet b { text-transform: uppercase; font-size: 1.15rem; } .notes p.meet span { color: var(--cream); }
   /* clips: edge to edge, then the broadcast lower-third underneath */
   .vid { position: relative; margin: 0 -12px; width: calc(100% + 24px); aspect-ratio: 16 / 9; background: #000; border-bottom: 3px solid var(--gold); box-shadow: 0 8px 22px #0009; }
   .vid iframe, .vid > div { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
@@ -139,7 +142,7 @@
   var D = null, raw = [], segs = [], idx = -1, userPaused = false, held = false, elapsed = 0, last = 0, yt = null, ytApi = null, started = false, ended = false, cur = null;
   var full = false, waiting = null, muted = false, startAt = null, playing = false, dog = [];
   var EMB = (function () { try { return JSON.parse(localStorage.getItem('rumbles.embed') || '{}') || {}; } catch (e) { return {}; } })();   // shared with the Hub and Rumble Central: clip id -> 1 plays / 0 blocked
-  var NAMES = { intro: 'Rundown', play: 'Top plays', game: 'Game of the week', finals: 'Around the league', pod: 'The podcast', slack: 'League chat', shotguns: 'Shotgun watch', records: 'Record book', lifetime: 'All-time', standings: 'Standings', outro: 'Next up', wait: 'One moment' };
+  var NAMES = { intro: 'Rundown', play: 'Top plays', game: 'Game of the week', series: 'Career head to head', trades: 'Trade report', race: 'Playoff race', finals: 'Around the league', pod: 'The podcast', slack: 'League chat', shotguns: 'Shotgun watch', records: 'Record book', lifetime: 'All-time', standings: 'Standings', outro: 'Next up', wait: 'One moment' };
   var ICON = { play: '<svg viewBox="0 0 24 24"><path d="M7 4v16l11-8z"/></svg>', pause: '<svg viewBox="0 0 24 24"><path d="M7 4h4v16H7zM13 4h4v16h-4z"/></svg>' };
   function paused() { return userPaused || held; }
 
@@ -272,7 +275,7 @@
     var z = 1;
     function bad() {
       if (seg.scrollHeight > seg.clientHeight + 1) return true;
-      var t = seg.querySelectorAll('.r .t, .hdr b, .r .t small'); for (var i = 0; i < t.length; i++) if (t[i].scrollWidth > t[i].clientWidth + 1) return true;
+      var t = seg.querySelectorAll('.r .t, .r .t.col > span, .hdr b, .r .t small'); for (var i = 0; i < t.length; i++) if (t[i].scrollWidth > t[i].clientWidth + 1) return true;
       return false;
     }
     while (z > .6 && bad()) { z = Math.round((z - .04) * 100) / 100; seg.style.zoom = z; }
@@ -332,12 +335,14 @@
   // rows: [{t, tag:'W'|'L', sub, w:1 (wrap), free:1, sm:1, slim:1, c:[{v, k}]}]; cols: labels for the cell columns, shown above them
   function board(rows, cols) {
     return '<div class="rows">' + (cols ? '<div class="r cols"><span class="t"></span>' + cols.map(function (c) { return '<span class="c">' + esc(c) + '</span>'; }).join('') + '</div>' : '') + rows.map(function (r, i) {
-      var chip = r.tag ? '<em class="chip ' + (r.tag === 'W' ? 'w' : 'l') + '">' + r.tag + '</em>' : '';
-      return '<div class="r in' + (r.slim ? ' slim' : '') + '"' + ds(i) + '><span class="t' + (r.sub ? ' col' : '') + (r.w ? ' w' : '') + (r.free ? ' free' : '') + (r.sm ? ' sm' : '') + '"><span>' + esc(r.t) + (chip ? ' ' + chip : '') + '</span>' + (r.sub ? '<small>' + esc(r.sub) + '</small>' : '') + '</span>' +
+      var chip = r.tag ? '<em class="chip ' + (/^(W|IN|BYE)$/.test(r.tag) ? 'w' : 'l') + '">' + r.tag + '</em>' : '';
+      return '<div class="r in' + (r.slim ? ' slim' : '') + (r.cut ? ' cut' : '') + '"' + ds(i) + '><span class="t' + (r.sub ? ' col' : '') + (r.w ? ' w' : '') + (r.free ? ' free' : '') + (r.sm ? ' sm' : '') + '"><span>' + esc(r.t) + (chip ? ' ' + chip : '') + '</span>' + (r.sub ? '<small>' + esc(r.sub) + '</small>' : '') + '</span>' +
         (r.c || []).map(function (c, j) { return '<span class="c fl ' + (c.k || '') + '"' + ds(i + j + 3) + '>' + esc(c.v) + '</span>'; }).join('') + '</div>';
     }).join('') + '</div>';
   }
   function f1(n) { return Number(n).toFixed(1); }
+  function sgn(n) { return (n >= 0 ? '+' : '\u2212') + Math.abs(n).toFixed(1); }
+  function ppct(x) { if (x == null) return '\u2013'; var v = x * 100; return v >= 99.5 && v < 100 ? '>99%' : v > 0 && v < .5 ? '<1%' : Math.round(v) + '%'; }
   function pts(n) { return (n >= 0 ? '+' : '−') + Math.abs(n).toFixed(1); }
   function situation(si, et) {   // the NFL game the play happened in: matchup, quarter and clock, the NFL score going in, kickoff
     if (!si) return '';
@@ -358,7 +363,20 @@
       board([{ t: s.w, tag: 'W', c: [{ v: f1(s.ws), k: 'g' }] }, { t: s.l, tag: 'L', c: [{ v: f1(s.ls), k: 'dim' }] }]) +
       '<div class="box">' + (s.sides || []).map(function (x, i) { return '<div class="in"' + ds(i + 3) + '><h4>' + esc(x.m) + (x.rec ? '<s>' + esc(x.rec) + '</s>' : '') + '</h4>' +
         (x.lines || []).map(function (l) { return '<p><b>' + esc(l.t) + '</b><u>' + (l.pts == null ? '' : pts(l.pts) + ' pts') + '</u></p>'; }).join('') + '</div>'; }).join('') + '</div>';
-    if (s.type === 'finals') return hdr('Around the league', '', '') + board((s.games || []).map(function (g) { return { t: g.w + ' over ' + g.l, sm: 1, c: [{ v: f1(g.ws), k: 'g sm' }, { v: f1(g.ls), k: 'dim sm' }] }; }));
+    if (s.type === 'finals') return hdr('Around the league', '', '') + board((s.games || []).map(function (g) { return { t: g.w + ' over ' + g.l, sm: 1, c: [{ v: f1(g.ws), k: 'g sm' }, { v: f1(g.ls), k: 'dim sm' }].concat(g.sr ? [{ v: g.sr, k: 'sm' }] : []) }; }), ['', '', 'CAREER']);
+    if (s.type === 'series') return hdr('Career head to head', s.head || '', '') +
+      board([{ t: s.a, c: [{ v: s.aw, k: s.aw >= s.bw ? 'g' : 'dim' }].concat(s.pa + s.pb ? [{ v: s.pa, k: 'sm' }] : []) }, { t: s.b, c: [{ v: s.bw, k: s.bw >= s.aw ? 'g' : 'dim' }].concat(s.pa + s.pb ? [{ v: s.pb, k: 'sm' }] : []) }], s.pa + s.pb ? ['WINS', 'PLAYOFFS'] : ['WINS']) +
+      '<div class="notes in"' + ds(4) + '><h4>Last meetings</h4>' + (s.last || []).map(function (g) { return '<p class="meet"><b>' + esc(g.w) + '</b><span>' + (g.p ? 'Playoffs ' : '') + g.s + ' · wk ' + g.wk + '</span></p>'; }).join('') + '</div>';
+    if (s.type === 'trades') return hdr('Trade report', s.head || '', '') +
+      board((s.rows || []).map(function (r) {
+        var info = r.par == null ? 'wk ' + r.w + ' · too early for PAR' : 'wk ' + r.w + ' · ' + r.a + ' ' + sgn(r.lga) + ' · ' + r.b + ' ' + sgn(r.lgb);
+        return { t: r.a + ' ⇄ ' + r.b, sub: info, c: [{ v: r.parw || '–', k: r.parw ? 'sm' : 'dim sm' }, { v: r.chatw || '–', k: r.verdict === 'right' ? 'g sm' : r.verdict === 'wrong' ? 'rd sm' : 'dim sm' }] };
+      }), ['PAR', 'CHAT']) +
+      ((s.best || []).length || (s.worst || []).length ? '<div class="notes in"' + ds(6) + '><h4>Season trade PAR</h4>' + (s.best || []).map(function (x) { return '<p><b>' + esc(x.m) + '</b> ' + sgn(x.v) + '</p>'; }).join('') + (s.worst || []).map(function (x) { return '<p><b style="color:#ff8a8f">' + esc(x.m) + '</b> ' + sgn(x.v) + '</p>'; }).join('') + '</div>' : '');
+    if (s.type === 'race') return hdr('Playoff race', s.head || '', s.weeksLeft + (s.weeksLeft === 1 ? ' WK LEFT' : ' WKS LEFT')) +
+      board((s.teams || []).map(function (t) {
+        return { t: t.rank + '  ' + t.m, sm: 1, tag: t.dead ? 'OUT' : t.top ? '1 SEED' : t.z ? 'BYE' : t.x ? 'IN' : '', cut: t.rank === s.spots, c: [{ v: ppct(t.make), k: t.make >= .95 ? 'g sm' : t.make < .2 ? 'rd sm' : 'sm' }].concat(s.byes > 1 ? [{ v: ppct(t.bye), k: 'dim sm' }] : []) };
+      }), s.byes > 1 ? ['PLAYOFFS', 'BYE'] : ['PLAYOFFS']);
     if (s.type === 'pod') return hdr('The podcast', s.name || '', s.ep ? 'EP ' + s.ep : '') +
       '<a class="thumb in"' + ds(1) + ' href="' + esc(s.url) + '" target="_blank" rel="noopener" style="background-image:url(https://i.ytimg.com/vi/' + esc(s.vid) + '/hqdefault.jpg)" aria-label="Listen to the episode"></a>' +
       (s.quote ? '<div class="notes in"' + ds(3) + '><h4>Overheard at ' + fmt(s.at) + '</h4><p class="q">“' + esc(s.quote) + '”</p></div>' : '');

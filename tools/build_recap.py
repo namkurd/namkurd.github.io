@@ -16,7 +16,7 @@ sys.path.insert(0, HERE)
 import build_feed as bf   # play_title / play_sub / fantasy / source / fetch
 
 HUB = bf.HUB
-BUDGET = 150          # seconds, the page never runs longer
+BUDGET = 170          # seconds, the page never runs longer (clips usually end before their slot does)
 SITE = 'https://namkurd.github.io'
 
 
@@ -152,6 +152,102 @@ def pod_card(pod, names, picks, asof, transcript=None):
     return card
 
 
+# ---------------------------------------------------------------- career head to head
+def text_source(src, repo, path):
+    if src:
+        return open(os.path.join(src, repo, path), encoding='utf-8').read()
+    import urllib.request
+    req = urllib.request.Request(bf.RAW.format(repo=repo, path=path), headers={'User-Agent': 'dtf-club-hub'})
+    return urllib.request.urlopen(req, timeout=60).read().decode('utf-8')
+
+
+def h2h_book(src, hist):
+    """Every real head-to-head the league has on record (regular season 2021 on from the Head-to-Head tool's frozen record, then this season from
+    Rumble Central's history, plus the playoff games): a function series(a, b) -> the career meetings of two managers, oldest first."""
+    import csv, io
+    games = []   # (season, week, kind, winner, loser)
+    try:
+        for r in csv.DictReader(io.StringIO(text_source(src, 'Sleeper-Head-to-Head', 'history_baseline.tsv')), delimiter='\t'):
+            if int(r['Season']) < int(hist.get('season', 9999)):
+                games.append((int(r['Season']), int(r['Week']), 'R', r['Winner'], r['Loser']))
+    except Exception as e:
+        print('h2h baseline: %s' % e, file=sys.stderr)
+    try:
+        for r in csv.DictReader(io.StringIO(text_source(src, 'Sleeper-Head-to-Head', 'playoff_baseline.tsv')), delimiter='\t'):
+            games.append((int(r['Season']), int(r['Week']), 'P', r['Winner'], r['Loser']))
+    except Exception as e:
+        print('h2h playoffs: %s' % e, file=sys.stderr)
+    names = {int(r['roster_id']): r['manager'] for r in hist['standings']}
+    for wk, rows in (hist.get('weekly') or {}).items():
+        for rid, d in rows.items():
+            if d.get('h2h_win') and d.get('opponent_roster_id') in names:
+                games.append((int(hist['season']), int(wk), 'R', names[int(rid)], names[d['opponent_roster_id']]))
+    games.sort(key=lambda g: (g[0], g[1]))
+
+    def series(a, b):
+        return [g for g in games if {g[3], g[4]} == {a, b}]
+    return series
+
+
+def series_card(series, a, b):
+    """a's career against b: wins each (regular season), the playoff record, the current streak and the last meetings."""
+    gs = series(a, b)
+    reg = [g for g in gs if g[2] == 'R']
+    aw, bw = sum(1 for g in reg if g[3] == a), sum(1 for g in reg if g[3] == b)
+    po = [g for g in gs if g[2] == 'P']
+    streak = 0
+    for g in reversed(gs):
+        if streak == 0 or g[3] == gs[-1][3]:
+            streak += 1 if g[3] == gs[-1][3] else 0
+        if g[3] != gs[-1][3]:
+            break
+    last = gs[-1][3] if gs else None
+    return {'a': a, 'b': b, 'aw': aw, 'bw': bw, 'pa': sum(1 for g in po if g[3] == a), 'pb': sum(1 for g in po if g[3] == b),
+            'streak': {'m': last, 'n': streak} if last else None,
+            'last': [{'w': g[3], 's': g[0], 'wk': g[1], 'p': g[2] == 'P'} for g in gs[-5:]][::-1]}
+
+
+# ---------------------------------------------------------------- trades: how they are panning out (lineup PAR) against what the chat thought
+def trade_report(src, season, week):
+    """This season's trades from the Trade Network: lineup gain in points above replacement (lga for the first manager, lgb for the second) and the
+    chat's lean (the Trade Network's sentiment notes: how each commenter rated each side). Returns None when there is nothing to say."""
+    import statistics
+    d = bf.source(src, 'SleeperTradeNodes', 'data.json')
+    try:
+        sent = bf.source(src, 'SleeperTradeNodes', 'sentiment.json')
+    except Exception:
+        sent = {}
+    ts = [t for t in d['trades'] if t['s'] == season]
+    if not ts:
+        return None
+    rows, tot = [], {}
+    for t in sorted(ts, key=lambda t: t['w']):
+        notes = [n for n in (sent.get(t['id']) or {}).get('notes', []) if n.get('a') is not None and n.get('b') is not None and not n.get('inv')]
+        lean = (statistics.mean(n['a'] for n in notes) - statistics.mean(n['b'] for n in notes)) if notes else None   # > 0: the chat favoured A
+        par = t.get('lgNet') if t.get('lga') is not None and t.get('lgb') is not None and (t.get('lgw') or 0) >= 2 else None   # > 0: A gained more
+        if par is not None:
+            for m, v in ((t['a'], t['lga']), (t['b'], t['lgb'])):
+                tot[m] = tot.get(m, 0) + v
+        rows.append({'a': t['a'], 'b': t['b'], 'w': t['w'], 'tv': t.get('tv'), 'lga': t.get('lga'), 'lgb': t.get('lgb'), 'par': par, 'lean': None if lean is None else round(lean, 2)})
+
+    def verdict(r):
+        if r['par'] is None or abs(r['par']) < 5 or r['lean'] is None or abs(r['lean']) < 0.2:
+            return None
+        return 'right' if (r['par'] > 0) == (r['lean'] > 0) else 'wrong'
+    for r in rows:
+        r['verdict'] = verdict(r)
+        r['parw'] = None if r['par'] is None or abs(r['par']) < 5 else (r['a'] if r['par'] > 0 else r['b'])
+        r['chatw'] = None if r['lean'] is None or abs(r['lean']) < 0.2 else (r['a'] if r['lean'] > 0 else r['b'])
+    clear = [r for r in rows if r['verdict']]
+    right = sum(1 for r in clear if r['verdict'] == 'right')
+    shown = sorted([r for r in rows if r['verdict'] or (r['w'] == week and r['chatw'])], key=lambda r: (r['w'] != week, -abs(r['par'] or 0)))[:4]
+    if not shown:
+        return None
+    lead = sorted(tot.items(), key=lambda kv: -kv[1])
+    return {'rows': shown, 'clear': len(clear), 'right': right, 'n': len(ts),
+            'best': [{'m': m, 'v': round(v, 1)} for m, v in lead[:2] if v > 0], 'worst': [{'m': m, 'v': round(v, 1)} for m, v in lead[::-1][:1] if v < 0]}
+
+
 def build(week, src, asof):
     season = (load('league.json') or {}).get('season') or asof.year
     hist = bf.source(src, 'SleeperLiveRumbles', 'rumbles_history.json')
@@ -193,13 +289,13 @@ def build(week, src, asof):
         cands.append(p); per[key] = per.get(key, 0) + 1
     picks = cands[:4]
     if picks:
-        segs.append({'type': 'clips', 'dur': 14, 'want': min(4, len(cands)), 'label': 'play of the week', 'cands': [play_segment(p, 'top', '') for p in cands]})
+        segs.append({'type': 'clips', 'dur': 12, 'want': min(4, len(cands)), 'label': 'play of the week', 'cands': [play_segment(p, 'top', '') for p in cands]})
     turning = None
     if wild and wild['flips'] >= 2:
         pool = [p for p in plays if {p['a'], p['b']} == {wild['w'], wild['l']}]
         if pool:
             turning = pool[0]
-            segs.append({'type': 'clips', 'dur': 14, 'want': 1, 'turn': True, 'label': 'Turning point', 'why': '%s vs %s \u00b7 %d lead changes' % (wild['w'], wild['l'], wild['flips']),
+            segs.append({'type': 'clips', 'dur': 12, 'want': 1, 'turn': True, 'label': 'Turning point', 'why': '%s vs %s \u00b7 %d lead changes' % (wild['w'], wild['l'], wild['flips']),
                          'cands': [play_segment(p, 'turn', 'Turning point') for p in pool[:4]]})
 
     # ---- the game of the week: the closest real game, or the one that traded the lead most, with the plays that decided it as its box score
@@ -216,9 +312,37 @@ def build(week, src, asof):
         segs.append({'type': 'game', 'dur': 9, 'title': 'Game of the week', 'why': why, 'w': g['w'], 'l': g['l'], 'ws': g['ws'], 'ls': g['ls'], 'flips': g['flips'],
                      'sides': [side(g['w']), side(g['l'])]})
 
+    # ---- career head to head: the game of the week's series, and every game's career record for the scores card
+    series = None
+    try:
+        series = h2h_book(src, hist)
+    except Exception as e:
+        print('h2h: %s' % e, file=sys.stderr)
+    if series and games:
+        g = close if close['margin'] <= 8 else wild
+        sc = series_card(series, g['w'], g['l'])
+        if sc['aw'] + sc['bw'] >= 2:
+            lead = sc['a'] if sc['aw'] > sc['bw'] else sc['b'] if sc['bw'] > sc['aw'] else None
+            hd = ('%s leads the series %d\u2013%d' % (lead, max(sc['aw'], sc['bw']), min(sc['aw'], sc['bw']))) if lead else 'Series tied %d\u2013%d' % (sc['aw'], sc['bw'])
+            if sc['streak'] and sc['streak']['n'] >= 2:
+                hd += ' \u00b7 %s has won %d straight' % (sc['streak']['m'], sc['streak']['n'])
+            segs.append({'type': 'series', 'dur': 8, 'title': 'Career head to head', 'head': hd, **sc})
+        for gm in games:
+            r = series_card(series, gm['w'], gm['l'])
+            gm['sr'] = '%d\u2013%d' % (r['aw'], r['bw'])
+
     # ---- around the league: the other scores, one line per game (the box score lives on the Game card)
     if games:
-        segs.append({'type': 'finals', 'dur': 8, 'title': 'Around the league', 'games': [{'w': g['w'], 'l': g['l'], 'ws': g['ws'], 'ls': g['ls']} for g in sorted(games, key=lambda g: -g['it'])]})
+        segs.append({'type': 'finals', 'dur': 8, 'title': 'Around the league', 'games': [{'w': g['w'], 'l': g['l'], 'ws': g['ws'], 'ls': g['ls'], 'sr': g.get('sr')} for g in sorted(games, key=lambda g: -g['it'])]})
+
+    # ---- trades: lineup PAR so far against what the chat thought at the time
+    try:
+        tr = trade_report(src, int(season), week)
+        if tr:
+            hd = ('The chat called %d of %d clear trades right' % (tr['right'], tr['clear'])) if tr['clear'] else ''
+            segs.append({'type': 'trades', 'dur': 11, 'title': 'Trade report', 'head': hd, **tr})
+    except Exception as e:
+        print('trades: %s' % e, file=sys.stderr)
 
     # ---- the podcast: the latest episode, with the stretch where the hosts talk about this week when the captions could be read
     try:
@@ -300,6 +424,17 @@ def build(week, src, asof):
     big = max((abs(r['prev'] - r['rank']) for r in st), default=0)
     segs.append({'type': 'standings', 'dur': 12 if moved >= 4 or big >= 2 else 9, 'title': 'Standings after week %d' % week, 'rows': st})
 
+    # ---- the playoff race (data/race.json, read out of Rumble Central by tools/build_race.py)
+    race = load('data/race.json')
+    if race and race.get('teams') and race.get('season') == season and race.get('played') >= week:
+        ts_ = sorted(race['teams'], key=lambda t: t['rank'])
+        P = race['spots']
+        shown = ts_[:P + 3]
+        bub = sorted(sorted([t for t in ts_ if 0.05 < t['make'] < 0.95], key=lambda t: abs(t['make'] - .5))[:3], key=lambda t: -t['make'])
+        hd = ('On the bubble: ' + ', '.join('%s %d%%' % (t['m'], round(t['make'] * 100)) for t in bub)) if bub else ''
+        segs.append({'type': 'race', 'dur': 12, 'title': 'Playoff race', 'head': hd, 'spots': P, 'byes': race['byes'], 'weeksLeft': race['weeksLeft'],
+                     'teams': [{'m': t['m'], 'rank': t['rank'], 'make': t['make'], 'bye': t.get('bye'), 'x': t['x'], 'z': t['z'], 'top': t['top'], 'dead': t['dead']} for t in shown]})
+
     # ---- outro: the next key date and the podcast
     lg = load('league.json') or {}
     today = asof
@@ -371,6 +506,9 @@ def build(week, src, asof):
         if t == 'intro': return 3 + 1.1 * len(sg['rundown'])
         if t == 'game': return 6 + 0.5 * sum(len(x['lines']) for x in sg['sides']) + (2 if sg.get('head') else 0)
         if t == 'finals': return 3 + 0.8 * len(sg['games'])
+        if t == 'series': return 5 + 0.5 * len(sg['last'])
+        if t == 'trades': return 4 + 1.8 * len(sg['rows'])
+        if t == 'race': return 4 + 0.8 * len(sg['teams'])
         if t == 'pod': return 6 + (len(sg.get('quote') or '') / 16.0)
         if t == 'slack': return 3 + 2 * len(sg['items'])
         if t == 'shotguns': return 4 + 2 * len(sg['items'])
@@ -386,7 +524,7 @@ def build(week, src, asof):
     # ---- trim to the budget: drop the least important extras first
     def total():
         return sum(s['dur'] * (s['want'] if s['type'] == 'clips' else 1) for s in segs)
-    for drop in ('finals', 'slack', 'pod', 'shotguns', 'records', 'game'):
+    for drop in ('finals', 'shotguns', 'records', 'lifetime', 'pod', 'slack'):
         if total() <= BUDGET:
             break
         segs[:] = [s for s in segs if s['type'] != drop]

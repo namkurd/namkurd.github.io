@@ -2,7 +2,7 @@
  "schema": 1,
  "season": 2026,
  "week": 10,
- "seconds": 146,
+ "seconds": 166,
  "segments": [
   {
    "type": "intro",
@@ -32,7 +32,7 @@
   },
   {
    "type": "clips",
-   "dur": 14,
+   "dur": 12,
    "want": 4,
    "label": "play of the week",
    "cands": [
@@ -441,7 +441,7 @@
   },
   {
    "type": "clips",
-   "dur": 14,
+   "dur": 12,
    "want": 1,
    "turn": true,
    "label": "Turning point",
@@ -659,6 +659,55 @@
    "id": 3
   },
   {
+   "type": "series",
+   "dur": 8,
+   "title": "Career head to head",
+   "head": "Haan leads the series 6–4 · Haan has won 4 straight",
+   "a": "Haan",
+   "b": "Aidan",
+   "aw": 6,
+   "bw": 4,
+   "pa": 1,
+   "pb": 1,
+   "streak": {
+    "m": "Haan",
+    "n": 4
+   },
+   "last": [
+    {
+     "w": "Haan",
+     "s": 2026,
+     "wk": 10,
+     "p": false
+    },
+    {
+     "w": "Haan",
+     "s": 2026,
+     "wk": 4,
+     "p": false
+    },
+    {
+     "w": "Haan",
+     "s": 2025,
+     "wk": 17,
+     "p": true
+    },
+    {
+     "w": "Haan",
+     "s": 2025,
+     "wk": 10,
+     "p": false
+    },
+    {
+     "w": "Aidan",
+     "s": 2025,
+     "wk": 1,
+     "p": false
+    }
+   ],
+   "id": 4
+  },
+  {
    "type": "finals",
    "dur": 8,
    "title": "Around the league",
@@ -667,40 +716,126 @@
      "w": "Stephanie",
      "l": "Joe",
      "ws": 161.21,
-     "ls": 152.34
+     "ls": 152.34,
+     "sr": "1–1"
     },
     {
      "w": "Haan",
      "l": "Aidan",
      "ws": 200.16,
-     "ls": 168.91
+     "ls": 168.91,
+     "sr": "6–4"
     },
     {
      "w": "Ben",
      "l": "Christian",
      "ws": 217.23,
-     "ls": 143.09
+     "ls": 143.09,
+     "sr": "2–4"
     },
     {
      "w": "Ryan",
      "l": "Jake",
      "ws": 120.13,
-     "ls": 90.07
+     "ls": 90.07,
+     "sr": "6–4"
     },
     {
      "w": "Steven",
      "l": "Alex",
      "ws": 138.05,
-     "ls": 105.51
+     "ls": 105.51,
+     "sr": "3–6"
     },
     {
      "w": "Ankit",
      "l": "Kaitlyn",
      "ws": 184.72,
-     "ls": 123.55
+     "ls": 123.55,
+     "sr": "1–0"
     }
    ],
-   "id": 4
+   "id": 5
+  },
+  {
+   "type": "trades",
+   "dur": 11,
+   "title": "Trade report",
+   "head": "The chat called 2 of 5 clear trades right",
+   "rows": [
+    {
+     "a": "Jake",
+     "b": "Steven",
+     "w": 10,
+     "tv": 99.1,
+     "lga": null,
+     "lgb": null,
+     "par": null,
+     "lean": 1.67,
+     "verdict": null,
+     "parw": null,
+     "chatw": "Jake"
+    },
+    {
+     "a": "Joe",
+     "b": "Ankit",
+     "w": 10,
+     "tv": 23.4,
+     "lga": 0.0,
+     "lgb": 0.0,
+     "par": null,
+     "lean": 0.27,
+     "verdict": null,
+     "parw": null,
+     "chatw": "Joe"
+    },
+    {
+     "a": "Ben",
+     "b": "Alex",
+     "w": 4,
+     "tv": 39.2,
+     "lga": -47.5,
+     "lgb": 70.2,
+     "par": -117.7,
+     "lean": 0.47,
+     "verdict": "wrong",
+     "parw": "Alex",
+     "chatw": "Ben"
+    },
+    {
+     "a": "Aidan",
+     "b": "Christian",
+     "w": 6,
+     "tv": 82.6,
+     "lga": 0.0,
+     "lgb": 53.1,
+     "par": -53.1,
+     "lean": -0.27,
+     "verdict": "right",
+     "parw": "Christian",
+     "chatw": "Christian"
+    }
+   ],
+   "clear": 5,
+   "right": 2,
+   "n": 9,
+   "best": [
+    {
+     "m": "Alex",
+     "v": 67.2
+    },
+    {
+     "m": "Christian",
+     "v": 53.1
+    }
+   ],
+   "worst": [
+    {
+     "m": "Ben",
+     "v": -53.7
+    }
+   ],
+   "id": 6
   },
   {
    "type": "pod",
@@ -711,7 +846,7 @@
    "channel": "DTF Club Podcast",
    "vid": "YbkRrv3n1QQ",
    "url": "https://www.youtube.com/watch?v=YbkRrv3n1QQ",
-   "id": 5
+   "id": 7
   },
   {
    "type": "slack",
@@ -740,7 +875,7 @@
      "href": "https://dtf-club.slack.com/archives/C07QP48E83E/p1795360571209459"
     }
    ],
-   "id": 6
+   "id": 8
   },
   {
    "type": "records",
@@ -763,7 +898,7 @@
     }
    ],
    "head": "Joe: Most Trades (Career)",
-   "id": 7
+   "id": 9
   },
   {
    "type": "lifetime",
@@ -802,7 +937,7 @@
     }
    ],
    "head": "Ankit climbs 1 in career rumbles",
-   "id": 8
+   "id": 10
   },
   {
    "type": "standings",
@@ -907,7 +1042,109 @@
     }
    ],
    "head": "Stephanie, Haan and Ankit climb 2 · Jake drops 2",
-   "id": 9
+   "id": 11
+  },
+  {
+   "type": "race",
+   "dur": 11,
+   "title": "Playoff race",
+   "head": "On the bubble: Haan 68%, Kaitlyn 47%, Ankit 31%",
+   "spots": 6,
+   "byes": 2,
+   "weeksLeft": 4,
+   "teams": [
+    {
+     "m": "Ben",
+     "rank": 1,
+     "make": 1,
+     "bye": 0.996,
+     "x": false,
+     "z": false,
+     "top": false,
+     "dead": false
+    },
+    {
+     "m": "Steven",
+     "rank": 2,
+     "make": 0.997,
+     "bye": 0.786,
+     "x": false,
+     "z": false,
+     "top": false,
+     "dead": false
+    },
+    {
+     "m": "Stephanie",
+     "rank": 3,
+     "make": 0.815,
+     "bye": 0.072,
+     "x": false,
+     "z": false,
+     "top": false,
+     "dead": false
+    },
+    {
+     "m": "Ryan",
+     "rank": 4,
+     "make": 0.753,
+     "bye": 0.049,
+     "x": false,
+     "z": false,
+     "top": false,
+     "dead": false
+    },
+    {
+     "m": "Jake",
+     "rank": 5,
+     "make": 0.838,
+     "bye": 0.054,
+     "x": false,
+     "z": false,
+     "top": false,
+     "dead": false
+    },
+    {
+     "m": "Haan",
+     "rank": 6,
+     "make": 0.681,
+     "bye": 0.036,
+     "x": false,
+     "z": false,
+     "top": false,
+     "dead": false
+    },
+    {
+     "m": "Alex",
+     "rank": 7,
+     "make": 0.109,
+     "bye": 0,
+     "x": false,
+     "z": false,
+     "top": false,
+     "dead": false
+    },
+    {
+     "m": "Kaitlyn",
+     "rank": 8,
+     "make": 0.47,
+     "bye": 0.004,
+     "x": false,
+     "z": false,
+     "top": false,
+     "dead": false
+    },
+    {
+     "m": "Ankit",
+     "rank": 9,
+     "make": 0.309,
+     "bye": 0.002,
+     "x": false,
+     "z": false,
+     "top": false,
+     "dead": false
+    }
+   ],
+   "id": 12
   },
   {
    "type": "outro",
@@ -923,10 +1160,10 @@
     "title": "Episode 53 · The Bill Romanowski Episode",
     "url": "https://www.youtube.com/watch?v=YbkRrv3n1QQ"
    },
-   "id": 10
+   "id": 13
   }
  ],
- "slack": "*Week 10 recap* — 146 seconds, tap to watch (clips play right in the page): https://namkurd.github.io/recap/?week=10\n• Play of the week: D. Samuel 70 yd TD run (Haan vs Aidan · Wk 10 · +13.0 pts)\n• Closest game: Stephanie over Joe by 8.9\n• New record: Most Trades (Career) — 33 trades (Joe)\n• Lifetime: Ankit up 1 spot in all-time Rumbles rank (now #5)\n• Biggest mover: Stephanie up to #3",
+ "slack": "*Week 10 recap* — 166 seconds, tap to watch (clips play right in the page): https://namkurd.github.io/recap/?week=10\n• Play of the week: D. Samuel 70 yd TD run (Haan vs Aidan · Wk 10 · +13.0 pts)\n• Closest game: Stephanie over Joe by 8.9\n• New record: Most Trades (Career) — 33 trades (Joe)\n• Lifetime: Ankit up 1 spot in all-time Rumbles rank (now #5)\n• Biggest mover: Stephanie up to #3",
  "link": "https://namkurd.github.io/recap/?week=10",
- "generatedAt": "2026-11-23T15:10:14Z"
+ "generatedAt": "2026-11-23T15:16:20Z"
 }
