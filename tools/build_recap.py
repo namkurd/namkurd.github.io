@@ -182,8 +182,7 @@ def build(week, src, asof):
     close = min(games, key=lambda g: g['margin']) if games else None
     wild = max(games, key=lambda g: (g['flips'], g['it'])) if games else None
     # the opener is the week's scoreboard: every real game, final, most interesting first (no stat that the standings already say)
-    segs.append({'type': 'intro', 'dur': 6, 'week': week, 'season': season, 'title': 'Week %d recap' % week,
-                 'games': [{'w': g['w'], 'l': g['l'], 'ws': g['ws'], 'ls': g['ls'], 'flips': g['flips']} for g in sorted(games, key=lambda g: -g['it'])]})
+    segs.append({'type': 'intro', 'dur': 6, 'week': week, 'season': season, 'title': 'Week %d recap' % week, 'rundown': []})
 
     # ---- clips: candidates only; the page keeps the first ones that really play in the viewer's browser (an owner who blocks embedding is skipped)
     cands, per = [], {}
@@ -216,6 +215,10 @@ def build(week, src, asof):
                                                           'pts': p.get('tot') if p.get('tot') is not None else p.get('pts')} for p in mine]}
         segs.append({'type': 'game', 'dur': 9, 'title': 'Game of the week', 'why': why, 'w': g['w'], 'l': g['l'], 'ws': g['ws'], 'ls': g['ls'], 'flips': g['flips'],
                      'sides': [side(g['w']), side(g['l'])]})
+
+    # ---- around the league: the other scores, one line per game (the box score lives on the Game card)
+    if games:
+        segs.append({'type': 'finals', 'dur': 8, 'title': 'Around the league', 'games': [{'w': g['w'], 'l': g['l'], 'ws': g['ws'], 'ls': g['ls']} for g in sorted(games, key=lambda g: -g['it'])]})
 
     # ---- the podcast: the latest episode, with the stretch where the hosts talk about this week when the captions could be read
     try:
@@ -310,10 +313,80 @@ def build(week, src, asof):
              **({'pod': {'title': pod.get('title'), 'url': pod.get('url')}} if pod.get('url') else {})}
     segs.append(outro)
 
+    # ---- plain-words headlines, the rundown on the opener, and how long each card holds (by how much there is to read)
+    def names_and(rows):
+        n = [r['m'] for r in rows]
+        return n[0] if len(n) == 1 else ', '.join(n[:-1]) + ' and ' + n[-1]
+
+    def head_play(p):
+        f, t, by = p.get('from'), p.get('to'), p.get('by') or ''
+        if f is None or t is None:
+            return ''
+        if f < 50 <= t:
+            return '%s takes the lead' % by
+        if f >= 50 and t > f:
+            return '%s pulls away' % by
+        if t < 50 and t > f:
+            return '%s fights back' % by
+        return '%s swings it' % by
+    for sg in segs:
+        if sg['type'] == 'clips':
+            for c in sg['cands']:
+                c['head'] = head_play({'from': c.get('from'), 'to': c.get('to'), 'by': c.get('by')})
+        elif sg['type'] == 'game':
+            sg['head'] = '%s beats %s%s' % (sg['w'], sg['l'], (' after %d lead changes' % sg['flips']) if sg['flips'] >= 2 else ' by %.1f' % (sg['ws'] - sg['ls']))
+        elif sg['type'] == 'standings':
+            ups = [r for r in sg['rows'] if r['prev'] - r['rank'] >= 2]
+            downs = [r for r in sg['rows'] if r['rank'] - r['prev'] >= 2]
+            bits = []
+            if ups:
+                bits.append('%s climb%s %d' % (names_and(ups[:3]), '' if len(ups) > 1 else 's', max(r['prev'] - r['rank'] for r in ups)))
+            if downs:
+                bits.append('%s drop%s %d' % (names_and(downs[:2]), '' if len(downs) > 1 else 's', max(r['rank'] - r['prev'] for r in downs)))
+            sg['head'] = ' \u00b7 '.join(bits)
+        elif sg['type'] == 'lifetime' and sg['items']:
+            x = sg['items'][0]
+            sg['head'] = '%s %s %d in career %s' % (x['m'], 'climbs' if x['delta'] > 0 else 'slips', abs(x['delta']), x['metric'].lower())
+        elif sg['type'] == 'records' and sg['items']:
+            x = sg['items'][0]
+            sg['head'] = '%s: %s' % (x['holder'], x['name'])
+    tops = [sg for sg in segs if sg['type'] == 'clips' and not sg.get('turn')]
+    rd = []
+    if tops and tops[0]['cands']:
+        c = tops[0]['cands'][0]
+        rd.append({'k': 'Play', 't': '%s, %s' % (c['title'], c['head'] or c['by'])})
+    for sg in segs:
+        if sg['type'] == 'game':
+            rd.append({'k': 'Game', 't': sg['head']})
+        elif sg['type'] == 'records' and sg.get('head'):
+            rd.append({'k': 'Record', 't': '%s \u2014 %s' % (sg['items'][0]['name'], sg['items'][0]['new'])})
+        elif sg['type'] == 'standings' and sg.get('head'):
+            rd.append({'k': 'Table', 't': sg['head']})
+        elif sg['type'] == 'shotguns':
+            rd.append({'k': 'Shotgun', 't': ', '.join(x['m'] for x in sg['items'])})
+    segs[0]['rundown'] = rd[:4]
+
+    def read_time(sg):   # seconds to take a card in: a few to see it, more for each line, plus the words
+        t = sg['type']
+        if t == 'intro': return 3 + 1.1 * len(sg['rundown'])
+        if t == 'game': return 6 + 0.5 * sum(len(x['lines']) for x in sg['sides']) + (2 if sg.get('head') else 0)
+        if t == 'finals': return 3 + 0.8 * len(sg['games'])
+        if t == 'pod': return 6 + (len(sg.get('quote') or '') / 16.0)
+        if t == 'slack': return 3 + 2 * len(sg['items'])
+        if t == 'shotguns': return 4 + 2 * len(sg['items'])
+        if t == 'records': return 3 + 2 * len(sg['items'])
+        if t == 'lifetime': return 3 + 1.3 * len(sg['items'])
+        if t == 'standings': return 4 + 0.6 * len(sg['rows']) + (2 if sg.get('head') else 0)
+        if t == 'outro': return 5
+        return sg['dur']
+    for sg in segs:
+        if sg['type'] != 'clips':
+            sg['dur'] = int(round(read_time(sg)))
+
     # ---- trim to the budget: drop the least important extras first
     def total():
         return sum(s['dur'] * (s['want'] if s['type'] == 'clips' else 1) for s in segs)
-    for drop in ('slack', 'pod', 'shotguns', 'records', 'game'):
+    for drop in ('finals', 'slack', 'pod', 'shotguns', 'records', 'game'):
         if total() <= BUDGET:
             break
         segs[:] = [s for s in segs if s['type'] != drop]
