@@ -9,6 +9,11 @@
   .dtf-wrap { padding: 10px 16px 6px; --avail: calc(100dvh - var(--dtf-top-pad, 0px) - var(--dtf-nav-h, 56px)); }
   .top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 2px 0 2px; }
   h1.home { font-size: 1.35rem; margin: 0; letter-spacing: -.01em; }
+  .rcp { flex: none; margin-left: auto; height: 28px; padding: 0 11px; border-radius: 14px; display: inline-flex; align-items: center; gap: 5px; font-size: .76rem; font-weight: 700; text-decoration: none; color: #04210f; background: var(--ac, #22c55e); white-space: nowrap; -webkit-tap-highlight-color: transparent; }
+  .rcp[hidden] { display: none; }
+  .dtf-wrap a.rcp { color: #04210f; }
+  h1.home { white-space: nowrap; }
+  @media (max-width: 400px) { .rcp .rw { display: none; } .rcp { padding: 0 9px; } }
   .me { flex: none; height: 28px; padding: 0 12px; border-radius: 14px; border: 1px solid var(--dtf-border); background: var(--dtf-panel); color: var(--dtf-dim); font-family: inherit; font-size: .76rem; font-weight: 600; cursor: pointer; -webkit-tap-highlight-color: transparent; }
   .me.set { color: var(--dtf-text); border-color: color-mix(in srgb, var(--dtf-accent) 55%, var(--dtf-border)); }
   .me.ask { color: var(--dtf-accent); border-color: var(--dtf-accent); }
@@ -258,7 +263,7 @@
   .skel { height: 96px; border-radius: 20px; background: var(--dtf-panel); border: 1px solid var(--dtf-border); opacity: .6; }
 </style>
 </head><body class="dtf-page"><div class="dtf-wrap">
-<div class="top"><h1 class="home">Rumble Hub</h1><button class="me ask" id="me" type="button" aria-label="Who are you?">Who are you?</button></div>
+<div class="top"><h1 class="home">Rumble Hub</h1><a class="rcp" id="rcp" href="/recap/" hidden></a><button class="me ask" id="me" type="button" aria-label="Who are you?">Who are you?</button></div>
 <div class="next" id="next" hidden></div>
 <button class="ir" id="ir" type="button" hidden></button>
   <button class="ir warn" id="ir2" type="button" hidden></button>
@@ -293,6 +298,8 @@
   var $ = function (id) { return document.getElementById(id); };
   if ((window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone) $('foot').hidden = true;   // already installed
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  // the weekly recap: a green pill beside the title once there is one (data/recap.json, built from the finished week)
+  get('/data/recap.json').then(function (r) { var a = $('rcp'); if (!r || !r.week) return; a.href = '/recap/?week=' + r.week; a.innerHTML = '\u25B6 <span class="rw">Wk ' + r.week + '&nbsp;</span>recap'; a.hidden = false; }).catch(function () {});
   function get(url) { return fetch(url, { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw 0; return r.json(); }); }
   function ls(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) {} return null; }
   function ago(iso) {
