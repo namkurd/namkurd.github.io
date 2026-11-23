@@ -40,6 +40,15 @@ jobs:
           pip install playwright
           python -m playwright install --with-deps chromium
           python3 tools/build_topplays.py
+      # Playoff race: each team's odds from Rumble Central's own simulation (read from the page; every few hours while the season is on)
+      - id: racecheck
+        run: python3 tools/build_race.py --check
+      - if: steps.racecheck.outputs.needed == 'true'
+        continue-on-error: true
+        run: |
+          pip install playwright
+          python -m playwright install --with-deps chromium
+          python3 tools/build_race.py
       # fantasy score of each cached play's matchup (no browser needed; also runs when nothing new was scraped)
       - run: python3 tools/build_topplays.py --scores
       # IR eligibility: run the FAB tool's own check (it only reads the Sleeper API); if it can't (offseason) the last status is kept
@@ -62,5 +71,5 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add feed.json league.json managers.json data/matchups.json data/topplays*.json shotguns.json shotguns_all.json data/recap*.json
+          git add feed.json league.json managers.json data/matchups.json data/topplays*.json shotguns.json shotguns_all.json data/recap*.json data/race.json
           if git diff --cached --quiet; then echo "no change"; else git commit -m "Update Home feed" && git pull --rebase origin main && git push; fi

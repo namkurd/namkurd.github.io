@@ -2,63 +2,37 @@
  "schema": 1,
  "season": 2026,
  "week": 10,
- "seconds": 132,
+ "seconds": 166,
  "segments": [
   {
    "type": "intro",
-   "dur": 6,
+   "dur": 7,
    "week": 10,
    "season": 2026,
    "title": "Week 10 recap",
-   "games": [
+   "rundown": [
     {
-     "w": "Stephanie",
-     "l": "Joe",
-     "ws": 161.21,
-     "ls": 152.34,
-     "flips": 2
+     "k": "Play",
+     "t": "D. Samuel 70 yd TD run, Haan takes the lead"
     },
     {
-     "w": "Haan",
-     "l": "Aidan",
-     "ws": 200.16,
-     "ls": 168.91,
-     "flips": 4
+     "k": "Game",
+     "t": "Haan beats Aidan after 4 lead changes"
     },
     {
-     "w": "Ben",
-     "l": "Christian",
-     "ws": 217.23,
-     "ls": 143.09,
-     "flips": 0
+     "k": "Record",
+     "t": "Most Trades (Career) — 33 trades"
     },
     {
-     "w": "Ryan",
-     "l": "Jake",
-     "ws": 120.13,
-     "ls": 90.07,
-     "flips": 0
-    },
-    {
-     "w": "Steven",
-     "l": "Alex",
-     "ws": 138.05,
-     "ls": 105.51,
-     "flips": 0
-    },
-    {
-     "w": "Ankit",
-     "l": "Kaitlyn",
-     "ws": 184.72,
-     "ls": 123.55,
-     "flips": 0
+     "k": "Table",
+     "t": "Stephanie, Haan and Ankit climb 2 · Jake drops 2"
     }
    ],
    "id": 0
   },
   {
    "type": "clips",
-   "dur": 14,
+   "dur": 12,
    "want": 4,
    "label": "play of the week",
    "cands": [
@@ -102,7 +76,8 @@
       "os": 168.91
      },
      "href": "https://www.youtube.com/watch?v=7QsPR86m9k4&t=0s",
-     "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.1.4&t=252948"
+     "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.1.4&t=252948",
+     "head": "Haan takes the lead"
     },
     {
      "type": "play",
@@ -144,7 +119,8 @@
       "os": 152.34
      },
      "href": "https://www.youtube.com/watch?v=JIS2CjSKZS4&t=0s",
-     "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.5.12&t=255912"
+     "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.5.12&t=255912",
+     "head": "Stephanie takes the lead"
     },
     {
      "type": "play",
@@ -181,7 +157,8 @@
       "os": 200.16
      },
      "href": "https://www.youtube.com/watch?v=ymxsfIEc-Gw&t=178s",
-     "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.1.4&t=8850"
+     "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.1.4&t=8850",
+     "head": "Aidan takes the lead"
     },
     {
      "type": "play",
@@ -223,7 +200,8 @@
       "os": 152.34
      },
      "href": "https://www.youtube.com/watch?v=dCH4N3Vpeu0&t=0s",
-     "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.5.12&t=249724"
+     "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.5.12&t=249724",
+     "head": "Stephanie fights back"
     },
     {
      "type": "play",
@@ -260,7 +238,8 @@
       "os": 200.16
      },
      "href": "https://www.youtube.com/watch?v=QzmCVesBVL8&t=87s",
-     "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.1.4&t=250378"
+     "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.1.4&t=250378",
+     "head": "Aidan takes the lead"
     },
     {
      "type": "play",
@@ -302,7 +281,8 @@
       "os": 105.51
      },
      "href": "https://www.youtube.com/watch?v=qk5NaIMsxO4&t=0s",
-     "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.6.7&t=247391"
+     "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.6.7&t=247391",
+     "head": "Steven pulls away"
     },
     {
      "type": "play",
@@ -339,7 +319,8 @@
       "os": 152.34
      },
      "href": "https://www.youtube.com/watch?v=CmmAl-VLHlY&t=232s",
-     "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.5.12&t=254349"
+     "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.5.12&t=254349",
+     "head": "Stephanie fights back"
     },
     {
      "type": "play",
@@ -376,7 +357,8 @@
       "os": 143.09
      },
      "href": "https://www.youtube.com/watch?v=svFx1fWwub0&t=82s",
-     "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.2.9&t=233942"
+     "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.2.9&t=233942",
+     "head": "Ben pulls away"
     },
     {
      "type": "play",
@@ -413,7 +395,8 @@
       "os": 90.07
      },
      "href": "https://www.youtube.com/watch?v=t6ITKm9ImHc&t=410s",
-     "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.3.10&t=6874"
+     "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.3.10&t=6874",
+     "head": "Ryan pulls away"
     },
     {
      "type": "play",
@@ -450,14 +433,15 @@
       "os": 138.05
      },
      "href": "https://www.youtube.com/watch?v=gbnTRbcmtSk&t=0s",
-     "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.6.7&t=243369"
+     "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.6.7&t=243369",
+     "head": "Alex fights back"
     }
    ],
    "id": 1
   },
   {
    "type": "clips",
-   "dur": 14,
+   "dur": 12,
    "want": 1,
    "turn": true,
    "label": "Turning point",
@@ -503,7 +487,8 @@
       "os": 168.91
      },
      "href": "https://www.youtube.com/watch?v=7QsPR86m9k4&t=0s",
-     "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.1.4&t=252948"
+     "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.1.4&t=252948",
+     "head": "Haan takes the lead"
     },
     {
      "type": "play",
@@ -540,7 +525,8 @@
       "os": 200.16
      },
      "href": "https://www.youtube.com/watch?v=ymxsfIEc-Gw&t=178s",
-     "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.1.4&t=8850"
+     "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.1.4&t=8850",
+     "head": "Aidan takes the lead"
     },
     {
      "type": "play",
@@ -577,7 +563,8 @@
       "os": 200.16
      },
      "href": "https://www.youtube.com/watch?v=QzmCVesBVL8&t=87s",
-     "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.1.4&t=250378"
+     "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.1.4&t=250378",
+     "head": "Aidan takes the lead"
     },
     {
      "type": "play",
@@ -614,14 +601,15 @@
       "os": 168.91
      },
      "href": "https://www.youtube.com/watch?v=q91YLcDWnUQ&t=445s",
-     "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.1.4&t=243827"
+     "replay": "/SleeperLiveRumbles/rumbles.html?wp=10.1.4&t=243827",
+     "head": "Haan fights back"
     }
    ],
    "id": 2
   },
   {
    "type": "game",
-   "dur": 9,
+   "dur": 11,
    "title": "Game of the week",
    "why": "4 lead changes",
    "w": "Haan",
@@ -667,7 +655,187 @@
      ]
     }
    ],
+   "head": "Haan beats Aidan after 4 lead changes",
    "id": 3
+  },
+  {
+   "type": "series",
+   "dur": 8,
+   "title": "Career head to head",
+   "head": "Haan leads the series 6–4 · Haan has won 4 straight",
+   "a": "Haan",
+   "b": "Aidan",
+   "aw": 6,
+   "bw": 4,
+   "pa": 1,
+   "pb": 1,
+   "streak": {
+    "m": "Haan",
+    "n": 4
+   },
+   "last": [
+    {
+     "w": "Haan",
+     "s": 2026,
+     "wk": 10,
+     "p": false
+    },
+    {
+     "w": "Haan",
+     "s": 2026,
+     "wk": 4,
+     "p": false
+    },
+    {
+     "w": "Haan",
+     "s": 2025,
+     "wk": 17,
+     "p": true
+    },
+    {
+     "w": "Haan",
+     "s": 2025,
+     "wk": 10,
+     "p": false
+    },
+    {
+     "w": "Aidan",
+     "s": 2025,
+     "wk": 1,
+     "p": false
+    }
+   ],
+   "id": 4
+  },
+  {
+   "type": "finals",
+   "dur": 8,
+   "title": "Around the league",
+   "games": [
+    {
+     "w": "Stephanie",
+     "l": "Joe",
+     "ws": 161.21,
+     "ls": 152.34,
+     "sr": "1–1"
+    },
+    {
+     "w": "Haan",
+     "l": "Aidan",
+     "ws": 200.16,
+     "ls": 168.91,
+     "sr": "6–4"
+    },
+    {
+     "w": "Ben",
+     "l": "Christian",
+     "ws": 217.23,
+     "ls": 143.09,
+     "sr": "2–4"
+    },
+    {
+     "w": "Ryan",
+     "l": "Jake",
+     "ws": 120.13,
+     "ls": 90.07,
+     "sr": "6–4"
+    },
+    {
+     "w": "Steven",
+     "l": "Alex",
+     "ws": 138.05,
+     "ls": 105.51,
+     "sr": "3–6"
+    },
+    {
+     "w": "Ankit",
+     "l": "Kaitlyn",
+     "ws": 184.72,
+     "ls": 123.55,
+     "sr": "1–0"
+    }
+   ],
+   "id": 5
+  },
+  {
+   "type": "trades",
+   "dur": 11,
+   "title": "Trade report",
+   "head": "The chat called 2 of 5 clear trades right",
+   "rows": [
+    {
+     "a": "Jake",
+     "b": "Steven",
+     "w": 10,
+     "tv": 99.1,
+     "lga": null,
+     "lgb": null,
+     "par": null,
+     "lean": 1.67,
+     "verdict": null,
+     "parw": null,
+     "chatw": "Jake"
+    },
+    {
+     "a": "Joe",
+     "b": "Ankit",
+     "w": 10,
+     "tv": 23.4,
+     "lga": 0.0,
+     "lgb": 0.0,
+     "par": null,
+     "lean": 0.27,
+     "verdict": null,
+     "parw": null,
+     "chatw": "Joe"
+    },
+    {
+     "a": "Ben",
+     "b": "Alex",
+     "w": 4,
+     "tv": 39.2,
+     "lga": -47.5,
+     "lgb": 70.2,
+     "par": -117.7,
+     "lean": 0.47,
+     "verdict": "wrong",
+     "parw": "Alex",
+     "chatw": "Ben"
+    },
+    {
+     "a": "Aidan",
+     "b": "Christian",
+     "w": 6,
+     "tv": 82.6,
+     "lga": 0.0,
+     "lgb": 53.1,
+     "par": -53.1,
+     "lean": -0.27,
+     "verdict": "right",
+     "parw": "Christian",
+     "chatw": "Christian"
+    }
+   ],
+   "clear": 5,
+   "right": 2,
+   "n": 9,
+   "best": [
+    {
+     "m": "Alex",
+     "v": 67.2
+    },
+    {
+     "m": "Christian",
+     "v": 53.1
+    }
+   ],
+   "worst": [
+    {
+     "m": "Ben",
+     "v": -53.7
+    }
+   ],
+   "id": 6
   },
   {
    "type": "pod",
@@ -678,11 +846,11 @@
    "channel": "DTF Club Podcast",
    "vid": "YbkRrv3n1QQ",
    "url": "https://www.youtube.com/watch?v=YbkRrv3n1QQ",
-   "id": 4
+   "id": 7
   },
   {
    "type": "slack",
-   "dur": 8,
+   "dur": 9,
    "title": "League chat",
    "items": [
     {
@@ -693,25 +861,25 @@
      "href": "https://dtf-club.slack.com/archives/CCH72430F/p1795195755715409"
     },
     {
+     "t": "Finally found a stream for redzone and it was in India",
+     "ch": "gameday",
+     "n": 32,
+     "p": 7,
+     "href": "https://dtf-club.slack.com/archives/CCH72NHC7/p1795373349504059"
+    },
+    {
      "t": "Helps his team this week, every week is basically an…",
      "ch": "trade-discussion",
      "n": 33,
      "p": 6,
      "href": "https://dtf-club.slack.com/archives/C07QP48E83E/p1795360571209459"
-    },
-    {
-     "t": "Finally found a stream for redzone and it was in India",
-     "ch": "gameday",
-     "n": 25,
-     "p": 6,
-     "href": "https://dtf-club.slack.com/archives/CCH72NHC7/p1795373349504059"
     }
    ],
-   "id": 5
+   "id": 8
   },
   {
    "type": "records",
-   "dur": 6,
+   "dur": 7,
    "title": "New records",
    "items": [
     {
@@ -729,11 +897,12 @@
      "prev": "Ankit & Joe"
     }
    ],
-   "id": 6
+   "head": "Joe: Most Trades (Career)",
+   "id": 9
   },
   {
    "type": "lifetime",
-   "dur": 9,
+   "dur": 10,
    "title": "Lifetime standings",
    "items": [
     {
@@ -767,11 +936,12 @@
      "delta": 1
     }
    ],
-   "id": 7
+   "head": "Ankit climbs 1 in career rumbles",
+   "id": 10
   },
   {
    "type": "standings",
-   "dur": 12,
+   "dur": 13,
    "title": "Standings after week 10",
    "rows": [
     {
@@ -871,11 +1041,114 @@
      "pts": 168.91
     }
    ],
-   "id": 8
+   "head": "Stephanie, Haan and Ankit climb 2 · Jake drops 2",
+   "id": 11
+  },
+  {
+   "type": "race",
+   "dur": 11,
+   "title": "Playoff race",
+   "head": "On the bubble: Haan 68%, Kaitlyn 47%, Ankit 31%",
+   "spots": 6,
+   "byes": 2,
+   "weeksLeft": 4,
+   "teams": [
+    {
+     "m": "Ben",
+     "rank": 1,
+     "make": 1,
+     "bye": 0.996,
+     "x": false,
+     "z": false,
+     "top": false,
+     "dead": false
+    },
+    {
+     "m": "Steven",
+     "rank": 2,
+     "make": 0.997,
+     "bye": 0.786,
+     "x": false,
+     "z": false,
+     "top": false,
+     "dead": false
+    },
+    {
+     "m": "Stephanie",
+     "rank": 3,
+     "make": 0.815,
+     "bye": 0.072,
+     "x": false,
+     "z": false,
+     "top": false,
+     "dead": false
+    },
+    {
+     "m": "Ryan",
+     "rank": 4,
+     "make": 0.753,
+     "bye": 0.049,
+     "x": false,
+     "z": false,
+     "top": false,
+     "dead": false
+    },
+    {
+     "m": "Jake",
+     "rank": 5,
+     "make": 0.838,
+     "bye": 0.054,
+     "x": false,
+     "z": false,
+     "top": false,
+     "dead": false
+    },
+    {
+     "m": "Haan",
+     "rank": 6,
+     "make": 0.681,
+     "bye": 0.036,
+     "x": false,
+     "z": false,
+     "top": false,
+     "dead": false
+    },
+    {
+     "m": "Alex",
+     "rank": 7,
+     "make": 0.109,
+     "bye": 0,
+     "x": false,
+     "z": false,
+     "top": false,
+     "dead": false
+    },
+    {
+     "m": "Kaitlyn",
+     "rank": 8,
+     "make": 0.47,
+     "bye": 0.004,
+     "x": false,
+     "z": false,
+     "top": false,
+     "dead": false
+    },
+    {
+     "m": "Ankit",
+     "rank": 9,
+     "make": 0.309,
+     "bye": 0.002,
+     "x": false,
+     "z": false,
+     "top": false,
+     "dead": false
+    }
+   ],
+   "id": 12
   },
   {
    "type": "outro",
-   "dur": 6,
+   "dur": 5,
    "title": "Next up",
    "next": {
     "label": "Trade deadline",
@@ -887,10 +1160,10 @@
     "title": "Episode 53 · The Bill Romanowski Episode",
     "url": "https://www.youtube.com/watch?v=YbkRrv3n1QQ"
    },
-   "id": 9
+   "id": 13
   }
  ],
- "slack": "*Week 10 recap* — 132 seconds, tap to watch (clips play right in the page): https://namkurd.github.io/recap/?week=10\n• Play of the week: D. Samuel 70 yd TD run (Haan vs Aidan · Wk 10 · +13.0 pts)\n• Closest game: Stephanie over Joe by 8.9\n• New record: Most Trades (Career) — 33 trades (Joe)\n• Lifetime: Ankit up 1 spot in all-time Rumbles rank (now #5)\n• Biggest mover: Stephanie up to #3",
+ "slack": "*Week 10 recap* — 166 seconds, tap to watch (clips play right in the page): https://namkurd.github.io/recap/?week=10\n• Play of the week: D. Samuel 70 yd TD run (Haan vs Aidan · Wk 10 · +13.0 pts)\n• Closest game: Stephanie over Joe by 8.9\n• New record: Most Trades (Career) — 33 trades (Joe)\n• Lifetime: Ankit up 1 spot in all-time Rumbles rank (now #5)\n• Biggest mover: Stephanie up to #3",
  "link": "https://namkurd.github.io/recap/?week=10",
- "generatedAt": "2026-11-23T13:00:33Z"
+ "generatedAt": "2026-11-23T15:16:20Z"
 }
