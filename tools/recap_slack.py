@@ -1,14 +1,7 @@
 #!/usr/bin/env python3
-"""Posts the weekly recap to Slack with a "comment of the week": the message with the most emoji reactions in the recap week.
-
-    SLACK_BOT_TOKEN=xoxb-...  python3 tools/recap_slack.py --channel standings [--days 7] [--dry-run]
-
-Reads data/recap.json (tools/build_recap.py), looks through the public channels' last `--days` days for the message with the most reactions
-(counted per person per emoji; the league's own bot posts and the recap itself are skipped; ties go to the earlier message), and posts the
-recap text plus that comment. The comment's text goes only into the Slack post; it is never written to this repo. Needs channels:read,
-channels:history, chat:write. --dry-run prints the post instead of sending it.
-"""
-import argparse, json, os, re, sys, time
+"""Reads the comment of the week (the message with the most reactions in the public channels) for the recap. Read-only: nothing is ever posted to
+Slack from this repo. Needs channels:read and channels:history. Used by build_recap.py."""
+import os, re, sys, time
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 from build_slack import Slack, SKIP_SUBTYPES, HUB
 
@@ -66,29 +59,3 @@ def best_comment(slack, oldest, skip_ts=()):
     text = clean_text(slack, m['text'], uc)
     return {'n': n, 'people': people, 'channel': ch['name'], 'who': who.get('profile', {}).get('display_name') or who.get('real_name'),
             'text': text if len(text) <= 300 else text[:297] + '\u2026', 'reactions': [{'name': r['name'], 'count': r['count']} for r in m['reactions'] if r['name'] not in IGNORE], 'link': link}
-
-
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument('--channel', default='standings')
-    ap.add_argument('--days', type=int, default=7)
-    ap.add_argument('--dry-run', action='store_true')
-    args = ap.parse_args()
-    token = os.environ.get('SLACK_BOT_TOKEN')
-    if not token:
-        sys.exit('SLACK_BOT_TOKEN is not set')
-    slack = Slack(token)
-    recap = json.load(open(os.path.join(HUB, 'data', 'recap.json'), encoding='utf-8'))
-    msg = recap['slack']
-    c = best_comment(slack, time.time() - args.days * 86400)
-    if c:
-        msg += '\n\n*Comment of the week* (%d reactions) \u2014 %s in #%s: \u201c%s\u201d <%s|link>' % (c['n'], c['who'], c['channel'], c['text'], c['link'])
-    if args.dry_run:
-        print(msg); return
-    ch = next(x for x in slack.pages('conversations.list', 'channels', types='public_channel', exclude_archived='true', limit=200) if x['name'] == args.channel)
-    slack.call('chat.postMessage', channel=ch['id'], text=msg, unfurl_links='false')
-    print('posted to #%s' % args.channel)
-
-
-if __name__ == '__main__':
-    main()
