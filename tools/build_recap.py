@@ -7,7 +7,7 @@
 
 The page is a short sequence of segments (cards and embedded clips). Which ones appear, how many, in what order and for how long is decided
 here from what actually happened that week, so a wild week runs long and a quiet one is shorter. Everything comes from files the hub already
-publishes; no Slack text is ever written to the repo (the Slack post adds a "comment of the week" at post time, see tools/recap_slack.py).
+publishes. Nothing is posted to Slack from here; the page is the only place the recap lives.
 """
 import argparse, datetime as dt, json, os, re, sys
 
@@ -649,22 +649,7 @@ def build(week, src, asof):
         s['id'] = i
 
     link = '%s/recap/?week=%d' % (SITE, week)
-    lines = ['*Week %d recap* — %d seconds, tap to watch (clips play right in the page): %s' % (week, total(), link)]
-    best_play = plays[0] if plays else None
-    if best_play:
-        lines.append('• Play of the week: %s (%s)' % (bf.play_title(best_play['who'], best_play['label'], best_play.get('sid'), best_play.get('stk'), best_play.get('slab')), bf.play_sub(best_play)))
-    if close:
-        lines.append('• Closest game: %s over %s by %.1f' % (close['w'], close['l'], close['margin']))
-    if rec:
-        lines.append('• New record: %s — %s (%s)' % (rec[0]['name'], rec[0]['new'], rec[0]['holder']))
-    if life:
-        x = life[0]
-        lines.append('\u2022 Lifetime: %s %s %d spot%s in all-time %s rank (now #%d)' % (x['m'], 'up' if x['delta'] > 0 else 'down', abs(x['delta']), '' if abs(x['delta']) == 1 else 's', x['metric'], x['rank']))
-    movers = sorted([r for r in st if r['rank'] != r['prev']], key=lambda r: -abs(r['prev'] - r['rank']))
-    if movers:
-        r = movers[0]
-        lines.append('• Biggest mover: %s %s to #%d' % (r['m'], 'up' if r['rank'] < r['prev'] else 'down', r['rank']))
-    return {'schema': 1, 'season': season, 'week': week, 'seconds': total(), 'segments': segs, 'slack': '\n'.join(lines), 'link': link,
+    return {'schema': 1, 'season': season, 'week': week, 'seconds': total(), 'segments': segs, 'link': link,
             'generatedAt': dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}
 
 
@@ -685,7 +670,6 @@ def main():
         with open(os.path.join(HUB, 'data', name), 'w', encoding='utf-8') as f:
             json.dump(out, f, ensure_ascii=False, indent=1)
     print('week %d: %d segments, %ds' % (week, len(out['segments']), out['seconds']))
-    print(out['slack'])
 
 
 if __name__ == '__main__':
