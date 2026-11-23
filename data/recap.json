@@ -2784,21 +2784,21 @@
    "items": [
     {
      "label": "Mount Rushmore vote closes",
-     "sub": "Episode 53: Best League Changes of All Time",
-     "when": "Tue Nov 24, 4:44 PM ET",
-     "days": 2,
+     "sub": "Episode 52: All-Time Backup QBs *Sent using* Claude",
+     "when": "Tue Nov 24, 5:04 PM ET",
+     "days": 1,
      "kind": "vote"
     },
     {
      "label": "Trade deadline",
      "when": "Thu Nov 26",
-     "days": 4,
+     "days": 3,
      "kind": "trade-deadline"
     },
     {
      "label": "Playoffs begin",
      "when": "Thu Dec 17",
-     "days": 25,
+     "days": 24,
      "kind": "playoffs"
     }
    ],
@@ -2806,5 +2806,5 @@
   }
  ],
  "link": "https://namkurd.github.io/recap/?week=10",
- "generatedAt": "2026-11-23T23:09:10Z"
+ "generatedAt": "2026-11-23T23:23:51Z"
 }
