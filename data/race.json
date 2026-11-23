@@ -4,6 +4,7 @@
  "byes": 2,
  "played": 10,
  "season": 2026,
+ "scenWeek": 11,
  "teams": [
   {
    "m": "Ben",
@@ -15,91 +16,122 @@
    "x": false,
    "z": false,
    "top": false,
-   "dead": false
+   "dead": false,
+   "scen": {
+    "p": {
+     "own": null,
+     "real": 20,
+     "long": 6,
+     "help": {
+      "allow": 1,
+      "list": [
+       {
+        "n": "Haan",
+        "th": 5
+       },
+       {
+        "n": "Alex",
+        "th": 16
+       },
+       {
+        "n": "Kaitlyn",
+        "th": 18
+       }
+      ]
+     }
+    }
+   }
   },
   {
    "m": "Steven",
    "rank": 2,
    "R": 137,
    "make": 0.997,
-   "bye": 0.786,
+   "bye": 0.784,
    "one": 0.041,
    "x": false,
    "z": false,
    "top": false,
-   "dead": false
+   "dead": false,
+   "scen": {}
   },
   {
    "m": "Stephanie",
    "rank": 3,
    "R": 113,
-   "make": 0.815,
+   "make": 0.814,
    "bye": 0.072,
    "one": 0.001,
    "x": false,
    "z": false,
    "top": false,
-   "dead": false
+   "dead": false,
+   "scen": {}
   },
   {
    "m": "Ryan",
    "rank": 4,
    "R": 112,
-   "make": 0.753,
+   "make": 0.754,
    "bye": 0.049,
    "one": 0.001,
    "x": false,
    "z": false,
    "top": false,
-   "dead": false
+   "dead": false,
+   "scen": {}
   },
   {
    "m": "Jake",
    "rank": 5,
    "R": 108,
-   "make": 0.838,
+   "make": 0.837,
    "bye": 0.054,
    "one": 0.001,
    "x": false,
    "z": false,
    "top": false,
-   "dead": false
+   "dead": false,
+   "scen": {}
   },
   {
    "m": "Haan",
    "rank": 6,
    "R": 104,
-   "make": 0.681,
-   "bye": 0.036,
+   "make": 0.685,
+   "bye": 0.037,
    "one": 0.001,
    "x": false,
    "z": false,
    "top": false,
-   "dead": false
+   "dead": false,
+   "scen": {}
   },
   {
    "m": "Alex",
    "rank": 7,
    "R": 93,
-   "make": 0.109,
+   "make": 0.108,
    "bye": 0,
    "one": 0,
    "x": false,
    "z": false,
    "top": false,
-   "dead": false
+   "dead": false,
+   "scen": {}
   },
   {
    "m": "Kaitlyn",
    "rank": 8,
    "R": 91,
-   "make": 0.47,
+   "make": 0.469,
    "bye": 0.004,
    "one": 0,
    "x": false,
    "z": false,
    "top": false,
-   "dead": false
+   "dead": false,
+   "scen": {}
   },
   {
    "m": "Ankit",
@@ -111,19 +143,21 @@
    "x": false,
    "z": false,
    "top": false,
-   "dead": false
+   "dead": false,
+   "scen": {}
   },
   {
    "m": "Christian",
    "rank": 10,
    "R": 84,
-   "make": 0.026,
+   "make": 0.025,
    "bye": 0,
    "one": 0,
    "x": false,
    "z": false,
    "top": false,
-   "dead": false
+   "dead": false,
+   "scen": {}
   },
   {
    "m": "Joe",
@@ -135,7 +169,8 @@
    "x": false,
    "z": false,
    "top": false,
-   "dead": false
+   "dead": false,
+   "scen": {}
   },
   {
    "m": "Aidan",
@@ -147,8 +182,28 @@
    "x": false,
    "z": false,
    "top": false,
-   "dead": false
+   "dead": false,
+   "scen": {
+    "o": {
+     "own": null,
+     "real": 10,
+     "long": 3,
+     "help": {
+      "allow": 1,
+      "list": [
+       {
+        "n": "Jake",
+        "th": 5
+       },
+       {
+        "n": "Haan",
+        "th": 9
+       }
+      ]
+     }
+    }
+   }
   }
  ],
- "generatedAt": "2026-11-23T15:12:43Z"
+ "generatedAt": "2026-11-23T17:53:34Z"
 }

@@ -9,7 +9,7 @@ The page is a short sequence of segments (cards and embedded clips). Which ones 
 here from what actually happened that week, so a wild week runs long and a quiet one is shorter. Everything comes from files the hub already
 publishes; no Slack text is ever written to the repo (the Slack post adds a "comment of the week" at post time, see tools/recap_slack.py).
 """
-import argparse, datetime as dt, json, os, sys
+import argparse, datetime as dt, json, os, re, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -229,7 +229,10 @@ def trade_report(src, season, week, asof):
         par = t['lgNet']                                                                                             # > 0: A's lineup gained more
         for m, v in ((t['a'], t['lga']), (t['b'], t['lgb'])):
             tot[m] = tot.get(m, 0) + v
-        r = {'id': t['id'], 'a': t['a'], 'b': t['b'], 'w': t['w'], 'weeks': t.get('lgw'), 'lga': t['lga'], 'lgb': t['lgb'], 'par': par, 'lean': None if lean is None else round(lean, 2)}
+        r = {'id': t['id'], 'a': t['a'], 'b': t['b'], 'w': t['w'], 'weeks': t.get('lgw'),
+             'ga': [{'n': bf.short_player(x['n']), 'p': (re.match(r'^(QB|RB|WR|TE|K|DEF|DST)\b', x['n']) or [None])[0]} for x in t.get('bg', [])],   # what A received
+             'gb': [{'n': bf.short_player(x['n']), 'p': (re.match(r'^(QB|RB|WR|TE|K|DEF|DST)\b', x['n']) or [None])[0]} for x in t.get('ag', [])],   # what B received
+             'sa': None if not notes else round(statistics.mean(n['a'] for n in notes), 1), 'sb': None if not notes else round(statistics.mean(n['b'] for n in notes), 1), 'nn': len(notes), 'lga': t['lga'], 'lgb': t['lgb'], 'par': par, 'lean': None if lean is None else round(lean, 2)}
         r['parw'] = None if abs(par) < 5 else (t['a'] if par > 0 else t['b'])
         r['chatw'] = None if lean is None or abs(lean) < 0.2 else (t['a'] if lean > 0 else t['b'])
         r['verdict'] = None if not (r['parw'] and r['chatw']) else 'right' if r['parw'] == r['chatw'] else 'wrong'
@@ -251,7 +254,7 @@ def trade_report(src, season, week, asof):
         json.dump(snap, f, separators=(',', ':'))
     clear = [r for r in rows if r['verdict']]
     right = sum(1 for r in clear if r['verdict'] == 'right')
-    shown = sorted([r for r in rows if r['parw']], key=lambda r: -abs(r['par']))[:5]
+    shown = sorted([r for r in rows if r['parw']], key=lambda r: -abs(r['par']))[:4]
     if not shown:
         return None
     lead = sorted(tot.items(), key=lambda kv: -kv[1])
@@ -279,6 +282,40 @@ def comment_of_week(week, asof):
         with open(path, 'w', encoding='utf-8') as f:
             json.dump(c, f, ensure_ascii=False, indent=1)
     return c
+
+
+# ---------------------------------------------------------------- the Mount Rushmore vote: closes five days after the post (kept in data/mountrushmore.json)
+MR_CHANNEL = 'C0CJXBMAYHM'
+
+
+def mr_vote(asof):
+    """The open Mount Rushmore vote as {label, when, days, kind} or None. With SLACK_BOT_TOKEN the newest "Episode N Mount Rushmore: topic" post in
+    #mountrushmore is read and the file refreshed; the vote closes five days after it was posted."""
+    from zoneinfo import ZoneInfo
+    path = os.path.join(HUB, 'data', 'mountrushmore.json')
+    cur = load('data/mountrushmore.json') or {}
+    token = os.environ.get('SLACK_BOT_TOKEN')
+    if token:
+        try:
+            import build_slack, time as _t
+            sl = build_slack.Slack(token)
+            for m in sl.pages('conversations.history', 'messages', channel=MR_CHANNEL, oldest='%.6f' % (_t.time() - 12 * 86400), limit=200):   # newest first
+                mt = re.match(r'^\s*Episode (\d+) Mount Rushmore: (.+?)\s*(?:\n|$)', m.get('text') or '')
+                if mt and not m.get('thread_ts') or (mt and m.get('thread_ts') == m.get('ts')):
+                    posted = dt.datetime.fromtimestamp(float(m['ts']), dt.timezone.utc)
+                    cur = {'episode': int(mt.group(1)), 'topic': mt.group(2), 'postedAt': posted.strftime('%Y-%m-%dT%H:%M:%SZ'),
+                           'closesAt': (posted + dt.timedelta(days=5)).strftime('%Y-%m-%dT%H:%M:%SZ')}
+                    json.dump(cur, open(path, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+                    break
+        except Exception as e:
+            print('mount rushmore: %s' % e, file=sys.stderr)
+    if not cur.get('closesAt'):
+        return None
+    closes = dt.datetime.fromisoformat(cur['closesAt'].replace('Z', '+00:00')).astimezone(ZoneInfo('America/New_York'))
+    days = (closes.date() - asof).days
+    if days < 0:
+        return None
+    return {'label': 'Mount Rushmore vote closes', 'sub': 'Episode %s: %s' % (cur.get('episode'), cur.get('topic')), 'when': closes.strftime('%a %b %-d') + ', ' + closes.strftime('%-I:%M %p ET'), 'days': days, 'kind': 'vote'}
 
 
 def build(week, src, asof):
@@ -314,15 +351,23 @@ def build(week, src, asof):
     segs.append({'type': 'intro', 'dur': 6, 'week': week, 'season': season, 'title': 'Week %d recap' % week, 'rundown': []})
 
     # ---- clips: candidates only; the page keeps the first ones that really play in the viewer's browser (an owner who blocks embedding is skipped)
-    cands, per = [], {}
-    for p in plays:
-        key = tuple(sorted([p['a'], p['b']]))
-        if per.get(key, 0) >= 3 or len(cands) >= 10:
-            continue
-        cands.append(p); per[key] = per.get(key, 0) + 1
-    picks = cands[:4]
-    if picks:
-        segs.append({'type': 'clips', 'dur': 12, 'want': min(4, len(cands)), 'label': 'play of the week', 'cands': [play_segment(p, 'top', '') for p in cands]})
+    def is_def(p):
+        return bool(re.match(r'^[A-Z]{2,4}$', p.get('sid') or ''))   # a team defense's score is credited to the team code
+
+    def spread(rows, n):   # best first, never more than three from one matchup
+        out, per = [], {}
+        for p in rows:
+            key = tuple(sorted([p['a'], p['b']]))
+            if per.get(key, 0) >= 3 or len(out) >= n:
+                continue
+            out.append(p); per[key] = per.get(key, 0) + 1
+        return out
+    offense, defense = spread([p for p in plays if not is_def(p)], 8), spread([p for p in plays if is_def(p)], 3)
+    cands = offense + defense
+    picks = offense[:3] + defense[:1]
+    if cands:
+        segs.append({'type': 'clips', 'dur': 12, 'want': 4 if defense else min(4, len(offense)), 'defWant': 1 if defense else 0, 'label': 'play of the week',
+                     'cands': [dict(play_segment(p, 'top', ''), **({'def': True} if is_def(p) else {})) for p in cands]})
     turning = None
     if wild and wild['flips'] >= 2:
         pool = [p for p in plays if {p['a'], p['b']} == {wild['w'], wild['l']}]
@@ -345,21 +390,13 @@ def build(week, src, asof):
         segs.append({'type': 'game', 'dur': 9, 'title': 'Game of the week', 'why': why, 'w': g['w'], 'l': g['l'], 'ws': g['ws'], 'ls': g['ls'], 'flips': g['flips'],
                      'sides': [side(g['w']), side(g['l'])]})
 
-    # ---- career head to head: the game of the week's series, and every game's career record for the scores card
+    # ---- career head to head: every game's career record, a column on the scores card
     series = None
     try:
         series = h2h_book(src, hist)
     except Exception as e:
         print('h2h: %s' % e, file=sys.stderr)
     if series and games:
-        g = close if close['margin'] <= 8 else wild
-        sc = series_card(series, g['w'], g['l'])
-        if sc['aw'] + sc['bw'] >= 2:
-            lead = sc['a'] if sc['aw'] > sc['bw'] else sc['b'] if sc['bw'] > sc['aw'] else None
-            hd = ('%s leads the series %d\u2013%d' % (lead, max(sc['aw'], sc['bw']), min(sc['aw'], sc['bw']))) if lead else 'Series tied %d\u2013%d' % (sc['aw'], sc['bw'])
-            if sc['streak'] and sc['streak']['n'] >= 2:
-                hd += ' \u00b7 %s has won %d straight' % (sc['streak']['m'], sc['streak']['n'])
-            segs.append({'type': 'series', 'dur': 8, 'title': 'Career head to head', 'head': hd, **sc})
         for gm in games:
             r = series_card(series, gm['w'], gm['l'])
             gm['sr'] = '%d\u2013%d' % (r['aw'], r['bw'])
@@ -437,11 +474,22 @@ def build(week, src, asof):
     # ---- lifetime standings: who moved in the Lifetime tool's all-time ranks since its last update (this season's managers only)
     life = []
     try:
-        LM = [('rumble_rank', 'Rumbles'), ('h2h_w_rank', 'H2H wins'), ('pf_rank', 'Points for'), ('field_rank', 'Vs. field record'), ('field_pct_rank', 'Vs. field %')]
-        for r in bf.source(src, 'sleepersheet', 'data/standings.json')['all_time']['rows']:
+        LM = [('rumble_rank', 'Rumbles', lambda r: '{:,} Rumbles'.format(int(r['rumbles']))), ('h2h_w_rank', 'H2H wins', lambda r: '%d wins' % r['w']),
+              ('pf_rank', 'Points for', lambda r: '{:,.1f} pts'.format(r['pf'])), ('field_rank', 'Vs. field record', lambda r: '%d\u2013%d' % (r['fw'], r['fl'])),
+              ('field_pct_rank', 'Vs. field %', lambda r: '%.1f%%' % (r['field_pct'] * 100))]
+        allrows = bf.source(src, 'sleepersheet', 'data/standings.json')['all_time']['rows']
+        for r in allrows:
             if r['name'] not in set(names.values()):
                 continue
-            mv = [{'m': r['name'], 'metric': lab, 'rank': r[k], 'delta': r[k + '_delta']} for k, lab in LM if r.get(k + '_delta')]
+            mv = []
+            for k, lab, fmtv in LM:
+                dl = r.get(k + '_delta')
+                if not dl:
+                    continue
+                # who they just passed (a climb) or who just passed them (a slide): the neighbour on the other side of the move
+                nb = [o for o in allrows if o.get(k) == r[k] + (1 if dl > 0 else -1)]
+                mv.append({'m': r['name'], 'metric': lab, 'rank': r[k], 'delta': dl, 'val': fmtv(r),
+                           **({'vs': {'m': nb[0]['name'], 'val': fmtv(nb[0]), 'passed': dl > 0}} if nb else {})})
             if len(mv) > 1 and mv[-1]['metric'] == 'Vs. field %' and mv[-2]['delta'] == mv[-1]['delta']:
                 mv.pop()   # the same move twice (record and percentage)
             life += mv
@@ -468,18 +516,43 @@ def build(week, src, asof):
         segs.append({'type': 'race', 'dur': 12, 'title': 'Playoff race', 'head': hd, 'spots': P, 'byes': race['byes'], 'weeksLeft': race['weeksLeft'],
                      'teams': [{'m': t['m'], 'rank': t['rank'], 'make': t['make'], 'bye': t.get('bye'), 'x': t['x'], 'z': t['z'], 'top': t['top'], 'dead': t['dead']} for t in shown]})
 
-    # ---- outro: the next key date and the podcast
+    # ---- clinching scenarios for this week (Rumble Central's cards, read into data/race.json): who can lock it up and what has to happen
+    if race and race.get('teams') and race.get('season') == season and race.get('played') >= week:
+        items = []
+        for t in sorted(race['teams'], key=lambda t: t['rank']):
+            sc = t.get('scen') or {}
+            p_, o_ = sc.get('p'), sc.get('o')
+            if t['x'] or t['dead']:
+                continue   # already settled
+            if p_ and t['make'] >= 0.5 and (p_.get('own') is not None or p_.get('real') is not None):
+                items.append({'m': t['m'], 'kind': 'clinch', 'own': p_.get('own'), 'need': p_.get('real') if p_.get('real') is not None else p_.get('long'), 'allow': p_['help']['allow'],
+                              'help': [{'n': h['n'], 'th': h['th']} for h in p_['help']['list'][:5]], 'make': t['make']})
+            elif o_ and 0.02 < t['make'] < 0.5 and (o_.get('own') is not None or o_.get('real') is not None):
+                items.append({'m': t['m'], 'kind': 'alive', 'own': o_.get('own'), 'need': o_.get('real') if o_.get('real') is not None else o_.get('long'), 'must': max(0, len(o_['help']['list']) - o_['help']['allow']),
+                              'help': [{'n': h['n'], 'th': h['th']} for h in o_['help']['list'][:5]], 'make': t['make']})
+        for t in sorted(race['teams'], key=lambda t: t['rank']):   # a first-round bye
+            b_ = (t.get('scen') or {}).get('b')
+            if b_ and not t['z'] and not t['dead'] and (t.get('bye') or 0) >= 0.2 and (b_.get('own') is not None or b_.get('real') is not None):
+                items.append({'m': t['m'], 'kind': 'bye', 'own': b_.get('own'), 'need': b_.get('real') if b_.get('real') is not None else b_.get('long'), 'allow': b_['help']['allow'],
+                              'help': [{'n': h['n'], 'th': h['th']} for h in b_['help']['list'][:5]], 'make': t.get('bye')})
+        cl = [i for i in items if i['kind'] == 'clinch'][:2] + sorted([i for i in items if i['kind'] == 'bye'], key=lambda i: -i['make'])[:2]
+        al = sorted([i for i in items if i['kind'] == 'alive'], key=lambda i: -i['make'])[:2]
+        if cl or al:
+            segs.append({'type': 'clinch', 'dur': 12, 'title': 'Clinch watch', 'weeksLeft': race['weeksLeft'], 'items': (cl + al)[:4]})
+
+    # ---- what is coming: the trade deadline, the Mount Rushmore vote closing, the start of the playoffs
     lg = load('league.json') or {}
-    today = asof
-    nxt = None
+    coming = []
     for d in lg.get('keyDates') or []:
-        days = (dt.date.fromisoformat(d['date']) - today).days
-        if days >= 0 and (nxt is None or days < nxt['days']):
-            nxt = {'label': d['label'], 'date': d['date'], 'days': days}
-    pod = load('podcast.json') or {}
-    outro = {'type': 'outro', 'dur': 6, 'title': 'Next up', 'next': nxt, 'week': week + 1,
-             **({'pod': {'title': pod.get('title'), 'url': pod.get('url')}} if pod.get('url') else {})}
-    segs.append(outro)
+        days = (dt.date.fromisoformat(d['date']) - asof).days
+        if 0 <= days <= 30 and d['id'] in ('trade-deadline', 'playoffs'):
+            coming.append({'label': d['label'], 'when': dt.date.fromisoformat(d['date']).strftime('%a %b %-d'), 'days': days, 'kind': d['id']})
+    mr = mr_vote(asof)
+    if mr:
+        coming.append(mr)
+    coming.sort(key=lambda c: c['days'])
+    if coming:
+        segs.append({'type': 'coming', 'dur': 8, 'title': 'Coming up', 'items': coming[:3]})
 
     # ---- plain-words headlines, the rundown on the opener, and how long each card holds (by how much there is to read)
     def names_and(rows):
@@ -548,7 +621,8 @@ def build(week, src, asof):
         if t == 'records': return 3 + 2 * len(sg['items'])
         if t == 'lifetime': return 3 + 1.3 * len(sg['items'])
         if t == 'standings': return 4 + 0.6 * len(sg['rows']) + (2 if sg.get('head') else 0)
-        if t == 'outro': return 5
+        if t == 'coming': return 3 + 1.8 * len(sg['items'])
+        if t == 'clinch': return 4 + 3 * len(sg['items'])
         return sg['dur']
     for sg in segs:
         if sg['type'] != 'clips':

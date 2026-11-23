@@ -114,6 +114,23 @@
   .hb { flex: 1; position: relative; height: 8px; background: #ffffff22; } .hb i { background: linear-gradient(90deg, #d9c9a0, var(--gold)); }
   .hero .hv small { font-size: 1.6rem; margin-left: 8px; color: var(--cream); font-weight: 800; text-transform: uppercase; }
   .axis em.ins { color: #fff !important; text-shadow: 0 1px 3px #000b; }
+
+  /* trade report: players and the chat's value on each side */
+  .sd { margin-top: 4px; } .sn { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; } .sn b { font-size: 1.1rem; text-transform: uppercase; color: var(--gold); }
+  .sn .pl { font-size: .95rem; color: #fff; flex: 1; min-width: 0; } .sn .pl u { text-decoration: none; font-size: .7rem; color: var(--cream); background: #ffffff22; padding: 0 4px; }
+  .sn .sv { flex: none; margin-left: auto; font-size: .85rem; font-weight: 900; letter-spacing: .05em; padding: 0 6px; background: #5a4a30; color: #e8dcc0; } .sn .sv.pos { background: var(--win); color: #fff; } .sn .sv.neg { background: var(--red); color: #fff; }
+  .tr .axis { margin-top: 2px; }
+  /* clinch watch */
+  .sc { background: var(--ink); border-bottom: 3px solid var(--gold); padding: 6px 10px 8px; }
+  .sc .sh { display: flex; align-items: center; gap: 12px; } .sc .sh .c { font-size: 2.6rem; font-weight: 900; min-width: 78px; text-align: center; padding: 0 6px; line-height: 1.15; background: linear-gradient(180deg, #6ed28a, var(--win)); color: #fff; } .sc .sh .c.rd { background: linear-gradient(180deg, #ee5a5f, var(--red2)); }
+  .sc .sh b { display: block; font-size: 1.6rem; text-transform: uppercase; line-height: 1.05; } .sc .sh small { color: var(--gold); font-size: .85rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+  .sc .sw { margin-top: 6px; font-size: .95rem; color: var(--cream); } .chs { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; } .chs span { background: #ffffff1c; padding: 1px 8px; font-size: 1.05rem; font-weight: 700; text-transform: uppercase; } .chs b { color: var(--gold); }
+  /* coming up: a countdown per date */
+  .cd { background: linear-gradient(180deg, #0007, #0003); border-top: 2px solid var(--gold); border-bottom: 2px solid var(--gold); padding: 8px 12px 10px; text-align: center; }
+  .cd .hk { display: inline-block; background: var(--red); padding: 2px 12px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; font-size: .95rem; }
+  .cd .cn { font-size: 3.4rem; font-weight: 900; line-height: 1; color: var(--gold); text-shadow: 0 3px 0 #0008; margin-top: 4px; } .cd.hot .cn { color: #ff8a8f; } .cd .cw { font-size: 1.2rem; font-weight: 700; text-transform: uppercase; color: #fff; } .cd .cw small { display: block; font-size: .85rem; color: var(--cream); letter-spacing: .04em; }
+  /* all-time movers: the number behind the move */
+  .mc em { display: block; font-style: normal; font-size: 1.25rem; font-weight: 800; color: #fff; margin-top: 2px; } .mc s { display: block; text-decoration: none; font-size: .85rem; color: var(--cream); }
   /* rundown on the opener */
   .rd { display: flex; flex-direction: column; gap: 8px; }
   .rd p { margin: 0; display: grid; grid-template-columns: 74px 1fr; gap: 10px; align-items: center; background: #00000055; border-bottom: 2px solid var(--gold); padding: 8px 10px 8px 0; font-size: 1.35rem; font-weight: 700; line-height: 1.15; }
@@ -147,6 +164,18 @@
   .wpb { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; align-items: center; background: var(--ink); border-bottom: 2px solid var(--gold); padding: 5px 10px 7px; }
   .wpb .who { font-size: 1.05rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; } .wpb .n { font-size: 1.5rem; font-weight: 900; font-variant-numeric: tabular-nums; } .wpb .n s { text-decoration: none; color: var(--cream); font-size: 1.1rem; padding: 0 4px; } .wpb .n .g { color: #7be08f; }
   .wpb .trk { grid-column: 1 / -1; position: relative; height: 12px; background: #ffffff22; } .wpb .a { position: absolute; left: 0; top: 0; bottom: 0; width: var(--f); background: linear-gradient(90deg, #d9c9a0, #7be08f); transition: width 1.3s cubic-bezier(.2,.8,.2,1) .6s; } .wpb .a.go { width: var(--t); } .wpb .m { position: absolute; left: 50%; top: -2px; bottom: -2px; width: 2px; background: #fff; }
+
+  /* win probability: where it was, where it went, and by how much */
+  .wpd { background: var(--ink); border-bottom: 2px solid var(--gold); padding: 5px 10px 9px; position: relative; }
+  .wpd .wh { display: flex; justify-content: space-between; align-items: center; } .wpd .who { font-size: 1.05rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+  .wpd .swg { font-size: 1.5rem; font-weight: 900; padding: 0 10px; background: var(--win); color: #fff; transition: opacity .2s; } .wpd.down .swg { background: var(--red); } .wpd .swg.pop { animation: swgpop .5s cubic-bezier(.2,1.6,.4,1); }
+  @keyframes swgpop { from { transform: scale(.4); } to { transform: scale(1); } }
+  .wpd .wn { text-align: center; line-height: 1; } .wpd .cur { font-size: 3.4rem; font-weight: 900; font-variant-numeric: tabular-nums; color: #7be08f; text-shadow: 0 0 18px #7be08f66; } .wpd.down .cur { color: #ff8a8f; text-shadow: 0 0 18px #ff8a8f66; }
+  .wpd.over .cur { color: var(--gold); text-shadow: 0 0 22px #f2c14e99; }
+  .wpd .trk { position: relative; height: 16px; background: #ffffff1c; margin-top: 4px; overflow: visible; }
+  .wpd .trk i { position: absolute; top: 0; bottom: 0; } .wpd .gain { background: linear-gradient(90deg, #2f9a53, #7be08f); box-shadow: 0 0 14px #7be08f88; } .wpd.down .gain { background: linear-gradient(90deg, #ee5a5f, #8f0f14); box-shadow: 0 0 14px #ee5a5f88; }
+  .wpd .tick { width: 3px; background: #fff; opacity: .55; transform: translateX(-1px); top: -3px; bottom: -3px; } .wpd .head { width: 5px; margin-left: -2px; top: -4px; bottom: -4px; background: #fff; box-shadow: 0 0 12px 3px #ffffffcc; }
+  .wpd .m { left: 50%; width: 2px; top: -2px; bottom: -2px; background: #fff9; }
   /* chapter sheet, toast */
   .sheet { position: absolute; left: 10px; right: 10px; top: 64px; z-index: 8; background: var(--ink); border: 2px solid var(--gold); box-shadow: 0 20px 40px #000; max-height: 66%; overflow: auto; }
   .sheet[hidden] { display: none; }
@@ -193,7 +222,7 @@
   var D = null, raw = [], segs = [], idx = -1, userPaused = false, held = false, elapsed = 0, last = 0, yt = null, ytApi = null, started = false, ended = false, cur = null;
   var full = false, waiting = null, muted = false, startAt = null, playing = false, dog = [];
   var EMB = (function () { try { return JSON.parse(localStorage.getItem('rumbles.embed') || '{}') || {}; } catch (e) { return {}; } })();   // shared with the Hub and Rumble Central: clip id -> 1 plays / 0 blocked
-  var NAMES = { intro: 'Rundown', play: 'Top plays', game: 'Game of the week', series: 'Career head to head', trades: 'Trade report', race: 'Playoff race', finals: 'Around the league', pod: 'The podcast', slack: 'League chat', shotguns: 'Shotgun watch', records: 'Record book', lifetime: 'All-time', standings: 'Standings', outro: 'Next up', wait: 'One moment' };
+  var NAMES = { intro: 'Rundown', play: 'Top plays', game: 'Game of the week', trades: 'Trade report', race: 'Playoff race', clinch: 'Clinch watch', coming: 'Coming up', finals: 'Around the league', pod: 'The podcast', slack: 'League chat', shotguns: 'Shotgun watch', records: 'Record book', lifetime: 'All-time', standings: 'Standings', outro: 'Next up', wait: 'One moment' };
   var ICON = { play: '<svg viewBox="0 0 24 24"><path d="M7 4v16l11-8z"/></svg>', pause: '<svg viewBox="0 0 24 24"><path d="M7 4h4v16H7zM13 4h4v16h-4z"/></svg>' };
   function paused() { return userPaused || held; }
 
@@ -272,11 +301,15 @@
     var out = [], used = {};
     raw.forEach(function (s) {
       if (s.type !== 'clips') { out.push(s); return; }
-      var ok = s.cands.filter(function (c) { return c._ok && !used[c._ok.id]; }).slice(0, s.want);
+      var pool = s.cands.filter(function (c) { return c._ok && !used[c._ok.id]; }), ok = [];
+      if (s.defWant) { var dp = pool.filter(function (c) { return c.def; })[0]; if (dp) ok.push(dp); }
+      pool.filter(function (c) { return !c.def; }).forEach(function (c) { if (ok.length < s.want) ok.push(c); });
+      ok.sort(function (a, b) { return b.swing - a.swing; });   // best first
       ok.forEach(function (c) { used[c._ok.id] = 1; });
       (s.turn ? ok : ok.slice().reverse()).forEach(function (c, j) {
         var p = {}; for (var k in c) p[k] = c[k];
         p.type = 'play'; p.clip = c._ok; p.dur = s.dur;
+        if (c.def) p.head = 'Defense \u00b7 ' + (p.head || '');
         if (s.turn) { p.label = 'Turning point'; p.why = s.why; p.turn = 1; p.head = s.why; }
         else { var rank = ok.length - j; p.rank = rank; p.label = s.label.charAt(0).toUpperCase() + s.label.slice(1); if (rank === 1) p.dur += 3; }
         out.push(p);
@@ -318,8 +351,25 @@
     var seg = $('seg'); seg.className = 'seg' + (cur.type === 'play' ? ' play' : ''); seg.innerHTML = render(cur); fit();
     seg.style.animation = 'none'; void seg.offsetWidth; seg.style.animation = '';
     [].forEach.call(seg.querySelectorAll('.wpb .a, .trk i, .axis i, .hb i'), function (a) { requestAnimationFrame(function () { requestAnimationFrame(function () { a.classList.add('go'); }); }); });
-    if (cur.type === 'play') startClip(cur.clip);
+    if (cur.type === 'play') { startClip(cur.clip); animateWP(); }
     clock();
+  }
+  // the win-probability swing: the number counts from where it was to where it went while a bar fills and its leading edge glows; the size of the swing pops in at the end
+  var wpRaf = 0;
+  function animateWP() {
+    cancelAnimationFrame(wpRaf);
+    var el = document.querySelector('.wpd'); if (!el) return;
+    var f = Number(el.dataset.f), t = Number(el.dataset.t), up = t >= f, cur = el.querySelector('.cur'), gain = el.querySelector('.gain'), head = el.querySelector('.head'), tick = el.querySelector('.tick'), swg = el.querySelector('.swg');
+    var lo = Math.min(f, t), hi = Math.max(f, t); tick.style.left = f + '%'; el.classList.toggle('down', !up);
+    function paint(v) { cur.textContent = Math.round(v) + '%'; gain.style.left = lo + '%'; gain.style.width = Math.abs(v - f) + '%'; if (!up) gain.style.left = v + '%'; head.style.left = v + '%'; el.classList.toggle('over', up ? v >= 50 && f < 50 : v < 50 && f >= 50); }
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) { paint(t); swg.style.opacity = 1; return; }
+    var t0 = performance.now() + 700, D = 1500;
+    paint(f);
+    (function step(now) {
+      var k = Math.max(0, Math.min(1, (now - t0) / D)), e = 1 - Math.pow(1 - k, 3);
+      paint(f + (t - f) * e);
+      if (k < 1) wpRaf = requestAnimationFrame(step); else { swg.style.opacity = 1; swg.classList.add('pop'); }
+    })(performance.now());
   }
   function fit() {   // shrink a card a little at a time until it fits the screen and no name or title is cut off
     var seg = $('seg'); seg.style.zoom = '';
@@ -407,7 +457,7 @@
       return '<div class="vid"></div>' + hdr(s.label, s.head || '', s.rank ? '#' + s.rank : '') +
         board([{ t: s.title, w: 1, c: [{ v: (s.pts == null ? '' : pts(s.pts)), k: 'g' }] }]) + situation(s.sit, s.et) +
         (fa ? board([{ t: fa.m, tag: fa.ms > fa.os ? 'W' : 'L', slim: 1, c: [{ v: f1(fa.ms), k: fa.ms > fa.os ? 'g' : 'dim' }] }, { t: fa.o, tag: fa.ms > fa.os ? 'L' : 'W', slim: 1, c: [{ v: f1(fa.os), k: 'dim' }] }]) : '') +
-        (s.from == null ? '' : '<div class="wpb in"' + ds(4) + '><span class="who">' + esc(s.by || 'Win') + '’s win chance</span><span class="n">' + f + '%<s>→</s><span class="g">' + t + '%</span></span><div class="trk"><div class="a" style="--f:' + f + '%;--t:' + t + '%"></div><i class="m"></i></div></div>') +
+        (s.from == null ? '' : '<div class="wpd in"' + ds(4) + ' data-f="' + f + '" data-t="' + t + '"><div class="wh"><span class="who">' + esc(s.by || 'Win') + '\u2019s win chance</span><span class="swg" style="opacity:0">' + (t >= f ? '+' : '\u2212') + Math.abs(t - f) + '</span></div><div class="wn"><b class="cur">' + f + '%</b></div><div class="trk"><i class="gain"></i><i class="tick"></i><i class="head"></i><i class="m"></i></div></div>') +
         '<div class="links"><a href="' + esc(s.replay) + '">Replay in Rumble Central</a></div>';
     }
     if (s.type === 'game') return hdr('Game of the week', s.head || s.why, '') +
@@ -417,20 +467,15 @@
     if (s.type === 'finals') return hdr('Around the league', '', '') + '<div class="tiles">' + (s.games || []).map(function (g, i) {
       return '<div class="tile in"' + ds(i) + '><div class="tw"><span>' + esc(g.w) + '</span><b>' + f1(g.ws) + '</b></div><div class="tl"><span>' + esc(g.l) + '</span><b>' + f1(g.ls) + '</b></div>' + (g.sr ? '<div class="ft">Career ' + esc(g.sr) + '</div>' : '') + '</div>';
     }).join('') + '</div>';
-    if (s.type === 'series') {
-      var tot = Math.max(1, s.aw + s.bw);
-      return hdr('Career head to head', s.head || '', '') +
-        '<div class="tug in"' + ds(1) + '><div class="' + (s.aw >= s.bw ? 'w' : 'l') + '" style="flex:' + Math.max(s.aw, .6) + '"><span>' + esc(s.a) + '</span><b>' + s.aw + '</b></div><div class="' + (s.bw >= s.aw ? 'w' : 'l') + '" style="flex:' + Math.max(s.bw, .6) + '"><b>' + s.bw + '</b><span>' + esc(s.b) + '</span></div></div>' +
-        (s.pa + s.pb ? '<div class="tugs in"' + ds(2) + '>Playoffs ' + esc(s.a) + ' ' + s.pa + ' – ' + s.pb + ' ' + esc(s.b) + '</div>' : '') +
-        '<div class="dots">' + (s.last || []).map(function (g, i) { return '<div class="dot in ' + (g.w === s.a ? 'a' : 'b') + '"' + ds(i + 3) + '><b>' + esc(g.w) + '</b><small>' + (g.p ? 'Playoffs ' : '') + g.s + ' · wk ' + g.wk + '</small></div>'; }).join('') + '</div>';
-    }
     if (s.type === 'trades') {
       var mx = 1; (s.rows || []).forEach(function (r) { mx = Math.max(mx, Math.abs(r.lga), Math.abs(r.lgb)); });
-      var line = function (name, v, i) { var w = Math.round(Math.abs(v) / mx * 50), inside = w >= 26; return '<div class="ln"><span>' + esc(name) + '</span><div class="axis"><i class="' + (v >= 0 ? 'p' : 'n') + '" style="--w:' + w + '%"></i><em class="' + (v >= 0 ? 'p' : 'n') + (inside ? ' ins' : '') + '" style="' + (v >= 0 ? (inside ? 'left:' + (50 + w) + '%;transform:translate(-100%,-50%)' : 'left:' + (50 + w) + '%') : (inside ? 'right:' + (50 + w) + '%;transform:translate(100%,-50%)' : 'right:' + (50 + w) + '%')) + '">' + sgn(v) + '</em></div></div>'; };
-      return hdr('Trade report', s.head || '', '') + (s.rows || []).map(function (r, i) {
+      var line = function (name, got, v, sv) { var w = Math.round(Math.abs(v) / mx * 50), inside = w >= 26, cls = sv == null ? '' : sv > 0.15 ? ' pos' : sv < -0.15 ? ' neg' : '';
+        return '<div class="sd"><div class="sn"><b>' + esc(name) + '</b><span class="pl">got ' + ((got || []).map(function (g) { return esc(g.n) + (g.p ? ' <u>' + g.p + '</u>' : ''); }).join(', ') || '–') + '</span>' + (sv == null ? '' : '<span class="sv' + cls + '">CHAT ' + (sv > 0 ? '+' : sv < 0 ? '−' : '') + Math.abs(sv).toFixed(1) + '</span>') + '</div>' +
+          '<div class="axis"><i class="' + (v >= 0 ? 'p' : 'n') + '" style="--w:' + w + '%"></i><em class="' + (v >= 0 ? 'p' : 'n') + (inside ? ' ins' : '') + '" style="' + (v >= 0 ? (inside ? 'left:' + (50 + w) + '%;transform:translate(-100%,-50%)' : 'left:' + (50 + w) + '%') : (inside ? 'right:' + (50 + w) + '%;transform:translate(100%,-50%)' : 'right:' + (50 + w) + '%')) + '">' + sgn(v) + ' PAR</em></div></div>'; };
+      return hdr('Trade report', s.head || '', '') + (s.rows || []).slice(0, window.innerHeight < 700 ? 3 : 4).map(function (r, i) {
         var vd = r.verdict === 'right' ? '<span class="vd ok">CHAT ✓</span>' : r.verdict === 'wrong' ? '<span class="vd no">CHAT ✗</span>' : '<span class="vd">NO CHAT CALL</span>';
         var mv = r.moved == null ? '' : (function () { var d = r.par > 0 ? r.moved : -r.moved; return ' · lead ' + (d >= 0 ? 'grew ' : 'shrank ') + Math.abs(d).toFixed(1) + ' this week'; })();
-        return '<div class="tr in"' + ds(i + 1) + '><div class="th"><b>' + esc(r.a) + ' ⇄ ' + esc(r.b) + '</b>' + vd + '</div><small>wk ' + r.w + ' · ' + r.weeks + ' wks of lineups' + esc(mv) + '</small>' + line(r.a, r.lga) + line(r.b, r.lgb) + '</div>';
+        return '<div class="tr in"' + ds(i + 1) + '><div class="th"><b>' + esc(r.a) + ' ⇄ ' + esc(r.b) + '</b>' + vd + '</div><small>wk ' + r.w + ' · ' + r.weeks + ' wks of lineups' + esc(mv) + '</small>' + line(r.a, r.ga, r.lga, r.sa) + line(r.b, r.gb, r.lgb, r.sb) + '</div>';
       }).join('') +
         '<div class="notes in"' + ds(7) + '><h4>Season trade PAR</h4><p>' + (s.best || []).map(function (x) { return '<b>' + esc(x.m) + '</b> ' + sgn(x.v); }).concat((s.worst || []).map(function (x) { return '<b style="color:#ff8a8f">' + esc(x.m) + '</b> ' + sgn(x.v); })).join(' · ') + '</p>' + (s.clear ? '<p>Chat called <b>' + s.right + ' of ' + s.clear + '</b> clear ones right</p>' : '') + '</div>';
     }
@@ -455,16 +500,23 @@
       (s.items || []).slice(0, 2).map(function (x, i) { return '<div class="hero in"' + ds(i + 1) + '><span class="hk">' + esc(x.name) + '</span><div class="hv">' + (function (v) { var m = /^(\S+)\s+(.+)$/.exec(String(v)); return m ? esc(m[1]) + '<small>' + esc(m[2]) + '</small>' : esc(v); })(x.new) + '</div><div class="hn">' + esc(x.holder) + '</div>' + (x.old ? '<div class="hw">was ' + esc(x.old) + (x.prev && x.prev !== x.holder ? ' · ' + esc(x.prev) : '') + '</div>' : '') + '</div>'; }).join('') +
       ((s.items || []).length > 2 ? '<div class="notes in"' + ds(4) + '>' + s.items.slice(2).map(function (x) { return '<p><b>' + esc(x.name) + '</b> ' + esc(x.new) + ' · ' + esc(x.holder) + '</p>'; }).join('') + '</div>' : '');
     if (s.type === 'lifetime') return hdr('All-time standings', s.head || '', '') + '<div class="mvs">' + (s.items || []).map(function (x, i) {
-      var up = x.delta > 0; return '<div class="mc in ' + (up ? 'up' : 'dn') + '"' + ds(i + 1) + '><b>' + (up ? '▲' : '▼') + Math.abs(x.delta) + '</b><span>' + esc(x.m) + '</span><small>' + esc(x.metric) + ' · #' + x.rank + '</small></div>'; }).join('') + '</div>';
+      var up = x.delta > 0; return '<div class="mc in ' + (up ? 'up' : 'dn') + '"' + ds(i + 1) + '><b>' + (up ? '▲' : '▼') + Math.abs(x.delta) + '</b><span>' + esc(x.m) + '</span><small>' + esc(x.metric) + ' · #' + x.rank + '</small>' +
+        '<em>' + esc(x.val || '') + '</em>' + (x.vs ? '<s>' + (x.vs.passed ? 'passed ' : 'passed by ') + esc(x.vs.m) + ' (' + esc(x.vs.val) + ')</s>' : '') + '</div>'; }).join('') + '</div>';
     if (s.type === 'standings') { var top = 1; (s.rows || []).forEach(function (r) { top = Math.max(top, r.rumbles); });
       return hdr('Standings', s.head || '', 'WK ' + D.week) + '<div class="rows">' + s.rows.map(function (r, i) {
         var dl = r.prev - r.rank;
         return '<div class="r bar in"' + ds(i) + '><span class="t sm">' + r.rank + '  ' + esc(r.m) + '</span><span class="trk"><i class="' + (dl >= 2 ? 'g' : '') + '" style="--w:' + Math.round(r.rumbles / top * 100) + '%"></i><b>' + r.rumbles + '</b></span><span class="c dim sm">+' + r.gain + '</span><span class="c sm ' + (dl > 0 ? 'g' : dl < 0 ? 'rd' : 'dim') + '">' + (dl ? (dl > 0 ? '▲' : '▼') + Math.abs(dl) : '–') + '</span></div>';
       }).join('') + '</div>'; }
-    if (s.type === 'outro') {
-      var n = s.next, when = n ? (n.days === 0 ? 'today' : n.days === 1 ? 'tomorrow' : n.days + ' days') : '';
-      return hdr('Next up', '', '') + board([{ t: 'Week ' + s.week, c: [{ v: s.week }] }].concat(n ? [{ t: n.label, sub: n.date, c: [{ v: when, k: n.days <= 3 ? 'rd' : '' }] }] : []));
-    }
+    if (s.type === 'clinch') return hdr('Clinch watch', '', s.weeksLeft + (s.weeksLeft === 1 ? ' WK LEFT' : ' WKS LEFT')) + (s.items || []).map(function (x, i) {
+      var what = x.kind === 'clinch' ? 'to clinch a playoff spot' : x.kind === 'bye' ? 'to clinch a first-round bye' : 'to stay alive', k = x.kind === 'alive' ? 'rd' : 'g';
+      var cond = x.kind === 'alive' ? (x.must ? 'At least ' + x.must + ' of these must stay under their number' : '') : (x.allow >= 0 ? (x.allow === 0 ? 'None of these can reach their number' : 'No more than ' + x.allow + ' of these can reach their number') : '');
+      return '<div class="sc in"' + ds(i + 1) + '><div class="sh"><span class="c ' + k + '">' + (x.own != null ? x.own : x.need) + '+</span><div><b>' + esc(x.m) + '</b><small>Rumbles ' + what + (x.own != null ? ' on their own' : '') + '</small></div></div>' +
+        (x.own == null && cond ? '<div class="sw">' + esc(cond) + '</div><div class="chs">' + (x.help || []).map(function (h) { return '<span>' + esc(h.n) + ' <b>' + h.th + '+</b></span>'; }).join('') + '</div>' : '') + '</div>';
+    }).join('');
+    if (s.type === 'coming') return hdr('Coming up', '', '') + (s.items || []).map(function (x, i) {
+      var big = x.days === 0 ? 'TODAY' : x.days === 1 ? 'TOMORROW' : x.days + ' DAYS';
+      return '<div class="cd in' + (x.days <= 3 ? ' hot' : '') + '"' + ds(i + 1) + '><span class="hk">' + esc(x.label) + '</span><div class="cn">' + big + '</div><div class="cw">' + esc(x.when) + (x.sub ? '<small>' + esc(x.sub) + '</small>' : '') + '</div></div>';
+    }).join('');
     return '';
   }
   // ---- controls: buttons, tap the sides of a card, hold to pause, the chapter sheet, share, sound
