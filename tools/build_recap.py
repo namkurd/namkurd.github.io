@@ -670,7 +670,6 @@ def main():
         with open(os.path.join(HUB, 'data', name), 'w', encoding='utf-8') as f:
             json.dump(out, f, ensure_ascii=False, indent=1)
     print('week %d: %d segments, %ds' % (week, len(out['segments']), out['seconds']))
-    print(out['slack'])
 
 
 if __name__ == '__main__':
