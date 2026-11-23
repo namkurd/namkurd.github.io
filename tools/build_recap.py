@@ -58,6 +58,15 @@ def standings_move(hist, week):
 
 
 # ---------------------------------------------------------------- segments
+def chart_for(p):
+    """The head-to-head's win-probability curve (data/wpcharts.json, from Rumble Central) turned to the play-maker's side, and where the play sits on it."""
+    ch = (((load('data/wpcharts.json') or {}).get('weeks') or {}).get(str(p['week'])) or {}).get('%s.%s' % (p.get('aid'), p.get('bid')))
+    if not ch or p.get('x') is None:
+        return None, None
+    flip = p.get('by') != p['a']   # the curve is the first manager's chance; show the play-maker's
+    return ch, {'flip': flip, 'x': p['x'], 'pp': round(1 - p['pp'], 3) if flip else p['pp']}
+
+
 def play_segment(p, kind, label):
     fa = bf.fantasy(p)
     return {'type': 'play', 'kind': kind, 'label': label, 'title': bf.play_title(p['who'], p['label'], p.get('sid'), p.get('stk'), p.get('slab')),
@@ -65,7 +74,8 @@ def play_segment(p, kind, label):
             'from': pct(p.get('from')), 'to': pct(p.get('to')), 'swing': round(p['swing'] * 100), 'clip': p['clip'], **({'alt': p['alt']} if p.get('alt') else {}),
             'et': p.get('et'), 'sit': p.get('sit'), **({'fant': fa} if fa else {}),
             'href': 'https://www.youtube.com/watch?v=%s&t=%ds' % (p['clip']['id'], int(p['clip']['s'])),
-            'replay': '/SleeperLiveRumbles/rumbles.html?wp=%d.%s.%s%s' % (p['week'], p.get('aid'), p.get('bid'), '&t=%d' % p['rt'] if p.get('rt') is not None else '')}
+            'replay': '/SleeperLiveRumbles/rumbles.html?wp=%d.%s.%s%s' % (p['week'], p.get('aid'), p.get('bid'), '&t=%d' % p['rt'] if p.get('rt') is not None else ''),
+            '_ck': '%s.%s.%s' % (p['week'], p.get('aid'), p.get('bid')), **({'star': chart_for(p)[1]} if chart_for(p)[1] else {})}
 
 
 # ---------------------------------------------------------------- podcast transcript -> "From the pod" quote
@@ -367,6 +377,7 @@ def build(week, src, asof):
     picks = offense[:3] + defense[:1]
     if cands:
         segs.append({'type': 'clips', 'dur': 12, 'want': 4 if defense else min(4, len(offense)), 'defWant': 1 if defense else 0, 'label': 'play of the week',
+                     'charts': {'%s.%s.%s' % (p['week'], p.get('aid'), p.get('bid')): chart_for(p)[0] for p in cands if chart_for(p)[0]},
                      'cands': [dict(play_segment(p, 'top', ''), **({'def': True} if is_def(p) else {})) for p in cands]})
     turning = None
     if wild and wild['flips'] >= 2:
@@ -374,6 +385,7 @@ def build(week, src, asof):
         if pool:
             turning = pool[0]
             segs.append({'type': 'clips', 'dur': 12, 'want': 1, 'turn': True, 'label': 'Turning point', 'why': '%s vs %s \u00b7 %d lead changes' % (wild['w'], wild['l'], wild['flips']),
+                         'charts': {'%s.%s.%s' % (p['week'], p.get('aid'), p.get('bid')): chart_for(p)[0] for p in pool[:4] if chart_for(p)[0]},
                          'cands': [play_segment(p, 'turn', 'Turning point') for p in pool[:4]]})
 
     # ---- the game of the week: the closest real game, or the one that traded the lead most, with the plays that decided it as its box score
@@ -475,8 +487,7 @@ def build(week, src, asof):
     life = []
     try:
         LM = [('rumble_rank', 'Rumbles', lambda r: '{:,} Rumbles'.format(int(r['rumbles']))), ('h2h_w_rank', 'H2H wins', lambda r: '%d wins' % r['w']),
-              ('pf_rank', 'Points for', lambda r: '{:,.1f} pts'.format(r['pf'])), ('field_rank', 'Vs. field record', lambda r: '%d\u2013%d' % (r['fw'], r['fl'])),
-              ('field_pct_rank', 'Vs. field %', lambda r: '%.1f%%' % (r['field_pct'] * 100))]
+              ('pf_rank', 'Points for', lambda r: '{:,.1f} pts'.format(r['pf'])), ('field_pct_rank', 'Vs. field win %', lambda r: '%.1f%% (%d\u2013%d)' % (r['field_pct'] * 100, r['fw'], r['fl']))]
         allrows = bf.source(src, 'sleepersheet', 'data/standings.json')['all_time']['rows']
         for r in allrows:
             if r['name'] not in set(names.values()):
@@ -490,8 +501,6 @@ def build(week, src, asof):
                 nb = [o for o in allrows if o.get(k) == r[k] + (1 if dl > 0 else -1)]
                 mv.append({'m': r['name'], 'metric': lab, 'rank': r[k], 'delta': dl, 'val': fmtv(r),
                            **({'vs': {'m': nb[0]['name'], 'val': fmtv(nb[0]), 'passed': dl > 0}} if nb else {})})
-            if len(mv) > 1 and mv[-1]['metric'] == 'Vs. field %' and mv[-2]['delta'] == mv[-1]['delta']:
-                mv.pop()   # the same move twice (record and percentage)
             life += mv
         life.sort(key=lambda x: (x['metric'] != 'Rumbles', -abs(x['delta']), x['rank']))
     except Exception as e:
@@ -503,18 +512,17 @@ def build(week, src, asof):
     st = standings_move(hist, week)
     moved = sum(1 for r in st if r['rank'] != r['prev'])
     big = max((abs(r['prev'] - r['rank']) for r in st), default=0)
-    segs.append({'type': 'standings', 'dur': 12 if moved >= 4 or big >= 2 else 9, 'title': 'Standings after week %d' % week, 'rows': st})
 
     # ---- the playoff race (data/race.json, read out of Rumble Central by tools/build_race.py)
     race = load('data/race.json')
     if race and race.get('teams') and race.get('season') == season and race.get('played') >= week:
         ts_ = sorted(race['teams'], key=lambda t: t['rank'])
         P = race['spots']
-        shown = ts_[:P + 3]
+        shown = ts_
         bub = sorted(sorted([t for t in ts_ if 0.05 < t['make'] < 0.95], key=lambda t: abs(t['make'] - .5))[:3], key=lambda t: -t['make'])
         hd = ('On the bubble: ' + ', '.join('%s %d%%' % (t['m'], round(t['make'] * 100)) for t in bub)) if bub else ''
-        segs.append({'type': 'race', 'dur': 12, 'title': 'Playoff race', 'head': hd, 'spots': P, 'byes': race['byes'], 'weeksLeft': race['weeksLeft'],
-                     'teams': [{'m': t['m'], 'rank': t['rank'], 'make': t['make'], 'bye': t.get('bye'), 'x': t['x'], 'z': t['z'], 'top': t['top'], 'dead': t['dead']} for t in shown]})
+        segs.append({'type': 'race', 'dur': 12, 'title': 'Playoff hunt', 'head': hd, 'spots': P, 'byes': race['byes'], 'weeksLeft': race['weeksLeft'],
+                     'teams': [{'m': t['m'], 'rank': t['rank'], 'R': t.get('R'), 'make': t['make'], 'bye': t.get('bye'), 'x': t['x'], 'z': t['z'], 'top': t['top'], 'dead': t['dead']} for t in shown]})
 
     # ---- clinching scenarios for this week (Rumble Central's cards, read into data/race.json): who can lock it up and what has to happen
     if race and race.get('teams') and race.get('season') == season and race.get('played') >= week:
@@ -601,8 +609,8 @@ def build(week, src, asof):
             rd.append({'k': 'Game', 't': sg['head']})
         elif sg['type'] == 'records' and sg.get('head'):
             rd.append({'k': 'Record', 't': '%s \u2014 %s' % (sg['items'][0]['name'], sg['items'][0]['new'])})
-        elif sg['type'] == 'standings' and sg.get('head'):
-            rd.append({'k': 'Table', 't': sg['head']})
+        elif sg['type'] == 'race' and sg.get('head'):
+            rd.append({'k': 'Race', 't': sg['head']})
         elif sg['type'] == 'shotguns':
             rd.append({'k': 'Shotgun', 't': ', '.join(x['m'] for x in sg['items'])})
     segs[0]['rundown'] = rd[:4]
@@ -614,7 +622,7 @@ def build(week, src, asof):
         if t == 'finals': return 3 + 0.8 * len(sg['games'])
         if t == 'series': return 5 + 0.5 * len(sg['last'])
         if t == 'trades': return 4 + 1.6 * len(sg['rows'])
-        if t == 'race': return 4 + 0.8 * len(sg['teams'])
+        if t == 'race': return 4 + 0.7 * len(sg['teams'])
         if t == 'pod': return 6 + (len(sg.get('quote') or '') / 16.0)
         if t == 'slack': return 3 + 2 * len(sg['items']) + (3 + len((sg.get('comment') or {}).get('text', '')) / 22.0 if sg.get('comment') else 0)
         if t == 'shotguns': return 4 + 2 * len(sg['items'])
