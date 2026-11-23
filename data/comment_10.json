@@ -1,18 +1,14 @@
 {
  "n": 3,
  "people": 3,
- "channel": "league-suggestions",
- "who": "Alex",
- "text": "Mentioned this on the pod, but we should drop back to one IR slot to free up more waiver wire activity",
+ "channel": "podcast",
+ "who": "Haan",
+ "text": "Think this is the moment @Jake was referring to",
  "reactions": [
   {
-   "name": "+1",
-   "count": 2
-  },
-  {
-   "name": "book",
-   "count": 1
+   "name": "fire",
+   "count": 3
   }
  ],
- "link": "https://dtf-club.slack.com/archives/CCG47441Z/p1794581451169139"
+ "link": "https://dtf-club.slack.com/archives/CCFGS58UQ/p1794516594008579"
 }

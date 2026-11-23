@@ -2330,25 +2330,21 @@
   },
   {
    "type": "slack",
-   "dur": 17,
+   "dur": 14,
    "title": "League chat",
    "comment": {
     "n": 3,
     "people": 3,
-    "channel": "league-suggestions",
-    "who": "Alex",
-    "text": "Mentioned this on the pod, but we should drop back to one IR slot to free up more waiver wire activity",
+    "channel": "podcast",
+    "who": "Haan",
+    "text": "Think this is the moment @Jake was referring to",
     "reactions": [
      {
-      "name": "+1",
-      "count": 2
-     },
-     {
-      "name": "book",
-      "count": 1
+      "name": "fire",
+      "count": 3
      }
     ],
-    "link": "https://dtf-club.slack.com/archives/CCG47441Z/p1794581451169139"
+    "link": "https://dtf-club.slack.com/archives/CCFGS58UQ/p1794516594008579"
    },
    "items": [
     {
@@ -2466,7 +2462,8 @@
    "type": "race",
    "dur": 12,
    "title": "Playoff hunt",
-   "head": "On the bubble: Haan 68%, Kaitlyn 47%, Ankit 31%",
+   "head": "",
+   "bubble": "On the bubble: Haan 68%, Kaitlyn 47%, Ankit 31%",
    "spots": 6,
    "byes": 2,
    "weeksLeft": 4,
@@ -2608,8 +2605,8 @@
   },
   {
    "type": "clinch",
-   "dur": 7,
-   "title": "Clinch watch",
+   "dur": 10,
+   "title": "Clinch & elimination",
    "weeksLeft": 4,
    "items": [
     {
@@ -2633,8 +2630,28 @@
       }
      ],
      "make": 1
+    },
+    {
+     "m": "Aidan",
+     "kind": "elim",
+     "own": null,
+     "need": 10,
+     "must": 1,
+     "help": [
+      {
+       "n": "Jake",
+       "th": 5
+      },
+      {
+       "n": "Haan",
+       "th": 9
+      }
+     ],
+     "make": 0
     }
    ],
+   "noElim": false,
+   "noClinch": false,
    "id": 10
   },
   {
@@ -2667,5 +2684,5 @@
  ],
  "slack": "*Week 10 recap* — 157 seconds, tap to watch (clips play right in the page): https://namkurd.github.io/recap/?week=10\n• Play of the week: D. Samuel 70 yd TD run (Haan vs Aidan · Wk 10 · +13.0 pts)\n• Closest game: Stephanie over Joe by 8.9\n• New record: Most Trades (Career) — 33 trades (Joe)\n• Lifetime: Ankit up 1 spot in all-time Rumbles rank (now #5)\n• Biggest mover: Stephanie up to #3",
  "link": "https://namkurd.github.io/recap/?week=10",
- "generatedAt": "2026-11-23T21:00:28Z"
+ "generatedAt": "2026-11-23T21:22:50Z"
 }
