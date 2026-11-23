@@ -208,44 +208,77 @@ def series_card(series, a, b):
 
 
 # ---------------------------------------------------------------- trades: how they are panning out (lineup PAR) against what the chat thought
-def trade_report(src, season, week):
-    """This season's trades from the Trade Network: lineup gain in points above replacement (lga for the first manager, lgb for the second) and the
-    chat's lean (the Trade Network's sentiment notes: how each commenter rated each side). Returns None when there is nothing to say."""
+def trade_report(src, season, week, asof):
+    """An update on this season's trades that are more than a week old, from the Trade Network: lineup gain in points above replacement (lga for the
+    first manager, lgb for the second) and the chat's lean (its sentiment notes: how each commenter rated each side). Each trade's gap is also
+    compared with last week's (data/trade_pnl.json keeps one snapshot per recap week). Returns None when there is nothing to say."""
     import statistics
     d = bf.source(src, 'SleeperTradeNodes', 'data.json')
     try:
         sent = bf.source(src, 'SleeperTradeNodes', 'sentiment.json')
     except Exception:
         sent = {}
-    ts = [t for t in d['trades'] if t['s'] == season]
-    if not ts:
-        return None
+    cutoff = dt.datetime.combine(asof, dt.time(23, 59, 59), tzinfo=dt.timezone.utc).timestamp() * 1000 - 7 * 864e5
+    ts = [t for t in d['trades'] if t['s'] == season and (t.get('ts') or 0) <= cutoff]   # done more than a week ago
     rows, tot = [], {}
     for t in sorted(ts, key=lambda t: t['w']):
+        if t.get('lga') is None or t.get('lgb') is None or (t.get('lgw') or 0) < 1:
+            continue
         notes = [n for n in (sent.get(t['id']) or {}).get('notes', []) if n.get('a') is not None and n.get('b') is not None and not n.get('inv')]
         lean = (statistics.mean(n['a'] for n in notes) - statistics.mean(n['b'] for n in notes)) if notes else None   # > 0: the chat favoured A
-        par = t.get('lgNet') if t.get('lga') is not None and t.get('lgb') is not None and (t.get('lgw') or 0) >= 2 else None   # > 0: A gained more
-        if par is not None:
-            for m, v in ((t['a'], t['lga']), (t['b'], t['lgb'])):
-                tot[m] = tot.get(m, 0) + v
-        rows.append({'a': t['a'], 'b': t['b'], 'w': t['w'], 'tv': t.get('tv'), 'lga': t.get('lga'), 'lgb': t.get('lgb'), 'par': par, 'lean': None if lean is None else round(lean, 2)})
-
-    def verdict(r):
-        if r['par'] is None or abs(r['par']) < 5 or r['lean'] is None or abs(r['lean']) < 0.2:
-            return None
-        return 'right' if (r['par'] > 0) == (r['lean'] > 0) else 'wrong'
+        par = t['lgNet']                                                                                             # > 0: A's lineup gained more
+        for m, v in ((t['a'], t['lga']), (t['b'], t['lgb'])):
+            tot[m] = tot.get(m, 0) + v
+        r = {'id': t['id'], 'a': t['a'], 'b': t['b'], 'w': t['w'], 'weeks': t.get('lgw'), 'lga': t['lga'], 'lgb': t['lgb'], 'par': par, 'lean': None if lean is None else round(lean, 2)}
+        r['parw'] = None if abs(par) < 5 else (t['a'] if par > 0 else t['b'])
+        r['chatw'] = None if lean is None or abs(lean) < 0.2 else (t['a'] if lean > 0 else t['b'])
+        r['verdict'] = None if not (r['parw'] and r['chatw']) else 'right' if r['parw'] == r['chatw'] else 'wrong'
+        rows.append(r)
+    if not rows:
+        return None
+    # last week's gap for each trade, then this week's is saved for next time
+    path = os.path.join(HUB, 'data', 'trade_pnl.json')
+    snap = load('data/trade_pnl.json', {}) or {}
+    snap.setdefault('weeks', {})
+    prev = {}
+    for wk in sorted((int(k) for k in snap['weeks'] if int(k) < week)):
+        prev = snap['weeks'][str(wk)]
     for r in rows:
-        r['verdict'] = verdict(r)
-        r['parw'] = None if r['par'] is None or abs(r['par']) < 5 else (r['a'] if r['par'] > 0 else r['b'])
-        r['chatw'] = None if r['lean'] is None or abs(r['lean']) < 0.2 else (r['a'] if r['lean'] > 0 else r['b'])
+        if r['id'] in prev:
+            r['moved'] = round(r['par'] - prev[r['id']], 1)   # > 0: A's side gained on B since last week
+    snap['weeks'][str(week)] = {r['id']: r['par'] for r in rows}
+    with open(path, 'w', encoding='utf-8') as f:
+        json.dump(snap, f, separators=(',', ':'))
     clear = [r for r in rows if r['verdict']]
     right = sum(1 for r in clear if r['verdict'] == 'right')
-    shown = sorted([r for r in rows if r['verdict'] or (r['w'] == week and r['chatw'])], key=lambda r: (r['w'] != week, -abs(r['par'] or 0)))[:4]
+    shown = sorted([r for r in rows if r['parw']], key=lambda r: -abs(r['par']))[:5]
     if not shown:
         return None
     lead = sorted(tot.items(), key=lambda kv: -kv[1])
-    return {'rows': shown, 'clear': len(clear), 'right': right, 'n': len(ts),
+    return {'rows': [{k: v for k, v in r.items() if k != 'id'} for r in shown], 'clear': len(clear), 'right': right, 'n': len(rows),
             'best': [{'m': m, 'v': round(v, 1)} for m, v in lead[:2] if v > 0], 'worst': [{'m': m, 'v': round(v, 1)} for m, v in lead[::-1][:1] if v < 0]}
+
+
+# ---------------------------------------------------------------- the comment of the week (most reactions), frozen once chosen
+def comment_of_week(week, asof):
+    path = os.path.join(HUB, 'data', 'comment_%d.json' % week)
+    c = load('data/comment_%d.json' % week)
+    if c:
+        return c
+    token = os.environ.get('SLACK_BOT_TOKEN')
+    if not token:
+        return None
+    try:
+        import build_slack, recap_slack
+        import time as _t
+        c = recap_slack.best_comment(build_slack.Slack(token), _t.time() - 7 * 86400)
+    except Exception as e:
+        print('comment of the week: %s' % e, file=sys.stderr)
+        return None
+    if c:
+        with open(path, 'w', encoding='utf-8') as f:
+            json.dump(c, f, ensure_ascii=False, indent=1)
+    return c
 
 
 def build(week, src, asof):
@@ -335,11 +368,13 @@ def build(week, src, asof):
     if games:
         segs.append({'type': 'finals', 'dur': 8, 'title': 'Around the league', 'games': [{'w': g['w'], 'l': g['l'], 'ws': g['ws'], 'ls': g['ls'], 'sr': g.get('sr')} for g in sorted(games, key=lambda g: -g['it'])]})
 
-    # ---- trades: lineup PAR so far against what the chat thought at the time
+    # ---- trades: how the ones made more than a week ago are panning out (lineup PAR) against what the chat thought at the time
     try:
-        tr = trade_report(src, int(season), week)
+        tr = trade_report(src, int(season), week, asof)
         if tr:
-            hd = ('The chat called %d of %d clear trades right' % (tr['right'], tr['clear'])) if tr['clear'] else ''
+            top = tr['rows'][0]
+            ahead, behind = (top['a'], top['b']) if top['par'] > 0 else (top['b'], top['a'])
+            hd = '%s is %d PAR ahead in the %s trade' % (ahead, round(abs(top['par'])), behind)
             segs.append({'type': 'trades', 'dur': 11, 'title': 'Trade report', 'head': hd, **tr})
     except Exception as e:
         print('trades: %s' % e, file=sys.stderr)
@@ -351,20 +386,18 @@ def build(week, src, asof):
         if pod.get('videoId') and posted and abs((asof - dt.date.fromisoformat(posted)).days) <= 10:
             pc = pod_card(pod, set(names.values()), picks + ([turning] if turning else []), asof,
                           transcript=None if not os.environ.get('RECAP_TRANSCRIPT') else json.load(open(os.environ['RECAP_TRANSCRIPT'])))
-            seg = {'type': 'pod', 'dur': 9 if pc else 6, 'title': 'The podcast', 'ep': pod.get('episode'), 'name': pod.get('name'), 'channel': pod.get('channel'),
-                   'vid': pod['videoId'], 'url': pod.get('url')}
-            if pc:
-                seg.update({'quote': pc['quote'], 'at': pc['at'], 'url': pc['url'], 'hits': pc['hits']})
-            segs.append(seg)
+            if pc:   # no captions, no card: the picture alone says nothing
+                segs.append({'type': 'pod', 'dur': 9, 'title': 'The podcast', 'ep': pod.get('episode'), 'name': pod.get('name'), 'quote': pc['quote'], 'at': pc['at'], 'url': pc['url'], 'hits': pc['hits']})
     except Exception as e:
         print('pod: %s' % e, file=sys.stderr)
 
-    # ---- the league chat: the busiest conversations of the week (slack.json: neutral titles, channel and counts only, as the Hub's Slack tab shows)
+    # ---- the league chat: the comment of the week (most reactions) and the busiest conversations (slack.json titles, channel and counts)
     try:
         sl = load('slack.json') or {}
         rows = [t for t in sl.get('topics', []) if not (t.get('title') or '').startswith('*CONTENT BOYS')][:3]
-        if rows:
-            segs.append({'type': 'slack', 'dur': 8, 'title': 'League chat', 'items': [{'t': t['title'], 'ch': t['channel'], 'n': t['messages'], 'p': t['people'], 'href': t.get('href')} for t in rows]})
+        cm = comment_of_week(week, asof)
+        if rows or cm:
+            segs.append({'type': 'slack', 'dur': 9, 'title': 'League chat', 'comment': cm, 'items': [{'t': t['title'], 'ch': t['channel'], 'n': t['messages'], 'p': t['people'], 'href': t.get('href')} for t in rows]})
     except Exception as e:
         print('slack: %s' % e, file=sys.stderr)
 
@@ -507,10 +540,10 @@ def build(week, src, asof):
         if t == 'game': return 6 + 0.5 * sum(len(x['lines']) for x in sg['sides']) + (2 if sg.get('head') else 0)
         if t == 'finals': return 3 + 0.8 * len(sg['games'])
         if t == 'series': return 5 + 0.5 * len(sg['last'])
-        if t == 'trades': return 4 + 1.8 * len(sg['rows'])
+        if t == 'trades': return 4 + 1.6 * len(sg['rows'])
         if t == 'race': return 4 + 0.8 * len(sg['teams'])
         if t == 'pod': return 6 + (len(sg.get('quote') or '') / 16.0)
-        if t == 'slack': return 3 + 2 * len(sg['items'])
+        if t == 'slack': return 3 + 2 * len(sg['items']) + (3 + len((sg.get('comment') or {}).get('text', '')) / 22.0 if sg.get('comment') else 0)
         if t == 'shotguns': return 4 + 2 * len(sg['items'])
         if t == 'records': return 3 + 2 * len(sg['items'])
         if t == 'lifetime': return 3 + 1.3 * len(sg['items'])

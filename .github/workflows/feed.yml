@@ -66,10 +66,12 @@ jobs:
         continue-on-error: true
       - name: "Weekly recap (top plays, game of the week, records, standings)"
         continue-on-error: true
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}   # the comment of the week (most reactions), chosen once and kept in data/comment_<week>.json
         run: python3 tools/build_recap.py
       - name: Commit if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add feed.json league.json managers.json data/matchups.json data/topplays*.json shotguns.json shotguns_all.json data/recap*.json data/race.json
+          git add feed.json league.json managers.json data/matchups.json data/topplays*.json shotguns.json shotguns_all.json data/recap*.json data/race.json data/comment_*.json data/trade_pnl.json
           if git diff --cached --quiet; then echo "no change"; else git commit -m "Update Home feed" && git pull --rebase origin main && git push; fi
