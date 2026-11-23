@@ -487,7 +487,7 @@ def build(week, src, asof):
     life = []
     try:
         LM = [('rumble_rank', 'Rumbles', lambda r: '{:,} Rumbles'.format(int(r['rumbles']))), ('h2h_w_rank', 'H2H wins', lambda r: '%d wins' % r['w']),
-              ('pf_rank', 'Points for', lambda r: '{:,.1f} pts'.format(r['pf'])), ('field_pct_rank', 'Vs. field win %', lambda r: '%.1f%% (%d\u2013%d)' % (r['field_pct'] * 100, r['fw'], r['fl']))]
+              ('pf_rank', 'Points for', lambda r: '{:,.1f} pts'.format(r['pf'])), ('field_pct_rank', 'Field win %', lambda r: '%.1f%%' % (r['field_pct'] * 100))]
         allrows = bf.source(src, 'sleepersheet', 'data/standings.json')['all_time']['rows']
         for r in allrows:
             if r['name'] not in set(names.values()):
