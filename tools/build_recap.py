@@ -312,14 +312,15 @@ def mr_vote(asof):
         try:
             import build_slack, time as _t
             sl = build_slack.Slack(token)
-            for m in sl.pages('conversations.history', 'messages', channel=MR_CHANNEL, oldest='%.6f' % (_t.time() - 12 * 86400), limit=200):   # newest first
-                mt = re.match(r'^\s*Episode (\d+) Mount Rushmore: (.+?)\s*(?:\n|$)', m.get('text') or '')
-                if mt and not m.get('thread_ts') or (mt and m.get('thread_ts') == m.get('ts')):
-                    posted = dt.datetime.fromtimestamp(float(m['ts']), dt.timezone.utc)
-                    cur = {'episode': int(mt.group(1)), 'topic': mt.group(2), 'postedAt': posted.strftime('%Y-%m-%dT%H:%M:%SZ'),
-                           'closesAt': (posted + dt.timedelta(days=5)).strftime('%Y-%m-%dT%H:%M:%SZ')}
-                    json.dump(cur, open(path, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-                    break
+            best = None
+            for m in sl.pages('conversations.history', 'messages', channel=MR_CHANNEL, oldest='%.6f' % (_t.time() - 14 * 86400), limit=200):
+                mt = re.match(r'^\s*Episode (\d+) Mount Rushmore: (.+?)\s*(?:\n|\*Sent using\*|$)', m.get('text') or '')
+                if mt and (not m.get('thread_ts') or m.get('thread_ts') == m.get('ts')) and (best is None or int(mt.group(1)) > best[0]):   # the latest EPISODE, not the latest post (last week's can be re-posted after)
+                    best = (int(mt.group(1)), mt.group(2).strip(), float(m['ts']))
+            if best:
+                posted = dt.datetime.fromtimestamp(best[2], dt.timezone.utc)
+                cur = {'episode': best[0], 'topic': best[1], 'postedAt': posted.strftime('%Y-%m-%dT%H:%M:%SZ'), 'closesAt': (posted + dt.timedelta(days=5)).strftime('%Y-%m-%dT%H:%M:%SZ')}
+                json.dump(cur, open(path, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
         except Exception as e:
             print('mount rushmore: %s' % e, file=sys.stderr)
     if not cur.get('closesAt'):
