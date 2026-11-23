@@ -521,7 +521,7 @@ def build(week, src, asof):
         shown = ts_
         bub = sorted(sorted([t for t in ts_ if 0.05 < t['make'] < 0.95], key=lambda t: abs(t['make'] - .5))[:3], key=lambda t: -t['make'])
         hd = ('On the bubble: ' + ', '.join('%s %d%%' % (t['m'], round(t['make'] * 100)) for t in bub)) if bub else ''
-        segs.append({'type': 'race', 'dur': 12, 'title': 'Playoff hunt', 'head': hd, 'spots': P, 'byes': race['byes'], 'weeksLeft': race['weeksLeft'],
+        segs.append({'type': 'race', 'dur': 12, 'title': 'Playoff hunt', 'head': '', 'bubble': hd, 'spots': P, 'byes': race['byes'], 'weeksLeft': race['weeksLeft'],
                      'teams': [{'m': t['m'], 'rank': t['rank'], 'R': t.get('R'), 'make': t['make'], 'bye': t.get('bye'), 'x': t['x'], 'z': t['z'], 'top': t['top'], 'dead': t['dead']} for t in shown]})
 
     # ---- clinching scenarios for this week (Rumble Central's cards, read into data/race.json): who can lock it up and what has to happen
@@ -535,8 +535,8 @@ def build(week, src, asof):
             if p_ and t['make'] >= 0.5 and (p_.get('own') is not None or p_.get('real') is not None):
                 items.append({'m': t['m'], 'kind': 'clinch', 'own': p_.get('own'), 'need': p_.get('real') if p_.get('real') is not None else p_.get('long'), 'allow': p_['help']['allow'],
                               'help': [{'n': h['n'], 'th': h['th']} for h in p_['help']['list'][:5]], 'make': t['make']})
-            elif o_ and 0.02 < t['make'] < 0.5 and (o_.get('own') is not None or o_.get('real') is not None):
-                items.append({'m': t['m'], 'kind': 'alive', 'own': o_.get('own'), 'need': o_.get('real') if o_.get('real') is not None else o_.get('long'), 'must': max(0, len(o_['help']['list']) - o_['help']['allow']),
+            elif o_ and (o_.get('own') is not None or o_.get('real') is not None):
+                items.append({'m': t['m'], 'kind': 'elim', 'own': o_.get('own'), 'need': o_.get('real') if o_.get('real') is not None else o_.get('long'), 'must': max(0, len(o_['help']['list']) - o_['help']['allow']),
                               'help': [{'n': h['n'], 'th': h['th']} for h in o_['help']['list'][:5]], 'make': t['make']})
         for t in sorted(race['teams'], key=lambda t: t['rank']):   # a first-round bye
             b_ = (t.get('scen') or {}).get('b')
@@ -544,9 +544,8 @@ def build(week, src, asof):
                 items.append({'m': t['m'], 'kind': 'bye', 'own': b_.get('own'), 'need': b_.get('real') if b_.get('real') is not None else b_.get('long'), 'allow': b_['help']['allow'],
                               'help': [{'n': h['n'], 'th': h['th']} for h in b_['help']['list'][:5]], 'make': t.get('bye')})
         cl = [i for i in items if i['kind'] == 'clinch'][:2] + sorted([i for i in items if i['kind'] == 'bye'], key=lambda i: -i['make'])[:2]
-        al = sorted([i for i in items if i['kind'] == 'alive'], key=lambda i: -i['make'])[:2]
-        if cl or al:
-            segs.append({'type': 'clinch', 'dur': 12, 'title': 'Clinch watch', 'weeksLeft': race['weeksLeft'], 'items': (cl + al)[:4]})
+        al = sorted([i for i in items if i['kind'] == 'elim'], key=lambda i: i['make'])[:3]   # the most endangered first
+        segs.append({'type': 'clinch', 'dur': 12, 'title': 'Clinch & elimination', 'weeksLeft': race['weeksLeft'], 'items': cl[:3] + al, 'noElim': not al, 'noClinch': not cl}) if (cl or al or race.get('scenWeek')) else None
 
     # ---- what is coming: the trade deadline, the Mount Rushmore vote closing, the start of the playoffs
     lg = load('league.json') or {}
@@ -609,8 +608,8 @@ def build(week, src, asof):
             rd.append({'k': 'Game', 't': sg['head']})
         elif sg['type'] == 'records' and sg.get('head'):
             rd.append({'k': 'Record', 't': '%s \u2014 %s' % (sg['items'][0]['name'], sg['items'][0]['new'])})
-        elif sg['type'] == 'race' and sg.get('head'):
-            rd.append({'k': 'Race', 't': sg['head']})
+        elif sg['type'] == 'race' and sg.get('bubble'):
+            rd.append({'k': 'Race', 't': sg['bubble']})
         elif sg['type'] == 'shotguns':
             rd.append({'k': 'Shotgun', 't': ', '.join(x['m'] for x in sg['items'])})
     segs[0]['rundown'] = rd[:4]
@@ -630,7 +629,7 @@ def build(week, src, asof):
         if t == 'lifetime': return 3 + 1.3 * len(sg['items'])
         if t == 'standings': return 4 + 0.6 * len(sg['rows']) + (2 if sg.get('head') else 0)
         if t == 'coming': return 3 + 1.8 * len(sg['items'])
-        if t == 'clinch': return 4 + 3 * len(sg['items'])
+        if t == 'clinch': return 4 + 3 * len(sg['items']) + (2 if sg.get('noElim') else 0)
         return sg['dur']
     for sg in segs:
         if sg['type'] != 'clips':
