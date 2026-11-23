@@ -68,6 +68,90 @@ def play_segment(p, kind, label):
             'replay': '/SleeperLiveRumbles/rumbles.html?wp=%d.%s.%s%s' % (p['week'], p.get('aid'), p.get('bid'), '&t=%d' % p['rt'] if p.get('rt') is not None else '')}
 
 
+# ---------------------------------------------------------------- podcast transcript -> "From the pod" quote
+def fetch_transcript(video_id):
+    """[{text, start}] from the video's captions, or None. youtube-transcript-api (pip install youtube-transcript-api); YouTube sometimes refuses
+    data-center addresses, in which case this returns None and the recap simply has no pod card (it is retried on a later run)."""
+    try:
+        from youtube_transcript_api import YouTubeTranscriptApi
+        api = YouTubeTranscriptApi()
+        if hasattr(api, 'fetch'):
+            return [{'text': x.text, 'start': x.start} for x in api.fetch(video_id, languages=['en'])]
+        return [{'text': x['text'], 'start': x['start']} for x in YouTubeTranscriptApi.get_transcript(video_id, languages=['en'])]
+    except Exception as e:
+        print('transcript: %s: %s' % (type(e).__name__, str(e)[:160]), file=sys.stderr)
+        return None
+
+
+def pod_quote(cues, keywords, window=28, width=230):
+    """The stretch of the episode that talks most about this week: keywords = {word: weight}. Cues are cut into `window`-second spans, each scored by
+    the weight of the distinct keywords it names; returns {at, quote, hits} for the best span (at least two distinct keywords), or None."""
+    import re
+    spans, cur = [], []
+    for c in cues:
+        if cur and c['start'] - cur[0]['start'] > window:
+            spans.append(cur); cur = []
+        cur.append(c)
+    if cur:
+        spans.append(cur)
+    best = None
+    for sp in spans:
+        text = re.sub(r'\s+', ' ', ' '.join(c['text'] for c in sp).replace('\n', ' ')).strip()
+        hits = {}
+        for w, wt in keywords.items():
+            m = re.search(r'\b%s\b' % re.escape(w), text, re.I)
+            if m:
+                hits[w] = (wt, m.start())
+        if len(hits) < 2:
+            continue
+        score = sum(wt for wt, _ in hits.values())
+        if best is None or score > best[0]:
+            best = (score, sp, text, hits)
+    if not best:
+        return None
+    _, sp, text, hits = best
+    first = min(pos for _, pos in hits.values())
+    lo = max(0, first - 70)
+    if lo:
+        lo = text.rfind(' ', 0, lo) + 1 if text.rfind(' ', 0, lo) >= 0 else 0
+    q = text[lo:lo + width]
+    if lo + width < len(text):
+        q = q[:q.rfind(' ')] if ' ' in q else q
+        q += '\u2026'
+    return {'at': int(sp[0]['start']), 'quote': (('\u2026' if lo else '') + q).strip(), 'hits': sorted(hits)}
+
+
+def pod_card(pod, names, picks, asof, transcript=None):
+    """The "From the pod" segment for the latest episode, or None. Retries a failed transcript fetch at most every 6 hours (data/recap_pod.json)."""
+    vid = (pod or {}).get('videoId')
+    if not vid:
+        return None
+    path = os.path.join(HUB, 'data', 'recap_pod.json')
+    prev = load('data/recap_pod.json', {}) or {}
+    now = dt.datetime.now(dt.timezone.utc)
+    kw = {}
+    for n in names:
+        kw[n] = 1
+    for p in picks:
+        for who in (p.get('stk') or [p['who']]):
+            last = (who or '').split()[-1].strip('.')
+            if len(last) >= 4:
+                kw[last] = 2
+    if transcript is None:
+        if prev.get('videoId') == vid and (prev.get('card') or (prev.get('tried') and now - dt.datetime.fromisoformat(prev['tried']) < dt.timedelta(hours=6))):
+            return prev.get('card')
+        transcript = fetch_transcript(vid)
+    card = None
+    if transcript:
+        q = pod_quote(transcript, kw)
+        if q:
+            card = {'type': 'pod', 'dur': 9, 'title': 'From the pod', 'ep': pod.get('episode'), 'name': pod.get('name'), 'quote': q['quote'], 'at': q['at'],
+                    'url': 'https://www.youtube.com/watch?v=%s&t=%ds' % (vid, q['at']), 'hits': q['hits']}
+    with open(path, 'w', encoding='utf-8') as f:
+        json.dump({'videoId': vid, 'tried': now.isoformat(), 'card': card}, f, ensure_ascii=False, indent=1)
+    return card
+
+
 def build(week, src, asof):
     season = (load('league.json') or {}).get('season') or asof.year
     hist = bf.source(src, 'SleeperLiveRumbles', 'rumbles_history.json')
@@ -150,6 +234,14 @@ def build(week, src, asof):
         s['why'] = '%s vs %s · %d lead changes' % (wild['w'], wild['l'], wild['flips'])
         segs.append(s)
 
+    # ---- the podcast, when the hosts talked about this week's plays and managers
+    try:
+        pc = pod_card(load('podcast.json'), set(names.values()), picks + ([turning] if turning else []), asof, transcript=None if not os.environ.get('RECAP_TRANSCRIPT') else json.load(open(os.environ['RECAP_TRANSCRIPT'])))
+        if pc:
+            segs.append(pc)
+    except Exception as e:
+        print('pod: %s' % e, file=sys.stderr)
+
     # ---- shotguns that week
     shots = []
     for m in (load('shotguns.json') or {}).get('managers', []):
@@ -222,7 +314,7 @@ def build(week, src, asof):
     # ---- trim to the budget: drop the least important extras first
     def total():
         return sum(s['dur'] for s in segs)
-    for drop in ('shotguns', 'records', 'game'):
+    for drop in ('pod', 'shotguns', 'records', 'game'):
         if total() <= BUDGET:
             break
         segs[:] = [s for s in segs if s['type'] != drop]
