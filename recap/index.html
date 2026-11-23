@@ -2,6 +2,11 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Weekly Recap</title>
+<meta name="description" content="The week in the league: top plays that play right here, the game of the week, trades, the playoff hunt and what is coming up.">
+<meta name="theme-color" content="#2c1306">
+<meta property="og:title" content="Rumble Hub weekly recap">
+<meta property="og:description" content="Top plays, the game of the week, trades, the playoff hunt and what is coming up.">
+<meta property="og:type" content="website">
 <link rel="stylesheet" href="/shell/tokens.css">
 <link rel="preload" href="/recap/fonts/barlow-condensed-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
@@ -65,7 +70,7 @@
   .r.slim .t { font-size: 1.2rem; padding: 4px 10px; } .r.slim .c { font-size: 1.2rem; }
 
   /* bars (standings, playoff race): the length is the number */
-  .r.bar { grid-template-columns: minmax(104px, 36%) 1fr; }
+  .r.bar { grid-template-columns: minmax(104px, 36%) 1fr; grid-auto-columns: 74px; }
   .r.bar .trk { position: relative; margin: 6px 4px; background: #ffffff1c; min-width: 40px; }
   .r.bar .trk i, .hb i, .axis i { position: absolute; top: 0; bottom: 0; left: 0; width: 0; transition: width 1s cubic-bezier(.2,.8,.2,1) .3s; }
   .r.bar .trk i { background: linear-gradient(90deg, #e3cf93, #f6e7b9); } .r.bar .trk i.g { background: linear-gradient(90deg, #2f9a53, #7be08f); } .r.bar .trk i.rd { background: linear-gradient(90deg, #8f0f14, #ee5a5f); }
@@ -76,8 +81,8 @@
   /* around the league: scoreboard tiles */
   .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .tile { background: var(--ink); border-bottom: 3px solid var(--gold); }
-  .tile .tw, .tile .tl { display: flex; justify-content: space-between; align-items: center; gap: 6px; padding: 5px 9px; font-size: 1.2rem; font-weight: 800; text-transform: uppercase; }
-  .tile .tw { background: linear-gradient(90deg, transparent, #1f8a3c66); } .tile .tw b { color: #7be08f; font-size: 1.4rem; } .tile .tl { color: #cfc4a4; } .tile .tl b { font-size: 1.2rem; }
+  .tile .tw, .tile .tl { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 5px 10px; font-size: 1.2rem; font-weight: 800; text-transform: uppercase; }
+  .tile .tw { background: linear-gradient(90deg, transparent, #1f8a3c66); } .tile .tw b { color: #7be08f; font-size: 1.3rem; } .tile .tl { color: #cfc4a4; } .tile .tl b { font-size: 1.2rem; }
   .tile .ft { padding: 2px 9px 6px; font-size: .85rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); }
   /* career head to head: a tug of war and the last meetings */
   .tug { display: flex; gap: 3px; height: 66px; } .tug > div { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 0 12px; min-width: 0; font-weight: 900; text-transform: uppercase; }
@@ -117,8 +122,8 @@
 
   /* trade report: players and the chat's value on each side */
   .sd { margin-top: 4px; } .sn { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; } .sn b { font-size: 1.1rem; text-transform: uppercase; color: var(--gold); }
-  .sn .pl { font-size: .95rem; color: #fff; flex: 1; min-width: 0; } .sn .pl u { text-decoration: none; font-size: .7rem; color: var(--cream); background: #ffffff22; padding: 0 4px; }
-  .sn .sv { flex: none; margin-left: auto; font-size: .85rem; font-weight: 900; letter-spacing: .05em; padding: 0 6px; background: #5a4a30; color: #e8dcc0; } .sn .sv.pos { background: var(--win); color: #fff; } .sn .sv.neg { background: var(--red); color: #fff; }
+  .sn .pl { order: 3; flex: 0 0 100%; font-size: 1rem; color: #fff; min-width: 0; line-height: 1.15; } .sn .pl u { text-decoration: none; font-size: .7rem; color: var(--cream); background: #ffffff22; padding: 0 4px; }
+  .sn .sv { order: 2; flex: none; margin-left: auto; font-size: .85rem; font-weight: 900; letter-spacing: .05em; padding: 0 6px; background: #5a4a30; color: #e8dcc0; } .sn .sv.pos { background: var(--win); color: #fff; } .sn .sv.neg { background: var(--red); color: #fff; }
   .tr .axis { margin-top: 2px; }
   /* clinch watch */
   .sc { background: var(--ink); border-bottom: 3px solid var(--gold); padding: 6px 10px 8px; }
@@ -131,6 +136,7 @@
   .cd .hk { display: inline-block; background: var(--red); padding: 2px 12px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; font-size: .95rem; }
   .cd .cn { font-size: 3.4rem; font-weight: 900; line-height: 1; color: var(--gold); text-shadow: 0 3px 0 #0008; margin-top: 4px; } .cd.hot .cn { color: #ff8a8f; } .cd .cw { font-size: 1.2rem; font-weight: 700; text-transform: uppercase; color: #fff; } .cd .cw small { display: block; font-size: .85rem; color: var(--cream); letter-spacing: .04em; }
   /* all-time movers: the number behind the move */
+  .mvs > .mc, .tiles > .tile, .dots > .dot, .box > div { min-width: 0; }
   .mc em { display: block; font-style: normal; font-size: 1.25rem; font-weight: 800; color: #fff; margin-top: 2px; } .mc s { display: block; text-decoration: none; font-size: .85rem; color: var(--cream); }
   /* rundown on the opener */
   .rd { display: flex; flex-direction: column; gap: 8px; }
@@ -200,7 +206,7 @@
   .portal .eye { position: absolute; left: 50%; top: 42%; width: 120px; height: 120px; margin: -60px 0 0 -60px; border-radius: 50%; background: radial-gradient(circle, #000 35%, #000a 55%, transparent 72%); box-shadow: 0 0 60px 12px #d0202799; }
   .portal .pttl { position: absolute; left: 0; right: 0; top: 42%; transform: translateY(-50%); text-align: center; pointer-events: none; animation: ppunch .9s cubic-bezier(.2,1.3,.3,1) both; }
   .portal .pttl .k { display: inline-block; background: var(--red); color: #fff; padding: 2px 12px; font-weight: 900; letter-spacing: .22em; text-transform: uppercase; font-size: .85rem; transform: skew(-8deg); }
-  .portal .pttl b { display: block; font-size: 5.6rem; line-height: .9; font-weight: 900; text-transform: uppercase; font-style: italic; transform: skew(-8deg); background: linear-gradient(180deg, #fff, #f2c14e 70%, #c77a1a); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 4px 0 #000) drop-shadow(0 0 24px #f2c14e77); letter-spacing: -.01em; }
+  .portal .pttl b { display: block; white-space: nowrap; font-size: min(5.6rem, 21vw); line-height: .9; font-weight: 900; text-transform: uppercase; font-style: italic; transform: skew(-8deg); background: linear-gradient(180deg, #fff, #f2c14e 70%, #c77a1a); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 4px 0 #000) drop-shadow(0 0 24px #f2c14e77); letter-spacing: -.01em; }
   .portal .pttl .sub { display: block; font-size: 1.1rem; font-weight: 800; letter-spacing: .5em; text-transform: uppercase; color: #f6e7b9; margin-top: 4px; padding-left: .5em; }
   @keyframes ppunch { from { opacity: 0; transform: translateY(-50%) scale(2.4); filter: blur(14px); } to { opacity: 1; transform: translateY(-50%) scale(1); filter: none; } }
   .portal .ptz { position: absolute; left: 12px; right: 12px; bottom: 14px; display: flex; flex-direction: column; gap: 5px; }
@@ -212,7 +218,7 @@
   .seg.c1 .fa { display: none; } .seg.c3 .sit { display: none; } .seg.c4 .links { display: none; } .seg.c5 .hdr .hs { display: none; }
   .sgrp { font-size: .9rem; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); border-bottom: 2px solid var(--gold); padding: 0 2px 2px; margin-top: 2px; } .sgrp.red { color: #ff8a8f; border-color: var(--red); }
   .sc.none { font-size: 1.1rem; font-weight: 700; color: var(--cream); text-transform: uppercase; letter-spacing: .04em; border-bottom-color: #ffffff33; }
-  .r.bar.cols { background: none; border: 0; } .r.bar.cols .lb { white-space: nowrap; font-size: .75rem; font-weight: 800; letter-spacing: .06em; color: var(--cream); display: flex; align-items: center; padding: 0 6px; } .r.bar.cols .c { background: none; font-size: .8rem; letter-spacing: .1em; color: var(--cream); }
+  .r.bar.cols { background: none; border: 0; } .r.bar.cols .lb { white-space: nowrap; font-size: .75rem; font-weight: 800; letter-spacing: .06em; color: var(--cream); display: flex; align-items: center; padding: 0 6px; } .r.bar.cols .c { background: none; font-size: .68rem; letter-spacing: .03em; white-space: nowrap; padding: 0 2px; color: var(--cream); }
   .topic .tm { margin-top: 2px; }
   /* chapter sheet, toast */
   .sheet { position: absolute; left: 10px; right: 10px; top: 64px; z-index: 8; background: var(--ink); border: 2px solid var(--gold); box-shadow: 0 20px 40px #000; max-height: 66%; overflow: auto; }
@@ -411,7 +417,8 @@
     })(performance.now());
   }
   // text stays on one line where it can: the font shrinks a little at a time until the line fits (down to 70%); a line that still doesn't fit wraps as before
-  var ONE = ['.r .t.w', '.r .t.col > span', '.r .t small', '.hdr .hs', '.topic b', '.sn .pl', '.sit', '.sc .sw', '.cd .cw small', '.mc s', '.mc small', '.mc em', '.tr small', '.dot small', '.rd p span', '.box p b', '.tile .tw span', '.tile .tl span', '.hdr b', '.notes p:not(.q):not(.meet)', '.tr .th b', '.sc .sh small', '.sc .sh b', '.r .t.sm', '.ptz span'];
+  var ONE = ['.r .t.w', '.r .t.col > span', '.r .t small', '.hdr .hs', '.sit', '.sc .sw', '.cd .cw small', '.mc em', '.tr small', '.rd p span', '.hdr b', '.notes p:not(.q):not(.meet)', '.tr .th b', '.sc .sh small', '.sc .sh b', '.ptz span'];
+  var GROUPS = ['.r .t.sm', '.box p b', '.mc s', '.mc small', '.topic b', '.tile .tw span', '.tile .tl span', '.dot small', '.sn .pl'];   // lines that sit side by side shrink together so they match
   function oneLine(el, min) {
     var cs = getComputedStyle(el); if (cs.display === 'inline') return;
     var base = parseFloat(cs.fontSize), k = 1;
@@ -428,9 +435,16 @@
       return false;
     });
   }
+  function oneGroup(els, min) {   // one font size for the whole group: the smallest any of them needs (down to `min`); a line that still doesn't fit then wraps
+    els = els.filter(function (el) { return getComputedStyle(el).display !== 'inline'; }); if (!els.length) return;
+    var kmin = 1, base = els.map(function (el) { return parseFloat(getComputedStyle(el).fontSize); });
+    els.forEach(function (el, i) { el.style.whiteSpace = 'nowrap'; var k = 1; while (el.scrollWidth > el.clientWidth + 1 && k > min) { k = Math.round((k - .04) * 100) / 100; el.style.fontSize = (base[i] * k) + 'px'; } kmin = Math.min(kmin, k); });
+    els.forEach(function (el, i) { el.style.fontSize = kmin < 1 ? (base[i] * kmin) + 'px' : ''; if (el.scrollWidth > el.clientWidth + 1) el.style.whiteSpace = ''; });
+  }
   function fit() {   // shrink a card a little at a time until it fits the screen and no name or title is cut off
     var seg = $('seg'); seg.style.zoom = '';
     [].forEach.call(seg.querySelectorAll(ONE.join(',')), function (el) { oneLine(el, .7); });
+    GROUPS.forEach(function (g) { oneGroup([].slice.call(seg.querySelectorAll(g)), .78); });
     if (seg.querySelector('.vid')) { fitPlay(seg); return; }   // never zoom a card with a video in it: the player keeps its own size and the clip comes out cut off
     var z = 1;
     function bad() {
@@ -439,6 +453,8 @@
       return false;
     }
     while (z > .6 && bad()) { z = Math.round((z - .04) * 100) / 100; seg.style.zoom = z; }
+    var trs = seg.querySelectorAll('.tr');   // a trade report that still doesn't fit shows fewer trades rather than tiny type
+    for (var q = trs.length - 1; q >= 2 && bad(); q--) { trs[q].remove(); z = 1; seg.style.zoom = ''; while (z > .72 && bad()) { z = Math.round((z - .04) * 100) / 100; seg.style.zoom = z; } }
   }
   window.addEventListener('resize', function () { if (started && !ended) fit(); });
   function applyPause() { try { if (yt && yt.pauseVideo) { paused() ? yt.pauseVideo() : yt.playVideo(); } } catch (e) { /* not ready */ } $('pp').innerHTML = userPaused ? ICON.play : ICON.pause; }
