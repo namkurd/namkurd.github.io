@@ -183,6 +183,23 @@ def build(week, src, asof):
     if rec:
         segs.append({'type': 'records', 'dur': 6 if len(rec) < 3 else 9, 'title': 'New records', 'items': rec[:5]})
 
+    # ---- lifetime standings: who moved in the Lifetime tool's all-time ranks since its last update (this season's managers only)
+    life = []
+    try:
+        LM = [('rumble_rank', 'Rumbles'), ('h2h_w_rank', 'H2H wins'), ('pf_rank', 'Points for'), ('field_rank', 'Vs. field record'), ('field_pct_rank', 'Vs. field %')]
+        for r in bf.source(src, 'sleepersheet', 'data/standings.json')['all_time']['rows']:
+            if r['name'] not in set(names.values()):
+                continue
+            mv = [{'m': r['name'], 'metric': lab, 'rank': r[k], 'delta': r[k + '_delta']} for k, lab in LM if r.get(k + '_delta')]
+            if len(mv) > 1 and mv[-1]['metric'] == 'Vs. field %' and mv[-2]['delta'] == mv[-1]['delta']:
+                mv.pop()   # the same move twice (record and percentage)
+            life += mv
+        life.sort(key=lambda x: (x['metric'] != 'Rumbles', -abs(x['delta']), x['rank']))
+    except Exception as e:
+        print('lifetime: %s' % e, file=sys.stderr)
+    if life:
+        segs.append({'type': 'lifetime', 'dur': 7 if len(life) < 4 else 9, 'title': 'Lifetime standings', 'items': life[:5]})
+
     # ---- standings, toward the end; longer when the table moved
     st = standings_move(hist, week)
     moved = sum(1 for r in st if r['rank'] != r['prev'])
@@ -225,6 +242,9 @@ def build(week, src, asof):
         lines.append('• Closest game: %s over %s by %.1f' % (close['w'], close['l'], close['margin']))
     if rec:
         lines.append('• New record: %s — %s (%s)' % (rec[0]['name'], rec[0]['new'], rec[0]['holder']))
+    if life:
+        x = life[0]
+        lines.append('\u2022 Lifetime: %s %s %d spot%s in all-time %s rank (now #%d)' % (x['m'], 'up' if x['delta'] > 0 else 'down', abs(x['delta']), '' if abs(x['delta']) == 1 else 's', x['metric'], x['rank']))
     movers = sorted([r for r in st if r['rank'] != r['prev']], key=lambda r: -abs(r['prev'] - r['rank']))
     if movers:
         r = movers[0]

@@ -2,7 +2,7 @@
  "schema": 1,
  "season": 2026,
  "week": 10,
- "seconds": 106,
+ "seconds": 115,
  "segments": [
   {
    "type": "intro",
@@ -314,6 +314,44 @@
    "id": 7
   },
   {
+   "type": "lifetime",
+   "dur": 9,
+   "title": "Lifetime standings",
+   "items": [
+    {
+     "m": "Ankit",
+     "metric": "Rumbles",
+     "rank": 5,
+     "delta": 1
+    },
+    {
+     "m": "Joe",
+     "metric": "Rumbles",
+     "rank": 6,
+     "delta": -1
+    },
+    {
+     "m": "Stephanie",
+     "metric": "Points for",
+     "rank": 13,
+     "delta": 3
+    },
+    {
+     "m": "Alex",
+     "metric": "Vs. field record",
+     "rank": 3,
+     "delta": -1
+    },
+    {
+     "m": "Stephanie",
+     "metric": "H2H wins",
+     "rank": 14,
+     "delta": 1
+    }
+   ],
+   "id": 8
+  },
+  {
    "type": "standings",
    "dur": 12,
    "title": "Standings after week 10",
@@ -415,7 +453,7 @@
      "pts": 168.91
     }
    ],
-   "id": 8
+   "id": 9
   },
   {
    "type": "outro",
@@ -431,10 +469,10 @@
     "title": "Episode 53 · The Bill Romanowski Episode",
     "url": "https://www.youtube.com/watch?v=YbkRrv3n1QQ"
    },
-   "id": 9
+   "id": 10
   }
  ],
- "slack": "*Week 10 recap* — 106 seconds, tap to watch (clips play right in the page): https://namkurd.github.io/recap/?week=10\n• Play of the week: D. Samuel 70 yd TD run (Haan vs Aidan · Wk 10 · +13.0 pts)\n• Closest game: Stephanie over Joe by 8.9\n• New record: Most Trades (Career) — 33 trades (Joe)\n• Biggest mover: Stephanie up to #3",
+ "slack": "*Week 10 recap* — 115 seconds, tap to watch (clips play right in the page): https://namkurd.github.io/recap/?week=10\n• Play of the week: D. Samuel 70 yd TD run (Haan vs Aidan · Wk 10 · +13.0 pts)\n• Closest game: Stephanie over Joe by 8.9\n• New record: Most Trades (Career) — 33 trades (Joe)\n• Lifetime: Ankit up 1 spot in all-time Rumbles rank (now #5)\n• Biggest mover: Stephanie up to #3",
  "link": "https://namkurd.github.io/recap/?week=10",
- "generatedAt": "2026-11-23T12:12:16Z"
+ "generatedAt": "2026-11-23T12:17:38Z"
 }
