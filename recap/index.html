@@ -70,7 +70,7 @@
   .r.slim .t { font-size: 1.2rem; padding: 4px 10px; } .r.slim .c { font-size: 1.2rem; }
 
   /* bars (standings, playoff race): the length is the number */
-  .r.bar { grid-template-columns: minmax(104px, 36%) 1fr; grid-auto-columns: 74px; }
+  .r.bar { grid-template-columns: minmax(104px, 36%) 1fr; grid-auto-columns: 86px; }
   .r.bar .trk { position: relative; margin: 6px 4px; background: #ffffff1c; min-width: 40px; }
   .r.bar .trk i, .hb i, .axis i { position: absolute; top: 0; bottom: 0; left: 0; width: 0; transition: width 1s cubic-bezier(.2,.8,.2,1) .3s; }
   .r.bar .trk i { background: linear-gradient(90deg, #e3cf93, #f6e7b9); } .r.bar .trk i.g { background: linear-gradient(90deg, #2f9a53, #7be08f); } .r.bar .trk i.rd { background: linear-gradient(90deg, #8f0f14, #ee5a5f); }
@@ -215,17 +215,19 @@
   @keyframes pfade { from { opacity: 0; transform: translateX(-18px); } to { opacity: 1; transform: none; } }
   @media (prefers-reduced-motion: reduce) { .portal .vtx, .portal .rg i, .portal .pt, .portal .pttl, .portal .ptz p { animation: none !important; } .portal .pt { opacity: .9; transform: rotate(var(--a)) translateX(var(--r)) rotate(calc(var(--a) * -1)) translateZ(-500px); } .portal .ptz p { opacity: 1; } }
 
+  .cd .hk { white-space: nowrap; } .cd .cn { white-space: nowrap; }
   .col { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
   .seg.c1 .fa { display: none; } .seg.c3 .sit { display: none; } .seg.c4 .links { display: none; } .seg.c5 .hdr .hs { display: none; }
   .sgrp { font-size: .9rem; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); border-bottom: 2px solid var(--gold); padding: 0 2px 2px; margin-top: 2px; } .sgrp.red { color: #ff8a8f; border-color: var(--red); }
   .sc.none { font-size: 1.1rem; font-weight: 700; color: var(--cream); text-transform: uppercase; letter-spacing: .04em; border-bottom-color: #ffffff33; }
   .r.bar.cols.dup { display: none; }
+  .r.bar.cols .c { min-width: 0; overflow: hidden; }
   .r.bar.cols { background: none; border: 0; } .r.bar.cols .lb { white-space: nowrap; font-size: .75rem; font-weight: 800; letter-spacing: .06em; color: var(--cream); display: flex; align-items: center; padding: 0 6px; } .r.bar.cols .c { background: none; font-size: .68rem; letter-spacing: .03em; white-space: nowrap; padding: 0 2px; color: var(--cream); }
   .topic .tm { margin-top: 2px; }
 
   /* ---- widescreen (a laptop or desktop window): a 16:9 stage; clips get the big left side, boards run in columns, type scales with the window height ---- */
   @media (min-width: 900px) and (min-aspect-ratio: 5/4) {
-    html { font-size: clamp(16px, 2.6dvh, 32px); }
+    html { font-size: clamp(16px, 3dvh, 36px); }
     .app { background: radial-gradient(80% 80% at 50% 50%, #1c0d06, #050302); }
     .stage { width: min(100vw, calc(100dvh * 16 / 9), 1760px); height: min(100dvh, calc(100vw * 9 / 16)); border: 0; box-shadow: none; }
     .bars { padding: 10px 22px 0; } .top { padding: 4px 18px 8px 22px; }
@@ -247,7 +249,7 @@
     .seg.t-lifetime .mvs { grid-column: 1 / -1; grid-template-columns: repeat(3, 1fr); }
     .seg.t-trades { grid-template-columns: 1fr 1fr; } .seg.t-trades > .notes { grid-column: 1 / -1; }
     .seg.t-records { grid-template-columns: 1fr 1fr; } .seg.t-records > .hero { align-self: stretch; }
-    .seg.t-coming { grid-template-columns: repeat(3, 1fr); } .seg.t-coming > .cd { align-self: stretch; }
+    .seg.t-coming { grid-template-columns: repeat(3, 1fr); } .seg.t-coming .cd .cn { font-size: 2.6rem; } .seg.t-coming .cd .cw { font-size: 1rem; } .seg.t-coming > .cd { align-self: stretch; }
     .seg.t-slack { grid-template-columns: 1.1fr 1fr; } .seg.t-slack > .cotw { grid-column: 1; grid-row: 2 / span 4; align-self: stretch; } .seg.t-slack > .topic { grid-column: 2; }
     .seg.t-clinch { grid-template-columns: 1fr 1fr; }
     .seg.t-shotguns > .col, .seg.t-clinch > .col { grid-column: auto; }
@@ -453,8 +455,9 @@
     })(performance.now());
   }
   // text stays on one line where it can: the font shrinks a little at a time until the line fits (down to 70%); a line that still doesn't fit wraps as before
+  var WIDE = window.matchMedia('(min-width: 900px) and (min-aspect-ratio: 5/4)');
   var ONE = ['.r .t.w', '.r .t.col > span', '.r .t small', '.hdr .hs', '.sit', '.sc .sw', '.cd .cw small', '.mc em', '.tr small', '.rd p span', '.hdr b', '.notes p:not(.q):not(.meet)', '.tr .th b', '.sc .sh small', '.sc .sh b', '.ptz span'];
-  var GROUPS = ['.r .t.sm', '.box p b', '.mc s', '.mc small', '.topic b', '.tile .tw span', '.tile .tl span', '.dot small', '.sn .pl'];   // lines that sit side by side shrink together so they match
+  var GROUPS = ['.r .t.sm', '.box p b', '.mc s', '.mc small', '.cd .cn', '.cd .hk', '.topic b', '.tile .tw span', '.tile .tl span', '.dot small', '.sn .pl'];   // lines that sit side by side shrink together so they match
   function oneLine(el, min) {
     var cs = getComputedStyle(el); if (cs.display === 'inline') return;
     var base = parseFloat(cs.fontSize), k = 1;
@@ -553,7 +556,7 @@
   // the matchup's win-probability replay (the play-maker's chance over the week's games), drawn left to right, with a star on the line where the play happened
   var cuid = 0;
   function chartHtml(s, h) {
-    var ch = s.chart, st = s.star, W = 400, H = h || 176, ml = 32, mr = 8, mt = 8, mb = 8, pw = W - ml - mr, ph = H - mt - mb, id = 'wc' + (++cuid);
+    var ch = s.chart, st = s.star, W = 400, H = h || (WIDE.matches ? 230 : 176), ml = 32, mr = 8, mt = 8, mb = 8, pw = W - ml - mr, ph = H - mt - mb, id = 'wc' + (++cuid);
     var X = function (x) { return ml + x * pw; }, Y = function (p) { return mt + (1 - p) * ph; }, P = ch.p.map(function (v) { return st.flip ? 1 - v : v; });
     var pts = ch.x.map(function (x, i) { return X(x).toFixed(1) + ',' + Y(P[i]).toFixed(1); }), area = 'M' + X(ch.x[0]).toFixed(1) + ',' + Y(.5) + 'L' + pts.join('L') + 'L' + X(ch.x[ch.x.length - 1]).toFixed(1) + ',' + Y(.5) + 'Z';
     var sx = X(st.x), sy = Y(st.pp), other = s.by === s.a ? s.b : s.a, swing = (s.to != null && s.from != null) ? s.to - s.from : null, lab = s.to != null ? s.to + '%' : '';
