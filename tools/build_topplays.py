@@ -16,7 +16,17 @@ HUB = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CACHE = os.path.join(HUB, 'data', 'topplays.json')   # the current season; an archived season is data/topplays_<year>.json (see main)
 NOT_A_PLAY = re.compile(r'stat correction|scoring adjustment|allowed', re.I)   # a correction or a defense's points-allowed line is not a play
 BASE = 'https://namkurd.github.io/SleeperLiveRumbles/rumbles.html'
+KEEP_RULE = b'|keep:30+3def'   # bump when what is kept per week changes
 KEEP = 30   # plays kept per week: the page checks in the viewer's browser which clips embed, so there must be spares
+
+
+def keep_plays(plays):
+    """The week's best plays (KEEP of them), plus up to three team-defense plays when they fall outside that: a defense's swings are small, and the
+    recap shows one defensive play of the week."""
+    isdef = lambda x: bool(re.match(r'^[A-Z]{2,4}$', x.get('sid') or ''))
+    keep = plays[:KEEP]
+    need = 3 - sum(1 for x in keep if isdef(x))
+    return keep + ([x for x in plays[KEEP:] if isdef(x)][:need] if need > 0 else [])
 
 
 def get_json(url):
@@ -50,7 +60,7 @@ def plan(base, root=None, path=None):
             raw = urllib.request.urlopen(urllib.request.Request('%s/wp_clips/week_%d.json' % (root, w), headers={'User-Agent': 'dtf-club-hub'}), timeout=60).read()   # a week's plays are only cached once its clips exist
         except Exception:
             continue
-        h = hashlib.md5(raw).hexdigest()[:12]
+        h = hashlib.md5(raw + KEEP_RULE).hexdigest()[:12]   # the keep rule is part of the stamp: changing it re-reads the weeks once
         PENDING_HASH[w] = h
         if w not in have or cache.get('clipsHash', {}).get(str(w)) != h:   # new week, or its clips changed (the audit drops interviews and videos taken down)
             todo.append(w)
@@ -114,7 +124,7 @@ def scrape(base, season, weeks, path=None):
             cache.setdefault('clipsHash', {})[str(w)] = PENDING_HASH.get(w)
             cache['weeks'][str(w)] = [{'week': w, 'a': x['a'], 'b': x['b'], 'who': x['who'], 'label': x['label'], 'swing': round(abs(x['d']), 3), 'by': x.get('by'), 'help': bool(x.get('help', True)), 'sid': x.get('sid'), 'tot': x.get('tot'), 'pts': x.get('pts'), **({'stk': x['stk'], 'slab': x['slab']} if x.get('stk') and x.get('slab') else {}), 'aid': x['arid'], 'bid': x['brid'], 'rt': x.get('rt'), 'et': x.get('et'), **({'sit': x['sit']} if x.get('sit') else {}), 'from': round((x['p0'] if x['d'] >= 0 else 1 - x['p0']) * 100), 'to': round((x['p1'] if x['d'] >= 0 else 1 - x['p1']) * 100),
                                        'clip': {'id': x['clip']['id'], 's': x['clip']['s'], 'e': x['clip']['e']},
-                                       **({'alt': {'id': x['clip']['x']['id'], 's': x['clip']['x']['s'], 'e': x['clip']['x']['e']}} if x['clip'].get('x') else {})} for x in plays[:KEEP]]
+                                       **({'alt': {'id': x['clip']['x']['id'], 's': x['clip']['x']['s'], 'e': x['clip']['x']['e']}} if x['clip'].get('x') else {})} for x in keep_plays(plays)]
             print('week %d: %d plays with clips, best %s' % (w, len(plays), plays[0]['who'] + ' ' + plays[0]['label'] if plays else '-'))
         browser.close()
     return cache
