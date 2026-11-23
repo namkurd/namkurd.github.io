@@ -178,61 +178,44 @@ def build(week, src, asof):
         g['flips'] = (x or {}).get('flips', 0)
         g['it'] = (x or {}).get('it', 0)
 
-    # ---- the story of the week decides the opening line
-    best_play = plays[0] if plays else None
+    # ---- the story of the week
     close = min(games, key=lambda g: g['margin']) if games else None
     wild = max(games, key=lambda g: (g['flips'], g['it'])) if games else None
-    top_score = max(weekly.items(), key=lambda kv: kv[1]['points']) if weekly else None
-    low_score = min(weekly.items(), key=lambda kv: kv[1]['points']) if weekly else None
-    big_rumble = max(weekly.items(), key=lambda kv: kv[1].get('rumbles', 0)) if weekly else None
-    intro = {'type': 'intro', 'dur': 5, 'week': week, 'season': season, 'title': 'Week %d recap' % week, 'stats': []}
-    if top_score:
-        intro['stats'].append({'k': 'High score', 'v': '%.1f' % top_score[1]['points'], 'm': names[int(top_score[0])]})
-    if big_rumble:
-        intro['stats'].append({'k': 'Most Rumbles', 'v': str(big_rumble[1].get('rumbles', 0)), 'm': names[int(big_rumble[0])]})
-    if close:
-        intro['stats'].append({'k': 'Closest game', 'v': '%.1f' % close['margin'], 'm': '%s over %s' % (close['w'], close['l'])})
-    if best_play:
-        intro['hook'] = 'Biggest swing: %s, %d%% → %d%%' % (bf.play_title(best_play['who'], best_play['label'], best_play.get('sid'), best_play.get('stk'), best_play.get('slab')),
-                                                               pct(best_play.get('from')) or 0, pct(best_play.get('to')) or 0)
-    segs.append(intro)
+    # the opener is the week's scoreboard: every real game, final, most interesting first (no stat that the standings already say)
+    segs.append({'type': 'intro', 'dur': 6, 'week': week, 'season': season, 'title': 'Week %d recap' % week,
+                 'games': [{'w': g['w'], 'l': g['l'], 'ws': g['ws'], 'ls': g['ls'], 'flips': g['flips']} for g in sorted(games, key=lambda g: -g['it'])]})
 
-    # ---- plays: 3 to 4 clips, countdown to the biggest, never more than two from one matchup
-    picks, per = [], {}
+    # ---- clips: candidates only; the page keeps the first ones that really play in the viewer's browser (an owner who blocks embedding is skipped)
+    cands, per = [], {}
     for p in plays:
         key = tuple(sorted([p['a'], p['b']]))
-        if per.get(key, 0) >= 2 or p['clip']['id'] in used:
+        if per.get(key, 0) >= 3 or len(cands) >= 10:
             continue
-        if len(picks) >= 3 and p['swing'] < 0.12:
-            break
-        picks.append(p); used.add(p['clip']['id']); per[key] = per.get(key, 0) + 1
-        if len(picks) == 4:
-            break
-    # the turning point of the wildest real game is a segment of its own, so keep it out of the countdown
+        cands.append(p); per[key] = per.get(key, 0) + 1
+    picks = cands[:4]
+    if picks:
+        segs.append({'type': 'clips', 'dur': 14, 'want': min(4, len(cands)), 'label': 'play of the week', 'cands': [play_segment(p, 'top', '') for p in cands]})
     turning = None
     if wild and wild['flips'] >= 2:
-        pool = [p for p in plays if {p['a'], p['b']} == {wild['w'], wild['l']} and p['clip']['id'] not in used]
+        pool = [p for p in plays if {p['a'], p['b']} == {wild['w'], wild['l']}]
         if pool:
             turning = pool[0]
-            used.add(turning['clip']['id'])
-    n = len(picks)
-    for i, p in enumerate(reversed(picks)):
-        rank = n - i
-        s = play_segment(p, 'top', '#%d play of the week' % rank)
-        s['dur'] = 16 if rank == 1 else 13
-        segs.append(s)
+            segs.append({'type': 'clips', 'dur': 14, 'want': 1, 'turn': True, 'label': 'Turning point', 'why': '%s vs %s \u00b7 %d lead changes' % (wild['w'], wild['l'], wild['flips']),
+                         'cands': [play_segment(p, 'turn', 'Turning point') for p in pool[:4]]})
 
-    # ---- the game of the week: the closest real game, or the one that traded the lead most
+    # ---- the game of the week: the closest real game, or the one that traded the lead most, with the plays that decided it as its box score
     if games:
         g = close if close['margin'] <= 8 else wild
         why = ('Decided by %.1f' % g['margin']) if g is close else ('%d lead changes' % g['flips'])
-        segs.append({'type': 'game', 'dur': 8, 'title': 'Game of the week', 'why': why, 'w': g['w'], 'l': g['l'], 'ws': g['ws'], 'ls': g['ls'], 'flips': g['flips'],
-                     'others': [x for x in sorted(games, key=lambda x: x['margin']) if x is not g][:4]})
-    if turning:
-        s = play_segment(turning, 'turn', 'Turning point')
-        s['dur'] = 14
-        s['why'] = '%s vs %s · %d lead changes' % (wild['w'], wild['l'], wild['flips'])
-        segs.append(s)
+        recs = {r['manager']: '%d-%d' % (r.get('h2h_w', 0), r.get('h2h_l', 0)) for r in hist['standings']}
+        allp = [p for p in (tp.get('weeks') or {}).get(str(week), []) if {p['a'], p['b']} == {g['w'], g['l']}]
+
+        def side(m):
+            mine = sorted([p for p in allp if p.get('by') == m], key=lambda p: -(p.get('tot') if p.get('tot') is not None else (p.get('pts') or 0)))[:3]
+            return {'m': m, 'rec': recs.get(m), 'lines': [{'t': bf.play_title(p['who'], p['label'], p.get('sid'), p.get('stk'), p.get('slab')),
+                                                          'pts': p.get('tot') if p.get('tot') is not None else p.get('pts')} for p in mine]}
+        segs.append({'type': 'game', 'dur': 9, 'title': 'Game of the week', 'why': why, 'w': g['w'], 'l': g['l'], 'ws': g['ws'], 'ls': g['ls'], 'flips': g['flips'],
+                     'sides': [side(g['w']), side(g['l'])]})
 
     # ---- the podcast, when the hosts talked about this week's plays and managers
     try:
@@ -313,21 +296,20 @@ def build(week, src, asof):
 
     # ---- trim to the budget: drop the least important extras first
     def total():
-        return sum(s['dur'] for s in segs)
+        return sum(s['dur'] * (s['want'] if s['type'] == 'clips' else 1) for s in segs)
     for drop in ('pod', 'shotguns', 'records', 'game'):
         if total() <= BUDGET:
             break
         segs[:] = [s for s in segs if s['type'] != drop]
-    while total() > BUDGET:
-        tops = [s for s in segs if s.get('kind') == 'top']
-        if len(tops) <= 2:
-            break
-        segs.remove(tops[0])   # the smallest of the countdown
+    for s_ in segs:
+        while total() > BUDGET and s_['type'] == 'clips' and not s_.get('turn') and s_['want'] > 2:
+            s_['want'] -= 1
     for i, s in enumerate(segs):
         s['id'] = i
 
     link = '%s/recap/?week=%d' % (SITE, week)
     lines = ['*Week %d recap* — %d seconds, tap to watch (clips play right in the page): %s' % (week, total(), link)]
+    best_play = plays[0] if plays else None
     if best_play:
         lines.append('• Play of the week: %s (%s)' % (bf.play_title(best_play['who'], best_play['label'], best_play.get('sid'), best_play.get('stk'), best_play.get('slab')), bf.play_sub(best_play)))
     if close:

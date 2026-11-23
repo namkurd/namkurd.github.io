@@ -4,123 +4,193 @@
 <title>Weekly Recap</title>
 <link rel="stylesheet" href="/shell/tokens.css">
 <style>
-  :root { --g: #22c55e; --gold: #facc15; --red: #ef4444; }
+  /* a late-night sports highlight show: brown-orange studio, black name bars, cream score cells, a red band, box-score panels */
+  :root { --gold: #f2c14e; --cream: #f6e7b9; --ink: #120a04; --red: #b3171a; --win: #1f8a3c;
+    --cond: "Arial Narrow", "Roboto Condensed", "Helvetica Neue", "HelveticaNeue-CondensedBold", Impact, system-ui, sans-serif; }
   html, body { height: 100%; }
-  body { margin: 0; background: #0b0d11; overflow: hidden; }
-  .app { height: 100dvh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-  .stage { position: relative; width: min(100vw, 470px); height: min(100dvh, 880px); display: flex; flex-direction: column; background:
-    radial-gradient(120% 60% at 50% 0%, color-mix(in srgb, var(--g) 16%, transparent), transparent 70%), var(--dtf-bg); overflow: hidden; }
-  @media (min-width: 520px) { .stage { border-radius: 22px; border: 1px solid var(--dtf-border); box-shadow: 0 30px 80px -30px #000; height: min(94dvh, 880px); } }
-  .bars { display: flex; gap: 3px; padding: calc(env(safe-area-inset-top) + 10px) 12px 0; flex: none; }
-  .bars i { flex: 1; height: 3px; border-radius: 2px; background: #ffffff26; overflow: hidden; }
-  .bars i b { display: block; height: 100%; width: 0; background: #fff; }
+  body { margin: 0; background: #060403; overflow: hidden; font-family: var(--cond); }
+  .app { height: 100dvh; display: flex; align-items: center; justify-content: center; }
+  .stage { position: relative; width: min(100vw, 470px); height: min(100dvh, 880px); display: flex; flex-direction: column; color: #fff; overflow: hidden;
+    background: linear-gradient(180deg, #3a1a08 0%, #8a4216 22%, #c9692a 55%, #d9892f 100%); }
+  .stage::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5; background:
+    repeating-linear-gradient(0deg, transparent 0 3px, #0000000d 3px 4px), radial-gradient(120% 50% at 50% 0%, #ffd78a55, transparent 70%); }
+  @media (min-width: 520px) { .stage { border: 2px solid var(--gold); box-shadow: 0 30px 80px -30px #000; height: min(94dvh, 880px); } }
+  .bars { display: flex; gap: 3px; padding: calc(env(safe-area-inset-top) + 8px) 10px 0; flex: none; position: relative; }
+  .bars i { flex: 1; height: 4px; background: #00000066; overflow: hidden; }
+  .bars i b { display: block; height: 100%; width: 0; background: var(--gold); }
   .bars i.done b { width: 100%; }
-  .top { display: flex; align-items: center; justify-content: space-between; padding: 8px 14px 0; flex: none; font-size: .78rem; color: var(--dtf-dim); }
-  .top a { color: var(--dtf-dim); text-decoration: none; font-weight: 600; }
-  .top b { color: var(--dtf-text); letter-spacing: .05em; text-transform: uppercase; font-size: .72rem; }
-  .seg { flex: 1; min-height: 0; padding: 12px 18px 8px; display: flex; flex-direction: column; justify-content: center; gap: 12px; animation: segin .35s ease both; }
-  @keyframes segin { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
-  @keyframes pop { from { opacity: 0; transform: translateY(10px) scale(.96); } to { opacity: 1; transform: none; } }
-  .pop { opacity: 0; animation: pop .45s ease forwards; }
-  .kick { font-size: .74rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--g); }
-  h2.big { margin: 0; font-size: 2.3rem; line-height: 1.05; letter-spacing: -.02em; }
-  .dim { color: var(--dtf-dim); }
-  .chips { display: flex; flex-direction: column; gap: 9px; margin-top: 6px; }
-  .chip { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 12px 14px; border-radius: 14px; background: var(--dtf-panel); border: 1px solid var(--dtf-border); }
-  .chip em { font-style: normal; color: var(--dtf-dim); font-size: .82rem; }
-  .chip b { font-size: 1.55rem; }
-  .chip span { font-size: .85rem; color: var(--dtf-text); font-weight: 700; margin-left: 8px; }
-  .hook { font-size: .95rem; color: var(--dtf-text); }
-  /* plays */
-  .vid { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 14px; overflow: hidden; border: 1px solid var(--dtf-border); }
+  .top { position: relative; display: flex; align-items: center; justify-content: space-between; padding: 7px 12px 6px; flex: none; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; }
+  .top a { color: var(--cream); text-decoration: none; font-weight: 700; }
+  .top b { color: var(--gold); font-weight: 800; } .top span { color: var(--cream); font-variant-numeric: tabular-nums; }
+  .seg { position: relative; flex: 1; min-height: 0; padding: 4px 12px 8px; display: flex; flex-direction: column; justify-content: center; gap: 10px; animation: segin .35s ease both; }
+  @keyframes segin { from { opacity: 0; transform: translateX(26px); } to { opacity: 1; transform: none; } }
+  @keyframes slide { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: none; } }
+  @keyframes flip { from { transform: rotateX(90deg); opacity: 0; } to { transform: none; opacity: 1; } }
+  .in { opacity: 0; animation: slide .4s cubic-bezier(.2,.8,.2,1) forwards; }
+  .fl { opacity: 0; animation: flip .35s ease forwards; transform-origin: 50% 50%; }
+  /* the scoreboard: a round mark on the left, a black bar per team with cream score cells */
+  .sb { display: flex; align-items: stretch; gap: 8px; }
+  .logo { flex: none; width: 54px; display: flex; align-items: center; justify-content: center; }
+  .logo i { width: 50px; height: 50px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #ffe08a, #c9871c 60%, #7a4a0a); border: 2px solid #fff3; display: flex; align-items: center; justify-content: center;
+    font-style: normal; font-weight: 900; font-size: 1.15rem; color: var(--ink); letter-spacing: -.05em; box-shadow: 0 3px 8px #0008; }
+  .rows { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+  .r { display: grid; grid-auto-flow: column; grid-template-columns: 1fr; grid-auto-columns: minmax(52px, auto); align-items: stretch; background: var(--ink); border-bottom: 2px solid var(--gold); }
+  .r .t { padding: 6px 10px; font-size: 1.45rem; font-weight: 800; text-transform: uppercase; letter-spacing: .01em; line-height: 1.1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+  .r .t.sm { font-size: 1rem; padding: 8px 8px; letter-spacing: 0; }
+  .r .t.w { white-space: normal; font-size: 1.2rem; line-height: 1.15; display: flex; align-items: center; }
+  .r .t small { display: block; font-size: .7rem; font-weight: 700; color: var(--gold); letter-spacing: .1em; line-height: 1; margin-top: 1px; }
+  .r .t em { color: var(--gold); font-style: normal; margin-left: 5px; font-size: 1rem; }
+  .r .c { min-width: 52px; display: flex; align-items: center; justify-content: center; margin: 3px 2px; padding: 0 8px; background: linear-gradient(180deg, #fff6d6, var(--cream) 55%, #e3cf93); color: var(--ink); font-weight: 800; font-size: 1.35rem; font-variant-numeric: tabular-nums; }
+  .r .c.dim { background: linear-gradient(180deg, #d9c9a0, #c9b583); color: #4a3a1c; }
+  .r .c.g { background: linear-gradient(180deg, #6ed28a, var(--win)); color: #fff; } .r .c.rd { background: linear-gradient(180deg, #e25a5a, var(--red)); color: #fff; }
+  .band { height: 20px; background: linear-gradient(180deg, #c42026, var(--red) 60%, #7d0c10); border-top: 2px solid var(--gold); border-bottom: 2px solid var(--gold); display: flex; align-items: center; padding: 0 10px; font-size: .72rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #ffe9b0; }
+  /* box score panels */
+  .box { display: grid; grid-template-columns: 1fr 1fr; background: #00000040; border-top: 2px solid var(--gold); border-bottom: 2px solid var(--gold); }
+  .box > div { padding: 0 0 6px; border-right: 2px solid var(--gold); min-width: 0; } .box > div:last-child { border-right: 0; }
+  .box h4 { margin: 0 0 6px; display: flex; justify-content: space-between; align-items: center; background: var(--ink); padding: 3px 8px; font-size: 1rem; text-transform: uppercase; letter-spacing: .04em; }
+  .box h4 s { text-decoration: none; background: var(--red); padding: 1px 7px; font-size: .85rem; }
+  .box p { margin: 0; padding: 4px 8px 5px; font-size: .78rem; line-height: 1.2; color: #fff; }
+  .box p b { display: block; color: var(--gold); font-size: .96rem; text-transform: uppercase; letter-spacing: .02em; }
+  .box p u { text-decoration: none; color: #8ff0a5; font-weight: 800; }
+  .notes { background: #00000040; border-top: 2px solid var(--gold); border-bottom: 2px solid var(--gold); padding: 0 0 6px; }
+  .notes h4 { margin: 0 0 4px; background: var(--ink); color: var(--gold); padding: 3px 8px; font-size: .95rem; text-transform: uppercase; letter-spacing: .08em; }
+  .notes p { margin: 0; padding: 3px 9px; font-size: .95rem; line-height: 1.25; } .notes p b { color: var(--gold); text-transform: uppercase; }
+  .notes p.q { font-size: 1.2rem; line-height: 1.3; font-weight: 600; padding: 6px 10px; } .notes small { display: block; padding: 2px 10px; color: var(--cream); opacity: .85; font-size: .74rem; letter-spacing: .04em; text-transform: uppercase; }
+  .notes a { color: var(--gold); }
+  /* clips */
+  .vid { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; border: 3px solid var(--gold); box-shadow: 0 8px 22px #0009; box-sizing: border-box; }
   .vid iframe, .vid > div { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-  .vid .fb { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; background: #11141a; color: var(--dtf-dim); text-align: center; padding: 10px; }
-  .vid .fb a { color: #fff; background: #ff3b30; padding: 8px 14px; border-radius: 20px; font-weight: 700; text-decoration: none; }
-  .ptitle { font-size: 1.5rem; font-weight: 800; line-height: 1.15; margin: 0; }
-  .pts { display: inline-block; font-weight: 800; color: var(--g); font-size: 1.25rem; text-shadow: 0 0 14px color-mix(in srgb, var(--g) 55%, transparent); }
-  .row2 { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
-  .wp { position: relative; height: 26px; border-radius: 13px; background: var(--dtf-panel); border: 1px solid var(--dtf-border); overflow: hidden; }
-  .wp .a { position: absolute; left: 0; top: 0; bottom: 0; width: var(--f); background: color-mix(in srgb, var(--g) 35%, transparent); transition: width 1.4s cubic-bezier(.2,.8,.2,1) .5s; }
-  .wp .a.go { width: var(--t); }
-  .wp .m { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: #ffffff40; }
-  .wp span { position: absolute; top: 3px; font-size: .78rem; font-weight: 800; }
-  .wp .l { left: 10px; } .wp .r { right: 10px; color: var(--dtf-text); }
-  .fant { font-size: .85rem; color: var(--dtf-dim); }
-  .fant b { color: var(--dtf-text); }
-  .links { font-size: .74rem; } .links a { color: var(--dtf-dim); margin-right: 12px; }
-  /* game */
-  .score { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px; text-align: center; }
-  .score .n { font-size: 1.15rem; font-weight: 800; } .score .v { font-size: 2.2rem; font-weight: 900; letter-spacing: -.02em; }
-  .score .w .v { color: var(--g); } .score .l .v { color: var(--dtf-dim); } .score i { font-style: normal; color: var(--dtf-dim); }
-  .list { display: flex; flex-direction: column; gap: 6px; }
-  .li { display: flex; justify-content: space-between; gap: 8px; padding: 9px 12px; border-radius: 12px; background: var(--dtf-panel); border: 1px solid var(--dtf-border); font-size: .92rem; }
-  .li b { color: var(--g); }
-  .rec .old { color: var(--dtf-dim); font-size: .8rem; text-decoration: line-through; }
-  /* standings */
-  .st { display: flex; flex-direction: column; gap: 4px; }
-  .sr { display: grid; grid-template-columns: 26px 1fr auto 56px; align-items: center; gap: 8px; padding: 7px 11px; border-radius: 11px; background: var(--dtf-panel); border: 1px solid var(--dtf-border); font-size: .92rem; }
-  .sr .rk { color: var(--dtf-dim); font-weight: 700; } .sr .nm { font-weight: 700; }
-  .up { color: var(--g); font-weight: 800; font-size: .8rem; } .dn { color: var(--red); font-weight: 800; font-size: .8rem; }
-  .sr .tt { text-align: right; font-weight: 800; }
-  .sr.hot { border-color: color-mix(in srgb, var(--g) 55%, var(--dtf-border)); box-shadow: 0 0 18px -8px var(--g); }
+  .links { font-size: .74rem; letter-spacing: .06em; text-transform: uppercase; } .links a { color: var(--cream); margin-right: 14px; }
+  .wp { display: flex; align-items: stretch; gap: 6px; } .wp .l { align-self: center; font-size: .74rem; letter-spacing: .1em; text-transform: uppercase; color: var(--cream); }
   /* controls */
-  .ctl { flex: none; display: flex; align-items: center; justify-content: center; gap: 14px; padding: 6px 12px calc(env(safe-area-inset-bottom) + 12px); }
-  .ctl button { width: 46px; height: 40px; border-radius: 20px; border: 1px solid var(--dtf-border); background: var(--dtf-panel); color: var(--dtf-text); font-size: 1rem; cursor: pointer; }
+  .ctl { position: relative; flex: none; display: flex; align-items: center; justify-content: center; gap: 12px; padding: 6px 12px calc(env(safe-area-inset-bottom) + 12px); }
+  .ctl button { width: 46px; height: 38px; border: 2px solid var(--gold); background: var(--ink); color: var(--cream); font-size: .95rem; cursor: pointer; }
   .ctl button.p { width: 64px; }
-  .ctl small { color: var(--dtf-dim); font-size: .72rem; min-width: 50px; text-align: center; }
-  .cover { position: absolute; inset: 0; z-index: 5; background: radial-gradient(100% 60% at 50% 20%, color-mix(in srgb, var(--g) 22%, transparent), #0b0d11e6 70%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; text-align: center; padding: 24px; }
-  .cover h1 { margin: 0; font-size: 2.6rem; line-height: 1; letter-spacing: -.02em; }
-  .cover button { margin-top: 8px; padding: 14px 30px; border-radius: 30px; border: 0; background: var(--g); color: #04210f; font-weight: 800; font-size: 1.05rem; cursor: pointer; }
+  .cover { position: absolute; inset: 0; z-index: 5; background: linear-gradient(180deg, #2a1206ee, #7a3a12ee 60%, #c9692aee); display: flex; flex-direction: column; justify-content: center; gap: 14px; padding: 24px 18px; }
   .cover[hidden] { display: none; }
-  .cover a { color: var(--dtf-dim); font-size: .82rem; }
+  .cover button { margin-top: 6px; align-self: center; padding: 13px 34px; border: 3px solid var(--gold); background: var(--ink); color: var(--gold); font-family: var(--cond); font-weight: 800; font-size: 1.15rem; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; }
+  .cover button:disabled { opacity: .55; cursor: default; }
+  .cover .st { text-align: center; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--cream); } .cover a { text-align: center; color: var(--cream); font-size: .78rem; }
 </style></head><body class="dtf-page">
 <div class="app"><div class="stage" id="stage">
   <div class="bars" id="bars"></div>
   <div class="top"><a href="/">&larr; Hub</a><b id="ttl">Weekly recap</b><span id="clock"></span></div>
   <div class="seg" id="seg"></div>
   <div class="ctl"><button id="prev" aria-label="Previous">&#9664;</button><button id="pp" class="p" aria-label="Pause">&#10074;&#10074;</button><button id="next" aria-label="Next">&#9654;</button></div>
-  <div class="cover" id="cover"><div class="kick">Rumble Hub</div><h1 id="ch">Weekly recap</h1><div class="dim" id="cs"></div><button id="go">&#9654; Watch</button><a href="/">Back to the Hub</a></div>
+  <div class="cover" id="cover">
+    <div class="sb"><div class="logo"><i>RH</i></div><div class="rows"><div class="r"><span class="t">Rumble Hub</span><span class="c" id="cw">&nbsp;</span></div><div class="r"><span class="t" id="ch">Recap</span><span class="c dim" id="cs">&nbsp;</span></div></div></div>
+    <div class="st" id="cst">Loading&hellip;</div>
+    <button id="go" disabled>&#9654; Watch</button><a href="/">Back to the Hub</a>
+  </div>
 </div></div>
 <script>
 (function () {
   'use strict';
   var $ = function (id) { return document.getElementById(id); };
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
-  var D = null, segs = [], idx = -1, paused = false, elapsed = 0, last = 0, yt = null, ytReady = null, started = false, ended = false, cur = null;
+  var D = null, raw = [], segs = [], idx = -1, paused = false, elapsed = 0, last = 0, yt = null, ytApi = null, started = false, ended = false, cur = null, ready = false;
+  var EMB = (function () { try { return JSON.parse(localStorage.getItem('rumbles.embed') || '{}') || {}; } catch (e) { return {}; } })();   // shared with the Hub and Rumble Central: clip id -> 1 plays / 0 blocked
 
   function wk() { var m = /[?&]week=(\d+)/.exec(location.search); return m ? m[1] : ''; }
   function load() {
     var w = wk(), urls = w ? ['/data/recap_' + w + '.json', '/data/recap.json'] : ['/data/recap.json'];
     (function next(i) {
-      if (i >= urls.length) { $('cs').textContent = 'No recap yet.'; $('go').hidden = true; return; }
-      fetch(urls[i], { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (d) { D = d; segs = d.segments || []; init(); }, function () { next(i + 1); });
+      if (i >= urls.length) { $('cst').textContent = 'No recap yet.'; return; }
+      fetch(urls[i], { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (d) { D = d; raw = d.segments || []; init(); }, function () { next(i + 1); });
     })(0);
   }
   function init() {
-    var t = 'Week ' + D.week + ' recap'; document.title = t + ' · Rumble Hub'; $('ch').textContent = t; $('ttl').textContent = t;
-    var s = D.seconds || segs.reduce(function (a, x) { return a + x.dur; }, 0);
-    $('cs').textContent = Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2) + ' · ' + segs.filter(function (x) { return x.type === 'play'; }).length + ' clips';
-    $('bars').innerHTML = segs.map(function () { return '<i><b></b></i>'; }).join('');
-  }
-  function api() {   // the YouTube IFrame API, loaded once
-    if (ytReady) return ytReady;
-    return ytReady = new Promise(function (res, rej) {
-      if (window.YT && YT.Player) return res(window.YT);
-      window.onYouTubeIframeAPIReady = function () { res(window.YT); };
-      var sc = document.createElement('script'); sc.src = 'https://www.youtube.com/iframe_api'; sc.onerror = rej; document.head.appendChild(sc); setTimeout(rej, 12000);
+    var t = 'Week ' + D.week + ' recap'; document.title = t + ' · Rumble Hub'; $('ch').textContent = t; $('ttl').textContent = t; $('cw').textContent = D.week;
+    resolve().then(function () {
+      segs = build(); ready = true;
+      var s = segs.reduce(function (a, x) { return a + x.dur; }, 0);
+      $('cs').textContent = Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2); $('cst').textContent = segs.filter(function (x) { return x.type === 'play'; }).length + ' clips · all play right here';
+      $('bars').innerHTML = segs.map(function () { return '<i><b></b></i>'; }).join(''); $('go').disabled = false; clock0();
     });
   }
+  // ---- only clips that play inline: every candidate (its clip, else its alternate) is tried once in a hidden player; an owner who blocks embedding answers with an error
+  function api() {
+    if (ytApi) return ytApi;
+    ytApi = new Promise(function (res, rej) {
+      if (window.YT && YT.Player) return res(window.YT);
+      var prev = window.onYouTubeIframeAPIReady; window.onYouTubeIframeAPIReady = function () { if (prev) prev(); res(window.YT); };
+      var sc = document.createElement('script'); sc.src = 'https://www.youtube.com/iframe_api'; sc.onerror = rej; document.head.appendChild(sc); setTimeout(rej, 12000);
+    });
+    ytApi.catch(function () { ytApi = null; });
+    return ytApi;
+  }
+  function probe(id) {   // true plays / false blocked / null could not tell
+    if (EMB[id] != null) return Promise.resolve(EMB[id] === 1);
+    return api().then(function (Y) {
+      return new Promise(function (resolve) {
+        var holder = document.createElement('div'), slot = document.createElement('div'), pl = null, done = false, timer;
+        holder.style.cssText = 'position:fixed;left:-400px;top:0;width:160px;height:90px;overflow:hidden;pointer-events:none;opacity:0'; holder.appendChild(slot); document.body.appendChild(holder);
+        function end(ok) {
+          if (done) return; done = true; clearTimeout(timer);
+          if (ok != null) { EMB[id] = ok ? 1 : 0; try { localStorage.setItem('rumbles.embed', JSON.stringify(EMB)); } catch (e) { /* private mode */ } }
+          try { if (pl) pl.destroy(); } catch (x) { /* gone */ } if (holder.parentNode) holder.parentNode.removeChild(holder); resolve(ok);
+        }
+        timer = setTimeout(function () { end(null); }, 8000);
+        pl = new Y.Player(slot, { host: 'https://www.youtube-nocookie.com', videoId: id, width: '160', height: '90', playerVars: { autoplay: 0, playsinline: 1 },
+          events: { onReady: function () { setTimeout(function () { end(true); }, 1200); }, onError: function () { end(false); } } });
+      });
+    }, function () { return null; });
+  }
+  function playable(c) {   // -> the clip that plays (its own, else the alternate) or null
+    return probe(c.clip.id).then(function (ok) {
+      if (ok) return c.clip;
+      return c.alt ? probe(c.alt.id).then(function (ok2) { return ok2 ? c.alt : null; }) : null;
+    });
+  }
+  function resolve() {
+    var jobs = [];
+    raw.forEach(function (s) { if (s.type === 'clips') s.cands.forEach(function (c) { jobs.push(c); }); });
+    return new Promise(function (done) {   // four at a time
+      if (!jobs.length) return done();
+      var run = 0, i = 0, n = 0;
+      (function pump() {
+        while (run < 4 && i < jobs.length) {
+          (function (c) {
+            run++;
+            playable(c).then(function (cl) { c._ok = cl; }, function () { c._ok = null; }).then(function () {
+              run--; n++; $('cst').textContent = 'Checking which clips play here… ' + n + '/' + jobs.length;
+              if (n === jobs.length) done(); else pump();
+            });
+          })(jobs[i++]);
+        }
+      })();
+    });
+  }
+  function build() {   // the final sequence: each candidate list becomes the first clips that really play; the countdown runs #n down to #1
+    var out = [], used = {};
+    raw.forEach(function (s) {
+      if (s.type !== 'clips') { out.push(s); return; }
+      var ok = s.cands.filter(function (c) { return c._ok && !used[c._ok.id]; }).slice(0, s.want);
+      ok.forEach(function (c) { used[c._ok.id] = 1; });
+      (s.turn ? ok : ok.slice().reverse()).forEach(function (c, j) {
+        var p = {}; for (var k in c) p[k] = c[k];
+        p.type = 'play'; p.clip = c._ok; p.dur = s.dur;
+        if (s.turn) { p.label = 'Turning point'; p.why = s.why; }
+        else { var rank = ok.length - j; p.rank = rank; p.label = s.label.charAt(0).toUpperCase() + s.label.slice(1); if (rank === 1) p.dur += 3; }
+        out.push(p);
+      });
+    });
+    out.forEach(function (s, i) { s.id = i; });
+    return out;
+  }
+  function total() { return segs.reduce(function (a, x) { return a + x.dur; }, 0); }
+  function fmt(s) { return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2); }
+  function clock0() { $('clock').textContent = fmt(total()); }
   function clock() {
     var tot = 0; segs.forEach(function (s, i) { if (i < idx) tot += s.dur; }); tot += Math.min(elapsed, cur ? cur.dur : 0);
-    var all = D.seconds || 0, left = Math.max(0, all - Math.round(tot));
-    $('clock').textContent = Math.floor(left / 60) + ':' + ('0' + (left % 60)).slice(-2);
+    $('clock').textContent = fmt(Math.max(0, total() - Math.round(tot)));
   }
   function tick(now) {
     if (!started || ended) return;
     if (!paused && cur) {
       elapsed += (now - last) / 1000;
       var b = $('bars').children[idx]; if (b) b.firstChild.style.width = Math.min(100, elapsed / cur.dur * 100) + '%';
-      if (elapsed >= cur.dur + (cur.type === 'play' ? 3 : 0)) { go(idx + 1); }
+      if (elapsed >= cur.dur + (cur.type === 'play' ? 3 : 0)) go(idx + 1);
       clock();
     }
     last = now; requestAnimationFrame(tick);
@@ -133,67 +203,66 @@
     idx = i; cur = segs[i]; elapsed = 0;
     [].forEach.call($('bars').children, function (b, k) { b.className = k < i ? 'done' : ''; b.firstChild.style.width = ''; });
     $('seg').innerHTML = render(cur); $('seg').style.animation = 'none'; void $('seg').offsetWidth; $('seg').style.animation = '';
-    if (cur.type === 'play') startClip(cur.clip, cur.alt, 0);
-    requestAnimationFrame(function () { [].forEach.call(document.querySelectorAll('.wp .a'), function (a) { a.classList.add('go'); }); });
+    if (cur.type === 'play') startClip(cur.clip);
     clock();
   }
-  function fallback(seg) {
-    var v = document.querySelector('.vid'); if (!v) return;
-    v.innerHTML = '<div class="fb"><span>This clip can’t play here</span><a href="' + esc(seg.href) + '" target="_blank" rel="noopener">Watch on YouTube</a></div>';
-    cur.dur = Math.min(cur.dur, 7); // don't hold a card with no video
-  }
-  function startClip(c, alt, tries) {
+  function startClip(c) {
     var seg = cur;
-    api().then(function (YT) {
+    api().then(function (Y) {
       if (cur !== seg) return;
-      var slot = document.createElement('div'); var v = document.querySelector('.vid'); if (!v) return; v.innerHTML = ''; v.appendChild(slot);
+      var slot = document.createElement('div'), v = document.querySelector('.vid'); if (!v) return; v.innerHTML = ''; v.appendChild(slot);
       var vars = { autoplay: 1, playsinline: 1, controls: 0, rel: 0, modestbranding: 1, start: Math.floor(c.s) };
       if (c.e && c.s !== 0) vars.end = Math.ceil(c.e);
-      yt = new YT.Player(slot, { host: 'https://www.youtube-nocookie.com', videoId: c.id, playerVars: vars, events: {
+      yt = new Y.Player(slot, { host: 'https://www.youtube-nocookie.com', videoId: c.id, playerVars: vars, events: {
         onReady: function (e) { if (paused) e.target.pauseVideo(); else e.target.playVideo(); },
         onStateChange: function (e) { if (e.data === 0 && cur === seg && !paused) go(idx + 1); },
-        onError: function () { if (cur !== seg) return; if (alt && !tries) { seg.clip = alt; startClip(alt, null, 1); } else fallback(seg); }
+        onError: function () { if (cur === seg) go(idx + 1); }   // verified clips shouldn't fail; if one does, move on rather than show a dead card
       } });
-    }, function () { if (cur === seg) fallback(seg); });
+    }, function () { if (cur === seg) go(idx + 1); });
   }
   function finish() {
     ended = true; stopVideo(); [].forEach.call($('bars').children, function (b) { b.className = 'done'; });
-    $('seg').innerHTML = '<div class="kick pop">That’s the week</div><h2 class="big pop" style="animation-delay:.1s">See you next Tuesday.</h2><div class="list pop" style="animation-delay:.2s"><a class="li" href="#" id="again">↺ Watch again</a><a class="li" href="/">The Rumble Hub</a><a class="li" href="/SleeperLiveRumbles/rumbles.html">Rumble Central</a></div>';
+    $('seg').innerHTML = board('See you Tuesday', [{ t: 'Week ' + (D.week + 1), c: [{ v: D.week + 1 }] }], 'RH') + '<div class="notes in"' + ds(4) + '><h4>Keep going</h4><p><a href="#" id="again">↺ Watch again</a></p><p><a href="/">The Rumble Hub</a></p><p><a href="/SleeperLiveRumbles/rumbles.html">Rumble Central</a></p></div>';
     $('again').onclick = function (e) { e.preventDefault(); ended = false; started = true; last = performance.now(); go(0); requestAnimationFrame(tick); };
     $('clock').textContent = '';
   }
-  function ord(n) { return n; }
+  // ---- the building blocks
+  function ds(i) { return ' style="animation-delay:' + (i * .09 + .05).toFixed(2) + 's"'; }
+  function board(band, rows, mark) {   // rows: [{t, tag, c:[{v, k}]}] -> a scoreboard with a round mark and a red band under it
+    return '<div class="sb"><div class="logo"><i>' + esc(mark || 'RH') + '</i></div><div class="rows">' + rows.map(function (r, i) {
+      return '<div class="r in"' + ds(i) + '><span class="t' + (r.w ? ' w' : '') + (r.sm ? ' sm' : '') + '">' + esc(r.t) + (r.tag ? '<em>' + esc(r.tag) + '</em>' : '') + (r.sub ? '<small>' + esc(r.sub) + '</small>' : '') + '</span>' + (r.c || []).map(function (c, j) { return '<span class="c fl ' + (c.k || '') + '"' + ds(i + j + 3) + '>' + esc(c.v) + '</span>'; }).join('') + '</div>';
+    }).join('') + '</div></div>' + (band ? '<div class="band">' + esc(band) + '</div>' : '');
+  }
+  function f1(n) { return Number(n).toFixed(1); }
+  function pts(n) { return (n >= 0 ? '+' : '−') + Math.abs(n).toFixed(1); }
   function render(s) {
-    var d = function (i) { return ' style="animation-delay:' + (i * .12 + .1).toFixed(2) + 's"'; };
-    if (s.type === 'intro') return '<div class="kick pop">Rumble Hub · ' + esc(s.season) + '</div><h2 class="big pop"' + d(1) + '>Week ' + esc(s.week) + '<br>recap</h2><div class="chips">' +
-      (s.stats || []).map(function (c, i) { return '<div class="chip pop"' + d(i + 2) + '><em>' + esc(c.k) + '</em><span style="margin-left:auto;text-align:right"><b>' + esc(c.v) + '</b> ' + esc(c.m) + '</span></div>'; }).join('') +
-      '</div>' + (s.hook ? '<div class="hook pop"' + d(6) + '>' + esc(s.hook) + '</div>' : '');
+    if (s.type === 'intro') return board('Final scores · week ' + s.week, (s.games || []).reduce(function (a, g) {
+      a.push({ t: g.w, tag: '◄', c: [{ v: f1(g.ws), k: 'g' }] }); a.push({ t: g.l, c: [{ v: f1(g.ls), k: 'dim' }] }); return a; }, []), s.week);
     if (s.type === 'play') {
-      var f = s.from == null ? 50 : s.from, t = s.to == null ? 50 : s.to, fa = s.fant, sit = s.sit;
-      return '<div class="kick">' + esc(s.label) + '</div><div class="vid"></div><h3 class="ptitle pop"' + d(1) + '>' + esc(s.title) + '</h3>' +
-        '<div class="row2 pop"' + d(2) + '><span class="pts">' + (s.pts == null ? '' : (s.pts >= 0 ? '+' : '−') + Math.abs(s.pts).toFixed(1) + ' pts') + '</span><span class="dim" style="font-size:.85rem">' + esc(s.by || '') + (s.et ? ' · ' + esc(s.et.replace(/ ([AP])M$/, function (m, x) { return x.toLowerCase(); })) : '') + '</span></div>' +
-        '<div class="wp pop"' + d(3) + ' title="Win probability"><div class="a" style="--f:' + f + '%;--t:' + t + '%;width:' + f + '%"></div><i class="m"></i><span class="l">' + f + '%</span><span class="r">→ ' + t + '%</span></div>' +
-        (fa ? '<div class="fant pop"' + d(4) + '><b>' + esc(fa.m) + '</b> ' + fa.ms.toFixed(1) + ' – ' + fa.os.toFixed(1) + ' ' + esc(fa.o) + '</div>' : '<div class="fant pop"' + d(4) + '>' + esc(s.sub) + '</div>') +
-        (s.why ? '<div class="fant pop"' + d(4) + '>' + esc(s.why) + '</div>' : '') +
-        '<div class="links"><a href="' + esc(s.replay) + '">Replay in Rumble Central</a><a href="' + esc(s.href) + '" target="_blank" rel="noopener">On YouTube</a></div>';
+      var fa = s.fant, f = s.from == null ? '–' : s.from + '%', t = s.to == null ? '–' : s.to + '%';
+      return board(s.label, [{ t: s.title, w: 1, c: [{ v: (s.pts == null ? '' : pts(s.pts)), k: 'g' }] }], s.rank ? '#' + s.rank : '↻') + '<div class="vid"></div>' +
+        (fa ? board('', [{ t: fa.m, tag: fa.ms > fa.os ? '◄' : '', c: [{ v: f1(fa.ms), k: fa.ms > fa.os ? 'g' : 'dim' }] }, { t: fa.o, c: [{ v: f1(fa.os), k: 'dim' }] }], 'WK') : '') +
+        '<div class="wp"><div class="r in"' + ds(2) + ' style="flex:1"><span class="t" style="font-size:1.05rem">Win probability' + (s.why ? ' · ' + esc(s.why) : '') + '</span></div>' +
+        '<div class="r"><span class="c dim fl"' + ds(3) + '>' + f + '</span><span class="c g fl"' + ds(5) + '>' + t + '</span></div></div>' +
+        '<div class="links"><a href="' + esc(s.replay) + '">Replay in Rumble Central</a></div>';
     }
-    if (s.type === 'game') return '<div class="kick">' + esc(s.title) + '</div><div class="score pop"' + d(1) + '><div class="w"><div class="n">' + esc(s.w) + '</div><div class="v">' + s.ws.toFixed(1) + '</div></div><i>vs</i><div class="l"><div class="n">' + esc(s.l) + '</div><div class="v">' + s.ls.toFixed(1) + '</div></div></div>' +
-      '<h2 class="big pop"' + d(2) + ' style="font-size:1.6rem;text-align:center;animation-delay:.3s">' + esc(s.why) + '</h2><div class="dim pop" style="text-align:center;animation-delay:.4s">' + (s.flips ? s.flips + ' lead changes' : '') + '</div>' +
-      '<div class="list">' + (s.others || []).map(function (g, i) { return '<div class="li pop"' + d(i + 4) + '><span><b>' + esc(g.w) + '</b> ' + g.ws.toFixed(1) + '</span><span class="dim">' + g.ls.toFixed(1) + ' ' + esc(g.l) + '</span></div>'; }).join('') + '</div>';
-    if (s.type === 'shotguns') return '<div class="kick" style="color:var(--red)">' + esc(s.title) + '</div><h2 class="big pop"' + d(1) + '>Zeroes in the lineup</h2><div class="list">' + s.items.map(function (x, i) { return '<div class="li pop"' + d(i + 2) + '><span><b style="color:var(--red)">' + esc(x.m) + '</b> started ' + esc(x.player) + '</span><span class="dim">' + esc(x.pos || '') + ' · 0.0</span></div>'; }).join('') + '</div>';
-    if (s.type === 'records') return '<div class="kick" style="color:var(--gold)">' + esc(s.title) + '</div><h2 class="big pop"' + d(1) + '>Record book<br>just changed</h2><div class="list rec">' + s.items.map(function (x, i) { return '<div class="li pop"' + d(i + 2) + '><span><b style="color:var(--gold)">' + esc(x.name) + '</b><br><span class="dim">' + esc(x.holder) + '</span></span><span style="text-align:right"><b style="color:var(--g)">' + esc(x.new) + '</b><br><span class="old">' + esc(x.old || '') + '</span></span></div>'; }).join('') + '</div>';
-    if (s.type === 'lifetime') return '<div class="kick" style="color:#34d399">' + esc(s.title) + '</div><h2 class="big pop"' + d(1) + '>All-time<br>movers</h2><div class="list">' + s.items.map(function (x, i) { var up = x.delta > 0;
-      return '<div class="li pop"' + d(i + 2) + '><span><b style="color:' + (up ? 'var(--g)' : 'var(--red)') + '">' + (up ? '\u25B2' : '\u25BC') + Math.abs(x.delta) + '</b> ' + esc(x.m) + '<br><span class="dim" style="font-size:.8rem">' + esc(x.metric) + '</span></span><span style="font-size:1.3rem;font-weight:800">#' + x.rank + '</span></div>'; }).join('') + '</div>';
-    if (s.type === 'pod') return '<div class="kick" style="color:#a78bfa">' + esc(s.title) + (s.ep ? ' \u00b7 Ep. ' + esc(s.ep) : '') + '</div><div class="pop" style="font-size:2.6rem;line-height:.6;color:#a78bfa"' + d(1) + '>\u201C</div><p class="pop" style="font-size:1.35rem;line-height:1.35;font-weight:600;margin:0"' + d(2) + '>' + esc(s.quote) + '</p>' +
-      '<div class="dim pop"' + d(4) + ' style="font-size:.8rem">From the episode captions' + (s.name ? ' \u00b7 ' + esc(s.name) : '') + ' \u00b7 ' + Math.floor(s.at / 60) + ':' + ('0' + (s.at % 60)).slice(-2) + '</div><div class="links"><a href="' + esc(s.url) + '" target="_blank" rel="noopener">Listen at that moment</a></div>';
-    if (s.type === 'standings') return '<div class="kick">' + esc(s.title) + '</div><div class="st">' + s.rows.map(function (r, i) {
-      var dl = r.prev - r.rank, mv = dl > 0 ? '<span class="up">▲' + dl + '</span>' : dl < 0 ? '<span class="dn">▼' + (-dl) + '</span>' : '<span class="dim">–</span>';
-      return '<div class="sr pop' + (dl >= 2 ? ' hot' : '') + '" style="animation-delay:' + (i * .09 + .1).toFixed(2) + 's"><span class="rk">' + r.rank + '</span><span class="nm">' + esc(r.m) + '</span>' + mv + '<span class="tt">' + r.rumbles + ' <span class="dim" style="font-weight:600;font-size:.74rem">+' + r.gain + '</span></span></div>';
-    }).join('') + '</div>';
+    if (s.type === 'game') return board(s.title + ' · ' + s.why, [{ t: s.w, tag: '◄', c: [{ v: f1(s.ws), k: 'g' }] }, { t: s.l, c: [{ v: f1(s.ls), k: 'dim' }] }], 'G') +
+      '<div class="box">' + (s.sides || []).map(function (x, i) { return '<div class="in"' + ds(i + 3) + '><h4>' + esc(x.m) + (x.rec ? '<s>' + esc(x.rec) + '</s>' : '') + '</h4>' +
+        (x.lines || []).map(function (l) { return '<p><b>' + esc(l.t) + '</b><u>' + (l.pts == null ? '' : pts(l.pts) + ' pts') + '</u></p>'; }).join('') + '</div>'; }).join('') + '</div>' +
+      (s.flips ? '<div class="notes in"' + ds(8) + '><h4>Notes</h4><p>The lead changed hands <b>' + s.flips + '</b> times.</p></div>' : '');
+    if (s.type === 'shotguns') return board('Shotgun watch', s.items.map(function (x) { return { t: x.m, c: [{ v: '0.0', k: 'rd' }] }; }), '0') +
+      '<div class="notes in"' + ds(4) + '><h4>Notes</h4>' + s.items.map(function (x) { return '<p><b>' + esc(x.m) + '</b> started ' + esc(x.player) + (x.pos ? ' (' + esc(x.pos) + ')' : '') + ' and got a zero.</p>'; }).join('') + '</div>';
+    if (s.type === 'records') return board('Record book', s.items.map(function (x) { return { t: x.holder, c: [{ v: x.new, k: 'g' }] }; }), 'R') +
+      '<div class="notes in"' + ds(4) + '><h4>Notes</h4>' + s.items.map(function (x) { return '<p><b>' + esc(x.name) + '</b>' + (x.old ? ' — was ' + esc(x.old) + (x.prev ? ' (' + esc(x.prev) + ')' : '') : '') + '</p>'; }).join('') + '</div>';
+    if (s.type === 'lifetime') return board('All-time standings · who moved', s.items.map(function (x) { return { t: x.m, sub: x.metric, c: [{ v: (x.delta > 0 ? '▲' : '▼') + Math.abs(x.delta), k: x.delta > 0 ? 'g' : 'rd' }, { v: '#' + x.rank }] }; }), 'ALL');
+    if (s.type === 'pod') return board('From the pod' + (s.ep ? ' · episode ' + s.ep : ''), [{ t: s.name || 'The podcast', c: [{ v: fmt(s.at) }] }], 'PD') +
+      '<div class="notes in"' + ds(3) + '><h4>Overheard</h4><p class="q">“' + esc(s.quote) + '”</p><small>From the episode captions</small><p><a href="' + esc(s.url) + '" target="_blank" rel="noopener">Listen at that moment</a></p></div>';
+    if (s.type === 'standings') return board('Standings after week ' + D.week, s.rows.map(function (r) {
+      var dl = r.prev - r.rank; return { t: r.rank + '  ' + r.m, sm: 1, tag: dl ? (dl > 0 ? '▲' : '▼') + Math.abs(dl) : '', c: [{ v: r.rumbles, k: dl >= 2 ? 'g' : '' }, { v: '+' + r.gain, k: 'dim' }] }; }), 'ST');
     if (s.type === 'outro') {
-      var n = s.next, when = n ? (n.days === 0 ? 'today' : n.days === 1 ? 'tomorrow' : 'in ' + n.days + ' days') : '';
-      return '<div class="kick">' + esc(s.title) + '</div><h2 class="big pop"' + d(1) + '>Week ' + esc(s.week) + '</h2>' + (n ? '<div class="chip pop"' + d(2) + '><em>' + esc(n.label) + '</em><span><b>' + esc(when) + '</b></span></div>' : '') +
-        (s.pod ? '<a class="chip pop"' + d(3) + ' href="' + esc(s.pod.url) + '" target="_blank" rel="noopener" style="text-decoration:none;color:inherit"><em>Latest podcast</em><span>' + esc(s.pod.title) + '</span></a>' : '');
+      var n = s.next, when = n ? (n.days === 0 ? 'today' : n.days === 1 ? 'tomorrow' : n.days + ' days') : '';
+      return board('Next up', [{ t: 'Week ' + s.week, c: [{ v: s.week }] }].concat(n ? [{ t: n.label, c: [{ v: when, k: n.days <= 3 ? 'rd' : '' }] }] : []), 'NX') +
+        (s.pod ? '<div class="notes in"' + ds(4) + '><h4>Latest podcast</h4><p><a href="' + esc(s.pod.url) + '" target="_blank" rel="noopener">' + esc(s.pod.title) + '</a></p></div>' : '');
     }
     return '';
   }
@@ -201,10 +270,10 @@
     paused = !paused; $('pp').innerHTML = paused ? '&#9654;' : '&#10074;&#10074;';
     try { if (yt && yt.pauseVideo) { paused ? yt.pauseVideo() : yt.playVideo(); } } catch (e) { /* not ready */ }
   }
-  $('go').onclick = function () { $('cover').hidden = true; started = true; last = performance.now(); go(0); requestAnimationFrame(tick); };
+  $('go').onclick = function () { if (!ready) return; $('cover').hidden = true; started = true; last = performance.now(); go(0); requestAnimationFrame(tick); };
   $('pp').onclick = toggle;
-  $('next').onclick = function () { if (ended) return; go(idx + 1); };
-  $('prev').onclick = function () { if (ended) { ended = false; started = true; last = performance.now(); go(segs.length - 1); requestAnimationFrame(tick); return; } go(elapsed > 2 ? idx : idx - 1); };
+  $('next').onclick = function () { if (ended || !started) return; go(idx + 1); };
+  $('prev').onclick = function () { if (!started) return; if (ended) { ended = false; last = performance.now(); go(segs.length - 1); requestAnimationFrame(tick); return; } go(elapsed > 2 ? idx : idx - 1); };
   document.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight') $('next').click(); else if (e.key === 'ArrowLeft') $('prev').click(); else if (e.key === ' ' && started) { e.preventDefault(); toggle(); } });
   load();
 })();
