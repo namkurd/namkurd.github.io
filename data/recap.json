@@ -2,7 +2,7 @@
  "schema": 1,
  "season": 2026,
  "week": 10,
- "seconds": 157,
+ "seconds": 169,
  "segments": [
   {
    "type": "intro",
@@ -2372,6 +2372,128 @@
    "id": 6
   },
   {
+   "type": "shotguns",
+   "dur": 12,
+   "title": "Shotgun watch",
+   "new": [],
+   "owed": [
+    {
+     "m": "Jake",
+     "n": 2,
+     "shots": [
+      {
+       "m": "Jake",
+       "player": "Colston Loveland",
+       "short": "C. Loveland",
+       "pos": "TE",
+       "wk": 1
+      },
+      {
+       "m": "Jake",
+       "player": "Kenyon Sadiq",
+       "short": "K. Sadiq",
+       "pos": "TE",
+       "wk": 4
+      }
+     ],
+     "oldest": 1
+    },
+    {
+     "m": "Christian",
+     "n": 2,
+     "shots": [
+      {
+       "m": "Christian",
+       "player": "Quinshon Judkins",
+       "short": "Q. Judkins",
+       "pos": "RB",
+       "wk": 6
+      },
+      {
+       "m": "Christian",
+       "player": "Adonai Mitchell",
+       "short": "A. Mitchell",
+       "pos": "WR",
+       "wk": 9
+      }
+     ],
+     "oldest": 6
+    },
+    {
+     "m": "Haan",
+     "n": 2,
+     "shots": [
+      {
+       "m": "Haan",
+       "player": "Chris Godwin Jr.",
+       "short": "C. Godwin Jr.",
+       "pos": "WR",
+       "wk": 8
+      },
+      {
+       "m": "Haan",
+       "player": "Will Reichard",
+       "short": "W. Reichard",
+       "pos": "K",
+       "wk": 8
+      }
+     ],
+     "oldest": 8
+    },
+    {
+     "m": "Ryan",
+     "n": 2,
+     "shots": [
+      {
+       "m": "Ryan",
+       "player": "Zay Flowers",
+       "short": "Z. Flowers",
+       "pos": "WR",
+       "wk": 8
+      },
+      {
+       "m": "Ryan",
+       "player": "Josh Jacobs",
+       "short": "J. Jacobs",
+       "pos": "RB",
+       "wk": 9
+      }
+     ],
+     "oldest": 8
+    },
+    {
+     "m": "Stephanie",
+     "n": 1,
+     "shots": [
+      {
+       "m": "Stephanie",
+       "player": "Tre Tucker",
+       "short": "T. Tucker",
+       "pos": "WR",
+       "wk": 8
+      }
+     ],
+     "oldest": 8
+    },
+    {
+     "m": "Aidan",
+     "n": 1,
+     "shots": [
+      {
+       "m": "Aidan",
+       "player": "Ladd McConkey",
+       "short": "L. McConkey",
+       "pos": "WR",
+       "wk": 9
+      }
+     ],
+     "oldest": 9
+    }
+   ],
+   "week": 10,
+   "id": 7
+  },
+  {
    "type": "records",
    "dur": 7,
    "title": "New records",
@@ -2392,7 +2514,7 @@
     }
    ],
    "head": "Joe: Most Trades (Career)",
-   "id": 7
+   "id": 8
   },
   {
    "type": "lifetime",
@@ -2456,7 +2578,7 @@
     }
    ],
    "head": "Ankit climbs 1 in career rumbles",
-   "id": 8
+   "id": 9
   },
   {
    "type": "race",
@@ -2601,13 +2723,14 @@
      "dead": false
     }
    ],
-   "id": 9
+   "id": 10
   },
   {
    "type": "clinch",
    "dur": 10,
    "title": "Clinch & elimination",
    "weeksLeft": 4,
+   "max": 20,
    "items": [
     {
      "m": "Ben",
@@ -2652,7 +2775,7 @@
    ],
    "noElim": false,
    "noClinch": false,
-   "id": 10
+   "id": 11
   },
   {
    "type": "coming",
@@ -2679,9 +2802,9 @@
      "kind": "playoffs"
     }
    ],
-   "id": 11
+   "id": 12
   }
  ],
  "link": "https://namkurd.github.io/recap/?week=10",
- "generatedAt": "2026-11-23T22:08:40Z"
+ "generatedAt": "2026-11-23T23:09:10Z"
 }

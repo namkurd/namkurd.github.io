@@ -167,7 +167,10 @@ def text_source(src, repo, path):
     if src:
         return open(os.path.join(src, repo, path), encoding='utf-8').read()
     import urllib.request
-    req = urllib.request.Request(bf.RAW.format(repo=repo, path=path), headers={'User-Agent': 'dtf-club-hub'})
+    url = bf.RAW.format(repo=repo, path=path)
+    if repo == 'Recordbook':
+        url = url.replace('/main/', '/claude/initial-build/')   # that repo's default branch
+    req = urllib.request.Request(url, headers={'User-Agent': 'dtf-club-hub'})
     return urllib.request.urlopen(req, timeout=60).read().decode('utf-8')
 
 
@@ -450,14 +453,20 @@ def build(week, src, asof):
     except Exception as e:
         print('slack: %s' % e, file=sys.stderr)
 
-    # ---- shotguns that week
-    shots = []
+    # ---- shotguns: new this week, and every one still owed (the punishment not served yet), oldest first, grouped by manager
+    new_s, owed = [], {}
     for m in (load('shotguns.json') or {}).get('managers', []):
         for sh in m.get('shots', []):
+            if sh.get('week', 99) > week:
+                continue
+            row = {'m': m['name'], 'player': sh.get('full') or sh.get('player'), 'short': sh.get('player'), 'pos': sh.get('pos'), 'wk': sh.get('week')}
             if sh.get('week') == week:
-                shots.append({'m': m['name'], 'player': sh.get('full') or sh.get('player'), 'pos': sh.get('pos')})
-    if shots:
-        segs.append({'type': 'shotguns', 'dur': 6 if len(shots) < 3 else 8, 'title': 'Shotgun watch', 'items': shots})
+                new_s.append(row)
+            if not sh.get('done'):
+                owed.setdefault(m['name'], []).append(row)
+    owed_rows = sorted(({'m': k, 'n': len(v), 'shots': sorted(v, key=lambda x: x['wk']), 'oldest': min(x['wk'] for x in v)} for k, v in owed.items()), key=lambda r: (r['oldest'], r['m']))
+    if new_s or owed_rows:
+        segs.append({'type': 'shotguns', 'dur': 8, 'title': 'Shotgun watch', 'new': new_s, 'owed': owed_rows, 'week': week})
 
     # ---- records broken that week (the Record Book's change log)
     rec, since = [], (asof - dt.timedelta(days=8)).isoformat()
@@ -468,8 +477,7 @@ def build(week, src, asof):
             lines = open(path, encoding='utf-8').read().splitlines()
         else:
             import urllib.request
-            req = urllib.request.Request(bf.RAW.format(repo='Recordbook', path='data/changelog.jsonl'), headers={'User-Agent': 'dtf-club-hub'})
-            lines = urllib.request.urlopen(req, timeout=60).read().decode('utf-8').splitlines()
+            lines = text_source(None, 'Recordbook', 'data/changelog.jsonl').splitlines()
     except Exception as e:
         print('records: %s' % e, file=sys.stderr)
     for l in lines:
@@ -545,7 +553,7 @@ def build(week, src, asof):
                               'help': [{'n': h['n'], 'th': h['th']} for h in b_['help']['list'][:5]], 'make': t.get('bye')})
         cl = [i for i in items if i['kind'] == 'clinch'][:2] + sorted([i for i in items if i['kind'] == 'bye'], key=lambda i: -i['make'])[:2]
         al = sorted([i for i in items if i['kind'] == 'elim'], key=lambda i: i['make'])[:3]   # the most endangered first
-        segs.append({'type': 'clinch', 'dur': 12, 'title': 'Clinch & elimination', 'weeksLeft': race['weeksLeft'], 'items': cl[:3] + al, 'noElim': not al, 'noClinch': not cl}) if (cl or al or race.get('scenWeek')) else None
+        segs.append({'type': 'clinch', 'dur': 12, 'title': 'Clinch & elimination', 'weeksLeft': race['weeksLeft'], 'max': hist.get('max_rumbles_per_week'), 'items': cl[:3] + al, 'noElim': not al, 'noClinch': not cl}) if (cl or al or race.get('scenWeek')) else None
 
     # ---- what is coming: the trade deadline, the Mount Rushmore vote closing, the start of the playoffs
     lg = load('league.json') or {}
@@ -610,8 +618,8 @@ def build(week, src, asof):
             rd.append({'k': 'Record', 't': '%s \u2014 %s' % (sg['items'][0]['name'], sg['items'][0]['new'])})
         elif sg['type'] == 'race' and sg.get('bubble'):
             rd.append({'k': 'Race', 't': sg['bubble']})
-        elif sg['type'] == 'shotguns':
-            rd.append({'k': 'Shotgun', 't': ', '.join(x['m'] for x in sg['items'])})
+        elif sg['type'] == 'shotguns' and sg['new']:
+            rd.append({'k': 'Shotgun', 't': ', '.join(x['m'] for x in sg['new'])})
     segs[0]['rundown'] = rd[:4]
 
     def read_time(sg):   # seconds to take a card in: a few to see it, more for each line, plus the words
@@ -624,7 +632,7 @@ def build(week, src, asof):
         if t == 'race': return 4 + 0.7 * len(sg['teams'])
         if t == 'pod': return 6 + (len(sg.get('quote') or '') / 16.0)
         if t == 'slack': return 3 + 2 * len(sg['items']) + (3 + len((sg.get('comment') or {}).get('text', '')) / 22.0 if sg.get('comment') else 0)
-        if t == 'shotguns': return 4 + 2 * len(sg['items'])
+        if t == 'shotguns': return 5 + 2 * len(sg['new']) + 1.2 * len(sg['owed'])
         if t == 'records': return 3 + 2 * len(sg['items'])
         if t == 'lifetime': return 3 + 1.3 * len(sg['items'])
         if t == 'standings': return 4 + 0.6 * len(sg['rows']) + (2 if sg.get('head') else 0)
@@ -638,7 +646,7 @@ def build(week, src, asof):
     # ---- trim to the budget: drop the least important extras first
     def total():
         return sum(s['dur'] * (s['want'] if s['type'] == 'clips' else 1) for s in segs)
-    for drop in ('finals', 'shotguns', 'records', 'lifetime', 'pod', 'slack'):
+    for drop in ('finals', 'records', 'lifetime', 'pod', 'slack'):
         if total() <= BUDGET:
             break
         segs[:] = [s for s in segs if s['type'] != drop]
