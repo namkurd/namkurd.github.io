@@ -215,11 +215,47 @@
   @keyframes pfade { from { opacity: 0; transform: translateX(-18px); } to { opacity: 1; transform: none; } }
   @media (prefers-reduced-motion: reduce) { .portal .vtx, .portal .rg i, .portal .pt, .portal .pttl, .portal .ptz p { animation: none !important; } .portal .pt { opacity: .9; transform: rotate(var(--a)) translateX(var(--r)) rotate(calc(var(--a) * -1)) translateZ(-500px); } .portal .ptz p { opacity: 1; } }
 
+  .col { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
   .seg.c1 .fa { display: none; } .seg.c3 .sit { display: none; } .seg.c4 .links { display: none; } .seg.c5 .hdr .hs { display: none; }
   .sgrp { font-size: .9rem; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); border-bottom: 2px solid var(--gold); padding: 0 2px 2px; margin-top: 2px; } .sgrp.red { color: #ff8a8f; border-color: var(--red); }
   .sc.none { font-size: 1.1rem; font-weight: 700; color: var(--cream); text-transform: uppercase; letter-spacing: .04em; border-bottom-color: #ffffff33; }
+  .r.bar.cols.dup { display: none; }
   .r.bar.cols { background: none; border: 0; } .r.bar.cols .lb { white-space: nowrap; font-size: .75rem; font-weight: 800; letter-spacing: .06em; color: var(--cream); display: flex; align-items: center; padding: 0 6px; } .r.bar.cols .c { background: none; font-size: .68rem; letter-spacing: .03em; white-space: nowrap; padding: 0 2px; color: var(--cream); }
   .topic .tm { margin-top: 2px; }
+
+  /* ---- widescreen (a laptop or desktop window): a 16:9 stage; clips get the big left side, boards run in columns, type scales with the window height ---- */
+  @media (min-width: 900px) and (min-aspect-ratio: 5/4) {
+    html { font-size: clamp(16px, 2.6dvh, 32px); }
+    .app { background: radial-gradient(80% 80% at 50% 50%, #1c0d06, #050302); }
+    .stage { width: min(100vw, calc(100dvh * 16 / 9), 1760px); height: min(100dvh, calc(100vw * 9 / 16)); border: 0; box-shadow: none; }
+    .bars { padding: 10px 22px 0; } .top { padding: 4px 18px 8px 22px; }
+    .seg { padding: 6px 26px 14px; gap: 14px; display: grid; grid-template-columns: 1fr 1fr; align-content: center; align-items: start; column-gap: 26px; }
+    .seg > .hdr, .seg > .sgrp, .seg > .links { grid-column: 1 / -1; }
+    .seg > * { min-width: 0; }
+    .ctl { padding: 6px 12px 10px; } .ctl button { height: 38px; }
+    /* the play card: the clip fills the left, everything about the play stacks on the right */
+    .seg.play { grid-template-columns: 2fr 1fr; align-content: start; padding-top: 4px; row-gap: 10px; }
+    .seg.play > .vid { grid-column: 1; grid-row: 1 / span 12; margin: 0; width: 100%; border: 3px solid var(--gold); align-self: start; }
+    .seg.play > :not(.vid) { grid-column: 2; }
+    .seg.play > .links { grid-column: 2; }
+    .seg.c1 .fa, .seg.c3 .sit, .seg.c4 .links { display: block; } .seg.c1 .fa { display: block; }
+    /* single-column cards sit in the middle, lists with many rows split in two */
+    .seg.t-game, .seg.t-pod, .seg.t-lifetime, .seg.t-coming, .seg.t-shotguns { grid-template-columns: 1fr 1fr; }
+    .seg.t-race .rows.hunt { grid-column: 1 / -1; display: grid; grid-auto-flow: column; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(7, auto); gap: 3px 26px; align-content: start; }
+    .r.bar.cols.dup { display: grid; }
+    .seg.t-finals .tiles { grid-column: 1 / -1; grid-template-columns: repeat(3, 1fr); }
+    .seg.t-lifetime .mvs { grid-column: 1 / -1; grid-template-columns: repeat(3, 1fr); }
+    .seg.t-trades { grid-template-columns: 1fr 1fr; } .seg.t-trades > .notes { grid-column: 1 / -1; }
+    .seg.t-records { grid-template-columns: 1fr 1fr; } .seg.t-records > .hero { align-self: stretch; }
+    .seg.t-coming { grid-template-columns: repeat(3, 1fr); } .seg.t-coming > .cd { align-self: stretch; }
+    .seg.t-slack { grid-template-columns: 1.1fr 1fr; } .seg.t-slack > .cotw { grid-column: 1; grid-row: 2 / span 4; align-self: stretch; } .seg.t-slack > .topic { grid-column: 2; }
+    .seg.t-clinch { grid-template-columns: 1fr 1fr; }
+    .seg.t-shotguns > .col, .seg.t-clinch > .col { grid-column: auto; }
+    .seg.t-intro, .seg.intro { display: flex; padding: 0; align-items: stretch; }
+    .portal .pttl b { font-size: min(9rem, 16vw); } .portal .ptz { left: 8%; right: 8%; flex-direction: row; gap: 10px; } .portal .ptz p { flex: 1; flex-direction: column; gap: 2px; font-size: 1.1rem; } .portal .ptz span { white-space: normal !important; text-overflow: clip; font-size: 1.05rem !important; }
+    .portal .pt { width: 18vmin; margin: -5vmin 0 0 -9vmin; } .portal .rg i:nth-child(1) { width: 30vmin; height: 30vmin; margin: -15vmin 0 0 -15vmin; } .portal .rg i:nth-child(2) { width: 44vmin; height: 44vmin; margin: -22vmin 0 0 -22vmin; } .portal .rg i:nth-child(3) { width: 60vmin; height: 60vmin; margin: -30vmin 0 0 -30vmin; }
+    .portal .vtx { width: 120vmin; margin: -60vmin 0 0 -60vmin; } .portal .eye { width: 22vmin; height: 22vmin; margin: -11vmin 0 0 -11vmin; }
+  }
   /* chapter sheet, toast */
   .sheet { position: absolute; left: 10px; right: 10px; top: 64px; z-index: 8; background: var(--ink); border: 2px solid var(--gold); box-shadow: 0 20px 40px #000; max-height: 66%; overflow: auto; }
   .sheet[hidden] { display: none; }
@@ -393,7 +429,7 @@
     idx = i; cur = segs[i]; elapsed = 0;
     markBars(); try { history.replaceState(null, '', location.pathname + location.search + '#' + i); } catch (e) { /* file view */ }
     $('ttl').textContent = NAMES[cur.type] || ('Week ' + D.week + ' recap');
-    var seg = $('seg'); seg.className = 'seg' + (cur.type === 'play' ? ' play' : cur.type === 'intro' ? ' intro' : ''); seg.innerHTML = render(cur); fit();
+    var seg = $('seg'); seg.className = 'seg t-' + cur.type + (cur.type === 'play' ? ' play' : cur.type === 'intro' ? ' intro' : ''); seg.innerHTML = render(cur); fit();
     seg.style.animation = 'none'; void seg.offsetWidth; seg.style.animation = '';
     [].forEach.call(seg.querySelectorAll('.wpb .a, .trk i, .axis i, .hb i'), function (a) { requestAnimationFrame(function () { requestAnimationFrame(function () { a.classList.add('go'); }); }); });
     if (cur.type === 'play') { startClip(cur.clip); if (!animateChart()) animateWP(); }
@@ -545,6 +581,8 @@
     })(performance.now());
     return true;
   }
+  function plus(v, mx) { return mx != null && v >= mx ? String(v) : v + '+'; }   // the most a team can score in a week is just that number, not "or more"
+  function labelRow(s, dup) { return '<div class="r bar cols' + (dup ? ' dup' : '') + '"><span class="t"></span><span class="lb">PLAYOFF CHANCE</span>' + (s.byes > 1 ? '<span class="c">BYE CHANCE</span>' : '') + '</div>'; }
   function f1(n) { return Number(n).toFixed(1); }
   function sgn(n) { return (n >= 0 ? '+' : '\u2212') + Math.abs(n).toFixed(1); }
   function ppct(x) { if (x == null) return '\u2013'; var v = x * 100; return v >= 99.5 && v < 100 ? '>99%' : v > 0 && v < .5 ? '<1%' : Math.round(v) + '%'; }
@@ -591,9 +629,10 @@
         '<div class="notes in"' + ds(7) + '><h4>Season trade PAR</h4><p>' + (s.best || []).map(function (x) { return '<b>' + esc(x.m) + '</b> ' + sgn(x.v); }).concat((s.worst || []).map(function (x) { return '<b style="color:#ff8a8f">' + esc(x.m) + '</b> ' + sgn(x.v); })).join(' · ') + '</p>' + (s.clear ? '<p>Chat called <b>' + s.right + ' of ' + s.clear + '</b> clear ones right</p>' : '') + '</div>';
     }
     if (s.type === 'race') return hdr('Playoff hunt', s.head || '', s.weeksLeft + (s.weeksLeft === 1 ? ' WK LEFT' : ' WKS LEFT')) +
-      '<div class="rows"><div class="r bar cols"><span class="t"></span><span class="lb">PLAYOFF CHANCE</span>' + (s.byes > 1 ? '<span class="c">BYE CHANCE</span>' : '') + '</div>' + (s.teams || []).map(function (t, i) {
+      '<div class="rows hunt">' + labelRow(s) + (s.teams || []).map(function (t, i) {
+        var half = Math.ceil((s.teams || []).length / 2);
         var chip = t.dead ? 'OUT' : t.top ? '1 SEED' : t.z ? 'BYE' : t.x ? 'IN' : '', k = t.make >= .95 ? 'g' : t.make < .2 ? 'rd' : '';
-        return '<div class="r bar in' + (t.rank === s.spots ? ' cut' : '') + '"' + ds(i) + '><span class="t sm">' + t.rank + '  ' + esc(t.m) + (t.R != null ? ' <i class="rr">' + t.R + '</i>' : '') + (chip ? ' <em class="chip ' + (t.dead ? 'l' : 'w') + '">' + chip + '</em>' : '') + '</span><span class="trk"><i class="' + k + '" style="--w:' + Math.round(t.make * 100) + '%"></i><b>' + ppct(t.make) + '</b></span>' + (s.byes > 1 ? '<span class="c dim sm">' + ppct(t.bye) + '</span>' : '') + '</div>';
+        return (i === half ? labelRow(s, true) : '') + '<div class="r bar in' + (t.rank === s.spots ? ' cut' : '') + '"' + ds(i) + '><span class="t sm">' + t.rank + '  ' + esc(t.m) + (t.R != null ? ' <i class="rr">' + t.R + '</i>' : '') + (chip ? ' <em class="chip ' + (t.dead ? 'l' : 'w') + '">' + chip + '</em>' : '') + '</span><span class="trk"><i class="' + k + '" style="--w:' + Math.round(t.make * 100) + '%"></i><b>' + ppct(t.make) + '</b></span>' + (s.byes > 1 ? '<span class="c dim sm">' + ppct(t.bye) + '</span>' : '') + '</div>';
       }).join('') + '</div>';
     if (s.type === 'pod') return hdr('The podcast', s.name || '', s.ep ? 'EP ' + s.ep : '') +
       '<div class="notes in"' + ds(2) + '><h4>Overheard at ' + fmt(s.at) + '</h4><p class="q">“' + esc(s.quote) + '”</p><p class="meet"><a href="' + esc(s.url) + '" target="_blank" rel="noopener">Listen at that moment</a></p></div>';
@@ -605,8 +644,14 @@
         (c ? '<div class="cotw in"' + ds(1) + '><span class="hk">Comment of the week</span><p>“' + esc(clean(c.text)) + '”</p><div class="cm"><b>' + esc(c.who) + '</b> in #' + esc(c.channel) + '<span class="rx">' + (c.reactions || []).map(function (r) { return em[r.name] ? em[r.name] + (r.count > 1 ? '×' + r.count : '') : ''; }).join(' ') + ' · ' + c.n + ' reactions</span></div></div>' : '') +
         (s.items || []).map(function (x, i) { return '<div class="topic in"' + ds(i + 3) + '><em class="chip l">#' + esc(x.ch) + '</em><b>' + esc(clean(x.t)) + '</b><div class="tm"><span>' + x.n + ' msgs · ' + x.p + ' people</span></div></div>'; }).join('');
     }
-    if (s.type === 'shotguns') return hdr('Shotgun watch', '', '') +
-      board(s.items.map(function (x) { return { t: x.m, sub: x.player + (x.pos ? ' (' + x.pos + ')' : ''), c: [{ v: '0.0', k: 'rd' }] }; }));
+    if (s.type === 'shotguns') {
+      var nw = s.new || [], ow = s.owed || [], tot = ow.reduce(function (a, r) { return a + r.n; }, 0);
+      return hdr('Shotgun watch', '', tot ? tot + ' OWED' : '') +
+        '<div class="col"><div class="sgrp red in"' + ds(1) + '>New this week</div>' +
+        (nw.length ? board(nw.map(function (x) { return { t: x.m, sub: x.player + (x.pos ? ' (' + x.pos + ')' : ''), c: [{ v: '0.0', k: 'rd' }] }; })) : '<div class="sc none in"' + ds(2) + '>No new shotguns this week</div>') + '</div>' +
+        (ow.length ? '<div class="col"><div class="sgrp in"' + ds(3) + '>Past due · punishment not served</div>' +
+          board(ow.map(function (r) { return { t: r.m, sm: 1, sub: r.shots.map(function (x) { return x.short + ' wk ' + x.wk; }).join(' · '), c: [{ v: r.n, k: r.n > 1 ? 'rd sm' : 'dim sm' }] }; })) + '</div>' : '');
+    }
     if (s.type === 'records') return hdr('Record book', '', '') +
       (s.items || []).slice(0, 2).map(function (x, i) { return '<div class="hero in"' + ds(i + 1) + '><span class="hk">' + esc(x.name) + '</span><div class="hv">' + (function (v) { var m = /^(\S+)\s+(.+)$/.exec(String(v)); return m ? esc(m[1]) + '<small>' + esc(m[2]) + '</small>' : esc(v); })(x.new) + '</div><div class="hn">' + esc(x.holder) + '</div>' + (x.old ? '<div class="hw">was ' + esc(x.old) + (x.prev && x.prev !== x.holder ? ' · ' + esc(x.prev) : '') + '</div>' : '') + '</div>'; }).join('') +
       ((s.items || []).length > 2 ? '<div class="notes in"' + ds(4) + '>' + s.items.slice(2).map(function (x) { return '<p><b>' + esc(x.name) + '</b> ' + esc(x.new) + ' · ' + esc(x.holder) + '</p>'; }).join('') + '</div>' : '');
@@ -622,13 +667,13 @@
       var one = function (x, i) {
         var what = x.kind === 'clinch' ? 'Rumbles to clinch a playoff spot' : x.kind === 'bye' ? 'Rumbles to clinch a first-round bye' : 'Rumbles to avoid elimination', k = x.kind === 'elim' ? 'rd' : 'g';
         var cond = x.kind === 'elim' ? (x.must ? 'At least ' + x.must + ' of these must stay under their number' : '') : (x.allow >= 0 ? (x.allow === 0 ? 'None of these can reach their number' : 'No more than ' + x.allow + ' of these can reach their number') : '');
-        return '<div class="sc in"' + ds(i + 1) + '><div class="sh"><span class="c ' + k + '">' + (x.own != null ? x.own : x.need) + '+</span><div><b>' + esc(x.m) + '</b><small>' + what + (x.own != null ? ' on their own' : '') + '</small></div></div>' +
-          (x.own == null && cond ? '<div class="sw">' + esc(cond) + '</div><div class="chs">' + (x.help || []).map(function (h) { return '<span>' + esc(h.n) + ' <b>' + h.th + '+</b></span>'; }).join('') + '</div>' : '') + '</div>';
+        return '<div class="sc in"' + ds(i + 1) + '><div class="sh"><span class="c ' + k + '">' + plus(x.own != null ? x.own : x.need, s.max) + '</span><div><b>' + esc(x.m) + '</b><small>' + what + (x.own != null ? ' on their own' : '') + '</small></div></div>' +
+          (x.own == null && cond ? '<div class="sw">' + esc(cond) + '</div><div class="chs">' + (x.help || []).map(function (h) { return '<span>' + esc(h.n) + ' <b>' + plus(h.th, s.max) + '</b></span>'; }).join('') + '</div>' : '') + '</div>';
       };
       var cl = (s.items || []).filter(function (x) { return x.kind !== 'elim'; }), el = (s.items || []).filter(function (x) { return x.kind === 'elim'; });
       return hdr(s.title || 'Clinch and elimination watch', '', s.weeksLeft + (s.weeksLeft === 1 ? ' WK LEFT' : ' WKS LEFT')) +
-        '<div class="sgrp in"' + ds(1) + '>Clinching</div>' + (cl.length ? cl.map(one).join('') : '<div class="sc none in"' + ds(2) + '>Nobody can clinch this week</div>') +
-        '<div class="sgrp red in"' + ds(3) + '>Elimination</div>' + (el.length ? el.map(function (x, i) { return one(x, i + 3); }).join('') : '<div class="sc none in"' + ds(4) + '>Nobody can be eliminated this week</div>');
+        '<div class="col"><div class="sgrp in"' + ds(1) + '>Clinching</div>' + (cl.length ? cl.map(one).join('') : '<div class="sc none in"' + ds(2) + '>Nobody can clinch this week</div>') + '</div>' +
+        '<div class="col"><div class="sgrp red in"' + ds(3) + '>Elimination</div>' + (el.length ? el.map(function (x, i) { return one(x, i + 3); }).join('') : '<div class="sc none in"' + ds(4) + '>Nobody can be eliminated this week</div>') + '</div>';
     }
     if (s.type === 'coming') return hdr('Coming up', '', '') + (s.items || []).map(function (x, i) {
       var big = x.days === 0 ? 'TODAY' : x.days === 1 ? 'TOMORROW' : x.days + ' DAYS';
