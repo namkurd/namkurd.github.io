@@ -11,12 +11,13 @@ embeddable clip are kept; YouTube's oEmbed endpoint says whether a video allows 
 """
 import argparse, datetime as dt, hashlib, json, os, re, sys, urllib.error, urllib.parse, urllib.request
 PENDING_HASH = {}   # week -> hash of its wp_clips file, set by plan()
+WPCHARTS = {}       # week -> {'<first manager's roster id>.<second's>': the head-to-head's win-probability curve}, filled by scrape()
 
 HUB = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CACHE = os.path.join(HUB, 'data', 'topplays.json')   # the current season; an archived season is data/topplays_<year>.json (see main)
 NOT_A_PLAY = re.compile(r'stat correction|scoring adjustment|allowed', re.I)   # a correction or a defense's points-allowed line is not a play
 BASE = 'https://namkurd.github.io/SleeperLiveRumbles/rumbles.html'
-KEEP_RULE = b'|keep:30+3def'   # bump when what is kept per week changes
+KEEP_RULE = b'|keep:30+3def+chart'   # bump when what is kept per week changes
 KEEP = 30   # plays kept per week: the page checks in the viewer's browser which clips embed, so there must be spares
 
 
@@ -121,9 +122,10 @@ def scrape(base, season, weeks, path=None):
                 print('week %d: not ready' % w, file=sys.stderr); continue
             plays = [x for x in res['plays'] if x.get('clip') and x['clip'].get('id') and not NOT_A_PLAY.search(x.get('label') or '')]   # whether a clip embeds is checked in the viewer's browser (an NFL-owned video can refuse only some sites)
             plays.sort(key=lambda x: -abs(x['d']))
+            WPCHARTS[str(w)] = res.get('charts') or {}
             cache.setdefault('clipsHash', {})[str(w)] = PENDING_HASH.get(w)
             cache['weeks'][str(w)] = [{'week': w, 'a': x['a'], 'b': x['b'], 'who': x['who'], 'label': x['label'], 'swing': round(abs(x['d']), 3), 'by': x.get('by'), 'help': bool(x.get('help', True)), 'sid': x.get('sid'), 'tot': x.get('tot'), 'pts': x.get('pts'), **({'stk': x['stk'], 'slab': x['slab']} if x.get('stk') and x.get('slab') else {}), 'aid': x['arid'], 'bid': x['brid'], 'rt': x.get('rt'), 'et': x.get('et'), **({'sit': x['sit']} if x.get('sit') else {}), 'from': round((x['p0'] if x['d'] >= 0 else 1 - x['p0']) * 100), 'to': round((x['p1'] if x['d'] >= 0 else 1 - x['p1']) * 100),
-                                       'clip': {'id': x['clip']['id'], 's': x['clip']['s'], 'e': x['clip']['e']},
+                                       'clip': {'id': x['clip']['id'], 's': x['clip']['s'], 'e': x['clip']['e']}, **({'x': x['x'], 'pp': x['pp']} if x.get('x') is not None else {}),
                                        **({'alt': {'id': x['clip']['x']['id'], 's': x['clip']['x']['s'], 'e': x['clip']['x']['e']}} if x['clip'].get('x') else {})} for x in keep_plays(plays)]
             print('week %d: %d plays with clips, best %s' % (w, len(plays), plays[0]['who'] + ' ' + plays[0]['label'] if plays else '-'))
         browser.close()
@@ -159,6 +161,17 @@ def run_one(args, year=None):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     json.dump(cache, open(path, 'w', encoding='utf-8'), separators=(',', ':'), ensure_ascii=False); open(path, 'a').write('\n')
     print('wrote', path)
+    if not year and WPCHARTS:   # the matchups' win-probability charts for the recap, one file for the current season
+        cp = os.path.join(HUB, 'data', 'wpcharts.json')
+        try:
+            cur = json.load(open(cp, encoding='utf-8'))
+        except Exception:
+            cur = {}
+        if cur.get('season') != season:
+            cur = {'season': season, 'weeks': {}}
+        cur['weeks'].update(WPCHARTS)
+        json.dump(cur, open(cp, 'w', encoding='utf-8'), separators=(',', ':')); open(cp, 'a').write('\n')
+        print('wrote', cp)
 
 
 def main():
