@@ -564,7 +564,8 @@ def main():
     week = args.week
     if not week:
         hist = bf.source(args.src, 'SleeperLiveRumbles', 'rumbles_history.json')
-        week = int(hist.get('weeks_completed') or max(int(w) for w in hist['weekly']))
+        wc = hist.get('weeks_completed')   # Rumble Central's history lists the finished weeks ([1, 2, ... 10]); an older file may hold a count
+        week = int(max(wc) if isinstance(wc, list) and wc else wc or max(int(w) for w in hist['weekly']))
     out = build(week, args.src, asof)
     for name in ('recap.json', 'recap_%d.json' % week):
         with open(os.path.join(HUB, 'data', name), 'w', encoding='utf-8') as f:
