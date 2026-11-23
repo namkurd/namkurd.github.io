@@ -55,7 +55,7 @@ jobs:
         run: python3 tools/build_shotguns.py
       - run: pip install youtube-transcript-api
         continue-on-error: true
-      - name: Weekly recap (the segments /recap plays: top plays, game of the week, records, standings)
+      - name: "Weekly recap (top plays, game of the week, records, standings)"
         continue-on-error: true
         run: python3 tools/build_recap.py
       - name: Commit if changed
