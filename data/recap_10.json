@@ -2,7 +2,7 @@
  "schema": 1,
  "season": 2026,
  "week": 10,
- "seconds": 118,
+ "seconds": 132,
  "segments": [
   {
    "type": "intro",
@@ -670,6 +670,46 @@
    "id": 3
   },
   {
+   "type": "pod",
+   "dur": 6,
+   "title": "The podcast",
+   "ep": 53,
+   "name": "The Bill Romanowski Episode",
+   "channel": "DTF Club Podcast",
+   "vid": "YbkRrv3n1QQ",
+   "url": "https://www.youtube.com/watch?v=YbkRrv3n1QQ",
+   "id": 4
+  },
+  {
+   "type": "slack",
+   "dur": 8,
+   "title": "League chat",
+   "items": [
+    {
+     "t": "I'd like to pull a Joe",
+     "ch": "news",
+     "n": 49,
+     "p": 5,
+     "href": "https://dtf-club.slack.com/archives/CCH72430F/p1795195755715409"
+    },
+    {
+     "t": "Helps his team this week, every week is basically an…",
+     "ch": "trade-discussion",
+     "n": 33,
+     "p": 6,
+     "href": "https://dtf-club.slack.com/archives/C07QP48E83E/p1795360571209459"
+    },
+    {
+     "t": "Finally found a stream for redzone and it was in India",
+     "ch": "gameday",
+     "n": 25,
+     "p": 6,
+     "href": "https://dtf-club.slack.com/archives/CCH72NHC7/p1795373349504059"
+    }
+   ],
+   "id": 5
+  },
+  {
    "type": "records",
    "dur": 6,
    "title": "New records",
@@ -689,7 +729,7 @@
      "prev": "Ankit & Joe"
     }
    ],
-   "id": 4
+   "id": 6
   },
   {
    "type": "lifetime",
@@ -727,7 +767,7 @@
      "delta": 1
     }
    ],
-   "id": 5
+   "id": 7
   },
   {
    "type": "standings",
@@ -831,7 +871,7 @@
      "pts": 168.91
     }
    ],
-   "id": 6
+   "id": 8
   },
   {
    "type": "outro",
@@ -840,17 +880,17 @@
    "next": {
     "label": "Trade deadline",
     "date": "2026-11-26",
-    "days": 8
+    "days": 4
    },
    "week": 11,
    "pod": {
     "title": "Episode 53 · The Bill Romanowski Episode",
     "url": "https://www.youtube.com/watch?v=YbkRrv3n1QQ"
    },
-   "id": 7
+   "id": 9
   }
  ],
- "slack": "*Week 10 recap* — 118 seconds, tap to watch (clips play right in the page): https://namkurd.github.io/recap/?week=10\n• Play of the week: D. Samuel 70 yd TD run (Haan vs Aidan · Wk 10 · +13.0 pts)\n• Closest game: Stephanie over Joe by 8.9\n• New record: Most Trades (Career) — 33 trades (Joe)\n• Lifetime: Ankit up 1 spot in all-time Rumbles rank (now #5)\n• Biggest mover: Stephanie up to #3",
+ "slack": "*Week 10 recap* — 132 seconds, tap to watch (clips play right in the page): https://namkurd.github.io/recap/?week=10\n• Play of the week: D. Samuel 70 yd TD run (Haan vs Aidan · Wk 10 · +13.0 pts)\n• Closest game: Stephanie over Joe by 8.9\n• New record: Most Trades (Career) — 33 trades (Joe)\n• Lifetime: Ankit up 1 spot in all-time Rumbles rank (now #5)\n• Biggest mover: Stephanie up to #3",
  "link": "https://namkurd.github.io/recap/?week=10",
- "generatedAt": "2026-11-23T12:35:59Z"
+ "generatedAt": "2026-11-23T13:00:33Z"
 }

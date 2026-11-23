@@ -217,13 +217,29 @@ def build(week, src, asof):
         segs.append({'type': 'game', 'dur': 9, 'title': 'Game of the week', 'why': why, 'w': g['w'], 'l': g['l'], 'ws': g['ws'], 'ls': g['ls'], 'flips': g['flips'],
                      'sides': [side(g['w']), side(g['l'])]})
 
-    # ---- the podcast, when the hosts talked about this week's plays and managers
+    # ---- the podcast: the latest episode, with the stretch where the hosts talk about this week when the captions could be read
     try:
-        pc = pod_card(load('podcast.json'), set(names.values()), picks + ([turning] if turning else []), asof, transcript=None if not os.environ.get('RECAP_TRANSCRIPT') else json.load(open(os.environ['RECAP_TRANSCRIPT'])))
-        if pc:
-            segs.append(pc)
+        pod = load('podcast.json') or {}
+        posted = (pod.get('postedAt') or '')[:10]
+        if pod.get('videoId') and posted and abs((asof - dt.date.fromisoformat(posted)).days) <= 10:
+            pc = pod_card(pod, set(names.values()), picks + ([turning] if turning else []), asof,
+                          transcript=None if not os.environ.get('RECAP_TRANSCRIPT') else json.load(open(os.environ['RECAP_TRANSCRIPT'])))
+            seg = {'type': 'pod', 'dur': 9 if pc else 6, 'title': 'The podcast', 'ep': pod.get('episode'), 'name': pod.get('name'), 'channel': pod.get('channel'),
+                   'vid': pod['videoId'], 'url': pod.get('url')}
+            if pc:
+                seg.update({'quote': pc['quote'], 'at': pc['at'], 'url': pc['url'], 'hits': pc['hits']})
+            segs.append(seg)
     except Exception as e:
         print('pod: %s' % e, file=sys.stderr)
+
+    # ---- the league chat: the busiest conversations of the week (slack.json: neutral titles, channel and counts only, as the Hub's Slack tab shows)
+    try:
+        sl = load('slack.json') or {}
+        rows = [t for t in sl.get('topics', []) if not (t.get('title') or '').startswith('*CONTENT BOYS')][:3]
+        if rows:
+            segs.append({'type': 'slack', 'dur': 8, 'title': 'League chat', 'items': [{'t': t['title'], 'ch': t['channel'], 'n': t['messages'], 'p': t['people'], 'href': t.get('href')} for t in rows]})
+    except Exception as e:
+        print('slack: %s' % e, file=sys.stderr)
 
     # ---- shotguns that week
     shots = []
@@ -297,7 +313,7 @@ def build(week, src, asof):
     # ---- trim to the budget: drop the least important extras first
     def total():
         return sum(s['dur'] * (s['want'] if s['type'] == 'clips' else 1) for s in segs)
-    for drop in ('pod', 'shotguns', 'records', 'game'):
+    for drop in ('slack', 'pod', 'shotguns', 'records', 'game'):
         if total() <= BUDGET:
             break
         segs[:] = [s for s in segs if s['type'] != drop]
