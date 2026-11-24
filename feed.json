@@ -547,6 +547,42 @@
     },
     {
      "rank": 15,
+     "title": "L. McConkey 11 yd TD catch",
+     "sub": "Aidan vs Alex · Wk 11 · +8.1 pts",
+     "pts": 8.1,
+     "managers": [
+      "Aidan",
+      "Alex"
+     ],
+     "swing": 28,
+     "from": 49,
+     "to": 77,
+     "clip": {
+      "id": "3A_0hm-ryv8",
+      "s": 61,
+      "e": 71.5
+     },
+     "et": "Sun 6:10 PM",
+     "fant": {
+      "m": "Aidan",
+      "o": "Alex",
+      "ms": 124.81,
+      "os": 111.29
+     },
+     "sit": {
+      "team": "LAC",
+      "opp": "NYJ",
+      "at": "",
+      "q": 4,
+      "clock": "13:05",
+      "tm": 16,
+      "op": 20
+     },
+     "replay": "/SleeperLiveRumbles/rumbles.html?wp=11.1.6&t=251705",
+     "href": "https://www.youtube.com/watch?v=3A_0hm-ryv8&t=61s"
+    },
+    {
+     "rank": 16,
      "title": "J. Gibbs 17 yd TD run",
      "sub": "Ankit vs Stephanie · Wk 3 · +7.7 pts",
      "pts": 7.7,
@@ -582,7 +618,7 @@
      "href": "https://www.youtube.com/watch?v=JL_zHcWkV3o&t=251s"
     },
     {
-     "rank": 16,
+     "rank": 17,
      "title": "D. Adams 49 yd catch",
      "sub": "Ankit vs Stephanie · Wk 3 · +6.4 pts",
      "pts": 6.4,
@@ -618,7 +654,7 @@
      "href": "https://www.youtube.com/watch?v=9OJU2k54QvI&t=168s"
     },
     {
-     "rank": 17,
+     "rank": 18,
      "title": "K. Coleman 12 yd TD catch",
      "sub": "Christian vs Ankit · Wk 6 · +8.2 pts",
      "pts": 8.2,
@@ -659,7 +695,7 @@
      "href": "https://www.youtube.com/watch?v=DMF-9Y-aI7o&t=0s"
     },
     {
-     "rank": 18,
+     "rank": 19,
      "title": "I. Likely 24 yd TD catch",
      "sub": "Aidan vs Ryan · Wk 6 · +9.4 pts",
      "pts": 9.4,
@@ -700,7 +736,43 @@
      "href": "https://www.youtube.com/watch?v=KmXVGhNWZ4k&t=0s"
     },
     {
-     "rank": 19,
+     "rank": 20,
+     "title": "C. McCaffrey 6 yd TD run",
+     "sub": "Stephanie vs Ryan · Wk 11 · +6.6 pts",
+     "pts": 6.6,
+     "managers": [
+      "Ryan",
+      "Stephanie"
+     ],
+     "swing": 25,
+     "from": 36,
+     "to": 61,
+     "clip": {
+      "id": "pf8QLhgAqCg",
+      "s": 229,
+      "e": 243
+     },
+     "et": "Sun 10:55 PM",
+     "fant": {
+      "m": "Stephanie",
+      "o": "Ryan",
+      "ms": 127.06,
+      "os": 138.42
+     },
+     "sit": {
+      "team": "SF",
+      "opp": "MIN",
+      "at": "",
+      "q": 4,
+      "clock": "13:30",
+      "tm": 34,
+      "op": 10
+     },
+     "replay": "/SleeperLiveRumbles/rumbles.html?wp=11.10.12&t=268785",
+     "href": "https://www.youtube.com/watch?v=pf8QLhgAqCg&t=229s"
+    },
+    {
+     "rank": 21,
      "title": "J. Coker 51 yd TD catch",
      "sub": "Jake vs Kaitlyn · Wk 1 · +12.1 pts",
      "pts": 12.1,
@@ -741,7 +813,7 @@
      "href": "https://www.youtube.com/watch?v=If1wDuhaB40&t=0s"
     },
     {
-     "rank": 20,
+     "rank": 22,
      "title": "C. Williams 29 yd TD run",
      "sub": "Alex vs Ben · Wk 1 · +8.9 pts",
      "pts": 8.9,
@@ -782,7 +854,7 @@
      "href": "https://www.youtube.com/watch?v=VNkXxLcw7FM&t=0s"
     },
     {
-     "rank": 21,
+     "rank": 23,
      "title": "C. Lamb 9 yd TD catch",
      "sub": "Kaitlyn vs Steven · Wk 7 · +7.9 pts",
      "pts": 7.9,
@@ -823,7 +895,7 @@
      "href": "https://www.youtube.com/watch?v=eCF9NRTyDZY&t=0s"
     },
     {
-     "rank": 22,
+     "rank": 24,
      "title": "J. Burrow 9 yd TD run",
      "sub": "Haan vs Alex · Wk 8 · +6.9 pts",
      "pts": 6.9,
@@ -859,7 +931,7 @@
      "href": "https://www.youtube.com/watch?v=rW7AI-S-CcU&t=0s"
     },
     {
-     "rank": 23,
+     "rank": 25,
      "title": "J. McCarthy/I. Likely 66 yd TD pass",
      "sub": "Aidan vs Haan · Wk 10 · +20.2 pts",
      "pts": 20.24,
@@ -895,7 +967,7 @@
      "href": "https://www.youtube.com/watch?v=ymxsfIEc-Gw&t=178s"
     },
     {
-     "rank": 24,
+     "rank": 26,
      "title": "C. Watson 81 yd TD catch",
      "sub": "Steven vs Haan · Wk 1 · +15.1 pts",
      "pts": 15.1,
@@ -936,7 +1008,7 @@
      "href": "https://www.youtube.com/watch?v=AaZff8yGimU&t=0s"
     },
     {
-     "rank": 25,
+     "rank": 27,
      "title": "A. Jeanty 13 yd TD catch",
      "sub": "Kaitlyn vs Jake · Wk 1 · +8.3 pts",
      "pts": 8.3,
@@ -972,7 +1044,7 @@
      "href": "https://www.youtube.com/watch?v=oNlvj_XajyU&t=219s"
     },
     {
-     "rank": 26,
+     "rank": 28,
      "title": "D. Prescott 3 yd TD pass",
      "sub": "Haan vs Ankit · Wk 2 · +4.1 pts",
      "pts": 4.12,
@@ -1008,7 +1080,7 @@
      "href": "https://www.youtube.com/watch?v=zlV7lpwL49A&t=95s"
     },
     {
-     "rank": 27,
+     "rank": 29,
      "title": "C. Ward 59 yd TD pass",
      "sub": "Jake vs Christian · Wk 11 · +6.4 pts",
      "pts": 6.36,
@@ -1023,6 +1095,11 @@
       "id": "gszHeKcJEeQ",
       "s": 0,
       "e": 15
+     },
+     "alt": {
+      "id": "8H3iWlKZGmo",
+      "s": 325,
+      "e": 354.5
      },
      "et": "Sun 3:04 PM",
      "fant": {
@@ -1044,7 +1121,7 @@
      "href": "https://www.youtube.com/watch?v=gszHeKcJEeQ&t=0s"
     },
     {
-     "rank": 28,
+     "rank": 30,
      "title": "SF 18 yd pick-6 (J. Brown)",
      "sub": "Jake vs Christian · Wk 11 · +8.7 pts",
      "pts": 8.72,
@@ -1080,7 +1157,7 @@
      "href": "https://www.youtube.com/watch?v=3bP1I_OceMw&t=0s"
     },
     {
-     "rank": 29,
+     "rank": 31,
      "title": "C. Lamb 12 yd TD catch",
      "sub": "Kaitlyn vs Alex · Wk 4 · +8.2 pts",
      "pts": 8.2,
@@ -1116,7 +1193,7 @@
      "href": "https://www.youtube.com/watch?v=Au-UBkRQObw&t=365s"
     },
     {
-     "rank": 30,
+     "rank": 32,
      "title": "L. Burden 8 yd TD catch",
      "sub": "Alex vs Ryan · Wk 3 · +7.8 pts",
      "pts": 7.8,
@@ -1157,7 +1234,7 @@
      "href": "https://www.youtube.com/watch?v=GqZ81kf-g_A&t=0s"
     },
     {
-     "rank": 31,
+     "rank": 33,
      "title": "D. Adams 23 yd catch",
      "sub": "Ankit vs Haan · Wk 2 · +3.8 pts",
      "pts": 3.8,
@@ -1193,7 +1270,7 @@
      "href": "https://www.youtube.com/watch?v=PTkCmmEi0bw&t=153s"
     },
     {
-     "rank": 32,
+     "rank": 34,
      "title": "J. Taylor 24 yd TD run",
      "sub": "Haan vs Ankit · Wk 2 · +8.4 pts",
      "pts": 8.4,
@@ -1234,7 +1311,7 @@
      "href": "https://www.youtube.com/watch?v=TF-KoVf-I24&t=0s"
     },
     {
-     "rank": 33,
+     "rank": 35,
      "title": "P. Nacua 2 yd TD run",
      "sub": "Jake vs Joe · Wk 4 · +6.2 pts",
      "pts": 6.2,
@@ -1275,7 +1352,7 @@
      "href": "https://www.youtube.com/watch?v=LPfo5En_My4&t=0s"
     },
     {
-     "rank": 34,
+     "rank": 36,
      "title": "J. Williams 10 yd TD catch",
      "sub": "Joe vs Ryan · Wk 7 · +8.0 pts",
      "pts": 8,
@@ -1311,7 +1388,7 @@
      "href": "https://www.youtube.com/watch?v=chvnnzyKu7c&t=90s"
     },
     {
-     "rank": 35,
+     "rank": 37,
      "title": "T. McLaurin 30 yd TD catch",
      "sub": "Christian vs Joe · Wk 3 · +10.0 pts",
      "pts": 10,
@@ -1352,7 +1429,7 @@
      "href": "https://www.youtube.com/watch?v=DSQNDW6CJcc&t=0s"
     },
     {
-     "rank": 36,
+     "rank": 38,
      "title": "D. Moore 43 yd TD catch",
      "sub": "Aidan vs Ankit · Wk 1 · +11.3 pts",
      "pts": 11.3,
@@ -1393,7 +1470,7 @@
      "href": "https://www.youtube.com/watch?v=pvQGzepIbv8&t=0s"
     },
     {
-     "rank": 37,
+     "rank": 39,
      "title": "K. Walker 5 yd TD catch",
      "sub": "Alex vs Ryan · Wk 3 · +7.5 pts",
      "pts": 7.5,
@@ -1429,7 +1506,7 @@
      "href": "https://www.youtube.com/watch?v=8oRq521nUM0&t=91s"
     },
     {
-     "rank": 38,
+     "rank": 40,
      "title": "C. Tate 59 yd TD catch",
      "sub": "Alex vs Aidan · Wk 11 · +12.9 pts",
      "pts": 12.9,
@@ -1444,6 +1521,11 @@
       "id": "uyfr0oYKF8s",
       "s": 0,
       "e": 15
+     },
+     "alt": {
+      "id": "cCa48l1wTVk",
+      "s": 89,
+      "e": 118.5
      },
      "et": "Sun 3:04 PM",
      "fant": {
@@ -1463,78 +1545,6 @@
      },
      "replay": "/SleeperLiveRumbles/rumbles.html?wp=11.1.6&t=240505",
      "href": "https://www.youtube.com/watch?v=uyfr0oYKF8s&t=0s"
-    },
-    {
-     "rank": 39,
-     "title": "J. Williams 34 yd run",
-     "sub": "Jake vs Haan · Wk 7 · +3.9 pts",
-     "pts": 3.9,
-     "managers": [
-      "Jake",
-      "Haan"
-     ],
-     "swing": 20,
-     "from": 80,
-     "to": 99,
-     "clip": {
-      "id": "j_8Nxkhuedo",
-      "s": 231,
-      "e": 254.5
-     },
-     "et": "Mon 10:42 PM",
-     "fant": {
-      "m": "Jake",
-      "o": "Haan",
-      "ms": 147.0,
-      "os": 132.73
-     },
-     "sit": {
-      "team": "DAL",
-      "opp": "PHI",
-      "at": "@",
-      "q": 4,
-      "clock": "13:28",
-      "tm": 28,
-      "op": 21
-     },
-     "replay": "/SleeperLiveRumbles/rumbles.html?wp=7.3.4&t=354385",
-     "href": "https://www.youtube.com/watch?v=j_8Nxkhuedo&t=231s"
-    },
-    {
-     "rank": 40,
-     "title": "T. Shough 3 yd TD pass",
-     "sub": "Kaitlyn vs Haan · Wk 3 · +4.1 pts",
-     "pts": 4.12,
-     "managers": [
-      "Haan",
-      "Kaitlyn"
-     ],
-     "swing": 20,
-     "from": 44,
-     "to": 64,
-     "clip": {
-      "id": "E0m0XEI7jzc",
-      "s": 274,
-      "e": 287.5
-     },
-     "et": "Sun 5:38 PM",
-     "fant": {
-      "m": "Kaitlyn",
-      "o": "Haan",
-      "ms": 121.62,
-      "os": 131.44
-     },
-     "sit": {
-      "team": "NO",
-      "opp": "LV",
-      "at": "",
-      "q": 2,
-      "clock": "1:57",
-      "tm": 12,
-      "op": 13
-     },
-     "replay": "/SleeperLiveRumbles/rumbles.html?wp=3.4.11&t=249752",
-     "href": "https://www.youtube.com/watch?v=E0m0XEI7jzc&t=274s"
     }
    ]
   },
@@ -2198,5 +2208,5 @@
   "violations": [],
   "blocked": []
  },
- "generatedAt": "2026-11-24T12:38:18Z"
+ "generatedAt": "2026-11-24T19:58:45Z"
 }

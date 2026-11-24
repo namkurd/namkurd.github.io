@@ -12,7 +12,7 @@
    "R": 168,
    "make": 1,
    "bye": 0.999,
-   "one": 0.975,
+   "one": 0.968,
    "x": false,
    "z": false,
    "top": false,
@@ -77,8 +77,8 @@
    "rank": 2,
    "R": 142,
    "make": 0.998,
-   "bye": 0.816,
-   "one": 0.025,
+   "bye": 0.818,
+   "one": 0.032,
    "x": false,
    "z": false,
    "top": false,
@@ -112,9 +112,9 @@
    "m": "Ryan",
    "rank": 3,
    "R": 127,
-   "make": 0.904,
-   "bye": 0.082,
-   "one": 0,
+   "make": 0.903,
+   "bye": 0.083,
+   "one": 0.0,
    "x": false,
    "z": false,
    "top": false,
@@ -125,8 +125,8 @@
    "m": "Jake",
    "rank": 4,
    "R": 126,
-   "make": 0.865,
-   "bye": 0.056,
+   "make": 0.854,
+   "bye": 0.055,
    "one": 0,
    "x": false,
    "z": false,
@@ -138,7 +138,7 @@
    "m": "Stephanie",
    "rank": 5,
    "R": 117,
-   "make": 0.746,
+   "make": 0.739,
    "bye": 0.025,
    "one": 0,
    "x": false,
@@ -151,8 +151,8 @@
    "m": "Haan",
    "rank": 6,
    "R": 111,
-   "make": 0.59,
-   "bye": 0.019,
+   "make": 0.591,
+   "bye": 0.018,
    "one": 0,
    "x": false,
    "z": false,
@@ -164,7 +164,7 @@
    "m": "Kaitlyn",
    "rank": 7,
    "R": 108,
-   "make": 0.399,
+   "make": 0.398,
    "bye": 0.001,
    "one": 0,
    "x": false,
@@ -177,7 +177,7 @@
    "m": "Ankit",
    "rank": 8,
    "R": 108,
-   "make": 0.437,
+   "make": 0.412,
    "bye": 0.001,
    "one": 0,
    "x": false,
@@ -190,7 +190,7 @@
    "m": "Alex",
    "rank": 9,
    "R": 93,
-   "make": 0.056,
+   "make": 0.101,
    "bye": 0,
    "one": 0,
    "x": false,
@@ -203,7 +203,7 @@
    "m": "Christian",
    "rank": 10,
    "R": 87,
-   "make": 0.004,
+   "make": 0.003,
    "bye": 0,
    "one": 0,
    "x": false,
@@ -247,7 +247,7 @@
    "m": "Joe",
    "rank": 11,
    "R": 80,
-   "make": 0.001,
+   "make": 0.002,
    "bye": 0,
    "one": 0,
    "x": false,
@@ -257,26 +257,26 @@
    "scen": {
     "o": {
      "own": 11,
-     "real": 2,
+     "real": 1,
      "long": 0,
      "help": {
       "allow": 1,
       "list": [
        {
         "n": "Stephanie",
-        "th": 6
+        "th": 5
        },
        {
         "n": "Haan",
-        "th": 12
+        "th": 11
        },
        {
         "n": "Kaitlyn",
-        "th": 15
+        "th": 14
        },
        {
         "n": "Ankit",
-        "th": 15
+        "th": 14
        }
       ]
      }
@@ -316,5 +316,5 @@
    }
   }
  ],
- "generatedAt": "2026-11-24T11:08:33Z"
+ "generatedAt": "2026-11-24T19:58:41Z"
 }
