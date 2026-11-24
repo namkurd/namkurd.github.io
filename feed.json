@@ -1952,51 +1952,69 @@
     },
     {
      "rank": 2,
-     "title": "Braelon Allen · Jake",
-     "sub": "+53 PAR · $150 · Wk 3",
-     "managers": [
-      "Jake"
-     ],
-     "href": "/FAB-Management/?season=2026&manager=Jake"
-    },
-    {
-     "rank": 3,
-     "title": "Minnesota Vikings · Joe",
-     "sub": "+39 PAR · $11 · Wk 2",
-     "managers": [
-      "Joe"
-     ],
-     "href": "/FAB-Management/?season=2026&manager=Joe"
-    },
-    {
-     "rank": 4,
      "title": "Jonah Coleman · Ben",
-     "sub": "+27 PAR · $76 · Wk 2",
+     "sub": "+54 PAR · $76 · Wk 2",
      "managers": [
       "Ben"
      ],
      "href": "/FAB-Management/?season=2026&manager=Ben"
     },
     {
+     "rank": 3,
+     "title": "Braelon Allen · Jake",
+     "sub": "+50 PAR · $150 · Wk 3",
+     "managers": [
+      "Jake"
+     ],
+     "href": "/FAB-Management/?season=2026&manager=Jake"
+    },
+    {
+     "rank": 4,
+     "title": "Minnesota Vikings · Joe",
+     "sub": "+34 PAR · $11 · Wk 2",
+     "managers": [
+      "Joe"
+     ],
+     "href": "/FAB-Management/?season=2026&manager=Joe"
+    },
+    {
      "rank": 5,
+     "title": "Buffalo Bills · Christian",
+     "sub": "+25 PAR · Wk 9",
+     "managers": [
+      "Christian"
+     ],
+     "href": "/FAB-Management/?season=2026&manager=Christian"
+    },
+    {
+     "rank": 6,
      "title": "Tyler Huntley · Ankit",
-     "sub": "+23 PAR · $21 · Wk 4",
+     "sub": "+24 PAR · $21 · Wk 4",
      "managers": [
       "Ankit"
      ],
      "href": "/FAB-Management/?season=2026&manager=Ankit"
     },
     {
-     "rank": 6,
+     "rank": 7,
+     "title": "Denver Broncos · Haan",
+     "sub": "+22 PAR · $3 · Wk 5",
+     "managers": [
+      "Haan"
+     ],
+     "href": "/FAB-Management/?season=2026&manager=Haan"
+    },
+    {
+     "rank": 8,
      "title": "Ollie Gordon II · Steven",
-     "sub": "+22 PAR · $88 · Wk 3",
+     "sub": "+21 PAR · $88 · Wk 3",
      "managers": [
       "Steven"
      ],
      "href": "/FAB-Management/?season=2026&manager=Steven"
     },
     {
-     "rank": 7,
+     "rank": 9,
      "title": "Carolina Panthers · Alex",
      "sub": "+20 PAR · $2 · Wk 2",
      "managers": [
@@ -2005,27 +2023,9 @@
      "href": "/FAB-Management/?season=2026&manager=Alex"
     },
     {
-     "rank": 8,
-     "title": "New England Patriots · Stephanie",
-     "sub": "+18 PAR · Wk 1",
-     "managers": [
-      "Stephanie"
-     ],
-     "href": "/FAB-Management/?season=2026&manager=Stephanie"
-    },
-    {
-     "rank": 9,
-     "title": "Buffalo Bills · Christian",
-     "sub": "+18 PAR · Wk 9",
-     "managers": [
-      "Christian"
-     ],
-     "href": "/FAB-Management/?season=2026&manager=Christian"
-    },
-    {
      "rank": 10,
-     "title": "Spencer Shrader · Aidan",
-     "sub": "+17 PAR · $1 · Wk 3",
+     "title": "Michael Penix Jr. · Aidan",
+     "sub": "+19 PAR · $31 · Wk 2",
      "managers": [
       "Aidan"
      ],
@@ -2040,7 +2040,7 @@
     {
      "rank": 1,
      "title": "Emmett Johnson · Ben",
-     "sub": "+28 PAR · Wk 1",
+     "sub": "+47 PAR · Wk 1",
      "managers": [
       "Ben"
      ],
@@ -2048,6 +2048,15 @@
     },
     {
      "rank": 2,
+     "title": "T.J. Hockenson · Haan",
+     "sub": "+13 PAR · Wk 4",
+     "managers": [
+      "Haan"
+     ],
+     "href": "/FAB-Management/?season=2026&manager=Haan"
+    },
+    {
+     "rank": 3,
      "title": "New York Giants · Jake",
      "sub": "+13 PAR · Wk 8",
      "managers": [
@@ -2056,45 +2065,36 @@
      "href": "/FAB-Management/?season=2026&manager=Jake"
     },
     {
-     "rank": 3,
+     "rank": 4,
      "title": "Shedeur Sanders · Alex",
-     "sub": "+12 PAR · Wk 9",
+     "sub": "+13 PAR · Wk 9",
      "managers": [
       "Alex"
      ],
      "href": "/FAB-Management/?season=2026&manager=Alex"
-    },
-    {
-     "rank": 4,
-     "title": "T.J. Hockenson · Haan",
-     "sub": "+12 PAR · Wk 4",
-     "managers": [
-      "Haan"
-     ],
-     "href": "/FAB-Management/?season=2026&manager=Haan"
     },
     {
      "rank": 5,
-     "title": "Chase McLaughlin · Ben",
-     "sub": "+10 PAR · Wk 7",
+     "title": "San Francisco 49ers · Jake",
+     "sub": "+11 PAR · Wk 10",
      "managers": [
-      "Ben"
+      "Jake"
      ],
-     "href": "/FAB-Management/?season=2026&manager=Ben"
+     "href": "/FAB-Management/?season=2026&manager=Jake"
     },
     {
      "rank": 6,
-     "title": "Malik Willis · Alex",
-     "sub": "+8 PAR · Wk 5",
+     "title": "Kyle Pitts Sr. · Jake",
+     "sub": "+10 PAR · Wk 6",
      "managers": [
-      "Alex"
+      "Jake"
      ],
-     "href": "/FAB-Management/?season=2026&manager=Alex"
+     "href": "/FAB-Management/?season=2026&manager=Jake"
     },
     {
      "rank": 7,
-     "title": "Kyle Pitts Sr. · Jake",
-     "sub": "+8 PAR · Wk 6",
+     "title": "Chimere Dike · Jake",
+     "sub": "+9 PAR · Wk 11",
      "managers": [
       "Jake"
      ],
@@ -2102,30 +2102,30 @@
     },
     {
      "rank": 8,
-     "title": "Keenan Allen · Haan",
-     "sub": "+7 PAR · Wk 6",
+     "title": "Malik Willis · Alex",
+     "sub": "+9 PAR · Wk 5",
      "managers": [
-      "Haan"
+      "Alex"
      ],
-     "href": "/FAB-Management/?season=2026&manager=Haan"
+     "href": "/FAB-Management/?season=2026&manager=Alex"
     },
     {
      "rank": 9,
-     "title": "Emanuel Wilson · Aidan",
-     "sub": "+6 PAR · Wk 4",
-     "managers": [
-      "Aidan"
-     ],
-     "href": "/FAB-Management/?season=2026&manager=Aidan"
-    },
-    {
-     "rank": 10,
      "title": "Chig Okonkwo · Ben",
      "sub": "+6 PAR · Wk 6",
      "managers": [
       "Ben"
      ],
      "href": "/FAB-Management/?season=2026&manager=Ben"
+    },
+    {
+     "rank": 10,
+     "title": "Keenan Allen · Haan",
+     "sub": "+6 PAR · Wk 6",
+     "managers": [
+      "Haan"
+     ],
+     "href": "/FAB-Management/?season=2026&manager=Haan"
     }
    ]
   }
@@ -2198,5 +2198,5 @@
   "violations": [],
   "blocked": []
  },
- "generatedAt": "2026-11-24T11:08:39Z"
+ "generatedAt": "2026-11-24T12:38:18Z"
 }
