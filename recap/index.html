@@ -200,9 +200,9 @@
   .portal .rg { position: absolute; left: 50%; top: 42%; width: 0; height: 0; } .portal .rg i { position: absolute; border-radius: 50%; border: 2px solid transparent; border-top-color: #f2c14e; border-bottom-color: #d02027; box-shadow: 0 0 24px #f2c14e55, inset 0 0 24px #d0202755; animation: pspin 5s linear infinite; }
   .portal .rg i:nth-child(1) { width: 170px; height: 170px; margin: -85px 0 0 -85px; } .portal .rg i:nth-child(2) { width: 250px; height: 250px; margin: -125px 0 0 -125px; animation-duration: 8s; animation-direction: reverse; opacity: .7; } .portal .rg i:nth-child(3) { width: 340px; height: 340px; margin: -170px 0 0 -170px; animation-duration: 12s; opacity: .45; }
   .portal .tun { position: absolute; inset: 0; perspective: 640px; perspective-origin: 50% 42%; }
-  .portal .pt { position: absolute; left: 50%; top: 42%; width: 118px; aspect-ratio: 16 / 9; margin: -33px 0 0 -59px; border: 2px solid #f2c14e; box-shadow: 0 0 22px #f2c14e66, 0 10px 30px #000a; background: #000; opacity: 0; transform: rotate(var(--a)) translateX(var(--r)) rotate(calc(var(--a) * -1)) translateZ(-1500px); animation: pfly 9.2s cubic-bezier(.4,.05,.9,.6) infinite; animation-delay: var(--d); }
+  .portal .pt { position: absolute; left: 50%; top: 42%; width: 118px; aspect-ratio: 16 / 9; margin: -33px 0 0 -59px; border: 2px solid #f2c14e; box-shadow: 0 0 22px #f2c14e66, 0 10px 30px #000a; background: #000; opacity: 0; transform: rotate(var(--a)) translateX(var(--r)) rotate(calc(var(--a) * -1)) translateZ(-1500px); animation: pfly 12s linear infinite; animation-delay: var(--d); }
   .portal .pt img { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(1.15) contrast(1.05); }
-  @keyframes pfly { 0% { opacity: 0; transform: rotate(var(--a)) translateX(var(--r)) rotate(calc(var(--a) * -1)) translateZ(-1500px); } 12% { opacity: 1; } 78% { opacity: 1; } 100% { opacity: 0; transform: rotate(calc(var(--a) + 160deg)) translateX(calc(var(--r) * 1.9)) rotate(calc((var(--a) + 160deg) * -1)) translateZ(380px); } }
+  @keyframes pfly { 0% { opacity: 0; transform: rotate(var(--a)) translateX(var(--r)) rotate(calc(var(--a) * -1)) translateZ(-1500px); } 14% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; transform: rotate(calc(var(--a) + 220deg)) translateX(calc(var(--r) * 2)) rotate(calc((var(--a) + 220deg) * -1)) translateZ(420px); } }
   .portal .eye { position: absolute; left: 50%; top: 42%; width: 120px; height: 120px; margin: -60px 0 0 -60px; border-radius: 50%; background: radial-gradient(circle, #000 35%, #000a 55%, transparent 72%); box-shadow: 0 0 60px 12px #d0202799; }
   .portal .pttl { position: absolute; left: 0; right: 0; top: 42%; transform: translateY(-50%); text-align: center; pointer-events: none; animation: ppunch .9s cubic-bezier(.2,1.3,.3,1) both; }
   .portal .pttl .k { display: inline-block; background: var(--red); color: #fff; padding: 2px 12px; font-weight: 900; letter-spacing: .22em; text-transform: uppercase; font-size: .85rem; transform: skew(-8deg); }
@@ -270,7 +270,10 @@
   .ctl button { width: 52px; height: 44px; border: 2px solid var(--gold); background: var(--ink); color: var(--cream); font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
   .ctl button.p { width: 72px; } .ctl button:focus-visible, .top button:focus-visible, .top a:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
   .ctl svg { width: 22px; height: 22px; fill: currentColor; } .ctl button.mu svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .cover { position: absolute; inset: 0; z-index: 10; background: linear-gradient(180deg, #1f0d05f2, #6a300eee 60%, #b9591fee); display: flex; flex-direction: column; justify-content: center; gap: 14px; padding: 24px 14px; }
+  .cover { position: absolute; inset: 0; z-index: 10; background: #050202; overflow: hidden; }
+  .cover .portal { position: absolute; inset: 0; } .cover .portal .ptz { bottom: 150px; }
+  .cover .cvb { position: absolute; left: 0; right: 0; bottom: 22px; display: flex; flex-direction: column; align-items: center; gap: 8px; z-index: 2; }
+  .cover .cvn { position: absolute; left: 14px; top: 12px; z-index: 2; background: #000000a0; padding: 3px 10px; } .cover .cvn[hidden], .cover .cvb [hidden] { display: none; }
   .cover[hidden] { display: none; }
   .cover button { margin-top: 6px; align-self: center; padding: 14px 38px; border: 3px solid var(--gold); background: var(--red); color: #fff; font-family: var(--cond); font-weight: 900; font-size: 1.3rem; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; }
   .cover button:disabled { opacity: .55; cursor: default; background: var(--ink); color: var(--gold); }
@@ -290,10 +293,9 @@
   <div class="sheet" id="sheet" hidden></div>
   <div class="toast" id="toast" hidden></div>
   <div class="cover" id="cover">
-    <div class="hdr"><div class="ht"><b>Rumble Hub</b><i id="cw">&nbsp;</i></div><div class="hs" id="ch">Weekly recap</div></div>
-    <div class="rows"><div class="r"><span class="t">Run time</span><span class="c dim" id="cs">&nbsp;</span></div></div>
-    <div class="st" id="cst">Loading&hellip;</div>
-    <button id="go" disabled>&#9654; Watch</button><a href="/">Back to the Hub</a>
+    <div id="cvp"></div><a class="cvn" href="/">&larr; Hub</a>
+    <div class="cvb"><div class="st"><span id="cst">Loading&hellip;</span> <span class="dim" id="cs"></span></div>
+    <button id="go" disabled>&#9654; Watch</button><i hidden id="cw"></i><i hidden id="ch"></i></div>
   </div>
 </div></div>
 <script>
@@ -325,8 +327,9 @@
   function init() {
     var t = 'Week ' + D.week + ' recap'; document.title = t + ' · Rumble Hub'; $('ch').textContent = t; $('ttl').textContent = t; $('cw').textContent = D.week;
     var h = /#(\d+)/.exec(location.hash); startAt = h ? Number(h[1]) : null;
-    $('cs').textContent = fmt(D.seconds || 0); $('cst').textContent = 'Ready'; $('go').disabled = false;
-    segs = raw.filter(function (x) { return x.type === 'intro'; }); drawBars(raw.length);   // the opener can start right away; the clips are checked while it plays
+    $('cs').textContent = '· ' + fmt(D.seconds || 0); $('cst').textContent = 'Ready'; $('go').disabled = false;
+    segs = raw.filter(function (x) { return x.type === 'intro'; }); drawBars(raw.length);
+    if (segs[0]) $('cvp').innerHTML = render(segs[0]);   // the start card is the opener itself, with the Watch button on it   // the opener can start right away; the clips are checked while it plays
     resolve().then(function () {
       segs = build(); full = true; drawBars(segs.length); clock0();
       if (idx >= 0) markBars();
@@ -603,8 +606,8 @@
   }
   function render(s) {
     if (s.type === 'intro') {
-      var ids = []; raw.forEach(function (x) { if (x.type === 'clips' && !x.turn) x.cands.forEach(function (c) { if (c.clip && ids.indexOf(c.clip.id) < 0 && ids.length < 8) ids.push(c.clip.id); }); });
-      var tiles = ids.map(function (id, i) { var a = i * (360 / Math.max(ids.length, 1)) + 20, r = 120 + (i % 3) * 38, d = -(i * 1.15);
+      var ids = []; raw.forEach(function (x) { if (x.type === 'clips' && !x.turn) x.cands.forEach(function (c) { if (c.clip && ids.indexOf(c.clip.id) < 0 && ids.length < 10) ids.push(c.clip.id); }); });
+      var tiles = ids.map(function (id, i) { var a = (i * 137.5) % 360, r = 110 + (i % 4) * 32, d = -(i * 12 / Math.max(ids.length, 1));
         return '<div class="pt" style="--a:' + a.toFixed(0) + 'deg;--r:' + r + 'px;--d:' + d.toFixed(2) + 's"><img alt="" src="https://i.ytimg.com/vi/' + esc(id) + '/mqdefault.jpg" onerror="this.style.visibility=\'hidden\'"></div>'; }).join('');
       return '<div class="portal"><div class="vtx"></div><div class="vtx b"></div><div class="rg"><i></i><i></i><i></i></div><div class="tun">' + tiles + '</div><div class="eye"></div>' +
         '<div class="pttl"><span class="k">Rumble Hub · ' + esc(s.season) + '</span><b>Week ' + esc(s.week) + '</b><span class="sub">The recap</span></div>' +
@@ -696,7 +699,7 @@
     userPaused = !userPaused; applyPause();
   }
   function begin(at) { $('cover').hidden = true; started = true; ended = false; last = performance.now(); go(at); requestAnimationFrame(tick); }
-  $('go').onclick = function () { begin(0); if (startAt != null && startAt > 0) { if (full) go(startAt); else waiting = startAt; } };
+  $('go').onclick = function () { begin(startAt != null && startAt > 0 ? startAt : 1); };
   $('pp').onclick = toggle;
   $('next').onclick = function () { if (ended || !started) return; go(idx + 1); };
   $('prev').onclick = function () { if (!started) return; if (ended) { ended = false; last = performance.now(); go(segs.length - 1); requestAnimationFrame(tick); return; } go(elapsed > 2 ? idx : idx - 1); };
