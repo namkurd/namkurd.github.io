@@ -1221,7 +1221,129 @@
 ],
 "hl": "161.21 – 143.09"
 }
+],
+"11": [
+{
+"best": "11.3.11",
+"it": 0.8462,
+"flips": 4,
+"margin": 2.13,
+"h2h": false,
+"names": [
+"Jake",
+"Kaitlyn"
+],
+"hl": "156.63 – 154.50"
+},
+{
+"best": "11.3.4",
+"it": 0.8272,
+"flips": 4,
+"margin": 2.15,
+"h2h": false,
+"names": [
+"Jake",
+"Haan"
+],
+"hl": "156.63 – 154.48"
+},
+{
+"best": "11.11.4",
+"it": 0.6969,
+"flips": 3,
+"margin": 0.02,
+"h2h": false,
+"names": [
+"Kaitlyn",
+"Haan"
+],
+"hl": "154.50 – 154.48"
+},
+{
+"best": "11.7.9",
+"it": 0.6924,
+"flips": 3,
+"margin": 1,
+"h2h": false,
+"names": [
+"Steven",
+"Christian"
+],
+"hl": "127.14 – 126.14"
+},
+{
+"best": "11.7.12",
+"it": 0.6913,
+"flips": 1,
+"margin": 0.08,
+"h2h": false,
+"names": [
+"Steven",
+"Stephanie"
+],
+"hl": "127.14 – 127.06"
+},
+{
+"best": "11.9.1",
+"it": 0.6418,
+"flips": 3,
+"margin": 1.33,
+"h2h": false,
+"names": [
+"Christian",
+"Aidan"
+],
+"hl": "126.14 – 124.81"
+},
+{
+"best": "11.7.1",
+"it": 0.5917,
+"flips": 3,
+"margin": 2.33,
+"h2h": false,
+"names": [
+"Steven",
+"Aidan"
+],
+"hl": "127.14 – 124.81"
+},
+{
+"best": "11.10.12",
+"it": 0.4657,
+"flips": 2,
+"margin": 11.36,
+"h2h": true,
+"names": [
+"Ryan",
+"Stephanie"
+],
+"hl": "138.42 – 127.06"
+},
+{
+"best": "11.1.6",
+"it": 0.4013,
+"flips": 1,
+"margin": 13.52,
+"h2h": true,
+"names": [
+"Aidan",
+"Alex"
+],
+"hl": "124.81 – 111.29"
+},
+{
+"best": "11.5.6",
+"it": 0.3929,
+"flips": 1,
+"margin": 7.06,
+"h2h": false,
+"names": [
+"Joe",
+"Alex"
+],
+"hl": "118.35 – 111.29"
+}
 ]
 },
-"updatedAt": "2026-11-17T12:34:25Z"
+"updatedAt": "2026-11-24T11:08:16Z"
 }

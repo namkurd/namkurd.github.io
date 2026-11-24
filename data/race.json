@@ -1,40 +1,70 @@
 {
- "weeksLeft": 4,
+ "weeksLeft": 3,
  "spots": 6,
  "byes": 2,
- "played": 10,
+ "played": 11,
  "season": 2026,
- "scenWeek": 11,
+ "scenWeek": 12,
  "teams": [
   {
    "m": "Ben",
    "rank": 1,
-   "R": 149,
+   "R": 168,
    "make": 1,
-   "bye": 0.996,
-   "one": 0.955,
+   "bye": 0.999,
+   "one": 0.975,
    "x": false,
    "z": false,
    "top": false,
    "dead": false,
    "scen": {
     "p": {
-     "own": null,
-     "real": 20,
-     "long": 6,
+     "own": 1,
+     "real": 0,
+     "long": 0,
      "help": {
-      "allow": 1,
+      "allow": 3,
       "list": [
        {
-        "n": "Haan",
-        "th": 5
+        "n": "Jake",
+        "th": 2
        },
        {
-        "n": "Alex",
-        "th": 16
+        "n": "Stephanie",
+        "th": 11
+       },
+       {
+        "n": "Haan",
+        "th": 17
        },
        {
         "n": "Kaitlyn",
+        "th": 20
+       },
+       {
+        "n": "Ankit",
+        "th": 20
+       }
+      ]
+     }
+    },
+    "b": {
+     "own": 20,
+     "real": 7,
+     "long": 1,
+     "help": {
+      "allow": 0,
+      "list": [
+       {
+        "n": "Ryan",
+        "th": 8
+       },
+       {
+        "n": "Jake",
+        "th": 9
+       },
+       {
+        "n": "Stephanie",
         "th": 18
        }
       ]
@@ -45,36 +75,46 @@
   {
    "m": "Steven",
    "rank": 2,
-   "R": 137,
-   "make": 0.997,
-   "bye": 0.784,
-   "one": 0.041,
+   "R": 142,
+   "make": 0.998,
+   "bye": 0.816,
+   "one": 0.025,
    "x": false,
    "z": false,
    "top": false,
    "dead": false,
-   "scen": {}
-  },
-  {
-   "m": "Stephanie",
-   "rank": 3,
-   "R": 113,
-   "make": 0.814,
-   "bye": 0.072,
-   "one": 0.001,
-   "x": false,
-   "z": false,
-   "top": false,
-   "dead": false,
-   "scen": {}
+   "scen": {
+    "p": {
+     "own": null,
+     "real": 12,
+     "long": 8,
+     "help": {
+      "allow": 1,
+      "list": [
+       {
+        "n": "Haan",
+        "th": 3
+       },
+       {
+        "n": "Kaitlyn",
+        "th": 6
+       },
+       {
+        "n": "Ankit",
+        "th": 6
+       }
+      ]
+     }
+    }
+   }
   },
   {
    "m": "Ryan",
-   "rank": 4,
-   "R": 112,
-   "make": 0.753,
-   "bye": 0.05,
-   "one": 0.001,
+   "rank": 3,
+   "R": 127,
+   "make": 0.904,
+   "bye": 0.082,
+   "one": 0,
    "x": false,
    "z": false,
    "top": false,
@@ -83,11 +123,24 @@
   },
   {
    "m": "Jake",
+   "rank": 4,
+   "R": 126,
+   "make": 0.865,
+   "bye": 0.056,
+   "one": 0,
+   "x": false,
+   "z": false,
+   "top": false,
+   "dead": false,
+   "scen": {}
+  },
+  {
+   "m": "Stephanie",
    "rank": 5,
-   "R": 108,
-   "make": 0.837,
-   "bye": 0.054,
-   "one": 0.001,
+   "R": 117,
+   "make": 0.746,
+   "bye": 0.025,
+   "one": 0,
    "x": false,
    "z": false,
    "top": false,
@@ -97,22 +150,9 @@
   {
    "m": "Haan",
    "rank": 6,
-   "R": 104,
-   "make": 0.685,
-   "bye": 0.037,
-   "one": 0.001,
-   "x": false,
-   "z": false,
-   "top": false,
-   "dead": false,
-   "scen": {}
-  },
-  {
-   "m": "Alex",
-   "rank": 7,
-   "R": 93,
-   "make": 0.109,
-   "bye": 0,
+   "R": 111,
+   "make": 0.59,
+   "bye": 0.019,
    "one": 0,
    "x": false,
    "z": false,
@@ -122,10 +162,10 @@
   },
   {
    "m": "Kaitlyn",
-   "rank": 8,
-   "R": 91,
-   "make": 0.469,
-   "bye": 0.004,
+   "rank": 7,
+   "R": 108,
+   "make": 0.399,
+   "bye": 0.001,
    "one": 0,
    "x": false,
    "z": false,
@@ -135,10 +175,23 @@
   },
   {
    "m": "Ankit",
+   "rank": 8,
+   "R": 108,
+   "make": 0.437,
+   "bye": 0.001,
+   "one": 0,
+   "x": false,
+   "z": false,
+   "top": false,
+   "dead": false,
+   "scen": {}
+  },
+  {
+   "m": "Alex",
    "rank": 9,
-   "R": 88,
-   "make": 0.309,
-   "bye": 0.002,
+   "R": 93,
+   "make": 0.056,
+   "bye": 0,
    "one": 0,
    "x": false,
    "z": false,
@@ -149,33 +202,91 @@
   {
    "m": "Christian",
    "rank": 10,
-   "R": 84,
-   "make": 0.025,
+   "R": 87,
+   "make": 0.004,
    "bye": 0,
    "one": 0,
    "x": false,
    "z": false,
    "top": false,
    "dead": false,
-   "scen": {}
+   "scen": {
+    "o": {
+     "own": 4,
+     "real": 0,
+     "long": 0,
+     "help": {
+      "allow": 2,
+      "list": [
+       {
+        "n": "Jake",
+        "th": 2
+       },
+       {
+        "n": "Stephanie",
+        "th": 11
+       },
+       {
+        "n": "Haan",
+        "th": 17
+       },
+       {
+        "n": "Kaitlyn",
+        "th": 20
+       },
+       {
+        "n": "Ankit",
+        "th": 20
+       }
+      ]
+     }
+    }
+   }
   },
   {
    "m": "Joe",
    "rank": 11,
-   "R": 79,
-   "make": 0.002,
+   "R": 80,
+   "make": 0.001,
    "bye": 0,
    "one": 0,
    "x": false,
    "z": false,
    "top": false,
    "dead": false,
-   "scen": {}
+   "scen": {
+    "o": {
+     "own": 11,
+     "real": 2,
+     "long": 0,
+     "help": {
+      "allow": 1,
+      "list": [
+       {
+        "n": "Stephanie",
+        "th": 6
+       },
+       {
+        "n": "Haan",
+        "th": 12
+       },
+       {
+        "n": "Kaitlyn",
+        "th": 15
+       },
+       {
+        "n": "Ankit",
+        "th": 15
+       }
+      ]
+     }
+    }
+   }
   },
   {
    "m": "Aidan",
    "rank": 12,
-   "R": 42,
+   "R": 53,
    "make": 0,
    "bye": 0,
    "one": 0,
@@ -186,18 +297,18 @@
    "scen": {
     "o": {
      "own": null,
-     "real": 10,
-     "long": 3,
+     "real": null,
+     "long": 19,
      "help": {
-      "allow": 1,
+      "allow": -4,
       "list": [
        {
-        "n": "Jake",
-        "th": 5
+        "n": "Christian",
+        "th": 7
        },
        {
-        "n": "Haan",
-        "th": 9
+        "n": "Joe",
+        "th": 14
        }
       ]
      }
@@ -205,5 +316,5 @@
    }
   }
  ],
- "generatedAt": "2026-11-24T01:02:23Z"
+ "generatedAt": "2026-11-24T11:08:33Z"
 }

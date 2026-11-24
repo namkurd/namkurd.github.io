@@ -1009,6 +1009,78 @@
     },
     {
      "rank": 27,
+     "title": "C. Ward 59 yd TD pass",
+     "sub": "Jake vs Christian · Wk 11 · +6.4 pts",
+     "pts": 6.36,
+     "managers": [
+      "Jake",
+      "Christian"
+     ],
+     "swing": 23,
+     "from": 65,
+     "to": 88,
+     "clip": {
+      "id": "gszHeKcJEeQ",
+      "s": 0,
+      "e": 15
+     },
+     "et": "Sun 3:04 PM",
+     "fant": {
+      "m": "Jake",
+      "o": "Christian",
+      "ms": 156.63,
+      "os": 126.14
+     },
+     "sit": {
+      "team": "TEN",
+      "opp": "DAL",
+      "at": "@",
+      "q": 3,
+      "clock": "7:31",
+      "tm": 22,
+      "op": 34
+     },
+     "replay": "/SleeperLiveRumbles/rumbles.html?wp=11.3.9&t=240505",
+     "href": "https://www.youtube.com/watch?v=gszHeKcJEeQ&t=0s"
+    },
+    {
+     "rank": 28,
+     "title": "SF 18 yd pick-6 (J. Brown)",
+     "sub": "Jake vs Christian · Wk 11 · +8.7 pts",
+     "pts": 8.72,
+     "managers": [
+      "Jake",
+      "Christian"
+     ],
+     "swing": 22,
+     "from": 65,
+     "to": 87,
+     "clip": {
+      "id": "3bP1I_OceMw",
+      "s": 0,
+      "e": 10
+     },
+     "et": "Sun 9:35 PM",
+     "fant": {
+      "m": "Jake",
+      "o": "Christian",
+      "ms": 156.63,
+      "os": 126.14
+     },
+     "sit": {
+      "team": "SF",
+      "opp": "MIN",
+      "at": "",
+      "q": 2,
+      "clock": "2:05",
+      "tm": 27,
+      "op": 10
+     },
+     "replay": "/SleeperLiveRumbles/rumbles.html?wp=11.3.9&t=263982",
+     "href": "https://www.youtube.com/watch?v=3bP1I_OceMw&t=0s"
+    },
+    {
+     "rank": 29,
      "title": "C. Lamb 12 yd TD catch",
      "sub": "Kaitlyn vs Alex · Wk 4 · +8.2 pts",
      "pts": 8.2,
@@ -1044,7 +1116,7 @@
      "href": "https://www.youtube.com/watch?v=Au-UBkRQObw&t=365s"
     },
     {
-     "rank": 28,
+     "rank": 30,
      "title": "L. Burden 8 yd TD catch",
      "sub": "Alex vs Ryan · Wk 3 · +7.8 pts",
      "pts": 7.8,
@@ -1085,7 +1157,7 @@
      "href": "https://www.youtube.com/watch?v=GqZ81kf-g_A&t=0s"
     },
     {
-     "rank": 29,
+     "rank": 31,
      "title": "D. Adams 23 yd catch",
      "sub": "Ankit vs Haan · Wk 2 · +3.8 pts",
      "pts": 3.8,
@@ -1121,7 +1193,7 @@
      "href": "https://www.youtube.com/watch?v=PTkCmmEi0bw&t=153s"
     },
     {
-     "rank": 30,
+     "rank": 32,
      "title": "J. Taylor 24 yd TD run",
      "sub": "Haan vs Ankit · Wk 2 · +8.4 pts",
      "pts": 8.4,
@@ -1162,7 +1234,7 @@
      "href": "https://www.youtube.com/watch?v=TF-KoVf-I24&t=0s"
     },
     {
-     "rank": 31,
+     "rank": 33,
      "title": "P. Nacua 2 yd TD run",
      "sub": "Jake vs Joe · Wk 4 · +6.2 pts",
      "pts": 6.2,
@@ -1203,7 +1275,7 @@
      "href": "https://www.youtube.com/watch?v=LPfo5En_My4&t=0s"
     },
     {
-     "rank": 32,
+     "rank": 34,
      "title": "J. Williams 10 yd TD catch",
      "sub": "Joe vs Ryan · Wk 7 · +8.0 pts",
      "pts": 8,
@@ -1239,7 +1311,7 @@
      "href": "https://www.youtube.com/watch?v=chvnnzyKu7c&t=90s"
     },
     {
-     "rank": 33,
+     "rank": 35,
      "title": "T. McLaurin 30 yd TD catch",
      "sub": "Christian vs Joe · Wk 3 · +10.0 pts",
      "pts": 10,
@@ -1280,7 +1352,7 @@
      "href": "https://www.youtube.com/watch?v=DSQNDW6CJcc&t=0s"
     },
     {
-     "rank": 34,
+     "rank": 36,
      "title": "D. Moore 43 yd TD catch",
      "sub": "Aidan vs Ankit · Wk 1 · +11.3 pts",
      "pts": 11.3,
@@ -1321,7 +1393,7 @@
      "href": "https://www.youtube.com/watch?v=pvQGzepIbv8&t=0s"
     },
     {
-     "rank": 35,
+     "rank": 37,
      "title": "K. Walker 5 yd TD catch",
      "sub": "Alex vs Ryan · Wk 3 · +7.5 pts",
      "pts": 7.5,
@@ -1357,7 +1429,43 @@
      "href": "https://www.youtube.com/watch?v=8oRq521nUM0&t=91s"
     },
     {
-     "rank": 36,
+     "rank": 38,
+     "title": "C. Tate 59 yd TD catch",
+     "sub": "Alex vs Aidan · Wk 11 · +12.9 pts",
+     "pts": 12.9,
+     "managers": [
+      "Aidan",
+      "Alex"
+     ],
+     "swing": 20,
+     "from": 22,
+     "to": 43,
+     "clip": {
+      "id": "uyfr0oYKF8s",
+      "s": 0,
+      "e": 15
+     },
+     "et": "Sun 3:04 PM",
+     "fant": {
+      "m": "Alex",
+      "o": "Aidan",
+      "ms": 111.29,
+      "os": 124.81
+     },
+     "sit": {
+      "team": "TEN",
+      "opp": "DAL",
+      "at": "@",
+      "q": 3,
+      "clock": "7:31",
+      "tm": 22,
+      "op": 34
+     },
+     "replay": "/SleeperLiveRumbles/rumbles.html?wp=11.1.6&t=240505",
+     "href": "https://www.youtube.com/watch?v=uyfr0oYKF8s&t=0s"
+    },
+    {
+     "rank": 39,
      "title": "J. Williams 34 yd run",
      "sub": "Jake vs Haan · Wk 7 · +3.9 pts",
      "pts": 3.9,
@@ -1393,7 +1501,7 @@
      "href": "https://www.youtube.com/watch?v=j_8Nxkhuedo&t=231s"
     },
     {
-     "rank": 37,
+     "rank": 40,
      "title": "T. Shough 3 yd TD pass",
      "sub": "Kaitlyn vs Haan · Wk 3 · +4.1 pts",
      "pts": 4.12,
@@ -1427,124 +1535,6 @@
      },
      "replay": "/SleeperLiveRumbles/rumbles.html?wp=3.4.11&t=249752",
      "href": "https://www.youtube.com/watch?v=E0m0XEI7jzc&t=274s"
-    },
-    {
-     "rank": 38,
-     "title": "J. Williams 8 yd TD run",
-     "sub": "Jake vs Joe · Wk 4 · +6.8 pts",
-     "pts": 6.8,
-     "managers": [
-      "Jake",
-      "Joe"
-     ],
-     "swing": 19,
-     "from": 55,
-     "to": 74,
-     "clip": {
-      "id": "tS5wCBMH6Dw",
-      "s": 0,
-      "e": 15
-     },
-     "alt": {
-      "id": "MasBFBvhti0",
-      "s": 196,
-      "e": 206.5
-     },
-     "et": "Sun 2:48 PM",
-     "fant": {
-      "m": "Jake",
-      "o": "Joe",
-      "ms": 151.76,
-      "os": 129.62
-     },
-     "sit": {
-      "team": "DAL",
-      "opp": "HOU",
-      "at": "@",
-      "q": 3,
-      "clock": "13:00",
-      "tm": 12,
-      "op": 16
-     },
-     "replay": "/SleeperLiveRumbles/rumbles.html?wp=4.3.5&t=239561",
-     "href": "https://www.youtube.com/watch?v=tS5wCBMH6Dw&t=0s"
-    },
-    {
-     "rank": 39,
-     "title": "B. Bowers 20 yd TD catch",
-     "sub": "Steven vs Stephanie · Wk 4 · +9.0 pts",
-     "pts": 9,
-     "managers": [
-      "Steven",
-      "Stephanie"
-     ],
-     "swing": 19,
-     "from": 39,
-     "to": 58,
-     "clip": {
-      "id": "97r166YR8gE",
-      "s": 0,
-      "e": 15
-     },
-     "alt": {
-      "id": "rtRNFy2-ij0",
-      "s": 163,
-      "e": 177
-     },
-     "et": "Sun 7:29 PM",
-     "fant": {
-      "m": "Steven",
-      "o": "Stephanie",
-      "ms": 166.97,
-      "os": 141.93
-     },
-     "sit": {
-      "team": "LV",
-      "opp": "KC",
-      "at": "",
-      "q": 4,
-      "clock": "1:54",
-      "tm": 25,
-      "op": 30
-     },
-     "replay": "/SleeperLiveRumbles/rumbles.html?wp=4.7.12&t=256454",
-     "href": "https://www.youtube.com/watch?v=97r166YR8gE&t=0s"
-    },
-    {
-     "rank": 40,
-     "title": "J. Burrow 1 yd TD run",
-     "sub": "Haan vs Aidan · Wk 4 · +6.1 pts",
-     "pts": 6.1,
-     "managers": [
-      "Aidan",
-      "Haan"
-     ],
-     "swing": 18,
-     "from": 58,
-     "to": 77,
-     "clip": {
-      "id": "YNSQzZj5Y7o",
-      "s": 956,
-      "e": 967.5
-     },
-     "et": "Sun 3:55 PM",
-     "fant": {
-      "m": "Haan",
-      "o": "Aidan",
-      "ms": 191.18,
-      "os": 128.47
-     },
-     "sit": {
-      "team": "CIN",
-      "opp": "JAX",
-      "at": "",
-      "q": 4,
-      "clock": "3:33",
-      "tm": 16,
-      "op": 22
-     },
-     "replay": "/SleeperLiveRumbles/rumbles.html?wp=4.1.4&t=243565",
-     "href": "https://www.youtube.com/watch?v=YNSQzZj5Y7o&t=956s"
     }
    ]
   },
@@ -1614,6 +1604,16 @@
     },
     {
      "rank": 7,
+     "title": "Jake 156.6 – 154.5 Kaitlyn",
+     "sub": "Week 11 · vs. field · 4 lead changes",
+     "managers": [
+      "Jake",
+      "Kaitlyn"
+     ],
+     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=11.3.11"
+    },
+    {
+     "rank": 8,
      "title": "Ben 219.0 – 218.5 Stephanie",
      "sub": "Week 2 · vs. field · 2 lead changes",
      "managers": [
@@ -1623,7 +1623,17 @@
      "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=2.2.12"
     },
     {
-     "rank": 8,
+     "rank": 9,
+     "title": "Jake 156.6 – 154.5 Haan",
+     "sub": "Week 11 · vs. field · 4 lead changes",
+     "managers": [
+      "Jake",
+      "Haan"
+     ],
+     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=11.3.4"
+    },
+    {
+     "rank": 10,
      "title": "Aidan 174.5 – 171.8 Joe",
      "sub": "Week 5 · vs. field · 4 lead changes",
      "managers": [
@@ -1631,26 +1641,6 @@
       "Joe"
      ],
      "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=5.1.5"
-    },
-    {
-     "rank": 9,
-     "title": "Aidan 119.8 – 117.7 Ryan",
-     "sub": "Week 9 · vs. field · 3 lead changes",
-     "managers": [
-      "Aidan",
-      "Ryan"
-     ],
-     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=9.1.10"
-    },
-    {
-     "rank": 10,
-     "title": "Haan 131.4 – 121.6 Kaitlyn",
-     "sub": "Week 3 · H2H · 2 lead changes",
-     "managers": [
-      "Haan",
-      "Kaitlyn"
-     ],
-     "href": "/SleeperLiveRumbles/rumbles.html?season=2026&wp=3.4.11"
     }
    ]
   },
@@ -1666,8 +1656,8 @@
       "Jake",
       "Steven"
      ],
-     "winner": null,
-     "edge": 0,
+     "winner": "Jake",
+     "edge": 60.0,
      "gets": [
       {
        "m": "Jake",
@@ -1697,7 +1687,7 @@
       "Christian"
      ],
      "winner": "Christian",
-     "edge": 53.1,
+     "edge": 100.0,
      "gets": [
       {
        "m": "Aidan",
@@ -1726,8 +1716,8 @@
       "Aidan",
       "Ankit"
      ],
-     "winner": null,
-     "edge": 0,
+     "winner": "Aidan",
+     "edge": 7.2,
      "gets": [
       {
        "m": "Aidan",
@@ -1755,7 +1745,7 @@
       "Alex"
      ],
      "winner": "Alex",
-     "edge": 117.7,
+     "edge": 103.9,
      "gets": [
       {
        "m": "Ben",
@@ -1783,8 +1773,8 @@
       "Alex",
       "Ankit"
      ],
-     "winner": "Ankit",
-     "edge": 1.2,
+     "winner": "Alex",
+     "edge": 3.6,
      "gets": [
       {
        "m": "Alex",
@@ -1803,7 +1793,7 @@
        "v": 9.1
       }
      ],
-     "href": "/SleeperTradeNodes/?season=2026&manager=Ankit"
+     "href": "/SleeperTradeNodes/?season=2026&manager=Alex"
     },
     {
      "rank": 6,
@@ -1813,8 +1803,8 @@
       "Joe",
       "Ankit"
      ],
-     "winner": null,
-     "edge": 0,
+     "winner": "Ankit",
+     "edge": 25.2,
      "gets": [
       {
        "m": "Joe",
@@ -1831,7 +1821,7 @@
        "v": 8.7
       }
      ],
-     "href": "/SleeperTradeNodes/?season=2026&manager=Joe"
+     "href": "/SleeperTradeNodes/?season=2026&manager=Ankit"
     },
     {
      "rank": 7,
@@ -1869,8 +1859,8 @@
       "Alex",
       "Steven"
      ],
-     "winner": null,
-     "edge": 0,
+     "winner": "Alex",
+     "edge": 1.8,
      "gets": [
       {
        "m": "Alex",
@@ -2144,77 +2134,69 @@
   {
    "m": "Ben",
    "rank": 1,
-   "rumbles": 149
+   "rumbles": 168
   },
   {
    "m": "Steven",
    "rank": 2,
-   "rumbles": 137
-  },
-  {
-   "m": "Stephanie",
-   "rank": 3,
-   "rumbles": 113
+   "rumbles": 142
   },
   {
    "m": "Ryan",
-   "rank": 4,
-   "rumbles": 112
+   "rank": 3,
+   "rumbles": 127
   },
   {
    "m": "Jake",
+   "rank": 4,
+   "rumbles": 126
+  },
+  {
+   "m": "Stephanie",
    "rank": 5,
-   "rumbles": 108
+   "rumbles": 117
   },
   {
    "m": "Haan",
    "rank": 6,
-   "rumbles": 104
-  },
-  {
-   "m": "Alex",
-   "rank": 7,
-   "rumbles": 93
+   "rumbles": 111
   },
   {
    "m": "Kaitlyn",
-   "rank": 8,
-   "rumbles": 91
+   "rank": 7,
+   "rumbles": 108
   },
   {
    "m": "Ankit",
+   "rank": 8,
+   "rumbles": 108
+  },
+  {
+   "m": "Alex",
    "rank": 9,
-   "rumbles": 88
+   "rumbles": 93
   },
   {
    "m": "Christian",
    "rank": 10,
-   "rumbles": 84
+   "rumbles": 87
   },
   {
    "m": "Joe",
    "rank": 11,
-   "rumbles": 79
+   "rumbles": 80
   },
   {
    "m": "Aidan",
    "rank": 12,
-   "rumbles": 42
+   "rumbles": 53
   }
  ],
  "ir": {
-  "week": 11,
-  "state": "blocked",
+  "week": 12,
+  "state": "clear",
   "violations": [],
-  "blocked": [
-   {
-    "m": "Alex",
-    "player": "T. Ferguson",
-    "pos": "TE",
-    "status": "IR",
-    "how": "waiver"
-   }
-  ]
+  "blocked": []
  },
- "generatedAt": "2026-11-21T23:27:43Z"
+ "generatedAt": "2026-11-24T11:08:39Z"
 }
