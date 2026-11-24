@@ -384,14 +384,7 @@ def build(week, src, asof):
         segs.append({'type': 'clips', 'dur': 17, 'want': 4 if defense else min(4, len(offense)), 'defWant': 1 if defense else 0, 'label': 'play of the week',
                      'charts': {'%s.%s.%s' % (p['week'], p.get('aid'), p.get('bid')): chart_for(p)[0] for p in cands if chart_for(p)[0]},
                      'cands': [dict(play_segment(p, 'top', ''), **({'def': True} if is_def(p) else {})) for p in cands]})
-    turning = None
-    if wild and wild['flips'] >= 2:
-        pool = [p for p in plays if {p['a'], p['b']} == {wild['w'], wild['l']}]
-        if pool:
-            turning = pool[0]
-            segs.append({'type': 'clips', 'dur': 17, 'want': 1, 'turn': True, 'label': 'Turning point', 'why': '%s vs %s \u00b7 %d lead changes' % (wild['w'], wild['l'], wild['flips']),
-                         'charts': {'%s.%s.%s' % (p['week'], p.get('aid'), p.get('bid')): chart_for(p)[0] for p in pool[:4] if chart_for(p)[0]},
-                         'cands': [play_segment(p, 'turn', 'Turning point') for p in pool[:4]]})
+    turning = None   # (the turning-point clip card was removed: the plays are the plays)
 
     # ---- the game of the week: the closest real game, or the one that traded the lead most, with the plays that decided it as its box score
     if games:
@@ -631,7 +624,7 @@ def build(week, src, asof):
     def read_time(sg):   # seconds to take a card in: a few to see it, more for each line, plus the words
         t = sg['type']
         if t == 'intro': return 3 + 1.3 * len(sg['rundown'])
-        if t == 'game': return 3 + words(sg.get('head')) / 3.5 + 1.4 + 0.9 * sum(len(x['lines']) for x in sg['sides'])   # score, then each scoring play
+        if t == 'game': return 10
         if t == 'finals': return 3 + 0.9 * len(sg['games'])
         if t == 'series': return 4 + 0.8 * len(sg['last'])
         if t == 'trades': return 3 + words(sg.get('head')) / 3.5 + 1.1 * len(sg['rows']) + 2   # two sides, players and numbers each, then the season totals
@@ -639,13 +632,13 @@ def build(week, src, asof):
         if t == 'pod': return 4 + words(sg.get('quote')) / 2.8
         if t == 'slack':
             cm = sg.get('comment')
-            return 3 + (2 + words(cm.get('text')) / 3.0 if cm else 0) + sum(1.5 + words(x['t']) / 3.5 for x in sg['items'])
+            return min(9, 3 + (2 + words(cm.get('text')) / 3.0 if cm else 0) + sum(1.5 + words(x['t']) / 3.5 for x in sg['items']))
         if t == 'shotguns': return 3 + 1.2 * len(sg['new']) + 0.4 * len(sg['owed'])   # a short list of small numbers: a glance
         if t == 'records': return 3 + sum(1.8 + words(x['name']) / 5.0 for x in sg['items'])   # name, new value, holder, what it was
         if t == 'lifetime': return 3 + 1.8 * len(sg['items'])
         if t == 'standings': return 4 + 0.6 * len(sg['rows']) + (2 if sg.get('head') else 0)
         if t == 'coming': return 3 + 2 * len(sg['items'])
-        if t == 'clinch': return 4 + 3 * len(sg['items']) + (2 if sg.get('noElim') else 0)
+        if t == 'clinch': return min(10, 4 + 3 * len(sg['items']) + (2 if sg.get('noElim') else 0))
         return sg['dur']
     for sg in segs:
         if sg['type'] != 'clips':

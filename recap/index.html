@@ -424,9 +424,9 @@
         p._rh = c.head || c.by;
         p.type = 'play'; p.clip = c._ok; p.dur = s.dur;
         if (s.charts && c._ck && s.charts[c._ck]) p.chart = s.charts[c._ck];
-        if (c.def) p.head = 'Defense \u00b7 ' + (p.head || '');
+        if (c.def) { p.isDef = 1; }
         if (s.turn) { p.label = 'Turning point'; p.why = s.why; p.turn = 1; p.head = s.why; }
-        else { var rank = ok.length - j; p.rank = rank; p.label = s.label.charAt(0).toUpperCase() + s.label.slice(1); if (rank === 1) p.dur += 3; }
+        else { var rank = ok.length - j; p.rank = rank; p.label = c.def ? 'Defensive play of the week' : s.label.charAt(0).toUpperCase() + s.label.slice(1); if (rank === 1) p.dur += 3; }
         out.push(p);
       });
     });
@@ -648,7 +648,7 @@
     }
     if (s.type === 'play') {
       var fa = s.fant, f = s.from == null ? 0 : s.from, t = s.to == null ? 0 : s.to;
-      return '<div class="vid"></div>' + hdr(s.label, s.head || '', s.rank ? '#' + s.rank : '') +
+      return '<div class="vid"></div>' + hdr(s.label, s.head || '', s.rank && !s.isDef ? '#' + s.rank : '') +
         board([{ t: s.title, w: 1, c: [{ v: (s.pts == null ? '' : pts(s.pts)), k: 'g' }] }]) + situation(s.sit, s.et) +
         (fa ? '<div class="fa">' + board([{ t: fa.m, tag: fa.ms > fa.os ? 'W' : 'L', slim: 1, c: [{ v: f1(fa.ms), k: fa.ms > fa.os ? 'g' : 'dim' }] }, { t: fa.o, tag: fa.ms > fa.os ? 'L' : 'W', slim: 1, c: [{ v: f1(fa.os), k: 'dim' }] }]) + '</div>' : '') +
         (s.chart && s.star ? chartHtml(s) : s.from == null ? '' : '<div class="wpd in"' + ds(4) + ' data-f="' + f + '" data-t="' + t + '"><div class="wh"><span class="who">' + esc(s.by || 'Win') + '\u2019s win chance</span><span class="swg" style="opacity:0">' + (t >= f ? '+' : '\u2212') + Math.abs(t - f) + '</span></div><div class="wn"><b class="cur">' + f + '%</b></div><div class="trk"><i class="gain"></i><i class="tick"></i><i class="head"></i><i class="m"></i></div></div>') +
