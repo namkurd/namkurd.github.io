@@ -199,8 +199,9 @@
   .card[hidden] { display: none; }
   .card .k { font-size: .62rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--dtf-accent); }
   .card .k .cbc { width: 1.55em; height: 1.55em; vertical-align: -.42em; margin-left: 3px; object-fit: contain; }
-  .pod { display: flex; gap: 10px; align-items: stretch; }
-  .pv { flex: 0 0 var(--pw, 42%); max-width: 260px; position: relative; aspect-ratio: 16 / 9; border-radius: 9px; overflow: hidden; background: #000; align-self: center; }
+  .pod { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: stretch; }   /* the episode's name gets a line of its own under the picture so it doesn't wrap in a narrow column */
+  .pod .pname { flex: 1 0 100%; min-width: 0; margin: 0; font-size: .84rem; font-weight: 700; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pv { flex: 0 0 var(--pw, 50%); max-width: 320px; position: relative; aspect-ratio: 16 / 9; border-radius: 9px; overflow: hidden; background: #000; align-self: center; }
   /* phones: the song is a small tile (about a quarter of the row) beside the episode; tapping it opens the Suno player */
   .lower { grid-template-columns: minmax(0, 1fr) 25%; }
   .lower .pod { grid-column: 1; grid-row: 1; } .lower .suno { grid-column: 2; grid-row: 1; } .lower .sg { grid-column: 1 / -1; grid-row: 2; }
@@ -226,9 +227,9 @@
   .pv .pl { position: absolute; left: 50%; top: 50%; width: 34px; height: 24px; margin: -12px 0 0 -17px; border-radius: 7px; background: rgba(255,0,0,.9); box-shadow: 0 2px 8px rgba(0,0,0,.45); }
   .pv .pl::after { content: ""; position: absolute; left: 14px; top: 6px; border-left: 11px solid #fff; border-top: 6px solid transparent; border-bottom: 6px solid transparent; }
   .pb { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 2px; }
-  .pb b { font-size: .8rem; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-  .pb small { color: var(--dtf-dim); font-size: .66rem; line-height: 1.25; }
-  .pb a { color: var(--dtf-accent); font-size: .68rem; text-decoration: none; }
+  .pb b { font-size: 1rem; line-height: 1.15; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .pb small { color: var(--dtf-dim); font-size: .64rem; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pb a { color: var(--dtf-accent); font-size: .66rem; text-decoration: none; white-space: nowrap; }
   .sgh { display: flex; align-items: baseline; gap: 7px; margin-bottom: 3px; }
   .sgh a.k { text-decoration: none; }
   .sgh b { font-size: .78rem; } .sgh small { margin-left: auto; color: var(--dtf-dim); font-size: .64rem; white-space: nowrap; }
@@ -256,7 +257,9 @@
     .lower { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
     .lower .pod { grid-column: 1; grid-row: 1; } .lower .suno { grid-column: 1; grid-row: 2; } .lower .sg { grid-column: 2; grid-row: 1 / span 2; }   /* wide: the song sits under the episode; Shotguns stays on the right */
     .suno .sb { flex-direction: row; justify-content: flex-start; gap: 12px; padding: 0 16px; min-height: 56px; } .suno .sb small { font-size: .76rem; }
-    .pb b { font-size: .92rem; } .pb small { font-size: .74rem; } .sgrow .who, .sgp, .sgrow .n { font-size: .74rem; }
+    /* wide: the card is not made taller; the picture stays about its old size and the name sits under 'Episode N' in the text column */
+    .pod { display: grid; grid-template-columns: minmax(0, 172px) minmax(0, 1fr); grid-template-rows: auto 1fr; gap: 0 12px; align-items: start; } .pod .pv { grid-column: 1; grid-row: 1 / span 2; max-width: 172px; align-self: center; } .pod .pb { grid-column: 2; grid-row: 1; justify-content: flex-start; } .pod .pname { grid-column: 2; grid-row: 2; white-space: normal; font-size: .92rem; }
+    .pb b { font-size: 1.05rem; } .pb small { font-size: .74rem; } .sgrow .who, .sgp, .sgrow .n { font-size: .74rem; }
     /* the Shotguns card is as tall as the episode and the song together, its rows spread to fill it */
     .lower .sg { align-self: stretch; display: flex; flex-direction: column; } #sg-l { flex: 1; display: flex; flex-direction: column; justify-content: space-evenly; }
   }
@@ -279,7 +282,8 @@
 <div class="lower" id="lower">
   <section class="card pod" id="pod" hidden aria-label="Latest podcast episode">
     <div class="pv" id="pod-v"><a id="pod-p" class="pp" href="#" target="_blank" rel="noopener" aria-label="Play the latest episode"><img id="pod-i" alt="" decoding="async"><span class="pl" aria-hidden="true"></span></a></div>
-    <div class="pb"><span class="k">Content Boys <img class="cbc" src="/shell/icons/cbc-coin.webp" alt="Content Boy Coin" width="16" height="16" decoding="async"></span><b id="pod-t"></b><small id="pod-m"></small><a id="pod-a" target="_blank" rel="noopener">Open on YouTube</a></div>
+    <div class="pb"><span class="k">Content Boys <img class="cbc" src="/shell/icons/cbc-coin.webp" alt="Content Boy Coin" width="16" height="16" decoding="async"></span><b id="pod-e"></b><small id="pod-m"></small><a id="pod-a" target="_blank" rel="noopener">YouTube ↗</a></div>
+    <p class="pname" id="pod-t"></p>
   </section>
   <section class="card suno" id="suno" aria-label="Theme song on Suno">
     <button type="button" id="suno-b" class="sb" aria-label="Play the theme song"><span class="se" aria-hidden="true">&#127930;</span><span class="sp" aria-hidden="true"></span><small>Theme Song</small></button>
@@ -473,7 +477,7 @@
   // Home is meant to fit one screen: if the content is taller than the space between the bars it is tightened in steps (the lower cards
   // shrink, the feed loses its caption, the tiles get smaller) and stops as soon as it fits; below the last step the page just scrolls
   // [Shotguns zoom, player width %, layout]: negative layouts are roomier (loose1, loose2), positive ones tighter (tight1, tight2). The roomiest that fits wins.
-  var HOME_STEPS = [[1.22, 52, -2], [1.14, 48, -2], [1.14, 48, -1], [1.08, 45, -1], [1, 42, 0], [1, 42, 1], [.92, 38, 1], [.84, 34, 1], [.84, 34, 2], [.76, 30, 2], [.76, 30, 3]];
+  var HOME_STEPS = [[1.22, 56, -2], [1.14, 54, -2], [1.14, 54, -1], [1.08, 52, -1], [1, 50, 0], [1, 50, 1], [.92, 48, 1], [.84, 46, 1], [.84, 46, 2], [.76, 44, 2], [.76, 44, 3]];   // [type scale, the episode picture's share of its card, tightness]
   function fitHome() {
     var lo = $('lower'), sg = $('sg'), root = document.querySelector('.dtf-wrap'); if (!lo || !root) return;
     var over = function () { return document.documentElement.scrollHeight > window.innerHeight; };
@@ -822,8 +826,10 @@
   // ---- latest podcast episode: the last YouTube link posted in #podcast (podcast.json, built by the Slack job)
   get('/podcast.json').then(function (p) {
     if (!p || !p.videoId) return;
-    $('pod-t').textContent = p.title || 'Latest episode';
-    $('pod-m').textContent = (p.channel ? p.channel + ' \u00b7 ' : '') + (p.postedAt ? 'posted ' + ago(p.postedAt) : '');
+    var tm = /^Episode\s+(\d+)\s*\u00b7\s*(.+)$/i.exec(p.title || '');   // 'Episode 53 · The Bill Romanowski Episode' -> 'Episode 53' beside the picture, the name underneath
+    $('pod-e').textContent = tm ? 'Episode ' + tm[1] : '';
+    $('pod-t').textContent = tm ? tm[2] : (p.title || 'Latest episode');
+    $('pod-m').textContent = p.postedAt ? ago(p.postedAt) : (p.channel || '');
     $('pod-a').href = p.url || ('https://www.youtube.com/watch?v=' + encodeURIComponent(p.videoId));
     var vid = encodeURIComponent(p.videoId), yt = $('pod-a').href, pv = $('pod-v'), pa = $('pod-p');
     $('pod-i').src = 'https://i.ytimg.com/vi/' + vid + '/hqdefault.jpg';
