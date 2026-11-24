@@ -312,7 +312,13 @@
   function load() {
     var w = wk(), urls = w ? ['/data/recap_' + w + '.json', '/data/recap.json'] : ['/data/recap.json'];
     (function next(i) {
-      if (i >= urls.length) { $('cst').textContent = 'No recap yet.'; return; }
+      if (i >= urls.length) {   // none published: say what it is waiting for
+        $('cst').textContent = 'No recap up yet.'; $('ch').textContent = 'Weekly recap';
+        fetch('/data/recap_status.json', { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (st) {
+          if (st && !st.ready) $('cst').textContent = 'The week ' + st.week + ' recap goes up once everything is updated' + (st.waiting && st.waiting.length ? ' \u00b7 waiting on ' + st.waiting.map(function (x) { return x.replace(/ \(.*$/, ''); }).join(', ') : '');
+        }).catch(function () { /* nothing to add */ });
+        return;
+      }
       fetch(urls[i], { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (d) { D = d; raw = d.segments || []; init(); }, function () { next(i + 1); });
     })(0);
   }

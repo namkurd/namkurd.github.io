@@ -731,7 +731,10 @@ def main():
         if load('data/recap_status.json') != status:
             json.dump(status, open(status_path, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
         if waiting:
-            print('week %d recap is not ready yet; waiting on: %s' % (week, '; '.join(waiting)))
+            cur = load('data/recap.json') or {}
+            if cur and int(cur.get('week', 0)) < week and os.path.exists(os.path.join(HUB, 'data', 'recap.json')):   # no recap is better than last week's
+                os.remove(os.path.join(HUB, 'data', 'recap.json'))
+            print('week %d recap is not ready yet (nothing is published until it is); waiting on: %s' % (week, '; '.join(waiting)))
             return
     out = build(week, args.src, asof)
     for name in ('recap.json', 'recap_%d.json' % week):
