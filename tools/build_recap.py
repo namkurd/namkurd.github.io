@@ -16,7 +16,7 @@ sys.path.insert(0, HERE)
 import build_feed as bf   # play_title / play_sub / fantasy / source / fetch
 
 HUB = bf.HUB
-BUDGET = 170          # seconds, the page never runs longer (clips usually end before their slot does)
+BUDGET = 195          # seconds, the page never runs longer (clips usually end before their slot does)
 SITE = 'https://namkurd.github.io'
 
 
@@ -648,10 +648,12 @@ def build(week, src, asof):
     # ---- trim to the budget: drop the least important extras first
     def total():
         return sum(s['dur'] * (s['want'] if s['type'] == 'clips' else 1) for s in segs)
-    for drop in ('finals', 'records', 'lifetime', 'pod', 'slack'):
+    for drop in ('finals', 'pod', 'slack', 'lifetime', 'records'):   # the records card is the last extra to go
         if total() <= BUDGET:
             break
         segs[:] = [s for s in segs if s['type'] != drop]
+    have = {x['type'] for x in segs}   # the opener only teases cards that are still in
+    segs[0]['rundown'] = [x for x in segs[0]['rundown'] if not (x['k'] == 'Record' and 'records' not in have)]
     for s_ in segs:
         while total() > BUDGET and s_['type'] == 'clips' and not s_.get('turn') and s_['want'] > 2:
             s_['want'] -= 1

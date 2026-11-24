@@ -126,7 +126,7 @@
   .sn .sv { order: 2; flex: none; margin-left: auto; font-size: .85rem; font-weight: 900; letter-spacing: .05em; padding: 0 6px; background: #5a4a30; color: #e8dcc0; } .sn .sv.pos { background: var(--win); color: #fff; } .sn .sv.neg { background: var(--red); color: #fff; }
   .tr .axis { margin-top: 2px; }
   /* trade report: every trade more than a week old, two lines each (one per side) */
-  .tg { display: flex; flex-direction: column; gap: 5px; } .tc { background: var(--ink); border-left: 4px solid #5a4a30; padding: 2px 8px 3px; } .tc.ok { border-left-color: var(--win); } .tc.no { border-left-color: var(--red); }
+  .tgw { display: flex; flex-direction: column; gap: 5px; } .tcol.dup .tgh { display: none; } .tg { display: flex; flex-direction: column; gap: 5px; } .tc { background: var(--ink); border-left: 4px solid #5a4a30; padding: 2px 8px 3px; } .tc.ok { border-left-color: var(--win); } .tc.no { border-left-color: var(--red); }
   .tc .sdr { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr) 3.4rem 2.8rem; align-items: center; gap: 6px; line-height: 1.25; }
   .tc .sdr b { font-size: .9rem; text-transform: uppercase; color: var(--gold); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .tc .sdr b.lead { color: #fff; }
   .tc .pl { font-size: .86rem; color: #f3ead6; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -244,7 +244,12 @@
     .seg > * { min-width: 0; }
     .ctl { padding: 6px 12px 10px; } .ctl button { height: 38px; }
     /* the play card: the clip fills the left, everything about the play stacks on the right */
-    .seg.t-trades > .hdr, .seg.t-trades > .tgh, .seg.t-trades > .tg, .seg.t-trades > .notes { grid-column: 1 / -1; }
+    .seg.t-trades > .hdr, .seg.t-trades > .tgw, .seg.t-trades > .notes { grid-column: 1 / -1; }
+    .tgw { display: grid; grid-template-columns: 1fr 1fr; gap: 0 26px; } .tcol.dup .tgh { display: grid; } .tc .sdr { gap: 8px; } .tc .sdr b { font-size: 1.05rem; } .tc .pl { font-size: 1rem; } .tc .pr { font-size: 1.05rem; } .tc .sv { font-size: .85rem; }
+    .tc .sdr, .tgh { grid-template-columns: 6.6rem minmax(0, 1fr) 4rem 3.2rem; }
+    .seg.t-race .r.bar { grid-auto-columns: 118px; } .r.bar.cols .c { overflow: visible; text-align: center; }
+    .seg.t-coming > .cd { padding: 30px 14px 32px; align-self: center; } .seg.t-coming .cd .cn { font-size: 3.7rem; margin: 10px 0 6px; } .seg.t-coming .cd .cw { font-size: 1.15rem; } .seg.t-coming .cd .hk { white-space: normal; max-width: 100%; font-size: .9rem; }
+    .seg.t-slack:not(:has(.cotw)) { grid-template-columns: repeat(3, 1fr); align-content: center; } .seg.t-slack:not(:has(.cotw)) > .topic { grid-column: auto; align-self: stretch; padding: 14px 16px 16px; } .seg.t-slack:not(:has(.cotw)) .topic b { font-size: 1.5rem; margin: 10px 0 12px; } .seg.t-slack:not(:has(.cotw)) .topic .tm { font-size: 1.05rem; }
     .seg.play { grid-template-columns: 2fr 1fr; align-content: start; padding-top: 4px; row-gap: 10px; }
     .seg.play > .vid { grid-column: 1; grid-row: 1 / span 12; margin: 0; width: 100%; border: 3px solid var(--gold); align-self: start; }
     .seg.play > :not(.vid) { grid-column: 2; }
@@ -256,7 +261,6 @@
     .r.bar.cols.dup { display: grid; }
     .seg.t-finals .tiles { grid-column: 1 / -1; grid-template-columns: repeat(3, 1fr); }
     .seg.t-lifetime .mvs { grid-column: 1 / -1; grid-template-columns: repeat(3, 1fr); }
-    .seg.t-trades { grid-template-columns: 1fr 1fr; } .seg.t-trades > .notes { grid-column: 1 / -1; }
     .seg.t-records { grid-template-columns: 1fr 1fr; } .seg.t-records > .hero { align-self: stretch; }
     .seg.t-coming { grid-template-columns: repeat(3, 1fr); } .seg.t-coming .cd .cn { font-size: 2.6rem; } .seg.t-coming .cd .cw { font-size: 1rem; } .seg.t-coming > .cd { align-self: stretch; }
     .seg.t-slack { grid-template-columns: 1.1fr 1fr; } .seg.t-slack > .cotw { grid-column: 1; grid-row: 2 / span 4; align-self: stretch; } .seg.t-slack > .topic { grid-column: 2; }
@@ -409,6 +413,7 @@
       ok.forEach(function (c) { used[c._ok.id] = 1; });
       (s.turn ? ok : ok.slice().reverse()).forEach(function (c, j) {
         var p = {}; for (var k in c) p[k] = c[k];
+        p._rh = c.head || c.by;
         p.type = 'play'; p.clip = c._ok; p.dur = s.dur;
         if (s.charts && c._ck && s.charts[c._ck]) p.chart = s.charts[c._ck];
         if (c.def) p.head = 'Defense \u00b7 ' + (p.head || '');
@@ -418,6 +423,13 @@
       });
     });
     out.forEach(function (s, i) { s.id = i; });
+    // the opener teases the play of the week that is really shown (the first clip in the data may not play on this device)
+    var pw = out.filter(function (x) { return x.type === 'play' && x.rank === 1 && !x.turn; })[0], it = out[0] && out[0].type === 'intro' ? out[0] : null;
+    if (pw && it) {
+      var t = pw.title + ', ' + (pw._rh || ''); (it.rundown || []).forEach(function (x) { if (x.k === 'Play') x.t = t; });
+      [].forEach.call(document.querySelectorAll('#cvp .ptz p'), function (el) { if (/^play$/i.test(el.firstChild.textContent)) el.lastChild.textContent = t; });
+      if (typeof fitCover === 'function') fitCover();
+    }
     return out;
   }
   function total() { return (full ? segs : raw.filter(function (x) { return x.type !== 'clips'; })).reduce(function (a, x) { return a + x.dur; }, 0); }
@@ -644,10 +656,13 @@
     if (s.type === 'trades') {
       var side = function (name, got, v, sv, lead) { var cls = sv == null ? 'none' : sv > 0.15 ? 'pos' : sv < -0.15 ? 'neg' : '';
         return '<div class="sdr"><b' + (lead ? ' class="lead"' : '') + '>' + esc(name) + '</b><span class="pl">' + ((got || []).map(function (g) { return esc(g.n); }).join(', ') || '–') + '</span><span class="pr ' + (v >= 0 ? 'p' : 'n') + '">' + sgn(v) + '</span><span class="sv ' + cls + '">' + (sv == null ? '' : (sv > 0 ? '+' : sv < 0 ? '\u2212' : '') + Math.abs(sv).toFixed(1)) + '</span></div>'; };
-      return hdr('Trade report', s.head || '', '') + '<div class="tgh"><span>Team</span><span>Got</span><span>PAR</span><span>Chat</span></div><div class="tg">' + (s.rows || []).map(function (r, i) {
-        var vc = r.verdict === 'right' ? ' ok' : r.verdict === 'wrong' ? ' no' : '';
-        return '<div class="tc in' + vc + '"' + ds(Math.min(i + 1, 6)) + ' title="Week ' + r.w + ' trade">' + side(r.a, r.ga, r.lga, r.sa, r.par > 0) + side(r.b, r.gb, r.lgb, r.sb, r.par < 0) + '</div>';
-      }).join('') + '</div>' +
+      return hdr('Trade report', s.head || '', '') + (function () {
+        var rows = s.rows || [], half = Math.ceil(rows.length / 2), hd = '<div class="tgh"><span>Team</span><span>Got</span><span>PAR</span><span>Chat</span></div>';
+        var cell = function (r, i) { var vc = r.verdict === 'right' ? ' ok' : r.verdict === 'wrong' ? ' no' : '';
+          return '<div class="tc in' + vc + '"' + ds(Math.min(i + 1, 6)) + ' title="Week ' + r.w + ' trade">' + side(r.a, r.ga, r.lga, r.sa, r.par > 0) + side(r.b, r.gb, r.lgb, r.sb, r.par < 0) + '</div>'; };
+        return '<div class="tgw"><div class="tcol">' + hd + '<div class="tg">' + rows.slice(0, half).map(cell).join('') + '</div></div>' +
+          (rows.length > half ? '<div class="tcol dup">' + hd + '<div class="tg">' + rows.slice(half).map(function (r, i) { return cell(r, i + half); }).join('') + '</div></div>' : '') + '</div>';
+      })() +
         '<div class="notes in"' + ds(7) + '><h4>Season trade PAR</h4><p>' + (s.best || []).map(function (x) { return '<b>' + esc(x.m) + '</b> ' + sgn(x.v); }).concat((s.worst || []).map(function (x) { return '<b style="color:#ff8a8f">' + esc(x.m) + '</b> ' + sgn(x.v); })).join(' · ') + '</p>' + (s.clear ? '<p>Chat called <b>' + s.right + ' of ' + s.clear + '</b> clear ones right</p>' : '') + '</div>';
     }
     if (s.type === 'race') return hdr('Playoff hunt', s.head || '', s.weeksLeft + (s.weeksLeft === 1 ? ' WK LEFT' : ' WKS LEFT')) +
