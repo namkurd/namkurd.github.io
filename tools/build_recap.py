@@ -397,8 +397,13 @@ def build(week, src, asof):
             mine = sorted([p for p in allp if p.get('by') == m], key=lambda p: -(p.get('tot') if p.get('tot') is not None else (p.get('pts') or 0)))[:3]
             return {'m': m, 'rec': recs.get(m), 'lines': [{'t': bf.play_title(p['who'], p['label'], p.get('sid'), p.get('stk'), p.get('slab')),
                                                           'pts': p.get('tot') if p.get('tot') is not None else p.get('pts')} for p in mine]}
-        segs.append({'type': 'game', 'dur': 9, 'title': 'Game of the week', 'why': why, 'w': g['w'], 'l': g['l'], 'ws': g['ws'], 'ls': g['ls'], 'flips': g['flips'],
-                     'sides': [side(g['w']), side(g['l'])]})
+        gseg = {'type': 'game', 'dur': 9, 'title': 'Game of the week', 'why': why, 'w': g['w'], 'l': g['l'], 'ws': g['ws'], 'ls': g['ls'], 'flips': g['flips'],
+                'sides': [side(g['w']), side(g['l'])]}
+        pair = [p for p in allp if {p['a'], p['b']} == {g['w'], g['l']}]   # the week's win-probability curve for this matchup (the winner's side)
+        gch = chart_for(pair[0])[0] if pair else None
+        if gch:
+            gseg['chart'] = {'x': gch['x'], 'p': gch['p'], 'flip': g['w'] != pair[0]['a'], 'gaps': gch.get('gaps') or []}
+        segs.append(gseg)
 
     # ---- career head to head: every game's career record, a column on the scores card
     series = None
@@ -413,7 +418,24 @@ def build(week, src, asof):
 
     # ---- around the league: the other scores, one line per game (the box score lives on the Game card)
     if games:
-        segs.append({'type': 'finals', 'dur': 8, 'title': 'Around the league', 'games': [{'w': g['w'], 'l': g['l'], 'ws': g['ws'], 'ls': g['ls'], 'sr': g.get('sr')} for g in sorted(games, key=lambda g: -g['it'])]})
+        allsc = sorted([g['ws'] for g in games] + [g['ls'] for g in games], reverse=True)   # every team's score this week
+        hi, lo = max(games, key=lambda g: g['ws']), min(games, key=lambda g: g['ls'])
+        blow, nail = max(games, key=lambda g: g['ws'] - g['ls']), min(games, key=lambda g: g['ws'] - g['ls'])
+        robbed = max(games, key=lambda g: g['ls'])   # the best score on a losing side
+        rrank = allsc.index(robbed['ls']) + 1
+        ords = {1: 'highest', 2: '2nd-highest', 3: '3rd-highest', 4: '4th-highest', 5: '5th-highest', 6: '6th-highest'}
+        gl = []
+        for g in sorted(games, key=lambda g: -g['it']):
+            tags = []
+            if g is hi: tags.append('HIGH SCORE')
+            if g is blow: tags.append('BLOWOUT')
+            if g is nail: tags.append('CLOSEST')
+            if g is robbed and rrank <= 4: tags.append('UNLUCKY')
+            gl.append({'w': g['w'], 'l': g['l'], 'ws': g['ws'], 'ls': g['ls'], 'sr': g.get('sr'), 'tags': tags})
+        fhead = '%s scored %.1f, the week\u2019s best' % (hi['w'], hi['ws'])
+        if rrank <= 4 and robbed['ls'] > 0:
+            fhead += ' \u00b7 %s lost with the %s score (%.1f)' % (robbed['l'], ords.get(rrank, '%dth-highest' % rrank), robbed['ls'])
+        segs.append({'type': 'finals', 'dur': 8, 'title': 'Around the league', 'head': fhead, 'games': gl})
 
     # ---- trades: how the ones made more than a week ago are panning out (lineup PAR) against what the chat thought at the time
     try:
@@ -525,8 +547,15 @@ def build(week, src, asof):
         shown = ts_
         bub = sorted(sorted([t for t in ts_ if 0.05 < t['make'] < 0.95], key=lambda t: abs(t['make'] - .5))[:3], key=lambda t: -t['make'])
         hd = ('On the bubble: ' + ', '.join('%s %d%%' % (t['m'], round(t['make'] * 100)) for t in bub)) if bub else ''
+        # each recap keeps its odds (data/race_<week>.json), so the next one can show how every team's chance moved
+        prevp = load('data/race_%d.json' % (week - 1)) or {}
+        try:
+            with open(os.path.join(HUB, 'data', 'race_%d.json' % week), 'w', encoding='utf-8') as f:
+                json.dump({t['m']: round(t['make'], 3) for t in ts_}, f, separators=(',', ':'))
+        except Exception as e:
+            print('race snapshot: %s' % e, file=sys.stderr)
         segs.append({'type': 'race', 'dur': 12, 'title': 'Playoff hunt', 'head': '', 'bubble': hd, 'spots': P, 'byes': race['byes'], 'weeksLeft': race['weeksLeft'],
-                     'teams': [{'m': t['m'], 'rank': t['rank'], 'R': t.get('R'), 'make': t['make'], 'bye': t.get('bye'), 'x': t['x'], 'z': t['z'], 'top': t['top'], 'dead': t['dead']} for t in shown]})
+                     'teams': [{'m': t['m'], 'rank': t['rank'], 'R': t.get('R'), 'make': t['make'], 'prev': prevp.get(t['m']), 'bye': t.get('bye'), 'x': t['x'], 'z': t['z'], 'top': t['top'], 'dead': t['dead']} for t in shown]})
 
     # ---- clinching scenarios for this week (Rumble Central's cards, read into data/race.json): who can lock it up and what has to happen
     if race and race.get('teams') and race.get('season') == season and race.get('played') >= week:
@@ -656,6 +685,9 @@ def build(week, src, asof):
     for s_ in segs:
         while total() > BUDGET and s_['type'] == 'clips' and not s_.get('turn') and s_['want'] > 2:
             s_['want'] -= 1
+    # ---- the running order: the week's action, what it did to the race, then league life, then history and what is next
+    ORDER = ['intro', 'clips', 'game', 'finals', 'race', 'clinch', 'trades', 'slack', 'pod', 'shotguns', 'records', 'lifetime', 'coming']
+    segs.sort(key=lambda x: ORDER.index(x['type']) if x['type'] in ORDER else len(ORDER))   # stable: ties keep their order
     for i, s in enumerate(segs):
         s['id'] = i
 
