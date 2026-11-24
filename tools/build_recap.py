@@ -131,6 +131,95 @@ def pod_quote(cues, keywords, window=28, width=230):
     return {'at': int(sp[0]['start']), 'quote': (('\u2026' if lo else '') + q).strip(), 'hits': sorted(hits)}
 
 
+def local_transcript(vid):
+    """The episode's captions as saved by the Mount Rushmore skill (data/podcast_transcript.json: {videoId, cues: [{start, text}]}), for this video only."""
+    d = load('data/podcast_transcript.json') or {}
+    if d.get('videoId') == vid and d.get('cues'):
+        return [{'start': float(c['start']), 'text': str(c['text'])} for c in d['cues'] if c.get('text')]
+    return None
+
+
+def _norm(t):
+    import re
+    return re.sub(r'[^a-z0-9]+', ' ', str(t).lower()).strip()
+
+
+def locate(cues, quote):
+    """Where (seconds) a quote starts in the transcript, or None when the words are not there verbatim: nothing the model says is shown unless the
+    transcript says it."""
+    nq = _norm(quote)
+    if len(nq) < 12:
+        return None
+    joined, offs = '', []
+    for c in cues:
+        offs.append(len(joined)); joined += _norm(c['text']) + ' '
+    i = joined.find(nq)
+    if i < 0:
+        return None
+    k = max(j for j, o in enumerate(offs) if o <= i)
+    return int(cues[k]['start'])
+
+
+NOTES_PROMPT = """Below is the auto-generated caption transcript of a weekly fantasy-football league podcast (the Content Boys). Captions garble names and have no speaker labels.
+
+Return ONLY a JSON object:
+{"coin": null or {"winner": first name, "reason": what it was for, in under 14 words, "quote": the exact words from the transcript where it is awarded},
+ "takes": [up to 3 of the spiciest opinions stated about a league member, a player, a trade or the league itself: {"topic": 3-6 words, "quote": exact consecutive words from the transcript, 80-200 characters}]}
+
+Rules: the Content Boy Coin is a prize the hosts award for the best content of the week; use null if it is not awarded in this episode. Quotes must be copied word for word, in order, from the transcript (garbled names and all). Do not attribute a take to a speaker. League members: {names}. Write "Steven" where the captions say "Stephen".
+
+TRANSCRIPT:
+{text}"""
+
+
+def ask_model(prompt):
+    import urllib.request
+    key = os.environ.get('ANTHROPIC_API_KEY')
+    if not key:
+        return None
+    req = urllib.request.Request('https://api.anthropic.com/v1/messages', headers={'x-api-key': key, 'anthropic-version': '2023-06-01', 'content-type': 'application/json'},
+                                 data=json.dumps({'model': 'claude-sonnet-5-5', 'max_tokens': 1500, 'messages': [{'role': 'user', 'content': prompt}]}).encode())
+    with urllib.request.urlopen(req, timeout=180) as r:
+        return ''.join(b.get('text', '') for b in json.load(r).get('content', []))
+
+
+def pod_notes(vid, cues, names, ask=None):
+    """Who won the Content Boy Coin and what the hot takes were, read out of the transcript by a model and kept only where the quoted words are really in it
+    (data/pod_notes.json keeps the answer per episode, so the model is asked once). None when there is no key, no answer, or nothing verifiable."""
+    sig = '%s:%d' % (vid, len(cues))
+    prev = load('data/pod_notes.json', {}) or {}
+    if prev.get('sig') == sig:
+        return prev.get('notes')
+    ask = ask or ask_model
+    text = '\n'.join('[%d:%02d] %s' % (int(c['start']) // 60, int(c['start']) % 60, c['text'].replace('\n', ' ')) for c in cues)[:200000]
+    try:
+        raw = ask(NOTES_PROMPT.replace('{names}', ', '.join(sorted(names))).replace('{text}', text))
+    except Exception as e:
+        print('pod notes: %s' % e, file=sys.stderr)
+        return None
+    if not raw:
+        return None
+    try:
+        d = json.loads(raw[raw.index('{'):raw.rindex('}') + 1])
+    except Exception:
+        print('pod notes: the answer was not JSON', file=sys.stderr)
+        return None
+    notes = {'coin': None, 'takes': []}
+    c = d.get('coin')
+    if isinstance(c, dict) and c.get('winner') and c.get('quote'):
+        at = locate(cues, c['quote'])
+        if at is not None:
+            notes['coin'] = {'winner': str(c['winner']).replace('Stephen', 'Steven'), 'reason': str(c.get('reason') or '')[:120], 'quote': c['quote'], 'at': at}
+    for t in (d.get('takes') or [])[:3]:
+        at = locate(cues, t.get('quote', '')) if isinstance(t, dict) else None
+        if at is not None and len(str(t['quote'])) <= 260:
+            notes['takes'].append({'topic': str(t.get('topic') or '')[:60], 'quote': t['quote'], 'at': at})
+    notes = notes if (notes['coin'] or notes['takes']) else None
+    with open(os.path.join(HUB, 'data', 'pod_notes.json'), 'w', encoding='utf-8') as f:
+        json.dump({'sig': sig, 'notes': notes}, f, ensure_ascii=False, indent=1)
+    return notes
+
+
 def pod_card(pod, names, picks, asof, transcript=None):
     """The "From the pod" segment for the latest episode, or None. Retries a failed transcript fetch at most every 6 hours (data/recap_pod.json)."""
     vid = (pod or {}).get('videoId')
@@ -147,18 +236,29 @@ def pod_card(pod, names, picks, asof, transcript=None):
             last = (who or '').split()[-1].strip('.')
             if len(last) >= 4:
                 kw[last] = 2
+    local = local_transcript(vid) if transcript is None else None
+    sig = '%s:%d' % (vid, len(local)) if local else None
     if transcript is None:
-        if prev.get('videoId') == vid and (prev.get('card') or (prev.get('tried') and now - dt.datetime.fromisoformat(prev['tried']) < dt.timedelta(hours=6))):
-            return prev.get('card')
-        transcript = fetch_transcript(vid)
+        if local:
+            transcript = local
+            if prev.get('sig') == sig:
+                return prev.get('card')
+        else:
+            if prev.get('videoId') == vid and (prev.get('card') or (prev.get('tried') and now - dt.datetime.fromisoformat(prev['tried']) < dt.timedelta(hours=6))):
+                return prev.get('card')
+            transcript = fetch_transcript(vid)
     card = None
     if transcript:
         q = pod_quote(transcript, kw)
-        if q:
-            card = {'type': 'pod', 'dur': 9, 'title': 'From the pod', 'ep': pod.get('episode'), 'name': pod.get('name'), 'quote': q['quote'], 'at': q['at'],
-                    'url': 'https://www.youtube.com/watch?v=%s&t=%ds' % (vid, q['at']), 'hits': q['hits']}
+        notes = pod_notes(vid, transcript, names) if (local or os.environ.get('RECAP_TRANSCRIPT')) else None   # the model reads the transcript the skill saved, or a given one
+        if q or notes:
+            at = q['at'] if q else (notes['coin'] or notes['takes'][0])['at']
+            card = {'type': 'pod', 'dur': 9, 'title': 'From the pod', 'ep': pod.get('episode'), 'name': pod.get('name'), 'quote': q['quote'] if q else '', 'at': at,
+                    'url': 'https://www.youtube.com/watch?v=%s&t=%ds' % (vid, at), 'hits': q['hits'] if q else [], 'vid': vid}
+            if notes:
+                card['coin'], card['takes'] = notes['coin'], notes['takes']
     with open(path, 'w', encoding='utf-8') as f:
-        json.dump({'videoId': vid, 'tried': now.isoformat(), 'card': card}, f, ensure_ascii=False, indent=1)
+        json.dump({'videoId': vid, 'tried': now.isoformat(), 'card': card, **({'sig': sig} if sig else {})}, f, ensure_ascii=False, indent=1)
     return card
 
 
@@ -456,7 +556,8 @@ def build(week, src, asof):
             pc = pod_card(pod, set(names.values()), picks + ([turning] if turning else []), asof,
                           transcript=None if not os.environ.get('RECAP_TRANSCRIPT') else json.load(open(os.environ['RECAP_TRANSCRIPT'])))
             if pc:   # no captions, no card: the picture alone says nothing
-                segs.append({'type': 'pod', 'dur': 9, 'title': 'The podcast', 'ep': pod.get('episode'), 'name': pod.get('name'), 'quote': pc['quote'], 'at': pc['at'], 'url': pc['url'], 'hits': pc['hits']})
+                segs.append({'type': 'pod', 'dur': 9, 'title': 'The podcast', 'ep': pod.get('episode'), 'name': pod.get('name'), 'quote': pc['quote'], 'at': pc['at'], 'url': pc['url'], 'hits': pc['hits'], 'vid': pc.get('vid'),
+                             **({'coin': pc.get('coin'), 'takes': pc['takes']} if pc.get('takes') or pc.get('coin') else {})})
     except Exception as e:
         print('pod: %s' % e, file=sys.stderr)
 
@@ -658,7 +759,7 @@ def build(week, src, asof):
         if t == 'series': return 4 + 0.8 * len(sg['last'])
         if t == 'trades': return 3 + words(sg.get('head')) / 3.5 + 1.1 * len(sg['rows']) + 2   # two sides, players and numbers each, then the season totals
         if t == 'race': return 5 + 0.6 * len(sg['teams']) + (2 if sg.get('bubble') else 0)
-        if t == 'pod': return 4 + words(sg.get('quote')) / 2.8
+        if t == 'pod': return 4 + (words(sg.get('quote')) / 2.8 if not sg.get('takes') else sum(1.0 + words(x['quote']) / 4.0 for x in sg['takes']) + (3 if sg.get('coin') else 0))
         if t == 'slack':
             cm = sg.get('comment')
             return min(9, 3 + (2 + words(cm.get('text')) / 3.0 if cm else 0) + sum(1.5 + words(x['t']) / 3.5 for x in sg['items']))
