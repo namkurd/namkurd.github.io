@@ -10,7 +10,7 @@
 Nothing in the tools has to change: this only reads files they already publish. If a source can't be read the
 previous output is kept, so a bad hour never blanks the Home screen.
 """
-import argparse, datetime as dt, json, os, re, sys, urllib.request
+import time, argparse, datetime as dt, json, os, re, sys, urllib.request
 
 HUB = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RAW = 'https://raw.githubusercontent.com/namkurd/{repo}/main/{path}'
@@ -26,7 +26,7 @@ def fetch(url):
 def source(src, repo, path):
     if src:
         return json.load(open(os.path.join(src, repo, path), encoding='utf-8'))
-    return fetch(RAW.format(repo=repo, path=path))
+    return fetch(RAW.format(repo=repo, path=path) + '?t=%d' % time.time())   # the query string steps around the raw CDN's ~5 minute cache
 
 
 def prev(name):

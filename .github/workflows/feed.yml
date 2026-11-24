@@ -64,6 +64,12 @@ jobs:
         run: python3 tools/build_shotguns.py
       - run: pip install youtube-transcript-api
         continue-on-error: true
+      - name: "Nudge Lifetime and Record Book to update (needs the SYNC_TOKEN secret)"
+        continue-on-error: true
+        timeout-minutes: 25
+        env:
+          SYNC_TOKEN: ${{ secrets.SYNC_TOKEN }}
+        run: python3 tools/sync_sources.py
       - name: "Weekly recap (top plays, game of the week, records, standings)"
         continue-on-error: true
         env:

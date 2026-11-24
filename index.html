@@ -41,6 +41,12 @@
   /* IR eligibility status (from FAB's IR check) */
   .ir { display: inline-block; width: auto; max-width: 100%; margin: 0 0 5px; padding: 2px 9px; border: 1px solid var(--dtf-border); border-radius: 10px; background: var(--dtf-panel); color: var(--dtf-text); font: inherit; font-size: .72rem; text-align: left; cursor: pointer; -webkit-tap-highlight-color: transparent; }
   .ir[hidden] { display: none; } #ir:not([hidden]), #ir2:not([hidden]) { display: block; width: fit-content; }
+  /* the IR check and an open Mount Rushmore vote share one line: the IR text gives way (ellipsis) before the vote link does */
+  .irrow { display: flex; align-items: center; gap: 6px; min-width: 0; margin: 0 0 5px; } .irrow:not(:has(:not([hidden]))) { display: none; }
+  .irrow #ir:not([hidden]) { flex: 0 1 auto; min-width: 0; margin: 0; }
+  .mrv { flex: none; display: inline-flex; align-items: center; gap: 4px; padding: 2px 9px; border: 1px solid color-mix(in srgb, var(--dtf-accent) 55%, var(--dtf-border)); border-radius: 10px; background: color-mix(in srgb, var(--dtf-accent) 14%, var(--dtf-panel)); color: var(--dtf-text); font-size: .72rem; font-weight: 600; text-decoration: none; white-space: nowrap; -webkit-tap-highlight-color: transparent; }
+  .mrv[hidden] { display: none; } .mrv b { color: var(--dtf-accent); font-weight: 700; } .mrv .sh { display: none; }
+  @media (max-width: 440px) { .mrv .lg { display: none; } .mrv .sh { display: inline; } }
   .ir .tx { display: block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .ir.open .tx { white-space: normal; }
   .ir.bad { border-color: #e5484d; background: color-mix(in srgb, #e5484d 14%, var(--dtf-panel)); } .ir.warn { border-color: #e0a23a; background: color-mix(in srgb, #e0a23a 12%, var(--dtf-panel)); }
   .ir a.irm { color: inherit; text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 45%, transparent); text-underline-offset: 2px; } .ir[data-one] { cursor: pointer; }
@@ -268,7 +274,7 @@
 </head><body class="dtf-page"><div class="dtf-wrap">
 <div class="top"><h1 class="home">Rumble Hub</h1><a class="rcp" id="rcp" href="/recap/" hidden></a><button class="me ask" id="me" type="button" aria-label="Who are you?">Who are you?</button></div>
 <div class="next" id="next" hidden></div>
-<button class="ir" id="ir" type="button" hidden></button>
+<div class="irrow" id="irrow"><button class="ir" id="ir" type="button" hidden></button><a class="mrv" id="mrv" href="#" target="_blank" rel="noopener" hidden></a></div>
   <button class="ir warn" id="ir2" type="button" hidden></button>
 <section class="feed" id="feed" aria-label="This season at a glance" hidden>
   <div class="tabs" id="tabs" role="tablist"></div>
@@ -367,6 +373,16 @@
     if (ms.length === 1) { location.href = ms[0]; return; }   // one manager in the alert: the whole alert is the link
     this.classList.toggle('open');
   }
+  // an open Mount Rushmore vote (data/mountrushmore.json, kept by the feed job from #mountrushmore): a link beside the IR check until it closes
+  get('/data/mountrushmore.json').then(function (v) {
+    if (!v || !v.closesAt) return; var end = Date.parse(v.closesAt); if (!(end > Date.now())) return;
+    var et = function (o) { return new Date(end).toLocaleDateString('en-US', Object.assign({ timeZone: 'America/New_York' }, o)); };
+    var today = et({ year: 'numeric', month: 'numeric', day: 'numeric' }) === new Date().toLocaleDateString('en-US', { timeZone: 'America/New_York', year: 'numeric', month: 'numeric', day: 'numeric' });
+    var when = today ? 'today' : et({ weekday: 'short' });
+    var a = $('mrv'); a.href = v.href || 'https://dtf-club.slack.com/archives/C0CJXBMAYHM';
+    a.innerHTML = '\uD83D\uDDF3 <span class="lg">Mount Rushmore vote \u00b7 closes <b>' + esc(when) + '</b></span><span class="sh">Vote \u00b7 <b>' + esc(when) + '</b></span>'; a.title = 'Mount Rushmore' + (v.episode ? ' \u00b7 Episode ' + v.episode : '') + (v.topic ? ': ' + v.topic : '');
+    a.hidden = false;
+  }).catch(function () {});
   $('ir2').addEventListener('click', irTap);
   $('ir').addEventListener('click', irTap);
 

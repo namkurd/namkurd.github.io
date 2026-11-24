@@ -167,7 +167,7 @@ def text_source(src, repo, path):
     if src:
         return open(os.path.join(src, repo, path), encoding='utf-8').read()
     import urllib.request
-    url = bf.RAW.format(repo=repo, path=path)
+    url = bf.RAW.format(repo=repo, path=path) + '?t=%d' % __import__('time').time()
     if repo == 'Recordbook':
         url = url.replace('/main/', '/claude/initial-build/')   # that repo's default branch
     req = urllib.request.Request(url, headers={'User-Agent': 'dtf-club-hub'})
@@ -319,7 +319,8 @@ def mr_vote(asof):
                     best = (int(mt.group(1)), mt.group(2).strip(), float(m['ts']))
             if best:
                 posted = dt.datetime.fromtimestamp(best[2], dt.timezone.utc)
-                cur = {'episode': best[0], 'topic': best[1], 'postedAt': posted.strftime('%Y-%m-%dT%H:%M:%SZ'), 'closesAt': (posted + dt.timedelta(days=5)).strftime('%Y-%m-%dT%H:%M:%SZ')}
+                host = ((load('league.json') or {}).get('slack') or 'https://dtf-club.slack.com/').rstrip('/')
+                cur = {'episode': best[0], 'topic': best[1], 'ts': '%.6f' % best[2], 'href': '%s/archives/%s/p%s' % (host, MR_CHANNEL, ('%.6f' % best[2]).replace('.', '')), 'postedAt': posted.strftime('%Y-%m-%dT%H:%M:%SZ'), 'closesAt': (posted + dt.timedelta(days=5)).strftime('%Y-%m-%dT%H:%M:%SZ')}
                 json.dump(cur, open(path, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
         except Exception as e:
             print('mount rushmore: %s' % e, file=sys.stderr)
