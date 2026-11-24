@@ -2,7 +2,7 @@
  "schema": 1,
  "season": 2026,
  "week": 11,
- "seconds": 164,
+ "seconds": 185,
  "segments": [
   {
    "type": "intro",
@@ -2201,6 +2201,56 @@
    "id": 3
   },
   {
+   "type": "finals",
+   "dur": 8,
+   "title": "Around the league",
+   "games": [
+    {
+     "w": "Ryan",
+     "l": "Stephanie",
+     "ws": 138.42,
+     "ls": 127.06,
+     "sr": "1–0"
+    },
+    {
+     "w": "Aidan",
+     "l": "Alex",
+     "ws": 124.81,
+     "ls": 111.29,
+     "sr": "8–0"
+    },
+    {
+     "w": "Ben",
+     "l": "Haan",
+     "ws": 168.76,
+     "ls": 154.48,
+     "sr": "6–2"
+    },
+    {
+     "w": "Jake",
+     "l": "Christian",
+     "ws": 156.63,
+     "ls": 126.14,
+     "sr": "5–0"
+    },
+    {
+     "w": "Kaitlyn",
+     "l": "Joe",
+     "ws": 154.5,
+     "ls": 118.35,
+     "sr": "2–0"
+    },
+    {
+     "w": "Ankit",
+     "l": "Steven",
+     "ws": 180.16,
+     "ls": 127.14,
+     "sr": "7–4"
+    }
+   ],
+   "id": 4
+  },
+  {
    "type": "trades",
    "dur": 12,
    "title": "Trade report",
@@ -2514,7 +2564,7 @@
      "v": -47.4
     }
    ],
-   "id": 4
+   "id": 5
   },
   {
    "type": "slack",
@@ -2544,7 +2594,7 @@
      "href": "https://dtf-club.slack.com/archives/C07QP48E83E/p1795360571209459"
     }
    ],
-   "id": 5
+   "id": 6
   },
   {
    "type": "shotguns",
@@ -2702,7 +2752,51 @@
     }
    ],
    "week": 11,
-   "id": 6
+   "id": 7
+  },
+  {
+   "type": "records",
+   "dur": 13,
+   "title": "New records",
+   "items": [
+    {
+     "name": "Most Trades (Career)",
+     "old": "32 trades",
+     "new": "33 trades",
+     "holder": "Joe",
+     "prev": "Joe"
+    },
+    {
+     "name": "Most Trades with One Partner",
+     "old": "7 trades",
+     "new": "8 trades",
+     "holder": "Ankit & Joe",
+     "prev": "Ankit & Joe"
+    },
+    {
+     "name": "Best Trader (Career PAR)",
+     "old": "+593.0 PAR",
+     "new": "+596.6 PAR",
+     "holder": "Aidan",
+     "prev": "Aidan"
+    },
+    {
+     "name": "Longest Head-to-Head Win Streak vs One Opponent",
+     "old": "7 straight",
+     "new": "8 straight",
+     "holder": "Aidan over Alex",
+     "prev": "Aidan over Alex; Steven over Jake"
+    },
+    {
+     "name": "Most One-Sided Rivalry",
+     "old": "7-0",
+     "new": "8-0",
+     "holder": "Aidan vs Alex",
+     "prev": "Aidan vs Alex"
+    }
+   ],
+   "head": "Joe: Most Trades (Career)",
+   "id": 8
   },
   {
    "type": "lifetime",
@@ -2761,7 +2855,7 @@
     }
    ],
    "head": "Ankit climbs 2 in career field win %",
-   "id": 7
+   "id": 9
   },
   {
    "type": "race",
@@ -2906,7 +3000,7 @@
      "dead": false
     }
    ],
-   "id": 8
+   "id": 10
   },
   {
    "type": "clinch",
@@ -3048,7 +3142,7 @@
    ],
    "noElim": false,
    "noClinch": false,
-   "id": 9
+   "id": 11
   },
   {
    "type": "coming",
@@ -3075,9 +3169,9 @@
      "kind": "playoffs"
     }
    ],
-   "id": 10
+   "id": 12
   }
  ],
  "link": "https://namkurd.github.io/recap/?week=11",
- "generatedAt": "2026-11-24T19:58:50Z"
+ "generatedAt": "2026-11-24T20:39:47Z"
 }
