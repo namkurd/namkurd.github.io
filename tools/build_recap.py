@@ -698,8 +698,19 @@ def readiness(week, src):
     return waiting
 
 
+def pod_only(week, src, asof):
+    """Only the podcast quote (data/recap_pod.json), from the transcript in $RECAP_TRANSCRIPT; the recap itself is left alone (it is published by the feed
+    job once every source has the week). Used by tools/pod_local.py."""
+    hist = bf.source(src, 'SleeperLiveRumbles', 'rumbles_history.json')
+    names = {r['manager'] for r in hist['standings']}
+    plays = sorted([p for p in ((load('data/topplays.json') or {}).get('weeks') or {}).get(str(week), []) if p.get('clip')], key=lambda p: -p['swing'])[:6]
+    card = pod_card(load('podcast.json') or {}, names, plays, asof, transcript=json.load(open(os.environ['RECAP_TRANSCRIPT'], encoding='utf-8')))
+    print('pod card: %s' % ('quote at %d:%02d' % (card['at'] // 60, card['at'] % 60) if card else 'none (the captions do not name two of this week\'s managers or players)'))
+
+
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument('--pod-only', action='store_true', help='only refresh the podcast quote from $RECAP_TRANSCRIPT')
     ap.add_argument('--force', action='store_true', help='build even if a source has not caught up to the week yet')
     ap.add_argument('--week', type=int)
     ap.add_argument('--src')
@@ -711,6 +722,8 @@ def main():
         hist = bf.source(args.src, 'SleeperLiveRumbles', 'rumbles_history.json')
         wc = hist.get('weeks_completed')   # Rumble Central's history lists the finished weeks ([1, 2, ... 10]); an older file may hold a count
         week = int(max(wc) if isinstance(wc, list) and wc else wc or max(int(w) for w in hist['weekly']))
+    if args.pod_only:
+        pod_only(week, args.src, asof); return
     status_path = os.path.join(HUB, 'data', 'recap_status.json')
     if not args.week and not args.force:   # the automatic path only publishes a week once every tool it draws on has that week
         waiting = readiness(week, args.src)
