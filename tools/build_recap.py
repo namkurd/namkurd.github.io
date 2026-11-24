@@ -662,8 +662,56 @@ def build(week, src, asof):
             'generatedAt': dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}
 
 
+def readiness(week, src):
+    """What the recap for `week` is still waiting for: the tools it draws on update on their own schedules, and a recap built before they catch up to the
+    week's end shows old career standings and records. Returns a list of plain-words reasons; empty means every source has the week."""
+    waiting = []
+    season = (load('league.json') or {}).get('season')
+
+    def has(label, fn):
+        try:
+            ok, got = fn()
+        except Exception as e:
+            waiting.append('%s (could not be read: %s)' % (label, str(e)[:60])); return
+        if not ok:
+            waiting.append('%s (through week %s, needs %d)' % (label, got, week))
+    hist = bf.source(src, 'SleeperLiveRumbles', 'rumbles_history.json')
+    done = [int(w) for w in hist.get('weeks_completed', [])]
+    has('Rumble Central results', lambda: (week in done, max(done) if done else 0))
+
+    def lifetime():
+        rows = bf.source(src, 'sleepersheet', 'data/standings.json')['seasons']
+        wp = next((x.get('weeks_played', 0) for x in rows if x.get('season') == season), 0)
+        return wp >= week, wp
+    has('Lifetime standings', lifetime)
+
+    def record_book():
+        facts = json.loads(text_source(src, 'Recordbook', 'data/cache/facts.json'))['weeks']
+        got = max([int(k.split('-')[1]) for k in facts if k.startswith('%s-' % season)] or [0])
+        return ('%s-%d' % (season, week)) in facts, got
+    has('Record Book', record_book)
+    def top_plays():
+        wks = (load('data/topplays.json') or {}).get('weeks') or {}
+        return str(week) in wks, max([int(w) for w in wks] or [0])
+    has('Top plays', top_plays)
+    has('Shotguns', lambda: ((load('shotguns.json') or {}).get('throughWeek', 0) >= week, (load('shotguns.json') or {}).get('throughWeek', 0)))
+    return waiting
+
+
+def pod_only(week, src, asof):
+    """Only the podcast quote (data/recap_pod.json), from the transcript in $RECAP_TRANSCRIPT; the recap itself is left alone (it is published by the feed
+    job once every source has the week). Used by tools/pod_local.py."""
+    hist = bf.source(src, 'SleeperLiveRumbles', 'rumbles_history.json')
+    names = {r['manager'] for r in hist['standings']}
+    plays = sorted([p for p in ((load('data/topplays.json') or {}).get('weeks') or {}).get(str(week), []) if p.get('clip')], key=lambda p: -p['swing'])[:6]
+    card = pod_card(load('podcast.json') or {}, names, plays, asof, transcript=json.load(open(os.environ['RECAP_TRANSCRIPT'], encoding='utf-8')))
+    print('pod card: %s' % ('quote at %d:%02d' % (card['at'] // 60, card['at'] % 60) if card else 'none (the captions do not name two of this week\'s managers or players)'))
+
+
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument('--pod-only', action='store_true', help='only refresh the podcast quote from $RECAP_TRANSCRIPT')
+    ap.add_argument('--force', action='store_true', help='build even if a source has not caught up to the week yet')
     ap.add_argument('--week', type=int)
     ap.add_argument('--src')
     ap.add_argument('--asof', help='YYYY-MM-DD, the day the recap is for (default today); the records window is the 8 days before it')
@@ -674,6 +722,20 @@ def main():
         hist = bf.source(args.src, 'SleeperLiveRumbles', 'rumbles_history.json')
         wc = hist.get('weeks_completed')   # Rumble Central's history lists the finished weeks ([1, 2, ... 10]); an older file may hold a count
         week = int(max(wc) if isinstance(wc, list) and wc else wc or max(int(w) for w in hist['weekly']))
+    if args.pod_only:
+        pod_only(week, args.src, asof); return
+    status_path = os.path.join(HUB, 'data', 'recap_status.json')
+    if not args.week and not args.force:   # the automatic path only publishes a week once every tool it draws on has that week
+        waiting = readiness(week, args.src)
+        status = {'week': week, 'ready': not waiting, 'waiting': waiting}
+        if load('data/recap_status.json') != status:
+            json.dump(status, open(status_path, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+        if waiting:
+            cur = load('data/recap.json') or {}
+            if cur and int(cur.get('week', 0)) < week and os.path.exists(os.path.join(HUB, 'data', 'recap.json')):   # no recap is better than last week's
+                os.remove(os.path.join(HUB, 'data', 'recap.json'))
+            print('week %d recap is not ready yet (nothing is published until it is); waiting on: %s' % (week, '; '.join(waiting)))
+            return
     out = build(week, args.src, asof)
     for name in ('recap.json', 'recap_%d.json' % week):
         with open(os.path.join(HUB, 'data', name), 'w', encoding='utf-8') as f:

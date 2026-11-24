@@ -3,8 +3,8 @@
 "From the pod" quote to the weekly recap.
 
     pip install youtube-transcript-api
-    python3 tools/pod_local.py            # fetch, rebuild the recap, show the quote
-    python3 tools/pod_local.py --push     # ...and commit + push data/recap*.json so the Hub picks it up (run from a clone of this repo)
+    python3 tools/pod_local.py            # fetch and pick the quote
+    python3 tools/pod_local.py --push     # ...and commit + push data/recap_pod.json so the Hub picks it up (run from a clone of this repo)
     python3 tools/pod_local.py --force    # redo it even if this episode already has a quote
     python3 tools/pod_local.py --transcript-file captions.json   # use a saved transcript ([{"text": ..., "start": seconds}, ...]) instead of fetching
 
@@ -55,7 +55,7 @@ def main():
         tmp = f.name
     try:
         env = dict(os.environ, RECAP_TRANSCRIPT=tmp)
-        r = subprocess.run([sys.executable, os.path.join(HERE, 'build_recap.py')], cwd=HUB, env=env, capture_output=True, text=True)
+        r = subprocess.run([sys.executable, os.path.join(HERE, 'build_recap.py'), '--pod-only'], cwd=HUB, env=env, capture_output=True, text=True)
         print(r.stdout.strip()); 
         if r.returncode:
             sys.exit(r.stderr.strip() or 'the recap build failed')
@@ -67,7 +67,7 @@ def main():
         sys.exit('the captions do not talk about this week\'s managers and plays (no stretch names two of them), so the recap has no pod card')
     print('quote at %d:%02d  "%s"\n%s' % (card['at'] // 60, card['at'] % 60, card['quote'], card['url']))
     if args.push:
-        sh('git', 'add', 'data/recap.json', 'data/recap_pod.json', *[os.path.join('data', n) for n in os.listdir(os.path.join(HUB, 'data')) if n.startswith('recap_') and n.endswith('.json') and n != 'recap_pod.json'])
+        sh('git', 'add', 'data/recap_pod.json')
         if sh('git', 'status', '--porcelain', '--untracked-files=no'):
             sh('git', 'commit', '-m', 'Podcast quote from the captions (fetched locally)')
             sh('git', 'pull', '--rebase', '--autostash', '--quiet')
