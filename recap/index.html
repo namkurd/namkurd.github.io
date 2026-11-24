@@ -83,6 +83,9 @@
   .tile { background: var(--ink); border-bottom: 3px solid var(--gold); }
   .tile .tw, .tile .tl { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 5px 10px; font-size: 1.2rem; font-weight: 800; text-transform: uppercase; }
   .tile .tw { background: linear-gradient(90deg, transparent, #1f8a3c66); } .tile .tw b { color: #7be08f; font-size: 1.3rem; } .tile .tl { color: #cfc4a4; } .tile .tl b { font-size: 1.2rem; }
+  .tile .ft { display: flex; flex-wrap: wrap; align-items: center; gap: 3px 6px; } .tile .ft .tgc { font-style: normal; font-size: .7rem; font-weight: 900; letter-spacing: .08em; padding: 0 6px; background: var(--red); color: #fff; } .tile .ft .tgc.bad { background: #f2c14e; color: #2a1405; }
+  .wpc .swg2 { font-size: .85rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--cream); background: #ffffff1c; padding: 0 8px; }
+  .r.bar .trk b { z-index: 1; } .r.bar .trk .dl { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); font-style: normal; font-size: .78rem; font-weight: 900; letter-spacing: .02em; background: #000000b8; padding: 0 5px; } .r.bar .trk .dl.up { color: #7be08f; } .r.bar .trk .dl.dn { color: #ff8a8f; }
   .tile .ft { padding: 2px 9px 6px; font-size: .85rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); }
   /* career head to head: a tug of war and the last meetings */
   .tug { display: flex; gap: 3px; height: 66px; } .tug > div { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 0 12px; min-width: 0; font-weight: 900; text-transform: uppercase; }
@@ -255,6 +258,8 @@
     .seg.t-trades > .hdr, .seg.t-trades > .tgw, .seg.t-trades > .notes { grid-column: 1 / -1; }
     .tgw { display: grid; grid-template-columns: 1fr 1fr; gap: 0 26px; } .tcol.dup .tgh { display: grid; } .tc .sdr { gap: 8px; } .tc .sdr b { font-size: 1.05rem; } .tc .pl { font-size: 1rem; } .tc .pr { font-size: 1.05rem; } .tc .sv { font-size: .85rem; }
     .tc .sdr, .tgh { grid-template-columns: 6.6rem minmax(0, 1fr) 4rem 3.2rem; }
+    .seg.t-game > .wpc { grid-column: 2; grid-row: 2 / span 2; align-self: stretch; } .seg.t-game > .box { grid-column: 1; grid-row: 3; } .seg.t-game > .board, .seg.t-game > .rows { grid-column: 1; }
+    .cover .cvb { padding-bottom: 3dvh; }
     .seg.t-race .r.bar { grid-auto-columns: 118px; } .r.bar.cols .c { overflow: visible; text-align: center; }
     .seg.t-coming > .cd { padding: 30px 14px 32px; align-self: center; } .seg.t-coming .cd .cn { font-size: 3.7rem; margin: 10px 0 6px; } .seg.t-coming .cd .cw { font-size: 1.15rem; } .seg.t-coming .cd .hk { white-space: normal; max-width: 100%; font-size: .9rem; }
     .seg.t-slack:not(:has(.cotw)) { grid-template-columns: repeat(3, 1fr); align-content: center; } .seg.t-slack:not(:has(.cotw)) > .topic { grid-column: auto; align-self: stretch; padding: 14px 16px 16px; } .seg.t-slack:not(:has(.cotw)) .topic b { font-size: 1.5rem; margin: 10px 0 12px; } .seg.t-slack:not(:has(.cotw)) .topic .tm { font-size: 1.05rem; }
@@ -291,11 +296,13 @@
   .ctl button { width: 52px; height: 44px; border: 2px solid var(--gold); background: var(--ink); color: var(--cream); font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
   .ctl button.p { width: 72px; } .ctl button:focus-visible, .top button:focus-visible, .top a:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
   .ctl svg { width: 22px; height: 22px; fill: currentColor; } .ctl button.mu svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  .cover { position: absolute; inset: 0; z-index: 10; background: #050202; overflow: hidden; }
-  .cover .portal { position: absolute; inset: 0; } .cover .portal .ptz { bottom: 150px; }
-  .cover .cvb { position: absolute; left: 0; right: 0; bottom: 22px; display: flex; flex-direction: column; align-items: center; gap: 8px; z-index: 2; }
+  .cover { position: absolute; inset: 0; z-index: 10; background: #050202; overflow: hidden; display: flex; flex-direction: column; } .cover[hidden] { display: none; } #cvp { flex: 1; position: relative; min-height: 0; }
+  .cover .portal { position: absolute; inset: 0; } .cover .portal .ptz { bottom: 12px; }
+  .cover .cvb { flex: none; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 6px 0 22px; z-index: 2; position: relative; }
   .cover .cvn { position: absolute; left: 14px; top: 12px; z-index: 2; background: #000000a0; padding: 3px 10px; } .cover .cvn[hidden], .cover .cvb [hidden] { display: none; }
   .cover[hidden] { display: none; }
+  button:focus-visible, a:focus-visible, .bars i:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+  .cover .kb { display: none; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: #f6e7b9aa; } @media (hover: hover) and (min-width: 900px) { .cover .kb { display: block; } }
   .cover button { margin-top: 6px; align-self: center; padding: 14px 38px; border: 3px solid var(--gold); background: var(--red); color: #fff; font-family: var(--cond); font-weight: 900; font-size: 1.3rem; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; }
   .cover button:disabled { opacity: .55; cursor: default; background: var(--ink); color: var(--gold); }
   .cover .st { text-align: center; font-size: .95rem; letter-spacing: .1em; text-transform: uppercase; color: var(--cream); } .cover a { text-align: center; color: var(--cream); font-size: .9rem; }
@@ -316,7 +323,7 @@
   <div class="cover" id="cover">
     <div id="cvp"></div><a class="cvn" href="/">&larr; Hub</a>
     <div class="cvb"><div class="st"><span id="cst">Loading&hellip;</span> <span class="dim" id="cs"></span></div>
-    <button id="go" disabled>&#9654; Watch</button><i hidden id="cw"></i><i hidden id="ch"></i></div>
+    <button id="go" disabled>&#9654; Watch</button><span class="kb">← → move · space pause</span><i hidden id="cw"></i><i hidden id="ch"></i></div>
   </div>
 </div></div>
 <script>
@@ -348,7 +355,7 @@
   function init() {
     var t = 'Week ' + D.week + ' recap'; document.title = t + ' · Rumble Hub'; $('ch').textContent = t; $('ttl').textContent = t; $('cw').textContent = D.week;
     var h = /#(\d+)/.exec(location.hash); startAt = h ? Number(h[1]) : null;
-    $('cs').textContent = '· ' + fmt(D.seconds || 0); $('cst').textContent = 'Ready'; $('go').disabled = false;
+    $('cs').textContent = '\u00b7 ' + fmt(D.seconds || 0) + (D.generatedAt ? ' \u00b7 built ' + new Date(D.generatedAt).toLocaleString('en-US', { timeZone: 'America/New_York', weekday: 'short', hour: 'numeric', minute: '2-digit' }) + ' ET' : ''); $('cst').textContent = 'Ready'; $('go').disabled = false;
     segs = raw.filter(function (x) { return x.type === 'intro'; }); drawBars(raw.length);
     if (segs[0]) $('cvp').innerHTML = render(segs[0]);   // the start card is the opener itself, with the Watch button on it
     fitCover(); window.addEventListener('resize', fitCover); if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitCover);   // the opener can start right away; the clips are checked while it plays
@@ -473,7 +480,8 @@
     var seg = $('seg'); seg.className = 'seg t-' + cur.type + (cur.type === 'play' ? ' play' : cur.type === 'intro' ? ' intro' : ''); seg.innerHTML = render(cur); fit();
     seg.style.animation = 'none'; void seg.offsetWidth; seg.style.animation = '';
     [].forEach.call(seg.querySelectorAll('.wpb .a, .trk i, .axis i, .hb i'), function (a) { requestAnimationFrame(function () { requestAnimationFrame(function () { a.classList.add('go'); }); }); });
-    if (cur.type === 'play') { startClip(cur.clip); if (!animateChart()) animateWP(); }
+    if (cur.type === 'play') { startClip(cur.clip); if (!animateChart()) animateWP(); } else if (cur.type === 'game') animateChart();
+    [].forEach.call(seg.querySelectorAll('[data-count]'), countUp);
     clock();
   }
   // the win-probability swing: the number counts from where it was to where it went while a bar fills and its leading edge glows; the size of the swing pops in at the end
@@ -597,34 +605,49 @@
   }
   // the matchup's win-probability replay (the play-maker's chance over the week's games), drawn left to right, with a star on the line where the play happened
   var cuid = 0;
+  function lead(P, X, Y) {   // a ring wherever the lead changed hands (the curve crossed 50%)
+    var o = '';
+    for (var i = 1; i < P.length; i++) if ((P[i - 1] - .5) * (P[i] - .5) < 0) { var k = (.5 - P[i - 1]) / (P[i] - P[i - 1]); o += '<circle cx="' + (X(ch_x(i - 1) + (ch_x(i) - ch_x(i - 1)) * k)).toFixed(1) + '" cy="' + Y(.5) + '" r="4.2" fill="#120a04" stroke="#f2c14e" stroke-width="2"/>'; }
+    return o;
+  }
+  var ch_x = function () { return 0; };
   function chartHtml(s, h) {
-    var ch = s.chart, st = s.star, W = 400, H = h || (WIDE.matches ? 230 : 176), ml = 32, mr = 8, mt = 8, mb = 8, pw = W - ml - mr, ph = H - mt - mb, id = 'wc' + (++cuid);
+    var ch = s.chart, st = s.star || { flip: ch.flip, x: 0, pp: .5 }, W = 400, H = h || (WIDE.matches ? 230 : 176), ml = 32, mr = 8, mt = 8, mb = 8, pw = W - ml - mr, ph = H - mt - mb, id = 'wc' + (++cuid);
     var X = function (x) { return ml + x * pw; }, Y = function (p) { return mt + (1 - p) * ph; }, P = ch.p.map(function (v) { return st.flip ? 1 - v : v; });
     var pts = ch.x.map(function (x, i) { return X(x).toFixed(1) + ',' + Y(P[i]).toFixed(1); }), area = 'M' + X(ch.x[0]).toFixed(1) + ',' + Y(.5) + 'L' + pts.join('L') + 'L' + X(ch.x[ch.x.length - 1]).toFixed(1) + ',' + Y(.5) + 'Z';
     var sx = X(st.x), sy = Y(st.pp), other = s.by === s.a ? s.b : s.a, swing = (s.to != null && s.from != null) ? s.to - s.from : null, lab = s.to != null ? s.to + '%' : '';
-    var o = '<div class="wpc in"' + ds(4) + ' data-sx="' + sx.toFixed(1) + '" data-w="' + W + '"><div class="wh"><span class="who">' + esc(s.by || 'Win') + '\u2019s win chance</span>' + (swing == null ? '' : '<span class="swg ' + (swing < 0 ? 'neg' : '') + '" style="opacity:0">' + (swing >= 0 ? '+' : '\u2212') + Math.abs(swing) + '</span>') + '</div>' +
+    ch_x = function (i) { return ch.x[i]; };
+    var o = '<div class="wpc in"' + ds(4) + ' data-sx="' + (s.star ? sx.toFixed(1) : W) + '" data-w="' + W + '"><div class="wh"><span class="who">' + esc(s.by || 'Win') + '\u2019s win chance</span>' + (s.badge ? '<span class="swg2">' + esc(s.badge) + '</span>' : '') + (swing == null ? '' : '<span class="swg ' + (swing < 0 ? 'neg' : '') + '" style="opacity:0">' + (swing >= 0 ? '+' : '\u2212') + Math.abs(swing) + '</span>') + '</div>' +
       '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Win probability across the week, the play marked with a star"><defs><clipPath id="' + id + 'a"><rect x="' + ml + '" y="' + mt + '" width="' + pw + '" height="' + (ph / 2) + '"/></clipPath><clipPath id="' + id + 'b"><rect x="' + ml + '" y="' + (mt + ph / 2) + '" width="' + pw + '" height="' + (ph / 2) + '"/></clipPath><clipPath id="' + id + 'r"><rect class="rv" x="0" y="0" width="0" height="' + H + '"/></clipPath></defs>';
     [0, 25, 50, 75, 100].forEach(function (g) { var y = Y(g / 100); o += '<line x1="' + ml + '" x2="' + (W - mr) + '" y1="' + y + '" y2="' + y + '" stroke="#ffffff33"' + (g === 50 ? ' stroke-dasharray="4 3"' : '') + '/><text x="' + (ml - 4) + '" y="' + (y + 3.5) + '" text-anchor="end" font-size="10" fill="#f6e7b9">' + g + '</text>'; });
     (ch.gaps || []).forEach(function (g) { o += '<line x1="' + X(g) + '" x2="' + X(g) + '" y1="' + mt + '" y2="' + (mt + ph) + '" stroke="#ffffff33" stroke-dasharray="2 3"/>'; });
     o += '<g clip-path="url(#' + id + 'r)"><path d="' + area + '" clip-path="url(#' + id + 'a)" fill="#3fae62" fill-opacity=".6"/><path d="' + area + '" clip-path="url(#' + id + 'b)" fill="#d0262b" fill-opacity=".6"/><polyline points="' + pts.join(' ') + '" fill="none" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"/></g>' +
       '<text x="' + (ml + 6) + '" y="' + (mt + 14) + '" font-size="12" font-weight="800" fill="#bff5c9" letter-spacing=".5">' + esc((s.by || '').toUpperCase()) + ' WINS</text><text x="' + (ml + 6) + '" y="' + (mt + ph - 6) + '" font-size="12" font-weight="800" fill="#ffb3b6" letter-spacing=".5">' + esc(String(other || '').toUpperCase()) + ' WINS</text>' +
-      '<g class="stg" transform="translate(' + sx.toFixed(1) + ' ' + sy.toFixed(1) + ')" opacity="0"><circle class="ring" r="13" fill="none" stroke="#f2c14e" stroke-width="2.5"/><path d="M0,-13 L3.8,-4.5 L12.4,-4 L5.7,1.8 L7.7,10.6 L0,5.9 L-7.7,10.6 L-5.7,1.8 L-12.4,-4 L-3.8,-4.5 Z" fill="#f2c14e" stroke="#120a04" stroke-width="1.6" stroke-linejoin="round"/>' +
-      (lab ? '<text x="0" y="' + (sy > mt + 34 ? -19 : 30) + '" text-anchor="middle" font-size="14" font-weight="900" fill="#f2c14e" stroke="#120a04" stroke-width="3" paint-order="stroke">' + lab + '</text>' : '') + '</g></svg></div>';
+      (s.star ? '' : lead(P, X, Y)) +
+      (s.star ? '<g class="stg" transform="translate(' + sx.toFixed(1) + ' ' + sy.toFixed(1) + ')" opacity="0"><circle class="ring" r="13" fill="none" stroke="#f2c14e" stroke-width="2.5"/><path d="M0,-13 L3.8,-4.5 L12.4,-4 L5.7,1.8 L7.7,10.6 L0,5.9 L-7.7,10.6 L-5.7,1.8 L-12.4,-4 L-3.8,-4.5 Z" fill="#f2c14e" stroke="#120a04" stroke-width="1.6" stroke-linejoin="round"/>' +
+      (lab ? '<text x="0" y="' + (sy > mt + 34 ? -19 : 30) + '" text-anchor="middle" font-size="14" font-weight="900" fill="#f2c14e" stroke="#120a04" stroke-width="3" paint-order="stroke">' + lab + '</text>' : '') + '</g>' : '') + '</svg></div>';
     return o;
   }
   function animateChart() {
     var el = document.querySelector('.wpc'); if (!el) return false;
     var rv = el.querySelector('.rv'), stg = el.querySelector('.stg'), swg = el.querySelector('.swg'), W = Number(el.dataset.w), sx = Number(el.dataset.sx);
-    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) { rv.setAttribute('width', W); stg.setAttribute('opacity', 1); if (swg) swg.style.opacity = 1; return true; }
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) { rv.setAttribute('width', W); if (stg) stg.setAttribute('opacity', 1); if (swg) swg.style.opacity = 1; return true; }
     var t0 = performance.now() + 500, D = 1900, shown = false;
     cancelAnimationFrame(wpRaf);
     (function step(now) {
       var k = Math.max(0, Math.min(1, (now - t0) / D)), e = 1 - Math.pow(1 - k, 2), x = e * W;
       rv.setAttribute('width', x);
-      if (!shown && x >= sx) { shown = true; stg.setAttribute('opacity', 1); stg.classList.add('pop'); if (swg) { swg.style.opacity = 1; swg.classList.add('pop'); } }
+      if (!shown && x >= sx) { shown = true; if (stg) { stg.setAttribute('opacity', 1); stg.classList.add('pop'); } if (swg) { swg.style.opacity = 1; swg.classList.add('pop'); } }
       if (k < 1) wpRaf = requestAnimationFrame(step);
     })(performance.now());
     return true;
+  }
+  function countUp(el) {   // a big number ticks up to its value (a quick 0.7s; skipped for reduced motion)
+    var to = Number(el.dataset.count), dec = Number(el.dataset.dec || 0), pre = el.dataset.pre || '', node = el.firstChild;
+    if (!node || node.nodeType !== 3 || isNaN(to) || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+    var rest = node.nodeValue.replace(/^[+\u2212-]?[\d.]+/, ''), t0 = performance.now() + 250;
+    node.nodeValue = pre + (0).toFixed(dec) + rest;
+    (function step(now) { var k = Math.max(0, Math.min(1, (now - t0) / 700)), e = 1 - Math.pow(1 - k, 3); node.nodeValue = pre + (to * e).toFixed(dec) + rest; if (k < 1) requestAnimationFrame(step); })(performance.now());
   }
   function plus(v, mx) { return mx != null && v >= mx ? String(v) : v + '+'; }   // the most a team can score in a week is just that number, not "or more"
   function labelRow(s, dup) { return '<div class="r bar cols' + (dup ? ' dup' : '') + '"><span class="t"></span><span class="lb">PLAYOFF CHANCE</span>' + (s.byes > 1 ? '<span class="c">BYE CHANCE</span>' : '') + '</div>'; }
@@ -656,10 +679,11 @@
     }
     if (s.type === 'game') return hdr('Game of the week', s.head || s.why, '') +
       board([{ t: s.w, tag: 'W', c: [{ v: f1(s.ws), k: 'g' }] }, { t: s.l, tag: 'L', c: [{ v: f1(s.ls), k: 'dim' }] }]) +
+      (s.chart ? chartHtml({ chart: s.chart, by: s.w, a: s.w, b: s.l, badge: s.flips ? s.flips + (s.flips === 1 ? ' lead change' : ' lead changes') : 'wire to wire' }, WIDE.matches ? 190 : 118) : '') +
       '<div class="box">' + (s.sides || []).map(function (x, i) { return '<div class="in"' + ds(i + 3) + '><h4>' + esc(x.m) + (x.rec ? '<s>' + esc(x.rec) + '</s>' : '') + '</h4>' +
         (x.lines || []).map(function (l) { return '<p><b>' + esc(l.t) + '</b><u>' + (l.pts == null ? '' : pts(l.pts) + ' pts') + '</u></p>'; }).join('') + '</div>'; }).join('') + '</div>';
-    if (s.type === 'finals') return hdr('Around the league', '', '') + '<div class="tiles">' + (s.games || []).map(function (g, i) {
-      return '<div class="tile in"' + ds(i) + '><div class="tw"><span>' + esc(g.w) + '</span><b>' + f1(g.ws) + '</b></div><div class="tl"><span>' + esc(g.l) + '</span><b>' + f1(g.ls) + '</b></div>' + (g.sr ? '<div class="ft">Career ' + esc(g.sr) + '</div>' : '') + '</div>';
+    if (s.type === 'finals') return hdr('Around the league', s.head || '', '') + '<div class="tiles">' + (s.games || []).map(function (g, i) {
+      return '<div class="tile in"' + ds(i) + '><div class="tw"><span>' + esc(g.w) + '</span><b>' + f1(g.ws) + '</b></div><div class="tl"><span>' + esc(g.l) + '</span><b>' + f1(g.ls) + '</b></div>' + '<div class="ft">' + (g.sr ? '<span>Career ' + esc(g.sr) + '</span>' : '') + (g.tags || []).map(function (t) { return '<em class="tgc' + (t === 'UNLUCKY' ? ' bad' : '') + '">' + esc(t) + '</em>'; }).join('') + '</div></div>';
     }).join('') + '</div>';
     if (s.type === 'trades') {
       var side = function (name, got, v, sv, lead) { var cls = sv == null ? 'none' : sv > 0.15 ? 'pos' : sv < -0.15 ? 'neg' : '';
@@ -677,7 +701,7 @@
       '<div class="rows hunt">' + labelRow(s) + (s.teams || []).map(function (t, i) {
         var half = Math.ceil((s.teams || []).length / 2);
         var chip = t.dead ? 'OUT' : t.top ? '1 SEED' : t.z ? 'BYE' : t.x ? 'IN' : '', k = t.make >= .95 ? 'g' : t.make < .2 ? 'rd' : '';
-        return (i === half ? labelRow(s, true) : '') + '<div class="r bar in' + (t.rank === s.spots ? ' cut' : '') + '"' + ds(i) + '><span class="t sm">' + t.rank + '  ' + esc(t.m) + (t.R != null ? ' <i class="rr">' + t.R + '</i>' : '') + (chip ? ' <em class="chip ' + (t.dead ? 'l' : 'w') + '">' + chip + '</em>' : '') + '</span><span class="trk"><i class="' + k + '" style="--w:' + Math.round(t.make * 100) + '%"></i><b>' + ppct(t.make) + '</b></span>' + (s.byes > 1 ? '<span class="c dim sm">' + ppct(t.bye) + '</span>' : '') + '</div>';
+        return (i === half ? labelRow(s, true) : '') + '<div class="r bar in' + (t.rank === s.spots ? ' cut' : '') + '"' + ds(i) + '><span class="t sm">' + t.rank + '  ' + esc(t.m) + (t.R != null ? ' <i class="rr">' + t.R + '</i>' : '') + (chip ? ' <em class="chip ' + (t.dead ? 'l' : 'w') + '">' + chip + '</em>' : '') + '</span><span class="trk"><i class="' + k + '" style="--w:' + Math.round(t.make * 100) + '%"></i><b>' + ppct(t.make) + '</b>' + (function () { var d = t.prev == null ? 0 : Math.round((t.make - t.prev) * 100); return Math.abs(d) >= 1 ? '<em class="dl ' + (d > 0 ? 'up' : 'dn') + '">' + (d > 0 ? '\u25B2' : '\u25BC') + Math.abs(d) + '</em>' : ''; })() + '</span>' + (s.byes > 1 ? '<span class="c dim sm">' + ppct(t.bye) + '</span>' : '') + '</div>';
       }).join('') + '</div>';
     if (s.type === 'pod') return hdr('The podcast', s.name || '', s.ep ? 'EP ' + s.ep : '') +
       '<div class="notes in"' + ds(2) + '><h4>Overheard at ' + fmt(s.at) + '</h4><p class="q">“' + esc(s.quote) + '”</p><p class="meet"><a href="' + esc(s.url) + '" target="_blank" rel="noopener">Listen at that moment</a></p></div>';
@@ -699,9 +723,10 @@
     }
     if (s.type === 'records') {
       var rv = function (v) { var m = /^(\S+)\s+(.+)$/.exec(String(v)); return m ? esc(m[1]) + '<small>' + esc(m[2]) + '</small>' : esc(v); };
+      var cnt = function (v) { var m = /^([+\u2212-]?)(\d+(?:\.(\d+))?)(?=\s|$)/.exec(String(v)); return m ? ' data-count="' + m[2] + '" data-dec="' + (m[3] ? m[3].length : 0) + '" data-pre="' + (m[1] === '-' ? '\u2212' : m[1]) + '"' : ''; };
       return hdr('Record book', s.head || '', (s.items || []).length + (s.items.length === 1 ? ' BROKEN' : ' BROKEN')) + '<div class="recs">' + (s.items || []).map(function (x, i) {
         var took = x.prev && x.prev !== x.holder;
-        return '<div class="rec in"' + ds(Math.min(i + 1, 6)) + '><div class="rv">' + rv(x.new) + '</div><div class="rx"><span class="rk">' + esc(x.name) + '</span><b>' + esc(x.holder) + '</b>' +
+        return '<div class="rec in"' + ds(Math.min(i + 1, 6)) + '><div class="rv"' + cnt(x.new) + '>' + rv(x.new) + '</div><div class="rx"><span class="rk">' + esc(x.name) + '</span><b>' + esc(x.holder) + '</b>' +
           (x.old ? '<span class="rw">' + (took ? 'took it from ' + esc(x.prev) + ' · ' : '') + 'was ' + esc(x.old) + '</span>' : '') + '</div></div>'; }).join('') + '</div>';
     }
     if (s.type === 'lifetime') return hdr('All-time standings', s.head || '', '') + '<div class="mvs">' + (s.items || []).map(function (x, i) {
@@ -726,7 +751,7 @@
     }
     if (s.type === 'coming') return hdr('Coming up', '', '') + (s.items || []).map(function (x, i) {
       var big = x.days === 0 ? 'TODAY' : x.days === 1 ? 'TOMORROW' : x.days + ' DAYS';
-      return '<div class="cd in' + (x.days <= 3 ? ' hot' : '') + '"' + ds(i + 1) + '><span class="hk">' + esc(x.label) + '</span><div class="cn">' + big + '</div><div class="cw">' + esc(x.when) + (x.sub ? '<small>' + esc(x.sub) + '</small>' : '') + '</div></div>';
+      return '<div class="cd in' + (x.days <= 3 ? ' hot' : '') + '"' + ds(i + 1) + '><span class="hk">' + esc(x.label) + '</span><div class="cn"' + (x.days > 1 ? ' data-count="' + x.days + '"' : '') + '>' + big + '</div><div class="cw">' + esc(x.when) + (x.sub ? '<small>' + esc(x.sub) + '</small>' : '') + '</div></div>';
     }).join('');
     return '';
   }
