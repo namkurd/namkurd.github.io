@@ -4,7 +4,7 @@
 The odds come from the page's own simulation (the Playoff picture), so this opens the real page in a headless browser and reads window.__dtfRace().
 build_recap.py turns the file into the recap's Playoff race card.
 
-    python3 tools/build_race.py --check        # needed=true/false: is the file missing, or older than 6 hours while the season is on?
+    python3 tools/build_race.py --check        # needed=true/false: is the file missing, or older than an hour while the season is on?
     python3 tools/build_race.py                # scrape it
     python3 tools/build_race.py --src /path    # serve sibling checkouts (/path/SleeperLiveRumbles/rumbles.html) instead of the published page (testing)
 """
@@ -12,7 +12,7 @@ import argparse, datetime as dt, json, mimetypes, os, sys
 HUB = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(HUB, 'data', 'race.json')
 BASE = 'https://namkurd.github.io/SleeperLiveRumbles/rumbles.html'
-FRESH_HOURS = 6
+FRESH_HOURS = 1   # the page's odds move with every result and projection: rescrape on the hourly feed run so the recap matches what Playoff Hunt shows now
 
 
 def load(path):

@@ -267,7 +267,7 @@ def trade_report(src, season, week, asof):
         json.dump(snap, f, separators=(',', ':'))
     clear = [r for r in rows if r['verdict']]
     right = sum(1 for r in clear if r['verdict'] == 'right')
-    shown = sorted([r for r in rows if r['parw']], key=lambda r: -abs(r['par']))[:4]
+    shown = sorted(rows, key=lambda r: -abs(r['par']))   # every trade made more than a week ago
     if not shown:
         return None
     lead = sorted(tot.items(), key=lambda kv: -kv[1])
@@ -630,7 +630,7 @@ def build(week, src, asof):
         if t == 'game': return 6 + 0.5 * sum(len(x['lines']) for x in sg['sides']) + (2 if sg.get('head') else 0)
         if t == 'finals': return 3 + 0.8 * len(sg['games'])
         if t == 'series': return 5 + 0.5 * len(sg['last'])
-        if t == 'trades': return 4 + 1.6 * len(sg['rows'])
+        if t == 'trades': return 4 + 0.9 * len(sg['rows'])
         if t == 'race': return 4 + 0.7 * len(sg['teams'])
         if t == 'pod': return 6 + (len(sg.get('quote') or '') / 16.0)
         if t == 'slack': return 3 + 2 * len(sg['items']) + (3 + len((sg.get('comment') or {}).get('text', '')) / 22.0 if sg.get('comment') else 0)

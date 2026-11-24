@@ -125,6 +125,14 @@
   .sn .pl { order: 3; flex: 0 0 100%; font-size: 1rem; color: #fff; min-width: 0; line-height: 1.15; } .sn .pl u { text-decoration: none; font-size: .7rem; color: var(--cream); background: #ffffff22; padding: 0 4px; }
   .sn .sv { order: 2; flex: none; margin-left: auto; font-size: .85rem; font-weight: 900; letter-spacing: .05em; padding: 0 6px; background: #5a4a30; color: #e8dcc0; } .sn .sv.pos { background: var(--win); color: #fff; } .sn .sv.neg { background: var(--red); color: #fff; }
   .tr .axis { margin-top: 2px; }
+  /* trade report: every trade more than a week old, two lines each (one per side) */
+  .tg { display: flex; flex-direction: column; gap: 5px; } .tc { background: var(--ink); border-left: 4px solid #5a4a30; padding: 2px 8px 3px; } .tc.ok { border-left-color: var(--win); } .tc.no { border-left-color: var(--red); }
+  .tc .sdr { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr) 3.4rem 2.8rem; align-items: center; gap: 6px; line-height: 1.25; }
+  .tc .sdr b { font-size: .9rem; text-transform: uppercase; color: var(--gold); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .tc .sdr b.lead { color: #fff; }
+  .tc .pl { font-size: .86rem; color: #f3ead6; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tc .pr { font-size: .9rem; font-weight: 900; text-align: right; white-space: nowrap; } .tc .pr.p { color: #7be08f; } .tc .pr.n { color: #ff8a8f; }
+  .tc .sv { font-size: .74rem; font-weight: 900; text-align: center; padding: 0 3px; background: #5a4a30; color: #e8dcc0; white-space: nowrap; } .tc .sv.pos { background: var(--win); color: #fff; } .tc .sv.neg { background: var(--red); color: #fff; } .tc .sv.none { background: none; }
+  .tgh { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr) 3.4rem 2.8rem; gap: 6px; padding: 0 8px 0 12px; font-size: .72rem; font-weight: 800; letter-spacing: .1em; color: var(--gold); text-transform: uppercase; } .tgh span:nth-child(3), .tgh span:nth-child(4) { text-align: right; }
   /* clinch watch */
   .sc { background: var(--ink); border-bottom: 3px solid var(--gold); padding: 6px 10px 8px; }
   .sc .sh { display: flex; align-items: center; gap: 12px; } .sc .sh .c { font-size: 2.6rem; font-weight: 900; min-width: 78px; text-align: center; padding: 0 6px; line-height: 1.15; background: linear-gradient(180deg, #6ed28a, var(--win)); color: #fff; } .sc .sh .c.rd { background: linear-gradient(180deg, #ee5a5f, var(--red2)); }
@@ -236,6 +244,7 @@
     .seg > * { min-width: 0; }
     .ctl { padding: 6px 12px 10px; } .ctl button { height: 38px; }
     /* the play card: the clip fills the left, everything about the play stacks on the right */
+    .seg.t-trades > .hdr, .seg.t-trades > .tgh, .seg.t-trades > .tg, .seg.t-trades > .notes { grid-column: 1 / -1; }
     .seg.play { grid-template-columns: 2fr 1fr; align-content: start; padding-top: 4px; row-gap: 10px; }
     .seg.play > .vid { grid-column: 1; grid-row: 1 / span 12; margin: 0; width: 100%; border: 3px solid var(--gold); align-self: start; }
     .seg.play > :not(.vid) { grid-column: 2; }
@@ -505,8 +514,8 @@
       return false;
     }
     while (z > .6 && bad()) { z = Math.round((z - .04) * 100) / 100; seg.style.zoom = z; }
-    var trs = seg.querySelectorAll('.tr');   // a trade report that still doesn't fit shows fewer trades rather than tiny type
-    for (var q = trs.length - 1; q >= 2 && bad(); q--) { trs[q].remove(); z = 1; seg.style.zoom = ''; while (z > .72 && bad()) { z = Math.round((z - .04) * 100) / 100; seg.style.zoom = z; } }
+    var trs = seg.querySelectorAll('.tc');   // every trade stays unless the card cannot fit even at the smallest type
+    for (var q = trs.length - 1; q >= 5 && bad(); q--) { trs[q].remove(); z = 1; seg.style.zoom = ''; while (z > .72 && bad()) { z = Math.round((z - .04) * 100) / 100; seg.style.zoom = z; } }
   }
   window.addEventListener('resize', function () { if (started && !ended) fit(); });
   function applyPause() { try { if (yt && yt.pauseVideo) { paused() ? yt.pauseVideo() : yt.playVideo(); } } catch (e) { /* not ready */ } $('pp').innerHTML = userPaused ? ICON.play : ICON.pause; }
@@ -614,7 +623,7 @@
       var tiles = ids.map(function (id, i) { var a = (i * 137.5) % 360, r = 110 + (i % 4) * 32, d = -(i * 12 / Math.max(ids.length, 1));
         return '<div class="pt" style="--a:' + a.toFixed(0) + 'deg;--r:' + r + 'px;--d:' + d.toFixed(2) + 's"><img alt="" src="https://i.ytimg.com/vi/' + esc(id) + '/mqdefault.jpg" onerror="this.style.visibility=\'hidden\'"></div>'; }).join('');
       return '<div class="portal"><div class="vtx"></div><div class="vtx b"></div><div class="rg"><i></i><i></i><i></i></div><div class="tun">' + tiles + '</div><div class="eye"></div>' +
-        '<div class="pttl"><span class="k">Rumble Hub · ' + esc(s.season) + '</span><b>Week ' + esc(s.week) + '</b><span class="sub">The recap</span></div>' +
+        '<div class="pttl"><span class="k">Rumble Hub · ' + esc(s.season) + '</span><b>Week ' + esc(s.week) + '</b><span class="sub">Recap</span></div>' +
         '<div class="ptz">' + (s.rundown || []).slice(0, 3).map(function (x, i) { return '<p style="animation-delay:' + (1.1 + i * .25).toFixed(2) + 's"><em>' + esc(x.k) + '</em><span>' + esc(x.t) + '</span></p>'; }).join('') + '</div></div>';
     }
     if (s.type === 'play') {
@@ -633,15 +642,12 @@
       return '<div class="tile in"' + ds(i) + '><div class="tw"><span>' + esc(g.w) + '</span><b>' + f1(g.ws) + '</b></div><div class="tl"><span>' + esc(g.l) + '</span><b>' + f1(g.ls) + '</b></div>' + (g.sr ? '<div class="ft">Career ' + esc(g.sr) + '</div>' : '') + '</div>';
     }).join('') + '</div>';
     if (s.type === 'trades') {
-      var mx = 1; (s.rows || []).forEach(function (r) { mx = Math.max(mx, Math.abs(r.lga), Math.abs(r.lgb)); });
-      var line = function (name, got, v, sv) { var w = Math.round(Math.abs(v) / mx * 50), inside = w >= 26, cls = sv == null ? '' : sv > 0.15 ? ' pos' : sv < -0.15 ? ' neg' : '';
-        return '<div class="sd"><div class="sn"><b>' + esc(name) + '</b><span class="pl">got ' + ((got || []).map(function (g) { return esc(g.n) + (g.p ? ' <u>' + g.p + '</u>' : ''); }).join(', ') || '–') + '</span>' + (sv == null ? '' : '<span class="sv' + cls + '">CHAT ' + (sv > 0 ? '+' : sv < 0 ? '−' : '') + Math.abs(sv).toFixed(1) + '</span>') + '</div>' +
-          '<div class="axis"><i class="' + (v >= 0 ? 'p' : 'n') + '" style="--w:' + w + '%"></i><em class="' + (v >= 0 ? 'p' : 'n') + (inside ? ' ins' : '') + '" style="' + (v >= 0 ? (inside ? 'left:' + (50 + w) + '%;transform:translate(-100%,-50%)' : 'left:' + (50 + w) + '%') : (inside ? 'right:' + (50 + w) + '%;transform:translate(100%,-50%)' : 'right:' + (50 + w) + '%')) + '">' + sgn(v) + ' PAR</em></div></div>'; };
-      return hdr('Trade report', s.head || '', '') + (s.rows || []).slice(0, window.innerHeight < 700 ? 3 : 4).map(function (r, i) {
-        var vd = r.verdict === 'right' ? '<span class="vd ok">CHAT ✓</span>' : r.verdict === 'wrong' ? '<span class="vd no">CHAT ✗</span>' : '<span class="vd">NO CHAT CALL</span>';
-        var mv = r.moved == null ? '' : (function () { var d = r.par > 0 ? r.moved : -r.moved; return ' · lead ' + (d >= 0 ? 'grew ' : 'shrank ') + Math.abs(d).toFixed(1) + ' this week'; })();
-        return '<div class="tr in"' + ds(i + 1) + '><div class="th"><b>' + esc(r.a) + ' ⇄ ' + esc(r.b) + '</b>' + vd + '</div><small>wk ' + r.w + ' · ' + r.weeks + ' wks of lineups' + esc(mv) + '</small>' + line(r.a, r.ga, r.lga, r.sa) + line(r.b, r.gb, r.lgb, r.sb) + '</div>';
-      }).join('') +
+      var side = function (name, got, v, sv, lead) { var cls = sv == null ? 'none' : sv > 0.15 ? 'pos' : sv < -0.15 ? 'neg' : '';
+        return '<div class="sdr"><b' + (lead ? ' class="lead"' : '') + '>' + esc(name) + '</b><span class="pl">' + ((got || []).map(function (g) { return esc(g.n); }).join(', ') || '–') + '</span><span class="pr ' + (v >= 0 ? 'p' : 'n') + '">' + sgn(v) + '</span><span class="sv ' + cls + '">' + (sv == null ? '' : (sv > 0 ? '+' : sv < 0 ? '\u2212' : '') + Math.abs(sv).toFixed(1)) + '</span></div>'; };
+      return hdr('Trade report', s.head || '', '') + '<div class="tgh"><span>Team</span><span>Got</span><span>PAR</span><span>Chat</span></div><div class="tg">' + (s.rows || []).map(function (r, i) {
+        var vc = r.verdict === 'right' ? ' ok' : r.verdict === 'wrong' ? ' no' : '';
+        return '<div class="tc in' + vc + '"' + ds(Math.min(i + 1, 6)) + ' title="Week ' + r.w + ' trade">' + side(r.a, r.ga, r.lga, r.sa, r.par > 0) + side(r.b, r.gb, r.lgb, r.sb, r.par < 0) + '</div>';
+      }).join('') + '</div>' +
         '<div class="notes in"' + ds(7) + '><h4>Season trade PAR</h4><p>' + (s.best || []).map(function (x) { return '<b>' + esc(x.m) + '</b> ' + sgn(x.v); }).concat((s.worst || []).map(function (x) { return '<b style="color:#ff8a8f">' + esc(x.m) + '</b> ' + sgn(x.v); })).join(' · ') + '</p>' + (s.clear ? '<p>Chat called <b>' + s.right + ' of ' + s.clear + '</b> clear ones right</p>' : '') + '</div>';
     }
     if (s.type === 'race') return hdr('Playoff hunt', s.head || '', s.weeksLeft + (s.weeksLeft === 1 ? ' WK LEFT' : ' WKS LEFT')) +
