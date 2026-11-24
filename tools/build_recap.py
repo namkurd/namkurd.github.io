@@ -16,7 +16,7 @@ sys.path.insert(0, HERE)
 import build_feed as bf   # play_title / play_sub / fantasy / source / fetch
 
 HUB = bf.HUB
-BUDGET = 195          # seconds, the page never runs longer (clips usually end before their slot does)
+BUDGET = 250          # seconds, the page never runs longer (clips usually end before their slot does)
 SITE = 'https://namkurd.github.io'
 
 
@@ -381,7 +381,7 @@ def build(week, src, asof):
     cands = offense + defense
     picks = offense[:3] + defense[:1]
     if cands:
-        segs.append({'type': 'clips', 'dur': 12, 'want': 4 if defense else min(4, len(offense)), 'defWant': 1 if defense else 0, 'label': 'play of the week',
+        segs.append({'type': 'clips', 'dur': 17, 'want': 4 if defense else min(4, len(offense)), 'defWant': 1 if defense else 0, 'label': 'play of the week',
                      'charts': {'%s.%s.%s' % (p['week'], p.get('aid'), p.get('bid')): chart_for(p)[0] for p in cands if chart_for(p)[0]},
                      'cands': [dict(play_segment(p, 'top', ''), **({'def': True} if is_def(p) else {})) for p in cands]})
     turning = None
@@ -389,7 +389,7 @@ def build(week, src, asof):
         pool = [p for p in plays if {p['a'], p['b']} == {wild['w'], wild['l']}]
         if pool:
             turning = pool[0]
-            segs.append({'type': 'clips', 'dur': 12, 'want': 1, 'turn': True, 'label': 'Turning point', 'why': '%s vs %s \u00b7 %d lead changes' % (wild['w'], wild['l'], wild['flips']),
+            segs.append({'type': 'clips', 'dur': 17, 'want': 1, 'turn': True, 'label': 'Turning point', 'why': '%s vs %s \u00b7 %d lead changes' % (wild['w'], wild['l'], wild['flips']),
                          'charts': {'%s.%s.%s' % (p['week'], p.get('aid'), p.get('bid')): chart_for(p)[0] for p in pool[:4] if chart_for(p)[0]},
                          'cands': [play_segment(p, 'turn', 'Turning point') for p in pool[:4]]})
 
@@ -471,7 +471,8 @@ def build(week, src, asof):
         segs.append({'type': 'shotguns', 'dur': 8, 'title': 'Shotgun watch', 'new': new_s, 'owed': owed_rows, 'week': week})
 
     # ---- records broken that week (the Record Book's change log)
-    rec, since = [], (asof - dt.timedelta(days=8)).isoformat()
+    end = min(dt.datetime.now(dt.timezone.utc), dt.datetime.combine(asof, dt.time(23, 59, 59), tzinfo=dt.timezone.utc))   # only records broken in the last 7 days
+    rec, since = [], (end - dt.timedelta(days=7)).strftime('%Y-%m-%dT%H:%M:%SZ')
     path = os.path.join(src, 'Recordbook', 'data', 'changelog.jsonl') if src else None
     lines = []
     try:
@@ -624,21 +625,26 @@ def build(week, src, asof):
             rd.append({'k': 'Shotgun', 't': ', '.join(x['m'] for x in sg['new'])})
     segs[0]['rundown'] = rd[:4]
 
+    def words(x):
+        return len(str(x or '').split())
+
     def read_time(sg):   # seconds to take a card in: a few to see it, more for each line, plus the words
         t = sg['type']
-        if t == 'intro': return 3 + 1.1 * len(sg['rundown'])
-        if t == 'game': return 6 + 0.5 * sum(len(x['lines']) for x in sg['sides']) + (2 if sg.get('head') else 0)
-        if t == 'finals': return 3 + 0.8 * len(sg['games'])
-        if t == 'series': return 5 + 0.5 * len(sg['last'])
-        if t == 'trades': return 4 + 0.9 * len(sg['rows'])
-        if t == 'race': return 4 + 0.7 * len(sg['teams'])
-        if t == 'pod': return 6 + (len(sg.get('quote') or '') / 16.0)
-        if t == 'slack': return 3 + 2 * len(sg['items']) + (3 + len((sg.get('comment') or {}).get('text', '')) / 22.0 if sg.get('comment') else 0)
-        if t == 'shotguns': return 5 + 2 * len(sg['new']) + 1.2 * len(sg['owed'])
-        if t == 'records': return 3 + 2 * len(sg['items'])
-        if t == 'lifetime': return 3 + 1.3 * len(sg['items'])
+        if t == 'intro': return 3 + 1.3 * len(sg['rundown'])
+        if t == 'game': return 3 + words(sg.get('head')) / 3.5 + 1.4 + 0.9 * sum(len(x['lines']) for x in sg['sides'])   # score, then each scoring play
+        if t == 'finals': return 3 + 0.9 * len(sg['games'])
+        if t == 'series': return 4 + 0.8 * len(sg['last'])
+        if t == 'trades': return 3 + words(sg.get('head')) / 3.5 + 1.1 * len(sg['rows']) + 2   # two sides, players and numbers each, then the season totals
+        if t == 'race': return 5 + 0.6 * len(sg['teams']) + (2 if sg.get('bubble') else 0)
+        if t == 'pod': return 4 + words(sg.get('quote')) / 2.8
+        if t == 'slack':
+            cm = sg.get('comment')
+            return 3 + (2 + words(cm.get('text')) / 3.0 if cm else 0) + sum(1.5 + words(x['t']) / 3.5 for x in sg['items'])
+        if t == 'shotguns': return 4 + 1.6 * len(sg['new']) + sum(1.1 + words(' '.join('%s wk %s' % (y.get('short') or y.get('player') or '', y.get('wk', '')) for y in r['shots'])) / 5.0 for r in sg['owed'])
+        if t == 'records': return 3 + sum(1.8 + words(x['name']) / 5.0 for x in sg['items'])   # name, new value, holder, what it was
+        if t == 'lifetime': return 3 + 1.8 * len(sg['items'])
         if t == 'standings': return 4 + 0.6 * len(sg['rows']) + (2 if sg.get('head') else 0)
-        if t == 'coming': return 3 + 1.8 * len(sg['items'])
+        if t == 'coming': return 3 + 2 * len(sg['items'])
         if t == 'clinch': return 4 + 3 * len(sg['items']) + (2 if sg.get('noElim') else 0)
         return sg['dur']
     for sg in segs:
