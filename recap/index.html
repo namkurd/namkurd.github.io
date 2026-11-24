@@ -329,7 +329,8 @@
     var h = /#(\d+)/.exec(location.hash); startAt = h ? Number(h[1]) : null;
     $('cs').textContent = '· ' + fmt(D.seconds || 0); $('cst').textContent = 'Ready'; $('go').disabled = false;
     segs = raw.filter(function (x) { return x.type === 'intro'; }); drawBars(raw.length);
-    if (segs[0]) $('cvp').innerHTML = render(segs[0]);   // the start card is the opener itself, with the Watch button on it   // the opener can start right away; the clips are checked while it plays
+    if (segs[0]) $('cvp').innerHTML = render(segs[0]);   // the start card is the opener itself, with the Watch button on it
+    fitCover(); window.addEventListener('resize', fitCover); if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitCover);   // the opener can start right away; the clips are checked while it plays
     resolve().then(function () {
       segs = build(); full = true; drawBars(segs.length); clock0();
       if (idx >= 0) markBars();
@@ -473,6 +474,9 @@
     el.style.whiteSpace = 'nowrap'; if (cs.display === 'flex') el.style.flexWrap = 'nowrap';
     while (el.scrollWidth > el.clientWidth + 1 && k > min) { k = Math.round((k - .04) * 100) / 100; el.style.fontSize = (base * k) + 'px'; }
     if (el.scrollWidth > el.clientWidth + 1) { el.style.whiteSpace = ''; el.style.fontSize = ''; el.style.flexWrap = ''; }
+  }
+  function fitCover() {   // the start card's teaser lines shrink (down to 60%) rather than end in an ellipsis
+    [].forEach.call(document.querySelectorAll('#cvp .ptz span'), function (el) { el.style.fontSize = ''; el.style.whiteSpace = ''; if (!$('cover').hidden) oneLine(el, .6); });
   }
   function fitPlay(seg) {   // a play card makes room by dropping the least important parts, in order: the matchup score, a shorter chart, the game situation, the replay link
     seg.classList.remove('c1', 'c2', 'c3', 'c4', 'c5');
