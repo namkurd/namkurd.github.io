@@ -3,6 +3,14 @@
  "windowDays": 7,
  "topics": [
   {
+   "title": "Week 11 Standings *Sent using* Claude",
+   "needs_summary": true,
+   "channel": "standings",
+   "messages": 44,
+   "people": 7,
+   "href": "https://dtf-club.slack.com/archives/C048A37TBA5/p1795520488683809"
+  },
+  {
    "title": "I'd like to pull a Joe",
    "needs_summary": true,
    "channel": "news",
@@ -73,15 +81,7 @@
    "messages": 14,
    "people": 4,
    "href": "https://dtf-club.slack.com/archives/CCG47441Z/p1795126515951779"
-  },
-  {
-   "title": "Looks like has to drop him for the morality clause - that’s…",
-   "needs_summary": true,
-   "channel": "trade-discussion",
-   "messages": 8,
-   "people": 5,
-   "href": "https://dtf-club.slack.com/archives/C07QP48E83E/p1795121657620259"
   }
  ],
- "generatedAt": "2026-11-24T04:25:03Z"
+ "generatedAt": "2026-11-24T21:29:01Z"
 }
