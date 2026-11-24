@@ -2627,8 +2627,8 @@
      "m": "Ryan",
      "rank": 4,
      "R": 112,
-     "make": 0.754,
-     "bye": 0.049,
+     "make": 0.753,
+     "bye": 0.05,
      "x": false,
      "z": false,
      "top": false,
@@ -2660,7 +2660,7 @@
      "m": "Alex",
      "rank": 7,
      "R": 93,
-     "make": 0.108,
+     "make": 0.109,
      "bye": 0,
      "x": false,
      "z": false,
@@ -2786,19 +2786,19 @@
      "label": "Mount Rushmore vote closes",
      "sub": "Episode 53: Best League Changes of All Time",
      "when": "Tue Nov 24, 4:44 PM ET",
-     "days": 1,
+     "days": 0,
      "kind": "vote"
     },
     {
      "label": "Trade deadline",
      "when": "Thu Nov 26",
-     "days": 3,
+     "days": 2,
      "kind": "trade-deadline"
     },
     {
      "label": "Playoffs begin",
      "when": "Thu Dec 17",
-     "days": 24,
+     "days": 23,
      "kind": "playoffs"
     }
    ],
@@ -2806,5 +2806,5 @@
   }
  ],
  "link": "https://namkurd.github.io/recap/?week=10",
- "generatedAt": "2026-11-23T23:33:21Z"
+ "generatedAt": "2026-11-24T01:02:31Z"
 }
