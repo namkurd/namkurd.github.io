@@ -74,6 +74,7 @@ jobs:
         continue-on-error: true
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}   # the comment of the week (most reactions), chosen once and kept in data/comment_<week>.json
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}   # reads the Content Boy Coin and hot takes out of data/podcast_transcript.json (once per episode)
         run: python3 tools/build_recap.py
       - name: Commit if changed
         run: |

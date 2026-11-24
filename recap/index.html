@@ -127,6 +127,11 @@
   /* record book: one row per broken record, the new number big on the left */
   .recs { display: flex; flex-direction: column; gap: 6px; } .rec { display: grid; grid-template-columns: minmax(5.4rem, auto) 1fr; align-items: center; gap: 12px; background: var(--ink); border-left: 4px solid var(--red); padding: 5px 10px 6px; }
   .rec .rv { min-width: 5.4rem; font-size: 2rem; font-weight: 900; line-height: 1; color: var(--gold); text-shadow: 0 2px 0 #0008; text-align: right; white-space: nowrap; } .rec .rv small { display: block; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--cream); margin-top: 3px; }
+  /* podcast: the Content Boy Coin and the hot takes, each linked to the moment it was said */
+  .coin { display: flex; align-items: center; gap: 12px; background: linear-gradient(90deg, #f2c14e30, #0006); border: 2px solid var(--gold); padding: 8px 12px; } .coin img { flex: none; width: 46px; height: 46px; border-radius: 50%; }
+  .coin .cx { flex: 1; min-width: 0; display: flex; flex-direction: column; } .coin .ck { font-size: .75rem; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); } .coin b { font-size: 1.7rem; text-transform: uppercase; line-height: 1; } .coin .cr { font-size: .95rem; color: var(--cream); font-weight: 600; line-height: 1.2; }
+  .coin a, .take a { flex: none; color: var(--gold); font-size: .8rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; text-decoration: none; white-space: nowrap; }
+  .take { background: var(--ink); border-left: 4px solid var(--red); padding: 5px 10px 7px; } .take .tp { font-size: .75rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; color: #ff8a8f; } .take p { margin: 2px 0 4px; font-size: 1.1rem; line-height: 1.25; font-weight: 600; }
   .rec .rx { min-width: 0; display: flex; flex-direction: column; gap: 1px; } .rec .rk { font-size: .78rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: #ff8a8f; } .rec b { font-size: 1.25rem; text-transform: uppercase; line-height: 1.1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .rec .rw { font-size: .85rem; color: var(--cream); font-weight: 700; }
   .hero .hv small { font-size: 1.6rem; margin-left: 8px; color: var(--cream); font-weight: 800; text-transform: uppercase; }
   .axis em.ins { color: #fff !important; text-shadow: 0 1px 3px #000b; }
@@ -258,6 +263,7 @@
     .seg.t-trades > .hdr, .seg.t-trades > .tgw, .seg.t-trades > .notes { grid-column: 1 / -1; }
     .tgw { display: grid; grid-template-columns: 1fr 1fr; gap: 0 26px; } .tcol.dup .tgh { display: grid; } .tc .sdr { gap: 8px; } .tc .sdr b { font-size: 1.05rem; } .tc .pl { font-size: 1rem; } .tc .pr { font-size: 1.05rem; } .tc .sv { font-size: .85rem; }
     .tc .sdr, .tgh { grid-template-columns: 6.6rem minmax(0, 1fr) 4rem 3.2rem; }
+    .seg.t-pod > .coin { grid-column: 1 / -1; } .take p { font-size: 1.15rem; }
     .seg.t-game > .wpc { grid-column: 2; grid-row: 2 / span 2; align-self: stretch; } .seg.t-game > .box { grid-column: 1; grid-row: 3; } .seg.t-game > .board, .seg.t-game > .rows { grid-column: 1; }
     .cover .cvb { padding-bottom: 3dvh; }
     .seg.t-race .r.bar { grid-auto-columns: 118px; } .r.bar.cols .c { overflow: visible; text-align: center; }
@@ -703,8 +709,12 @@
         var chip = t.dead ? 'OUT' : t.top ? '1 SEED' : t.z ? 'BYE' : t.x ? 'IN' : '', k = t.make >= .95 ? 'g' : t.make < .2 ? 'rd' : '';
         return (i === half ? labelRow(s, true) : '') + '<div class="r bar in' + (t.rank === s.spots ? ' cut' : '') + '"' + ds(i) + '><span class="t sm">' + t.rank + '  ' + esc(t.m) + (t.R != null ? ' <i class="rr">' + t.R + '</i>' : '') + (chip ? ' <em class="chip ' + (t.dead ? 'l' : 'w') + '">' + chip + '</em>' : '') + '</span><span class="trk"><i class="' + k + '" style="--w:' + Math.round(t.make * 100) + '%"></i><b>' + ppct(t.make) + '</b>' + (function () { var d = t.prev == null ? 0 : Math.round((t.make - t.prev) * 100); return Math.abs(d) >= 1 ? '<em class="dl ' + (d > 0 ? 'up' : 'dn') + '">' + (d > 0 ? '\u25B2' : '\u25BC') + Math.abs(d) + '</em>' : ''; })() + '</span>' + (s.byes > 1 ? '<span class="c dim sm">' + ppct(t.bye) + '</span>' : '') + '</div>';
       }).join('') + '</div>';
-    if (s.type === 'pod') return hdr('The podcast', s.name || '', s.ep ? 'EP ' + s.ep : '') +
-      '<div class="notes in"' + ds(2) + '><h4>Overheard at ' + fmt(s.at) + '</h4><p class="q">“' + esc(s.quote) + '”</p><p class="meet"><a href="' + esc(s.url) + '" target="_blank" rel="noopener">Listen at that moment</a></p></div>';
+    if (s.type === 'pod') {
+      var yl = function (at) { return 'https://www.youtube.com/watch?v=' + esc(s.vid || '') + '&t=' + at + 's'; };
+      var coin = s.coin ? '<div class="coin in"' + ds(1) + '><img src="/shell/icons/cbc-coin.webp" alt="" width="46" height="46"><div class="cx"><span class="ck">Content Boy Coin</span><b>' + esc(s.coin.winner) + '</b><span class="cr">' + esc(s.coin.reason) + '</span></div><a href="' + yl(s.coin.at) + '" target="_blank" rel="noopener">' + fmt(s.coin.at) + ' \u2197</a></div>' : '';
+      var takes = (s.takes || []).slice(0, window.innerHeight < 700 ? 2 : 3).map(function (t, i) { return '<div class="take in"' + ds(i + 2) + '><span class="tp">' + esc(t.topic || 'Hot take') + '</span><p>\u201c' + esc(t.quote) + '\u201d</p><a href="' + yl(t.at) + '" target="_blank" rel="noopener">Overheard at ' + fmt(t.at) + ' \u2197</a></div>'; }).join('');
+      return hdr('The podcast', s.name || '', s.ep ? 'EP ' + s.ep : '') + coin + (takes || (s.quote ? '<div class="notes in"' + ds(2) + '><h4>Overheard at ' + fmt(s.at) + '</h4><p class="q">“' + esc(s.quote) + '”</p><p class="meet"><a href="' + esc(s.url) + '" target="_blank" rel="noopener">Listen at that moment</a></p></div>' : ''));
+    }
     if (s.type === 'slack') {
       var c = s.comment, em = { fire: '🔥', '+1': '👍', joy: '😂', book: '📖', eyes: '👀', heart: '❤️', '100': '💯', raised_hands: '🙌', clap: '👏', skull: '💀', sob: '😭', muscle: '💪', tada: '🎉', 'thumbsup': '👍', laughing: '😆', point_up: '☝️' };
       var mxn = 1; (s.items || []).forEach(function (x) { mxn = Math.max(mxn, x.n); });
