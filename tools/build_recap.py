@@ -466,7 +466,7 @@ def build(week, src, asof):
                 new_s.append(row)
             if not sh.get('done'):
                 owed.setdefault(m['name'], []).append(row)
-    owed_rows = sorted(({'m': k, 'n': len(v), 'shots': sorted(v, key=lambda x: x['wk']), 'oldest': min(x['wk'] for x in v)} for k, v in owed.items()), key=lambda r: (r['oldest'], r['m']))
+    owed_rows = sorted(({'m': k, 'n': len(v), 'shots': sorted(v, key=lambda x: x['wk']), 'oldest': min(x['wk'] for x in v)} for k, v in owed.items()), key=lambda r: (-r['n'], r['oldest'], r['m']))   # most owed first
     if new_s or owed_rows:
         segs.append({'type': 'shotguns', 'dur': 8, 'title': 'Shotgun watch', 'new': new_s, 'owed': owed_rows, 'week': week})
 
@@ -640,7 +640,7 @@ def build(week, src, asof):
         if t == 'slack':
             cm = sg.get('comment')
             return 3 + (2 + words(cm.get('text')) / 3.0 if cm else 0) + sum(1.5 + words(x['t']) / 3.5 for x in sg['items'])
-        if t == 'shotguns': return 4 + 1.6 * len(sg['new']) + sum(1.1 + words(' '.join('%s wk %s' % (y.get('short') or y.get('player') or '', y.get('wk', '')) for y in r['shots'])) / 5.0 for r in sg['owed'])
+        if t == 'shotguns': return 3 + 1.2 * len(sg['new']) + 0.4 * len(sg['owed'])   # a short list of small numbers: a glance
         if t == 'records': return 3 + sum(1.8 + words(x['name']) / 5.0 for x in sg['items'])   # name, new value, holder, what it was
         if t == 'lifetime': return 3 + 1.8 * len(sg['items'])
         if t == 'standings': return 4 + 0.6 * len(sg['rows']) + (2 if sg.get('head') else 0)
