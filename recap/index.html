@@ -117,6 +117,14 @@
   .topic { background: var(--ink); border-bottom: 2px solid var(--gold); padding: 6px 10px 7px; } .topic b { display: block; font-size: 1.2rem; line-height: 1.15; margin: 4px 0 5px; font-weight: 700; }
   .topic .chip { text-transform: uppercase; } .topic .tm { display: flex; align-items: center; gap: 8px; font-size: .9rem; color: var(--cream); font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
   .hb { flex: 1; position: relative; height: 8px; background: #ffffff22; } .hb i { background: linear-gradient(90deg, #d9c9a0, var(--gold)); }
+  /* shotgun watch: owed punishments, one row per manager with a chip for each */
+  .sos { display: flex; flex-direction: column; gap: 3px; } .so { display: flex; flex-wrap: wrap; align-items: center; gap: 3px 7px; background: var(--ink); border-bottom: 2px solid var(--gold); padding: 3px 8px 4px; }
+  .so .n { font-style: normal; font-weight: 900; font-size: 1rem; min-width: 1.6em; text-align: center; background: var(--red); color: #fff; padding: 0 4px; } .so .n.one { background: #6b5a3c; color: #f6e7b9; }
+  .so b { font-size: 1.1rem; text-transform: uppercase; margin-right: 2px; } .so span { font-size: .88rem; font-weight: 700; background: #ffffff16; padding: 0 6px; white-space: nowrap; } .so u { text-decoration: none; color: var(--gold); font-weight: 800; font-size: .78rem; margin-left: 4px; text-transform: uppercase; }
+  /* record book: one row per broken record, the new number big on the left */
+  .recs { display: flex; flex-direction: column; gap: 6px; } .rec { display: grid; grid-template-columns: minmax(5.4rem, auto) 1fr; align-items: center; gap: 12px; background: var(--ink); border-left: 4px solid var(--red); padding: 5px 10px 6px; }
+  .rec .rv { min-width: 5.4rem; font-size: 2rem; font-weight: 900; line-height: 1; color: var(--gold); text-shadow: 0 2px 0 #0008; text-align: right; white-space: nowrap; } .rec .rv small { display: block; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; color: var(--cream); margin-top: 3px; }
+  .rec .rx { min-width: 0; display: flex; flex-direction: column; gap: 1px; } .rec .rk { font-size: .78rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: #ff8a8f; } .rec b { font-size: 1.25rem; text-transform: uppercase; line-height: 1.1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .rec .rw { font-size: .85rem; color: var(--cream); font-weight: 700; }
   .hero .hv small { font-size: 1.6rem; margin-left: 8px; color: var(--cream); font-weight: 800; text-transform: uppercase; }
   .axis em.ins { color: #fff !important; text-shadow: 0 1px 3px #000b; }
 
@@ -261,7 +269,7 @@
     .r.bar.cols.dup { display: grid; }
     .seg.t-finals .tiles { grid-column: 1 / -1; grid-template-columns: repeat(3, 1fr); }
     .seg.t-lifetime .mvs { grid-column: 1 / -1; grid-template-columns: repeat(3, 1fr); }
-    .seg.t-records { grid-template-columns: 1fr 1fr; } .seg.t-records > .hero { align-self: stretch; }
+    .seg.t-records > .recs { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 26px; } .rec { padding: 10px 14px 12px; } .rec .rv { font-size: 3.2rem; } .rec b { font-size: 1.5rem; } .rec .rw { font-size: 1rem; }
     .seg.t-coming { grid-template-columns: repeat(3, 1fr); } .seg.t-coming .cd .cn { font-size: 2.6rem; } .seg.t-coming .cd .cw { font-size: 1rem; } .seg.t-coming > .cd { align-self: stretch; }
     .seg.t-slack { grid-template-columns: 1.1fr 1fr; } .seg.t-slack > .cotw { grid-column: 1; grid-row: 2 / span 4; align-self: stretch; } .seg.t-slack > .topic { grid-column: 2; }
     .seg.t-clinch { grid-template-columns: 1fr 1fr; }
@@ -416,9 +424,9 @@
         p._rh = c.head || c.by;
         p.type = 'play'; p.clip = c._ok; p.dur = s.dur;
         if (s.charts && c._ck && s.charts[c._ck]) p.chart = s.charts[c._ck];
-        if (c.def) p.head = 'Defense \u00b7 ' + (p.head || '');
+        if (c.def) { p.isDef = 1; }
         if (s.turn) { p.label = 'Turning point'; p.why = s.why; p.turn = 1; p.head = s.why; }
-        else { var rank = ok.length - j; p.rank = rank; p.label = s.label.charAt(0).toUpperCase() + s.label.slice(1); if (rank === 1) p.dur += 3; }
+        else { var rank = ok.length - j; p.rank = rank; p.label = c.def ? 'Defensive play of the week' : s.label.charAt(0).toUpperCase() + s.label.slice(1); if (rank === 1) p.dur += 3; }
         out.push(p);
       });
     });
@@ -640,7 +648,7 @@
     }
     if (s.type === 'play') {
       var fa = s.fant, f = s.from == null ? 0 : s.from, t = s.to == null ? 0 : s.to;
-      return '<div class="vid"></div>' + hdr(s.label, s.head || '', s.rank ? '#' + s.rank : '') +
+      return '<div class="vid"></div>' + hdr(s.label, s.head || '', s.rank && !s.isDef ? '#' + s.rank : '') +
         board([{ t: s.title, w: 1, c: [{ v: (s.pts == null ? '' : pts(s.pts)), k: 'g' }] }]) + situation(s.sit, s.et) +
         (fa ? '<div class="fa">' + board([{ t: fa.m, tag: fa.ms > fa.os ? 'W' : 'L', slim: 1, c: [{ v: f1(fa.ms), k: fa.ms > fa.os ? 'g' : 'dim' }] }, { t: fa.o, tag: fa.ms > fa.os ? 'L' : 'W', slim: 1, c: [{ v: f1(fa.os), k: 'dim' }] }]) + '</div>' : '') +
         (s.chart && s.star ? chartHtml(s) : s.from == null ? '' : '<div class="wpd in"' + ds(4) + ' data-f="' + f + '" data-t="' + t + '"><div class="wh"><span class="who">' + esc(s.by || 'Win') + '\u2019s win chance</span><span class="swg" style="opacity:0">' + (t >= f ? '+' : '\u2212') + Math.abs(t - f) + '</span></div><div class="wn"><b class="cur">' + f + '%</b></div><div class="trk"><i class="gain"></i><i class="tick"></i><i class="head"></i><i class="m"></i></div></div>') +
@@ -687,11 +695,15 @@
         '<div class="col"><div class="sgrp red in"' + ds(1) + '>New this week</div>' +
         (nw.length ? board(nw.map(function (x) { return { t: x.m, sub: x.player + (x.pos ? ' (' + x.pos + ')' : ''), c: [{ v: '0.0', k: 'rd' }] }; })) : '<div class="sc none in"' + ds(2) + '>No new shotguns this week</div>') + '</div>' +
         (ow.length ? '<div class="col"><div class="sgrp in"' + ds(3) + '>Past due · punishment not served</div>' +
-          board(ow.map(function (r) { return { t: r.m, sm: 1, sub: r.shots.map(function (x) { return x.short + ' wk ' + x.wk; }).join(' · '), c: [{ v: r.n, k: r.n > 1 ? 'rd sm' : 'dim sm' }] }; })) + '</div>' : '');
+          '<div class="sos">' + ow.map(function (r, i) { return '<div class="so in"' + ds(Math.min(i + 4, 9)) + '><i class="n' + (r.n > 1 ? '' : ' one') + '">' + r.n + '</i><b>' + esc(r.m) + '</b>' + r.shots.map(function (x) { return '<span>' + esc(x.short) + '<u>wk ' + x.wk + '</u></span>'; }).join('') + '</div>'; }).join('') + '</div></div>' : '');
     }
-    if (s.type === 'records') return hdr('Record book', '', '') +
-      (s.items || []).slice(0, 2).map(function (x, i) { return '<div class="hero in"' + ds(i + 1) + '><span class="hk">' + esc(x.name) + '</span><div class="hv">' + (function (v) { var m = /^(\S+)\s+(.+)$/.exec(String(v)); return m ? esc(m[1]) + '<small>' + esc(m[2]) + '</small>' : esc(v); })(x.new) + '</div><div class="hn">' + esc(x.holder) + '</div>' + (x.old ? '<div class="hw">was ' + esc(x.old) + (x.prev && x.prev !== x.holder ? ' · ' + esc(x.prev) : '') + '</div>' : '') + '</div>'; }).join('') +
-      ((s.items || []).length > 2 ? '<div class="notes in"' + ds(4) + '>' + s.items.slice(2).map(function (x) { return '<p><b>' + esc(x.name) + '</b> ' + esc(x.new) + ' · ' + esc(x.holder) + '</p>'; }).join('') + '</div>' : '');
+    if (s.type === 'records') {
+      var rv = function (v) { var m = /^(\S+)\s+(.+)$/.exec(String(v)); return m ? esc(m[1]) + '<small>' + esc(m[2]) + '</small>' : esc(v); };
+      return hdr('Record book', s.head || '', (s.items || []).length + (s.items.length === 1 ? ' BROKEN' : ' BROKEN')) + '<div class="recs">' + (s.items || []).map(function (x, i) {
+        var took = x.prev && x.prev !== x.holder;
+        return '<div class="rec in"' + ds(Math.min(i + 1, 6)) + '><div class="rv">' + rv(x.new) + '</div><div class="rx"><span class="rk">' + esc(x.name) + '</span><b>' + esc(x.holder) + '</b>' +
+          (x.old ? '<span class="rw">' + (took ? 'took it from ' + esc(x.prev) + ' · ' : '') + 'was ' + esc(x.old) + '</span>' : '') + '</div></div>'; }).join('') + '</div>';
+    }
     if (s.type === 'lifetime') return hdr('All-time standings', s.head || '', '') + '<div class="mvs">' + (s.items || []).map(function (x, i) {
       var up = x.delta > 0; return '<div class="mc in ' + (up ? 'up' : 'dn') + '"' + ds(i + 1) + '><b>' + (up ? '▲' : '▼') + Math.abs(x.delta) + '</b><span>' + esc(x.m) + '</span><small>' + esc(x.metric) + ' · #' + x.rank + '</small>' +
         '<em>' + esc(x.val || '') + '</em>' + (x.vs ? '<s>' + (x.vs.passed ? 'passed ' : 'passed by ') + esc(x.vs.m) + ' (' + esc(x.vs.val) + ')</s>' : '') + '</div>'; }).join('') + '</div>';
