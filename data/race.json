@@ -77,7 +77,7 @@
    "rank": 2,
    "R": 142,
    "make": 0.998,
-   "bye": 0.823,
+   "bye": 0.829,
    "one": 0.032,
    "x": false,
    "z": false,
@@ -86,22 +86,26 @@
    "scen": {
     "p": {
      "own": null,
-     "real": 12,
+     "real": 11,
      "long": 8,
      "help": {
       "allow": 1,
       "list": [
        {
         "n": "Haan",
-        "th": 3
+        "th": 2
        },
        {
         "n": "Kaitlyn",
-        "th": 6
+        "th": 5
        },
        {
         "n": "Ankit",
-        "th": 6
+        "th": 5
+       },
+       {
+        "n": "Alex",
+        "th": 20
        }
       ]
      }
@@ -112,8 +116,8 @@
    "m": "Ryan",
    "rank": 3,
    "R": 127,
-   "make": 0.899,
-   "bye": 0.076,
+   "make": 0.894,
+   "bye": 0.072,
    "one": 0,
    "x": false,
    "z": false,
@@ -125,8 +129,8 @@
    "m": "Jake",
    "rank": 4,
    "R": 126,
-   "make": 0.868,
-   "bye": 0.059,
+   "make": 0.864,
+   "bye": 0.057,
    "one": 0,
    "x": false,
    "z": false,
@@ -138,7 +142,7 @@
    "m": "Stephanie",
    "rank": 5,
    "R": 117,
-   "make": 0.727,
+   "make": 0.736,
    "bye": 0.023,
    "one": 0,
    "x": false,
@@ -151,8 +155,8 @@
    "m": "Haan",
    "rank": 6,
    "R": 111,
-   "make": 0.592,
-   "bye": 0.017,
+   "make": 0.614,
+   "bye": 0.018,
    "one": 0,
    "x": false,
    "z": false,
@@ -164,7 +168,7 @@
    "m": "Kaitlyn",
    "rank": 7,
    "R": 108,
-   "make": 0.41,
+   "make": 0.416,
    "bye": 0.001,
    "one": 0,
    "x": false,
@@ -177,7 +181,7 @@
    "m": "Ankit",
    "rank": 8,
    "R": 108,
-   "make": 0.41,
+   "make": 0.377,
    "bye": 0.001,
    "one": 0,
    "x": false,
@@ -190,7 +194,7 @@
    "m": "Alex",
    "rank": 9,
    "R": 93,
-   "make": 0.092,
+   "make": 0.095,
    "bye": 0,
    "one": 0,
    "x": false,
@@ -203,7 +207,7 @@
    "m": "Christian",
    "rank": 10,
    "R": 87,
-   "make": 0.003,
+   "make": 0.004,
    "bye": 0,
    "one": 0,
    "x": false,
@@ -316,5 +320,5 @@
    }
   }
  ],
- "generatedAt": "2026-11-25T04:24:50Z"
+ "generatedAt": "2026-11-25T15:48:11Z"
 }
