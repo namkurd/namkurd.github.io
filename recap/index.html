@@ -112,11 +112,11 @@
   .hero .hk { display: inline-block; background: var(--red); padding: 2px 12px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; font-size: .95rem; }
   .hero .hv { font-size: 4.2rem; font-weight: 900; line-height: 1; color: var(--gold); text-shadow: 0 3px 0 #0008; margin-top: 4px; } .hero .hn { font-size: 1.6rem; font-weight: 800; text-transform: uppercase; } .hero .hw { color: var(--cream); font-size: 1rem; }
   /* all-time movers: tiles */
-  .mvs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .mvs { display: grid; grid-template-columns: 1fr; gap: 8px; }
   .mc { background: var(--ink); border-bottom: 3px solid var(--gold); padding: 6px 10px 8px; min-width: 0; } .mc .mt { display: block; color: var(--gold); font-size: .8rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 3px; }
-  /* all-time standings: the manager who climbed and the one he passed share a box */
-  .mc .mr { display: grid; grid-template-columns: 2.9rem 1fr; align-items: baseline; gap: 0 6px; padding: 2px 0; } .mc .mr b { font-size: 1.3rem; line-height: 1; font-weight: 900; } .mc .mr.up b { color: #7be08f; } .mc .mr.dn b { color: #ff8a8f; }
-  .mc .mr span { font-size: 1.1rem; font-weight: 800; text-transform: uppercase; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .mc .mr.dn span { color: #d9cdb0; } .mc .mr i { grid-column: 2; font-style: normal; font-size: .86rem; color: var(--cream); font-weight: 700; margin-top: -2px; }
+  /* all-time standings: the manager who climbed and the one he passed sit side by side in one box, styled alike (green up, red down) */
+  .mc .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; } .mc .mb { min-width: 0; } .mc .mh { display: flex; align-items: baseline; gap: 7px; min-width: 0; } .mc .mh b { font-size: 1.5rem; line-height: 1; font-weight: 900; flex: none; } .mc .mb.up b { color: #7be08f; } .mc .mb.dn b { color: #ff8a8f; }
+  .mc .mh span { font-size: 1.15rem; font-weight: 800; text-transform: uppercase; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .mc .mb.dn .mh span { color: #e8d9c4; } .mc .mb i { display: block; font-style: normal; font-size: .86rem; color: var(--cream); font-weight: 700; margin: 1px 0 0 2.4rem; }
 
   /* league chat: the comment of the week, then the busiest threads */
   .cotw { background: linear-gradient(180deg, #0007, #0003); border-top: 2px solid var(--gold); border-bottom: 2px solid var(--gold); padding: 8px 12px 10px; }
@@ -133,8 +133,8 @@
   .recs { display: flex; flex-direction: column; gap: 6px; } .rec { background: var(--ink); border-left: 4px solid var(--red); padding: 6px 12px 7px; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
   .rec .rk { font-size: .78rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: #ff8a8f; line-height: 1.15; } .rec .rr { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; min-width: 0; } .rec .rv { font-size: 2.1rem; font-weight: 900; line-height: 1; color: var(--gold); text-shadow: 0 2px 0 #0008; white-space: nowrap; flex: none; } .rec .rv small { font-size: .85rem; letter-spacing: .1em; text-transform: uppercase; color: var(--cream); margin-left: 6px; text-shadow: none; } .rec .rh { font-size: 1.3rem; font-weight: 800; text-transform: uppercase; text-align: right; line-height: 1.1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .rec .rw { font-size: .88rem; color: var(--cream); font-weight: 700; }
   /* podcast: the Content Boy Coin and the hot takes, each linked to the moment it was said */
-  .coin { display: flex; align-items: center; gap: 12px; background: linear-gradient(90deg, #f2c14e30, #0006); border: 2px solid var(--gold); padding: 8px 12px; } .coin img { flex: none; width: 46px; height: 46px; border-radius: 50%; }
-  .coin .cx { flex: 1; min-width: 0; display: flex; flex-direction: column; } .coin .ck { font-size: .75rem; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); } .coin b { font-size: 1.7rem; text-transform: uppercase; line-height: 1; } .coin .cr { font-size: .95rem; color: var(--cream); font-weight: 600; line-height: 1.2; }
+  .coin { display: flex; align-items: center; gap: 16px; background: linear-gradient(90deg, #f2c14e30, #0006); border: 2px solid var(--gold); padding: 10px 14px; } .coin img { flex: none; width: 5.6rem; height: 5.6rem; border-radius: 50%; filter: drop-shadow(0 4px 10px #000a); }
+  .coin .cx { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; } .coin .ck { font-size: .9rem; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); } .coin b { font-size: 2.3rem; text-transform: uppercase; line-height: .95; } .coin .cr { font-size: 1.1rem; color: var(--cream); font-weight: 600; line-height: 1.2; }
   .coin a, .take a { flex: none; color: var(--gold); font-size: .8rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; text-decoration: none; white-space: nowrap; }
   .take { background: var(--ink); border-left: 4px solid var(--red); padding: 5px 10px 7px; } .take .tp { font-size: .75rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; color: #ff8a8f; } .take p { margin: 2px 0 4px; font-size: 1.1rem; line-height: 1.25; font-weight: 600; }
   .hero .hv small { font-size: 1.6rem; margin-left: 8px; color: var(--cream); font-weight: 800; text-transform: uppercase; }
@@ -267,7 +267,7 @@
     .seg.t-trades > .hdr, .seg.t-trades > .tgw, .seg.t-trades > .notes { grid-column: 1 / -1; }
     .tgw { display: grid; grid-template-columns: 1fr 1fr; gap: 0 26px; } .tcol.dup .tgh { display: grid; } .tc .sdr { gap: 8px; } .tc .sdr b { font-size: 1.05rem; } .tc .pl { font-size: 1rem; } .tc .pr { font-size: 1.05rem; } .tc .sv { font-size: .85rem; }
     .tc .sdr, .tgh { grid-template-columns: 6.6rem minmax(0, 1fr) 4rem 3.2rem; }
-    .seg.t-pod > .coin { grid-column: 1 / -1; } .take p { font-size: 1.05rem; }
+    .seg.t-pod > .coin { grid-column: 1 / -1; } .coin img { width: 7.6rem; height: 7.6rem; } .coin b { font-size: 3rem; } .take p { font-size: 1.05rem; }
     .seg.t-game > .wpc { grid-column: 2; grid-row: 2 / span 2; align-self: stretch; } .seg.t-game > .box { grid-column: 1; grid-row: 3; } .seg.t-game > .board, .seg.t-game > .rows { grid-column: 1; }
     .cover .cvb { padding-bottom: 3dvh; }
     .seg.t-race .r.bar { grid-auto-columns: 118px; } .r.bar.cols .c { overflow: visible; text-align: center; }
@@ -282,7 +282,7 @@
     .seg.t-race .rows.hunt { grid-column: 1 / -1; display: grid; grid-auto-flow: column; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(7, auto); gap: 3px 26px; align-content: start; }
     .r.bar.cols.dup { display: grid; }
     .seg.t-finals .tiles { grid-column: 1 / -1; grid-template-columns: repeat(3, 1fr); }
-    .seg.t-lifetime .mvs { grid-column: 1 / -1; grid-template-columns: repeat(3, 1fr); } .mc .mr { grid-template-columns: 3.3rem 1fr; } .mc .mr span { font-size: 1.4rem; } .mc .mr i { font-size: .95rem; }
+    .seg.t-lifetime .mvs { grid-column: 1 / -1; grid-template-columns: repeat(2, 1fr); } .mc .mh b { font-size: 1.9rem; } .mc .mh span { font-size: 1.5rem; } .mc .mb i { font-size: 1rem; margin-left: 3rem; }
     .seg.t-coming:not(:has(> .cd:nth-child(4))) { grid-template-columns: repeat(2, minmax(0, 31%)); justify-content: center; } .seg.t-coming:not(:has(> .cd:nth-child(3))) { grid-template-columns: minmax(0, 36%); justify-content: center; }
     .seg.t-records > .recs { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 26px; } .rec { padding: 9px 14px 11px; } .rec .rv { font-size: 3rem; } .rec .rh { font-size: 1.5rem; } .rec .rw { font-size: 1rem; } .rec .rk { font-size: .9rem; }
     .seg.t-coming { grid-template-columns: repeat(3, 1fr); } .seg.t-coming .cd .cn { font-size: 2.6rem; } .seg.t-coming .cd .cw { font-size: 1rem; } .seg.t-coming > .cd { align-self: stretch; }
@@ -721,7 +721,7 @@
       }).join('') + '</div>';
     if (s.type === 'pod') {
       var yl = function (at) { return 'https://www.youtube.com/watch?v=' + esc(s.vid || '') + '&t=' + at + 's'; };
-      var coin = s.coin ? '<div class="coin in"' + ds(1) + '><img src="/shell/icons/cbc-coin.webp" alt="" width="46" height="46"><div class="cx"><span class="ck">Content Boy Coin</span><b>' + esc(s.coin.winner) + '</b><span class="cr">' + esc(s.coin.reason) + '</span></div><a href="' + yl(s.coin.at) + '" target="_blank" rel="noopener">' + fmt(s.coin.at) + ' \u2197</a></div>' : '';
+      var coin = s.coin ? '<div class="coin in"' + ds(1) + '><img src="/shell/icons/cbc-coin.webp" alt="" width="120" height="120"><div class="cx"><span class="ck">Content Boy Coin</span><b>' + esc(s.coin.winner) + '</b><span class="cr">' + esc(s.coin.reason) + '</span></div><a href="' + yl(s.coin.at) + '" target="_blank" rel="noopener">' + fmt(s.coin.at) + ' \u2197</a></div>' : '';
       var takes = (s.takes || []).slice(0, window.innerHeight < 700 ? 2 : 3).map(function (t, i) { return '<div class="take in"' + ds(i + 2) + '><span class="tp">' + esc(t.topic || 'Hot take') + '</span><p>\u201c' + esc(t.quote) + '\u201d</p><a href="' + yl(t.at) + '" target="_blank" rel="noopener">Overheard at ' + fmt(t.at) + ' \u2197</a></div>'; }).join('');
       return hdr('The podcast', s.name || '', s.ep ? 'EP ' + s.ep : '') + coin + (takes || (s.quote ? '<div class="notes in"' + ds(2) + '><h4>Overheard at ' + fmt(s.at) + '</h4><p class="q">“' + esc(s.quote) + '”</p><p class="meet"><a href="' + esc(s.url) + '" target="_blank" rel="noopener">Listen at that moment</a></p></div>' : ''));
     }
@@ -750,9 +750,9 @@
           (x.old ? '<span class="rw">was ' + esc(x.old) + (took ? ' \u00b7 held by ' + esc(x.prev) : '') + '</span>' : '') + '</div>'; }).join('') + '</div>';
     }
     if (s.type === 'lifetime') return hdr('All-time standings', '', '') + '<div class="mvs">' + (s.items || []).map(function (x, i) {
-      return '<div class="mc in"' + ds(i + 1) + '><small class="mt">' + esc(x.metric) + '</small>' +
-        '<div class="mr up"><b>\u25B2' + Math.abs(x.delta) + '</b><span>' + esc(x.m) + '</span><i>#' + x.rank + ' \u00b7 ' + esc(x.val || '') + '</i></div>' +
-        (x.dn ? '<div class="mr dn"><b>\u25BC' + Math.abs(x.dn.delta || 1) + '</b><span>' + esc(x.dn.m) + '</span><i>#' + x.dn.rank + ' \u00b7 ' + esc(x.dn.val || '') + '</i></div>' : '') + '</div>'; }).join('') + '</div>';
+      var blk = function (cls, mark, n, who, rank, val) { return '<div class="mb ' + cls + '"><div class="mh"><b>' + mark + n + '</b><span>' + esc(who) + '</span></div><i>#' + rank + ' \u00b7 ' + esc(val || '') + '</i></div>'; };
+      return '<div class="mc in"' + ds(i + 1) + '><small class="mt">' + esc(x.metric) + '</small><div class="pair">' + blk('up', '\u25B2', Math.abs(x.delta), x.m, x.rank, x.val) +
+        (x.dn ? blk('dn', '\u25BC', Math.abs(x.dn.delta || 1), x.dn.m, x.dn.rank, x.dn.val) : '') + '</div></div>'; }).join('') + '</div>';
     if (s.type === 'standings') { var top = 1; (s.rows || []).forEach(function (r) { top = Math.max(top, r.rumbles); });
       return hdr('Standings', s.head || '', 'WK ' + D.week) + '<div class="rows">' + s.rows.map(function (r, i) {
         var dl = r.prev - r.rank;

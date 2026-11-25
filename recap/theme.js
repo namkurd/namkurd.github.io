@@ -1,17 +1,19 @@
-/* The recap's theme song player. The music itself is composed each week by tools/build_theme.py and played by a sampled orchestra (strings, choir, basses,
-   cellos, timpani, horns, trumpet, violins, cymbals) into data/theme/: three looping stems that stack (0 strings, choir and basses; 1 adds cellos, timpani
-   and a snare cadence; 2 adds horns, trumpet, violins and cymbals) and three one-shots (a big and a small hit for card changes, and the ending).
-   This file mixes them: the stems loop on the title card, the energy follows the card on screen, a hit lands on each card change, and the whole thing
+/* The recap's theme song player. The music itself is a college fight-band march composed each week by tools/build_theme.py and played by a sampled band
+   (tuba, clarinets, horns, trombones, trumpet, piccolo, snare, bass drum, cymbals) into data/theme/: three looping stems that stack (0 the tuba's oom
+   and soft clarinets; 1 adds the afterbeat horns and trombones and the snare cadence; 2 adds the trumpet and piccolo melody, brass stabs and cymbals)
+   and the ending one-shot.
+   This file mixes them: the stems loop on the title card, the energy follows the card on screen, and the whole thing
    steps aside while an NFL clip is playing with its own sound. Nothing plays until the listener taps the theme button.
+   (No hit on card changes any more: the music just follows the energy of each card, and the ending plays once at the close.)
 
    Theme.setup()                      look for this week's theme (a promise; rejects when there is none)
    Theme.start()                      (from a tap) load the audio and start the title-card loop
-   Theme.card(type, i, n)             a card change: set the energy and hit it
+   Theme.card(type, i, n)             a card change: set the energy
    Theme.mute(on)  Theme.duck(on)     silence it (the sound button), or dip it while an NFL clip plays with its own sound
    Theme.finish()  Theme.stop()       the ending; stop */
 (function (global) {
   'use strict';
-  var BASE = '/data/theme/', NAMES = ['l0', 'l1', 'l2', 'big', 'small', 'end'];
+  var BASE = '/data/theme/', NAMES = ['l0', 'l1', 'l2', 'end'];
   // how much of the arrangement plays on each kind of card: 0 strings and choir, 1 adds the drive, 2 everything
   var LEVELS = { intro: 2, game: 2, finals: 1, race: 1, clinch: 2, trades: 1, slack: 1, pod: 0, shotguns: 1, records: 2, lifetime: 1, coming: 2, wait: 0 };
 
@@ -67,7 +69,7 @@
     vol();
     load().then(function () {
       if (!armed) return;
-      if (!timer) { nextLoop = ctx.currentTime + .1; timer = setInterval(scheduleLoops, 400); scheduleLoops(); shot('big', .8); }
+      if (!timer) { nextLoop = ctx.currentTime + .1; timer = setInterval(scheduleLoops, 400); scheduleLoops(); }
     }, function () { armed = false; });
   }
   function stop() {
@@ -79,8 +81,7 @@
   function card(type, i, n) {
     level = LEVELS[type] != null ? LEVELS[type] : 1;
     if (type === 'play') { ducked = true; vol(true); return; }
-    var wasDucked = ducked; ducked = false; vol(true);
-    shot((i === 0 || wasDucked || i === n - 1) ? 'big' : 'small', .8);
+    ducked = false; vol(true);   // the energy follows the card, but no hit lands on the change
   }
   function mute(on) { silent = !!on; vol(true); }
   function duck(on) { ducked = !!on; vol(true); }

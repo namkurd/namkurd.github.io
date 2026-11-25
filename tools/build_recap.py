@@ -754,7 +754,7 @@ def build(week, src, asof):
         if t == 'game': return 10
         if t == 'finals': return 7
         if t == 'series': return 4 + 0.8 * len(sg['last'])
-        if t == 'trades': return 3 + words(sg.get('head')) / 3.5 + 1.1 * len(sg['rows']) + 2   # two sides, players and numbers each, then the season totals
+        if t == 'trades': return 15
         if t == 'race': return 7
         if t == 'pod': return 3 + sum(0.8 + words(x['quote']) / 4.5 for x in (sg.get('takes') or [])) + (3 if sg.get('coin') else 0)
         if t == 'slack':

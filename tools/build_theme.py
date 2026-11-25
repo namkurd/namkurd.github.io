@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
-"""The recap's theme song: composed for the week and played by a sampled orchestra (the MuseScore General soundfont, through FluidSynth), then cut
-into the pieces the player mixes: three looping stems (0 strings, choir and basses; 1 adds cellos, timpani and snare cadence; 2 adds horns, trumpet,
-violins and cymbals) and three one-shots (a big hit and a small hit for the card changes, and the ending).
+"""The recap's theme song: a college fight-band march composed for the week and played by a sampled band (the MuseScore General soundfont, through
+FluidSynth), then cut into the pieces the player mixes: three looping stems that stack (0 the bass line and soft woodwinds, 1 adds the afterbeat horns and
+trombones and the snare cadence, 2 adds the trumpet and piccolo melody, brass stabs and cymbal crashes) and the ending.
 
     python3 tools/build_theme.py --check     # needed=true/false: is there no theme for the current recap week yet?
     python3 tools/build_theme.py             # compose, render, write data/theme/*
-    python3 tools/build_theme.py --keep      # also keep the .mid files next to the audio (to look at)
+    python3 tools/build_theme.py --keep      # also keep the .mid files in /tmp (to look at)
 
 Needs: fluidsynth, the soundfont (apt: fluidsynth musescore-general-soundfont), ffmpeg and `pip install mido`.
-Every week is a different piece: key, mode, chord progression, melody and tempo come from the week number, and the tempo is chosen so a whole number of
-16-bar loops fills the recap.
+Every week is a different march: key, strain order, chords and melody come from the week number, and the tempo is chosen so a whole number of 16-bar
+loops fills the recap.
 """
 import argparse, json, os, random, shutil, subprocess, sys, tempfile
 
@@ -18,30 +18,25 @@ OUT = os.path.join(HUB, 'data', 'theme')
 SF = next((p for p in ('/usr/share/sounds/sf3/MuseScore_General.sf3', '/usr/share/sounds/sf3/MuseScore_General_Full.sf3', '/usr/share/sounds/sf2/FluidR3_GM.sf2') if os.path.exists(p)), None)
 TPB = 480
 
-# General MIDI programs (0-based)
-STRINGS, CHOIR, BASS, CELLO, VIOLA, VIOLIN, HORN, TRUMPET, BRASS, TIMP = 49, 52, 43, 42, 41, 40, 60, 56, 61, 47
-CH = {'strings': 0, 'choir': 1, 'bass': 2, 'cello': 3, 'viola': 4, 'timp': 5, 'horn': 6, 'trumpet': 7, 'brass': 8, 'violin': 10, 'drums': 9, 'low': 11}
-STEMS = {0: ['strings', 'choir', 'bass'], 1: ['cello', 'viola', 'timp', 'drums'], 2: ['horn', 'trumpet', 'brass', 'violin', 'drums2']}
-PROG = {'strings': STRINGS, 'choir': CHOIR, 'bass': BASS, 'cello': CELLO, 'viola': VIOLA, 'timp': TIMP, 'horn': HORN, 'trumpet': TRUMPET, 'brass': BRASS, 'violin': VIOLIN, 'low': BASS}
-VOL = {'strings': 78, 'choir': 56, 'bass': 100, 'cello': 100, 'viola': 84, 'timp': 112, 'horn': 96, 'trumpet': 100, 'brass': 100, 'violin': 88, 'drums': 100, 'low': 100}
+# General MIDI programs (0-based): the band
+TUBA, TROMBONE, TRUMPET, HORN, BRASS, CLARINET, PICCOLO = 58, 57, 56, 60, 61, 71, 72
+CH = {'tuba': 0, 'clarinet': 1, 'horn': 2, 'trombone': 3, 'trumpet': 4, 'piccolo': 5, 'brass': 6, 'drums': 9}
+STEMS = {0: ['tuba', 'clarinet', 'drums0'], 1: ['horn', 'trombone', 'drums'], 2: ['trumpet', 'piccolo', 'brass', 'drums2']}
+PROG = {'tuba': TUBA, 'trombone': TROMBONE, 'trumpet': TRUMPET, 'horn': HORN, 'brass': BRASS, 'clarinet': CLARINET, 'piccolo': PICCOLO}
+VOL = {'tuba': 112, 'clarinet': 70, 'horn': 100, 'trombone': 100, 'trumpet': 112, 'piccolo': 84, 'brass': 108, 'drums': 110}
 
-MINOR = [(0, 'm'), (2, 'd'), (3, 'M'), (5, 'm'), (7, 'm'), (8, 'M'), (10, 'M')]
-MAJOR = [(0, 'M'), (2, 'm'), (4, 'm'), (5, 'M'), (7, 'M'), (9, 'm'), (11, 'd')]
-PROGS = {   # (semitones above the tonic, quality)
-    'minor': [[(0, 'm'), (8, 'M'), (3, 'M'), (10, 'M')], [(0, 'm'), (10, 'M'), (8, 'M'), (10, 'M')], [(0, 'm'), (5, 'm'), (8, 'M'), (7, 'M')], [(0, 'm'), (3, 'M'), (10, 'M'), (8, 'M')]],
-    'major': [[(0, 'M'), (7, 'M'), (9, 'm'), (5, 'M')], [(0, 'M'), (9, 'm'), (5, 'M'), (7, 'M')], [(9, 'm'), (5, 'M'), (0, 'M'), (7, 'M')]]
-}
-SCALES = {'minor': [0, 2, 3, 5, 7, 8, 10], 'major': [0, 2, 4, 5, 7, 9, 11]}
-CELLS = [   # a bar of melody: (start beat, length in beats)
-    [(0, 1.5), (1.5, .5), (2, 2)], [(0, 1), (1, 1), (2, 2)], [(0, 3), (3, 1)], [(0, 2), (2, 1), (3, 1)],
-    [(0, 1.5), (1.5, .5), (2, 1), (3, 1)], [(0, 4)]
+SCALE = [0, 2, 4, 5, 7, 9, 11]
+STRAIN_A = [[(0, 'M'), (0, 'M'), (7, 'M'), (0, 'M')], [(0, 'M'), (5, 'M'), (0, 'M'), (7, 'M')], [(0, 'M'), (7, 'M'), (0, 'M'), (5, 'M')]]
+STRAIN_B = [[(0, 'M'), (9, 'm'), (5, 'M'), (7, 'M')], [(5, 'M'), (7, 'M'), (0, 'M'), (9, 'm')], [(0, 'M'), (4, 'm'), (5, 'M'), (7, 'M')]]
+CELLS = [   # a bar of melody: (start beat, length in beats): dotted fanfare rhythms and marching eighths
+    [(0, .75), (.75, .25), (1, 1), (2, 2)], [(0, .5), (.5, .5), (1, .5), (1.5, .5), (2, 2)], [(0, 1), (1, .5), (1.5, .5), (2, 1), (3, 1)],
+    [(0, .75), (.75, .25), (1, .75), (1.75, .25), (2, 1), (3, 1)], [(0, 1.5), (1.5, .5), (2, .5), (2.5, .5), (3, 1)], [(0, .5), (.5, .5), (1, 1), (2, .5), (2.5, .5), (3, 1)]
 ]
 
 
 def triad(root, q):
     third = 3 if q in ('m', 'd') else 4
-    fifth = 6 if q == 'd' else 7
-    return [root, root + third, root + fifth]
+    return [root, root + third, root + (6 if q == 'd' else 7)]
 
 
 class Song:
@@ -69,7 +64,7 @@ class Song:
         meta = mido.MidiTrack(); meta.append(mido.MetaMessage('set_tempo', tempo=mido.bpm2tempo(self.bpm), time=0)); mid.tracks.append(meta)
         end = 0
         for name in chans:
-            key = name.rstrip('2')
+            key = name.rstrip('0123456789')
             evs = self.ev.get(name, [])
             if not evs:
                 continue
@@ -78,7 +73,7 @@ class Song:
             if key != 'drums':
                 tr.append(mido.Message('program_change', channel=ch, program=PROG[key], time=0))
             tr.append(mido.Message('control_change', channel=ch, control=7, value=VOL.get(key, 100), time=0))
-            tr.append(mido.Message('control_change', channel=ch, control=91, value=70, time=0))
+            tr.append(mido.Message('control_change', channel=ch, control=91, value=55, time=0))
             tr.append(mido.Message('control_change', channel=ch, control=11, value=127, time=0))
             last = 0
             for tick, _, m in sorted(evs, key=lambda e: (e[0], e[1])):
@@ -96,138 +91,88 @@ class Song:
 
 def compose(week, seconds):
     rnd = random.Random(week * 7919 + 13)
-    mode = rnd.choice(['minor', 'minor', 'major'])
-    tonic = rnd.choice([57, 58, 60, 62, 64, 65, 67]) - 12 if mode == 'minor' else rnd.choice([57, 60, 62, 64, 65, 67]) - 12   # tonic pitch around A2..G3
-    prog = rnd.choice(PROGS[mode])
-    n = max(3, min(8, round(seconds * 108 / 3840)))   # whole 16-bar loops across the recap, at a tempo near 108
-    bpm = 3840.0 * n / seconds
-    bpm = max(96, min(120, bpm))
+    tonic = rnd.choice([46, 53, 51, 56, 48, 55])   # Bb, F, Eb, Ab, C, G: the band keys
+    n = max(3, min(8, round(seconds * 126 / 3840)))   # whole 16-bar loops across the recap, at a march tempo near 126
+    bpm = max(116, min(138, 3840.0 * n / seconds))
     loop_sec = 16 * 4 * 60.0 / bpm
-    s = Song(bpm)
-    scale = [tonic + 12 + x for x in SCALES[mode]]   # one octave of the key, an octave above the tonic
-    chords = []
-    for bar in range(16):
-        off, q = prog[bar % 4]
-        if bar == 15:
-            off, q = 7, 'M'   # the dominant turns the loop back to the start
-        chords.append((tonic + off, q))
-    # the melody: chord tones on the strong beats, steps between them
-    lo_hi = {0: (67, 79), 1: (69, 81), 2: (69, 81), 3: (72, 84)}
-    cells = [rnd.choice(CELLS[:5]) for _ in range(4)]
-    prev = None
-    mel = []
+    a, a2 = rnd.choice(STRAIN_A), rnd.choice(STRAIN_A)
+    b = rnd.choice(STRAIN_B)
+    c = rnd.choice(STRAIN_A)
+    prog = a + a2 + b + c
+    chords = [(tonic + off, q) for off, q in prog]
+    chords[15] = (tonic + 7, 'M')   # the dominant turns the loop back to the start
+    scale = [tonic + 24 + x for x in SCALE]   # melody: two octaves above the tonic
+    lo_hi = {0: (72, 84), 1: (72, 84), 2: (74, 86), 3: (76, 88)}
+    cells = [rnd.choice(CELLS) for _ in range(4)]
+    mel, prev = [], None
     for bar in range(16):
         sec = bar // 4
         lo, hi = lo_hi[sec]
         root, q = chords[bar]
-        tones = []
-        for base in (root, root + 12, root + 24, root + 36):
-            tones += [p for p in (triad(base, q)) if lo <= p <= hi]
-        tones = sorted(set(tones))
+        tones = sorted({p for base in (root, root + 12, root + 24, root + 36, root + 48) for p in triad(base, q) if lo <= p <= hi})
         allowed = sorted({p + 12 * o for p in scale for o in (-1, 0, 1) if lo <= p + 12 * o <= hi})
-        cell = cells[bar % 4] if sec != 3 else cells[(bar + 1) % 4]
+        cell = cells[bar % 4] if sec != 1 else cells[(bar + 1) % 4]
         if bar % 4 == 3:
-            cell = [(0, 2), (2, 2)] if rnd.random() < .5 else [(0, 4)]   # a phrase ends on a long note
+            cell = [(0, 1), (1, 1), (2, 2)] if rnd.random() < .5 else [(0, .75), (.75, .25), (1, 1), (2, 2)]   # a strain ends on a long note
         direction = 1 if (bar % 4) < 2 else -1
         for j, (st, ln) in enumerate(cell):
-            if j == 0 or bar % 4 == 3 and j == len(cell) - 1:
-                pool = tones
+            if j == 0 or (bar % 4 == 3 and j == len(cell) - 1):
                 target = prev if prev is not None else tones[len(tones) // 2]
-                if bar % 4 == 0 and sec == 3:
-                    target = hi - 2   # the last section opens high
-                pitch = min(pool, key=lambda p: (abs(p - target) + rnd.random() * 2))
+                if bar % 4 == 0 and sec in (2, 3):
+                    target = hi - 3   # the later strains open high
+                pitch = min(tones, key=lambda p: (abs(p - target) + rnd.random() * 2))
             else:
                 idx = min(range(len(allowed)), key=lambda i: abs(allowed[i] - prev))
                 idx = max(0, min(len(allowed) - 1, idx + direction * rnd.choice([1, 1, 2])))
                 pitch = allowed[idx]
-            mel.append((bar * 4 + st, ln * .96, pitch))
+            mel.append((bar * 4 + st, ln * .9, pitch))
             prev = pitch
-    # ---- stem 0: the bed
-    for bar in range(16):
-        root, q = chords[bar]
-        t = triad(root + 12, q)
-        for p in t:
-            s.note('strings', bar * 4, 4.05, p, 58 + (6 if bar % 4 == 3 else 0))
-        s.note('strings', bar * 4, 4.05, root + 24, 50)
-        s.note('choir', bar * 4, 4.05, root + 24, 46)
-        s.note('choir', bar * 4, 4.05, t[1] + 12, 40)
-        s.note('bass', bar * 4, 4.0, root - 12 + 12 if root - 12 < 28 else root - 12, 78)
-        if bar % 4 == 3:
-            s.ramp('strings', bar * 4, 4, 100, 127)
-            s.ramp('choir', bar * 4, 4, 100, 127)
-        else:
-            s.cc('strings', bar * 4, 11, 100); s.cc('choir', bar * 4, 11, 100)
-    # ---- stem 1: the drive
+    s = Song(bpm)
     for bar in range(16):
         root, q = chords[bar]
         t = triad(root, q)
-        # cellos and violas in marcato eighths on root, fifth and octave
-        for k in range(8):
-            step = [0, 2, 1, 2][k % 4]
-            acc = 96 if k % 4 == 0 else 74
-            s.note('cello', bar * 4 + k * .5, .42, t[step] + 12 if step else t[0] + 12, acc)
-            s.note('viola', bar * 4 + k * .5, .42, t[[1, 2, 1, 2][k % 4]] + 24, acc - 14)
-        # timpani on the root, beats one and three
-        s.note('timp', bar * 4, .5, root + 12 if root + 12 <= 52 else root, 100)
-        s.note('timp', bar * 4 + 2, .5, root + 7 + 12 if root + 19 <= 55 else root + 7, 84)
-        if bar % 4 == 3:   # a roll into the next phrase
-            for i in range(8):
-                s.note('timp', bar * 4 + 2 + i * .25, .24, root + 12 if root + 12 <= 52 else root, 60 + i * 8)
-        # a snare cadence: the backbeat, a roll at the end of each phrase
-        s.note('drums', bar * 4 + 1, .2, 38, 62); s.note('drums', bar * 4 + 3, .2, 38, 70)
-        if bar % 4 == 3:
-            for i in range(8):
-                s.note('drums', bar * 4 + 2 + i * .25, .2, 38, 45 + i * 9)
-    # ---- stem 2: the horns, trumpet and violins, and the cymbals
-    for bar in range(16):
-        root, q = chords[bar]
-        t = triad(root + 12, q)
-        for p in t:
-            s.note('horn', bar * 4, 4.0, p, 82)
         sec = bar // 4
+        # stem 0: the oom of the oom-pah (tuba, root then fifth) and soft clarinet afterbeats, the bass drum
+        s.note('tuba', bar * 4, .5, root - 12, 100); s.note('tuba', bar * 4 + 2, .5, t[2] - 12, 94)
+        for beat in (1, 3):
+            for p in (t[0] + 12, t[1] + 12, t[2] + 12):
+                s.note('clarinet', bar * 4 + beat, .4, p + 12, 62)
+        s.note('drums0', bar * 4, .3, 36, 84); s.note('drums0', bar * 4 + 2, .3, 36, 84)
+        # stem 1: the pah (horns and trombones on the afterbeats), a trombone line, the snare cadence
+        for beat in (1, 3):
+            for p in (t[0] + 12, t[1] + 12, t[2] + 12):
+                s.note('horn', bar * 4 + beat, .42, p, 98)
+            s.note('trombone', bar * 4 + beat, .42, t[1], 92)
+        s.note('trombone', bar * 4, 1.0, root, 90); s.note('trombone', bar * 4 + 2, 1.0, t[2] - 12 + 12, 86)
+        cad = [0, .5, .75, 1, 1.5, 2, 2.5, 2.75, 3, 3.5] if bar % 2 == 0 else [0, .5, 1, 1.5, 1.75, 2, 2.5, 3, 3.25, 3.5, 3.75]
+        for k, bt in enumerate(cad):
+            s.note('drums', bar * 4 + bt, .15, 38, 96 if bt in (1, 3) else 70)
+        if bar % 4 == 3:   # a snare roll and a tom run into the next strain
+            for i in range(8):
+                s.note('drums', bar * 4 + 2 + i * .25, .15, 38, 50 + i * 10)
+            for i, nn in enumerate((45, 43, 41, 38)):
+                s.note('drums', bar * 4 + 3.0 + i * .25, .2, nn, 100)
+        # stem 2: stabs and crashes
         if bar % 4 == 0:
-            s.note('drums2', bar * 4, 3.5, 49, 100 if sec in (0, 3) else 84)
-            s.note('drums2', bar * 4, .5, 36, 110)
+            s.note('drums2', bar * 4, 3.0, 49, 108 if sec in (0, 3) else 92); s.note('drums2', bar * 4, .5, 36, 118)
             for p in (root + 12, root + 19, root + 24):
-                s.note('brass', bar * 4, 1.0, p, 108 if sec == 3 else 96)
-        if bar % 4 == 3:
-            s.ramp('horn', bar * 4, 4, 96, 127); s.ramp('trumpet', bar * 4, 4, 100, 127)
+                s.note('brass', bar * 4, .9, p, 112 if sec >= 2 else 100)
     for st, ln, p in mel:
-        s.note('trumpet', st, ln, p, 96); s.note('violin', st, ln, p + 12, 74); s.note('horn', st, ln, p - 12 if p - 12 >= 55 else p, 70)
-    return s, dict(mode=mode, tonic=tonic, bpm=bpm, loops=n, loop=loop_sec, prog=[c[0] - tonic for c in chords[:4]], progq=[c[1] for c in chords[:4]]), chords
+        s.note('trumpet', st, ln, p, 104); s.note('piccolo', st, ln, p + 12 if p + 12 <= 96 else p, 82)
+    return s, dict(mode='major', tonic=tonic, bpm=bpm, loops=n, loop=loop_sec), chords
 
 
-def hits(plan, tonic, mode, bpm):
-    third = 3 if mode == 'minor' else 4
-    out = {}
-    # a big hit: a timpani roll into a full-orchestra open chord, bass drum and cymbal
-    s = Song(bpm)
-    for i in range(6):
-        s.note('timp', i * .25, .3, tonic + 12 if tonic + 12 <= 52 else tonic, 70 + i * 9)
-    for p in (tonic, tonic + 7, tonic + 12, tonic + 19):
-        s.note('brass', 1.5, 2.5, p + 12, 120); s.note('horn', 1.5, 2.5, p + 12, 112); s.note('strings', 1.5, 3.5, p + 12, 100)
-    s.note('trumpet', 1.5, 2.2, tonic + 31, 112); s.note('bass', 1.5, 3, tonic - 12 + 12, 110)
-    s.note('drums', 1.5, 3.5, 49, 120); s.note('drums', 1.5, .5, 36, 127); s.note('timp', 1.5, 1.0, tonic + 12 if tonic + 12 <= 52 else tonic, 127)
-    out['big'] = (s, 5)
-    # a small hit: two drum strokes and a short brass stab
-    s = Song(bpm)
-    s.note('timp', 0, .4, tonic + 12 if tonic + 12 <= 52 else tonic, 100); s.note('timp', .5, .4, tonic + 19 if tonic + 19 <= 55 else tonic + 7, 110)
-    for p in (tonic + 12, tonic + 19, tonic + 24):
-        s.note('brass', .5, .8, p, 104); s.note('horn', .5, .8, p, 96)
-    s.note('drums', .5, 1.5, 49, 80); s.note('drums', .5, .4, 36, 112)
-    out['small'] = (s, 3)
-    # the ending: a held chord resolved to the tonic (a major third at last, for a lift), a roll, a crash
+def ending(plan, tonic, bpm):
+    """The ending: the full band on the tonic chord, a bass-drum flourish, a long crash."""
     s = Song(bpm)
     for i in range(8):
-        s.note('timp', i * .25, .3, tonic + 12 if tonic + 12 <= 52 else tonic, 64 + i * 8)
-    chord = [tonic, tonic + 7, tonic + 12, tonic + 12 + 4, tonic + 19]
-    for p in chord:
-        s.note('brass', 2.0, 5, p + 12, 118); s.note('horn', 2.0, 5, p + 12, 108); s.note('strings', 2.0, 6, p + 12, 100)
-    s.note('trumpet', 2.0, 4.5, tonic + 28, 112); s.note('bass', 2.0, 5, tonic, 110)
-    s.note('drums', 2.0, 5, 49, 120); s.note('drums', 2.0, .5, 36, 127); s.note('timp', 2.0, 1.0, tonic + 12 if tonic + 12 <= 52 else tonic, 127)
-    s.ramp('strings', 2.0, 6, 127, 40); s.ramp('horn', 2.0, 6, 127, 40)
-    out['end'] = (s, 6)
-    return out
+        s.note('drums', i * .25, .2, 38, 50 + i * 10)
+    s.note('drums', 2.0, .3, 36, 127); s.note('drums', 2.5, .3, 36, 120)
+    for p in (tonic + 12, tonic + 19, tonic + 24, tonic + 28):
+        s.note('brass', 2.0, 4.0, p, 118); s.note('horn', 2.0, 4.0, p, 108); s.note('trombone', 2.0, 4.0, p - 12, 108)
+    s.note('trumpet', 2.0, 4.0, tonic + 40, 118); s.note('tuba', 2.0, 4.0, tonic - 12, 112); s.note('piccolo', 2.0, 4.0, tonic + 52, 90)
+    s.note('drums', 2.0, 4.5, 49, 127)
+    return s, 6
 
 
 def render(mid, mp3, gain_db=0.0, tail_trim=None):
@@ -287,18 +232,23 @@ def main():
         for lv, chans in STEMS.items():
             mid = os.path.join(tmp, 'l%d.mid' % lv)
             song.save(mid, chans, 8)   # two bars of tail for the reverb
-            wavs['l%d' % lv] = render(mid, os.path.join(OUT, 'l%d.mp3' % lv))
-        for name, (hs, tail) in hits(plan, plan['tonic'], plan['mode'], plan['bpm']).items():
-            mid = os.path.join(tmp, name + '.mid')
-            hs.save(mid, ['timp', 'brass', 'horn', 'strings', 'trumpet', 'bass', 'drums'], tail)
-            wavs[name] = render(mid, os.path.join(OUT, name + '.mp3'))
+            wavs['l%d' % lv] = render(mid, os.path.join(OUT, 'l%d.mp3' % lv), -9.0)   # the three stems stack, so each is rendered with headroom
+        es, etail = ending(plan, plan['tonic'], plan['bpm'])
+        mid = os.path.join(tmp, 'end.mid')
+        es.save(mid, ['tuba', 'horn', 'trombone', 'trumpet', 'piccolo', 'brass', 'drums'], etail)
+        wavs['end'] = render(mid, os.path.join(OUT, 'end.mp3'), -8.0)
         if args.keep:
             for f in os.listdir(tmp):
                 shutil.copy(os.path.join(tmp, f), os.path.join('/tmp', 'theme_' + f))
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
     names = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
-    info = {'week': week, 'seconds': seconds, 'bpm': round(plan['bpm'], 2), 'loop': round(plan['loop'], 3), 'loops': plan['loops'], 'key': '%s %s' % (names[plan['tonic'] % 12], plan['mode']),
+    for old in ('big.mp3', 'small.mp3'):
+        try:
+            os.remove(os.path.join(OUT, old))
+        except OSError:
+            pass
+    info = {'week': week, 'seconds': seconds, 'bpm': round(plan['bpm'], 2), 'loop': round(plan['loop'], 3), 'loops': plan['loops'], 'key': '%s major' % names[plan['tonic'] % 12],
             'generatedAt': __import__('datetime').datetime.now(__import__('datetime').timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}
     json.dump(info, open(os.path.join(OUT, 'plan.json'), 'w'), indent=1)
     print('theme: week %d, %s, %.1f bpm, loop %.1fs x %d' % (week, info['key'], info['bpm'], info['loop'], info['loops']))
