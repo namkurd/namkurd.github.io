@@ -2,7 +2,7 @@
  "schema": 1,
  "season": 2026,
  "week": 11,
- "seconds": 201,
+ "seconds": 203,
  "segments": [
   {
    "type": "intro",
@@ -2112,7 +2112,7 @@
      "m": "Ryan",
      "rank": 3,
      "R": 127,
-     "make": 0.895,
+     "make": 0.896,
      "prev": null,
      "bye": 0.079,
      "x": false,
@@ -2136,7 +2136,7 @@
      "m": "Stephanie",
      "rank": 5,
      "R": 117,
-     "make": 0.73,
+     "make": 0.729,
      "prev": null,
      "bye": 0.024,
      "x": false,
@@ -2160,7 +2160,7 @@
      "m": "Kaitlyn",
      "rank": 7,
      "R": 108,
-     "make": 0.405,
+     "make": 0.403,
      "prev": null,
      "bye": 0.001,
      "x": false,
@@ -2721,7 +2721,7 @@
   },
   {
    "type": "pod",
-   "dur": 19,
+   "dur": 21,
    "title": "The podcast",
    "ep": 53,
    "name": "The Bill Romanowski Episode",
@@ -2734,6 +2734,29 @@
     "Stephanie"
    ],
    "vid": "YbkRrv3n1QQ",
+   "coin": {
+    "winner": "Aidan",
+    "reason": "his answer to the listener question: \"does anyone believe that Haan's win was honest? How could TNF polls be so wrong?\"",
+    "quote": "Yes, you're right. Give them to Aidan.",
+    "at": 4139
+   },
+   "takes": [
+    {
+     "topic": "Stephanie's reverse jinx on Joe",
+     "quote": "this was a real veteran move by a rookie league member, and I think we have to tip our hats to Stephanie",
+     "at": 4168
+    },
+    {
+     "topic": "Cut a bench spot",
+     "quote": "I would be in favor of cutting a bench spot if you think that the waiver wire is too barren.",
+     "at": 1881
+    },
+    {
+     "topic": "Haan's win and the \"collusion\"",
+     "quote": "A 90 yard touchdown from a dead man. Debo Samuel, a dead man catching touchdowns.",
+     "at": 1986
+    }
+   ],
    "id": 8
   },
   {
@@ -3005,5 +3028,5 @@
   }
  ],
  "link": "https://namkurd.github.io/recap/?week=11",
- "generatedAt": "2026-11-25T00:16:50Z"
+ "generatedAt": "2026-11-25T01:27:15Z"
 }

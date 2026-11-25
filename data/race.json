@@ -112,7 +112,7 @@
    "m": "Ryan",
    "rank": 3,
    "R": 127,
-   "make": 0.895,
+   "make": 0.896,
    "bye": 0.079,
    "one": 0.0,
    "x": false,
@@ -138,7 +138,7 @@
    "m": "Stephanie",
    "rank": 5,
    "R": 117,
-   "make": 0.73,
+   "make": 0.729,
    "bye": 0.024,
    "one": 0,
    "x": false,
@@ -164,7 +164,7 @@
    "m": "Kaitlyn",
    "rank": 7,
    "R": 108,
-   "make": 0.405,
+   "make": 0.403,
    "bye": 0.001,
    "one": 0,
    "x": false,
@@ -316,5 +316,5 @@
    }
   }
  ],
- "generatedAt": "2026-11-25T00:16:32Z"
+ "generatedAt": "2026-11-25T01:27:01Z"
 }
