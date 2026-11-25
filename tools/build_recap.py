@@ -384,7 +384,7 @@ def trade_report(src, season, week, asof):
         return None
     lead = sorted(tot.items(), key=lambda kv: -kv[1])
     return {'rows': [{k: v for k, v in r.items() if k != 'id'} for r in shown], 'clear': len(clear), 'right': right, 'n': len(rows),
-            'best': [{'m': m, 'v': round(v, 1)} for m, v in lead[:2] if v > 0], 'worst': [{'m': m, 'v': round(v, 1)} for m, v in lead[::-1][:1] if v < 0]}
+            'tot': [{'m': m, 'v': round(v, 1)} for m, v in lead]}
 
 
 # ---------------------------------------------------------------- the comment of the week (most reactions), frozen once chosen
@@ -530,24 +530,8 @@ def build(week, src, asof):
 
     # ---- around the league: the other scores, one line per game (the box score lives on the Game card)
     if games:
-        allsc = sorted([g['ws'] for g in games] + [g['ls'] for g in games], reverse=True)   # every team's score this week
-        hi, lo = max(games, key=lambda g: g['ws']), min(games, key=lambda g: g['ls'])
-        blow, nail = max(games, key=lambda g: g['ws'] - g['ls']), min(games, key=lambda g: g['ws'] - g['ls'])
-        robbed = max(games, key=lambda g: g['ls'])   # the best score on a losing side
-        rrank = allsc.index(robbed['ls']) + 1
-        ords = {1: 'highest', 2: '2nd-highest', 3: '3rd-highest', 4: '4th-highest', 5: '5th-highest', 6: '6th-highest'}
-        gl = []
-        for g in sorted(games, key=lambda g: -g['it']):
-            tags = []
-            if g is hi: tags.append('HIGH SCORE')
-            if g is blow: tags.append('BLOWOUT')
-            if g is nail: tags.append('CLOSEST')
-            if g is robbed and rrank <= 4: tags.append('UNLUCKY')
-            gl.append({'w': g['w'], 'l': g['l'], 'ws': g['ws'], 'ls': g['ls'], 'sr': g.get('sr'), 'tags': tags})
-        fhead = '%s scored %.1f, the week\u2019s best' % (hi['w'], hi['ws'])
-        if rrank <= 4 and robbed['ls'] > 0:
-            fhead += ' \u00b7 %s lost with the %s score (%.1f)' % (robbed['l'], ords.get(rrank, '%dth-highest' % rrank), robbed['ls'])
-        segs.append({'type': 'finals', 'dur': 8, 'title': 'Around the league', 'head': fhead, 'games': gl})
+        gl = [{'w': g['w'], 'l': g['l'], 'ws': g['ws'], 'ls': g['ls'], 'sr': g.get('sr')} for g in sorted(games, key=lambda g: -g['it'])]
+        segs.append({'type': 'finals', 'dur': 7, 'title': 'Around the league', 'games': gl})
 
     # ---- trades: how the ones made more than a week ago are panning out (lineup PAR) against what the chat thought at the time
     try:
@@ -617,6 +601,8 @@ def build(week, src, asof):
         except Exception:
             continue
         if d.get('ts', '') >= since and (d.get('cause') or '').startswith('auto') and d.get('new'):
+            if d['new'].get('holder') in [h.strip() for h in str((d.get('old') or {}).get('holder') or '').split(';')]:
+                continue   # a manager topping his own mark (or one he already shared) is not a new record holder
             rec.append({'name': d.get('name'), 'old': (d.get('old') or {}).get('value'), 'new': d['new'].get('value'), 'holder': d['new'].get('holder'),
                         'prev': (d.get('old') or {}).get('holder')})
     if rec:
@@ -631,16 +617,15 @@ def build(week, src, asof):
         for r in allrows:
             if r['name'] not in set(names.values()):
                 continue
-            mv = []
             for k, lab, fmtv in LM:
                 dl = r.get(k + '_delta')
-                if not dl:
+                if not dl or dl < 0:
+                    continue   # one box per climb: the manager who climbed and the highest-ranked manager he passed (the one now just below him)
+                nb = [o for o in allrows if o.get(k) == r[k] + 1]
+                if not nb:
                     continue
-                # who they just passed (a climb) or who just passed them (a slide): the neighbour on the other side of the move
-                nb = [o for o in allrows if o.get(k) == r[k] + (1 if dl > 0 else -1)]
-                mv.append({'m': r['name'], 'metric': lab, 'rank': r[k], 'delta': dl, 'val': fmtv(r),
-                           **({'vs': {'m': nb[0]['name'], 'val': fmtv(nb[0]), 'passed': dl > 0}} if nb else {})})
-            life += mv
+                life.append({'m': r['name'], 'metric': lab, 'rank': r[k], 'delta': dl, 'val': fmtv(r),
+                             'dn': {'m': nb[0]['name'], 'rank': r[k] + 1, 'val': fmtv(nb[0]), 'delta': abs(nb[0].get(k + '_delta') or 1)}})
         life.sort(key=lambda x: (x['metric'] != 'Rumbles', -abs(x['delta']), x['rank']))
     except Exception as e:
         print('lifetime: %s' % e, file=sys.stderr)
@@ -767,20 +752,20 @@ def build(week, src, asof):
         t = sg['type']
         if t == 'intro': return 3 + 1.3 * len(sg['rundown'])
         if t == 'game': return 10
-        if t == 'finals': return 3 + 0.9 * len(sg['games'])
+        if t == 'finals': return 7
         if t == 'series': return 4 + 0.8 * len(sg['last'])
         if t == 'trades': return 3 + words(sg.get('head')) / 3.5 + 1.1 * len(sg['rows']) + 2   # two sides, players and numbers each, then the season totals
-        if t == 'race': return 5 + 0.6 * len(sg['teams']) + (2 if sg.get('bubble') else 0)
+        if t == 'race': return 7
         if t == 'pod': return 3 + sum(0.8 + words(x['quote']) / 4.5 for x in (sg.get('takes') or [])) + (3 if sg.get('coin') else 0)
         if t == 'slack':
             cm = sg.get('comment')
             return min(9, 3 + (2 + words(cm.get('text')) / 3.0 if cm else 0) + sum(1.5 + words(x['t']) / 3.5 for x in sg['items']))
         if t == 'shotguns': return 3 + 1.2 * len(sg['new']) + 0.4 * len(sg['owed'])   # a short list of small numbers: a glance
         if t == 'records': return 3 + sum(1.8 + words(x['name']) / 5.0 for x in sg['items'])   # name, new value, holder, what it was
-        if t == 'lifetime': return 3 + 1.8 * len(sg['items'])
+        if t == 'lifetime': return 3 + 1.4 * len(sg['items'])
         if t == 'standings': return 4 + 0.6 * len(sg['rows']) + (2 if sg.get('head') else 0)
         if t == 'coming': return 3 + 2 * len(sg['items'])
-        if t == 'clinch': return min(10, 4 + 3 * len(sg['items']) + (2 if sg.get('noElim') else 0))
+        if t == 'clinch': return 7
         return sg['dur']
     for sg in segs:
         if sg['type'] != 'clips':
