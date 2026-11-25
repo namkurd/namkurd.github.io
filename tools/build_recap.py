@@ -621,11 +621,13 @@ def build(week, src, asof):
                 dl = r.get(k + '_delta')
                 if not dl or dl < 0:
                     continue   # one box per climb: the manager who climbed and the highest-ranked manager he passed (the one now just below him)
-                nb = [o for o in allrows if o.get(k) == r[k] + 1]
+                # the managers who slid in this metric and now sit below him (ties counted): the highest-ranked of them is the one he passed
+                below = [o for o in allrows if o is not r and (o.get(k + '_delta') or 0) < 0 and o.get(k) is not None and r[k] <= o[k] <= r[k] + dl + 1]
+                nb = sorted(below, key=lambda o: (o[k], o['name'])) or sorted([o for o in allrows if o.get(k) == r[k] + 1], key=lambda o: o['name'])
                 if not nb:
                     continue
                 life.append({'m': r['name'], 'metric': lab, 'rank': r[k], 'delta': dl, 'val': fmtv(r),
-                             'dn': {'m': nb[0]['name'], 'rank': r[k] + 1, 'val': fmtv(nb[0]), 'delta': abs(nb[0].get(k + '_delta') or 1)}})
+                             'dn': {'m': nb[0]['name'], 'rank': nb[0][k], 'val': fmtv(nb[0]), 'delta': abs(nb[0].get(k + '_delta') or 1)}})
         life.sort(key=lambda x: (x['metric'] != 'Rumbles', -abs(x['delta']), x['rank']))
     except Exception as e:
         print('lifetime: %s' % e, file=sys.stderr)
