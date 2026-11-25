@@ -2,7 +2,7 @@
  "schema": 1,
  "season": 2026,
  "week": 11,
- "seconds": 171,
+ "seconds": 173,
  "segments": [
   {
    "type": "intro",
@@ -2929,9 +2929,22 @@
   },
   {
    "type": "lifetime",
-   "dur": 4,
+   "dur": 6,
    "title": "Lifetime standings",
    "items": [
+    {
+     "m": "Ankit",
+     "metric": "Field win %",
+     "rank": 5,
+     "delta": 2,
+     "val": "51.8%",
+     "dn": {
+      "m": "Steven",
+      "rank": 7,
+      "val": "51.6%",
+      "delta": 1
+     }
+    },
     {
      "m": "Kaitlyn",
      "metric": "Points for",
@@ -2946,7 +2959,7 @@
      }
     }
    ],
-   "head": "Kaitlyn climbs 1 in career points for",
+   "head": "Ankit climbs 2 in career field win %",
    "id": 10
   },
   {
@@ -2971,5 +2984,5 @@
   }
  ],
  "link": "https://namkurd.github.io/recap/?week=11",
- "generatedAt": "2026-11-25T02:11:55Z"
+ "generatedAt": "2026-11-25T02:15:20Z"
 }
