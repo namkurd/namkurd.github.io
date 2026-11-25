@@ -76,6 +76,16 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}   # the comment of the week (most reactions), chosen once and kept in data/comment_<week>.json
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}   # reads the Content Boy Coin and hot takes out of data/podcast_transcript.json (once per episode)
         run: python3 tools/build_recap.py
+      - id: themecheck
+        run: python3 tools/build_theme.py --check
+      - name: "Theme song for the week (composed and played by a sampled orchestra, once per recap week)"
+        if: steps.themecheck.outputs.needed == 'true'
+        continue-on-error: true
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq --no-install-recommends fluidsynth musescore-general-soundfont
+          pip install mido
+          python3 tools/build_theme.py
       - name: Commit if changed
         run: |
           git config user.name "github-actions[bot]"
