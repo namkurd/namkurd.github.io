@@ -139,6 +139,14 @@ def local_transcript(vid):
     return None
 
 
+NAME_FIX = {'Aiden': 'Aidan', 'Stephen': 'Steven', 'Rohan': 'Haan', 'Rohaan': 'Haan'}   # how the captions spell the league's managers -> how the league does
+
+
+def tidy_names(t):
+    import re
+    return re.sub(r'\b(%s)\b' % '|'.join(NAME_FIX), lambda m: NAME_FIX[m.group(1)], str(t or ''))
+
+
 def _norm(t):
     import re
     return re.sub(r'[^a-z0-9]+', ' ', str(t).lower()).strip()
@@ -209,7 +217,7 @@ def pod_notes(vid, cues, names, ask=None):
     if isinstance(c, dict) and c.get('winner') and c.get('quote'):
         at = locate(cues, c['quote'])
         if at is not None:
-            notes['coin'] = {'winner': str(c['winner']).replace('Stephen', 'Steven'), 'reason': str(c.get('reason') or '')[:120], 'quote': c['quote'], 'at': at}
+            notes['coin'] = {'winner': str(c['winner']), 'reason': str(c.get('reason') or '')[:220], 'quote': c['quote'], 'at': at}
     for t in (d.get('takes') or [])[:3]:
         at = locate(cues, t.get('quote', '')) if isinstance(t, dict) else None
         if at is not None and len(str(t['quote'])) <= 260:
@@ -257,8 +265,10 @@ def pod_card(pod, names, picks, asof, transcript=None):
             at = q['at'] if q else (notes['coin'] or notes['takes'][0])['at']
             card = {'type': 'pod', 'dur': 9, 'title': 'From the pod', 'ep': pod.get('episode'), 'name': pod.get('name'), 'quote': q['quote'] if q else '', 'at': at,
                     'url': 'https://www.youtube.com/watch?v=%s&t=%ds' % (vid, at), 'hits': q['hits'] if q else [], 'vid': vid}
-            if notes:
-                card['coin'], card['takes'] = notes['coin'], notes['takes']
+            if notes:   # shown with the league's spellings of the names (the verbatim words were already checked against the captions)
+                fix = lambda d: {k: (tidy_names(v) if isinstance(v, str) else v) for k, v in d.items()}
+                card['coin'] = fix(notes['coin']) if notes['coin'] else None
+                card['takes'] = [fix(t) for t in notes['takes']]
     with open(path, 'w', encoding='utf-8') as f:
         json.dump({'videoId': vid, 'tried': now.isoformat(), 'card': card, **({'sig': sig} if sig else {})}, f, ensure_ascii=False, indent=1)
     return card
