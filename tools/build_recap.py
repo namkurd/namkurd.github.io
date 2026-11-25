@@ -139,6 +139,14 @@ def local_transcript(vid):
     return None
 
 
+NAME_FIX = {'Aiden': 'Aidan', 'Stephen': 'Steven', 'Rohan': 'Haan', 'Rohaan': 'Haan'}   # how the captions spell the league's managers -> how the league does
+
+
+def tidy_names(t):
+    import re
+    return re.sub(r'\b(%s)\b' % '|'.join(NAME_FIX), lambda m: NAME_FIX[m.group(1)], str(t or ''))
+
+
 def _norm(t):
     import re
     return re.sub(r'[^a-z0-9]+', ' ', str(t).lower()).strip()
@@ -209,7 +217,7 @@ def pod_notes(vid, cues, names, ask=None):
     if isinstance(c, dict) and c.get('winner') and c.get('quote'):
         at = locate(cues, c['quote'])
         if at is not None:
-            notes['coin'] = {'winner': str(c['winner']).replace('Stephen', 'Steven'), 'reason': str(c.get('reason') or '')[:120], 'quote': c['quote'], 'at': at}
+            notes['coin'] = {'winner': str(c['winner']), 'reason': str(c.get('reason') or '')[:220], 'quote': c['quote'], 'at': at}
     for t in (d.get('takes') or [])[:3]:
         at = locate(cues, t.get('quote', '')) if isinstance(t, dict) else None
         if at is not None and len(str(t['quote'])) <= 260:
@@ -241,7 +249,9 @@ def pod_card(pod, names, picks, asof, transcript=None):
     if transcript is None:
         if local:
             transcript = local
-            if prev.get('sig') == sig:
+            pn = load('data/pod_notes.json', {}) or {}
+            had = bool((prev.get('card') or {}).get('takes') or (prev.get('card') or {}).get('coin'))
+            if prev.get('sig') == sig and had == bool(pn.get('sig') == sig and pn.get('notes')):   # nothing new since the card was built
                 return prev.get('card')
         else:
             if prev.get('videoId') == vid and (prev.get('card') or (prev.get('tried') and now - dt.datetime.fromisoformat(prev['tried']) < dt.timedelta(hours=6))):
@@ -250,13 +260,15 @@ def pod_card(pod, names, picks, asof, transcript=None):
     card = None
     if transcript:
         q = pod_quote(transcript, kw)
-        notes = pod_notes(vid, transcript, names) if (local or os.environ.get('RECAP_TRANSCRIPT')) else None   # the model reads the transcript the skill saved, or a given one
-        if q or notes:
+        notes = pod_notes(vid, transcript, names) if (local or os.environ.get('RECAP_TRANSCRIPT')) else None   # the notes file (or a model) for the transcript the skill saved
+        if notes:   # a bare keyword quote out of raw captions reads badly (fillers, cut sentences): the card needs the verified coin or takes
             at = q['at'] if q else (notes['coin'] or notes['takes'][0])['at']
             card = {'type': 'pod', 'dur': 9, 'title': 'From the pod', 'ep': pod.get('episode'), 'name': pod.get('name'), 'quote': q['quote'] if q else '', 'at': at,
                     'url': 'https://www.youtube.com/watch?v=%s&t=%ds' % (vid, at), 'hits': q['hits'] if q else [], 'vid': vid}
-            if notes:
-                card['coin'], card['takes'] = notes['coin'], notes['takes']
+            if notes:   # shown with the league's spellings of the names (the verbatim words were already checked against the captions)
+                fix = lambda d: {k: (tidy_names(v) if isinstance(v, str) else v) for k, v in d.items()}
+                card['coin'] = fix(notes['coin']) if notes['coin'] else None
+                card['takes'] = [fix(t) for t in notes['takes']]
     with open(path, 'w', encoding='utf-8') as f:
         json.dump({'videoId': vid, 'tried': now.isoformat(), 'card': card, **({'sig': sig} if sig else {})}, f, ensure_ascii=False, indent=1)
     return card
@@ -759,7 +771,7 @@ def build(week, src, asof):
         if t == 'series': return 4 + 0.8 * len(sg['last'])
         if t == 'trades': return 3 + words(sg.get('head')) / 3.5 + 1.1 * len(sg['rows']) + 2   # two sides, players and numbers each, then the season totals
         if t == 'race': return 5 + 0.6 * len(sg['teams']) + (2 if sg.get('bubble') else 0)
-        if t == 'pod': return 4 + (words(sg.get('quote')) / 2.8 if not sg.get('takes') else sum(1.0 + words(x['quote']) / 4.0 for x in sg['takes']) + (3 if sg.get('coin') else 0))
+        if t == 'pod': return 3 + sum(0.8 + words(x['quote']) / 4.5 for x in (sg.get('takes') or [])) + (3 if sg.get('coin') else 0)
         if t == 'slack':
             cm = sg.get('comment')
             return min(9, 3 + (2 + words(cm.get('text')) / 3.0 if cm else 0) + sum(1.5 + words(x['t']) / 3.5 for x in sg['items']))
