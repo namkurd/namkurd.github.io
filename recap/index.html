@@ -113,8 +113,11 @@
   .hero .hv { font-size: 4.2rem; font-weight: 900; line-height: 1; color: var(--gold); text-shadow: 0 3px 0 #0008; margin-top: 4px; } .hero .hn { font-size: 1.6rem; font-weight: 800; text-transform: uppercase; } .hero .hw { color: var(--cream); font-size: 1rem; }
   /* all-time movers: tiles */
   .mvs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .mc { background: var(--ink); border-bottom: 3px solid var(--gold); padding: 6px 10px 8px; } .mc b { display: block; font-size: 2.6rem; line-height: 1; } .mc.up b { color: #7be08f; } .mc.dn b { color: #ff8a8f; } .mc.dn { border-bottom-color: var(--red); }
-  .mc span { display: block; font-size: 1.35rem; font-weight: 800; text-transform: uppercase; } .mc small { display: block; color: var(--gold); font-size: .85rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+  .mc { background: var(--ink); border-bottom: 3px solid var(--gold); padding: 6px 10px 8px; min-width: 0; } .mc .mt { display: block; color: var(--gold); font-size: .8rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 3px; }
+  /* all-time standings: the manager who climbed and the one he passed share a box */
+  .mc .mr { display: grid; grid-template-columns: 2.9rem 1fr; align-items: baseline; gap: 0 6px; padding: 2px 0; } .mc .mr b { font-size: 1.3rem; line-height: 1; font-weight: 900; } .mc .mr.up b { color: #7be08f; } .mc .mr.dn b { color: #ff8a8f; }
+  .mc .mr span { font-size: 1.1rem; font-weight: 800; text-transform: uppercase; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .mc .mr.dn span { color: #d9cdb0; } .mc .mr i { grid-column: 2; font-style: normal; font-size: .86rem; color: var(--cream); font-weight: 700; margin-top: -2px; }
+
   /* league chat: the comment of the week, then the busiest threads */
   .cotw { background: linear-gradient(180deg, #0007, #0003); border-top: 2px solid var(--gold); border-bottom: 2px solid var(--gold); padding: 8px 12px 10px; }
   .cotw .hk { display: inline-block; background: var(--red); padding: 2px 10px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; font-size: .9rem; }
@@ -152,7 +155,7 @@
   .tgh { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr) 3.4rem 2.8rem; gap: 6px; padding: 0 8px 0 12px; font-size: .72rem; font-weight: 800; letter-spacing: .1em; color: var(--gold); text-transform: uppercase; } .tgh span:nth-child(3), .tgh span:nth-child(4) { text-align: right; }
   /* clinch watch */
   .sc { background: var(--ink); border-bottom: 3px solid var(--gold); padding: 6px 10px 8px; }
-  .sc .sh { display: flex; align-items: center; gap: 12px; } .sc .sh .c { font-size: 2.6rem; font-weight: 900; min-width: 78px; text-align: center; padding: 0 6px; line-height: 1.15; background: linear-gradient(180deg, #6ed28a, var(--win)); color: #fff; } .sc .sh .c.rd { background: linear-gradient(180deg, #ee5a5f, var(--red2)); }
+  .sc .sh { display: flex; align-items: flex-start; gap: 12px; } .sc .sh .c { font-size: 2.4rem; font-weight: 900; flex: none; width: 4.6rem; height: 3.1rem; display: flex; align-items: center; justify-content: center; padding: 0; line-height: 1; background: linear-gradient(180deg, #6ed28a, var(--win)); color: #fff; } .sc .sh .c.rd { background: linear-gradient(180deg, #ee5a5f, var(--red2)); }
   .sc .sh b { display: block; font-size: 1.6rem; text-transform: uppercase; line-height: 1.05; } .sc .sh small { display: block; color: var(--gold); font-size: .85rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
   .sc .sh > div { min-width: 0; flex: 1; }
   .sc .sw { margin-top: 6px; font-size: .95rem; color: var(--cream); } .chs { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; } .chs span { background: #ffffff1c; padding: 1px 8px; font-size: 1.05rem; font-weight: 700; text-transform: uppercase; } .chs b { color: var(--gold); }
@@ -279,7 +282,8 @@
     .seg.t-race .rows.hunt { grid-column: 1 / -1; display: grid; grid-auto-flow: column; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(7, auto); gap: 3px 26px; align-content: start; }
     .r.bar.cols.dup { display: grid; }
     .seg.t-finals .tiles { grid-column: 1 / -1; grid-template-columns: repeat(3, 1fr); }
-    .seg.t-lifetime .mvs { grid-column: 1 / -1; grid-template-columns: repeat(3, 1fr); }
+    .seg.t-lifetime .mvs { grid-column: 1 / -1; grid-template-columns: repeat(3, 1fr); } .mc .mr { grid-template-columns: 3.3rem 1fr; } .mc .mr span { font-size: 1.4rem; } .mc .mr i { font-size: .95rem; }
+    .seg.t-coming:not(:has(> .cd:nth-child(4))) { grid-template-columns: repeat(2, minmax(0, 31%)); justify-content: center; } .seg.t-coming:not(:has(> .cd:nth-child(3))) { grid-template-columns: minmax(0, 36%); justify-content: center; }
     .seg.t-records > .recs { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 26px; } .rec { padding: 9px 14px 11px; } .rec .rv { font-size: 3rem; } .rec .rh { font-size: 1.5rem; } .rec .rw { font-size: 1rem; } .rec .rk { font-size: .9rem; }
     .seg.t-coming { grid-template-columns: repeat(3, 1fr); } .seg.t-coming .cd .cn { font-size: 2.6rem; } .seg.t-coming .cd .cw { font-size: 1rem; } .seg.t-coming > .cd { align-self: stretch; }
     .seg.t-slack { grid-template-columns: 1.1fr 1fr; } .seg.t-slack > .cotw { grid-column: 1; grid-row: 2 / span 4; align-self: stretch; } .seg.t-slack > .topic { grid-column: 2; }
@@ -693,20 +697,20 @@
       (s.chart ? chartHtml({ chart: s.chart, by: s.w, a: s.w, b: s.l, badge: s.flips ? s.flips + (s.flips === 1 ? ' lead change' : ' lead changes') : 'wire to wire' }, WIDE.matches ? 190 : 118) : '') +
       '<div class="box">' + (s.sides || []).map(function (x, i) { return '<div class="in"' + ds(i + 3) + '><h4>' + esc(x.m) + (x.rec ? '<s>' + esc(x.rec) + '</s>' : '') + '</h4>' +
         (x.lines || []).map(function (l) { return '<p><b>' + esc(l.t) + '</b><u>' + (l.pts == null ? '' : pts(l.pts) + ' pts') + '</u></p>'; }).join('') + '</div>'; }).join('') + '</div>';
-    if (s.type === 'finals') return hdr('Around the league', s.head || '', '') + '<div class="tiles">' + (s.games || []).map(function (g, i) {
-      return '<div class="tile in"' + ds(i) + '><div class="tw"><span>' + esc(g.w) + '</span><b>' + f1(g.ws) + '</b></div><div class="tl"><span>' + esc(g.l) + '</span><b>' + f1(g.ls) + '</b></div>' + '<div class="ft">' + (g.sr ? '<span>Career ' + esc(g.sr) + '</span>' : '') + (g.tags || []).map(function (t) { return '<em class="tgc' + (t === 'UNLUCKY' ? ' bad' : '') + '">' + esc(t) + '</em>'; }).join('') + '</div></div>';
+    if (s.type === 'finals') return hdr('Around the league', '', '') + '<div class="tiles">' + (s.games || []).map(function (g, i) {
+      return '<div class="tile in"' + ds(i) + '><div class="tw"><span>' + esc(g.w) + '</span><b>' + f1(g.ws) + '</b></div><div class="tl"><span>' + esc(g.l) + '</span><b>' + f1(g.ls) + '</b></div>' + (g.sr ? '<div class="ft">Career ' + esc(g.sr) + '</div>' : '') + '</div>';
     }).join('') + '</div>';
     if (s.type === 'trades') {
       var side = function (name, got, v, sv, lead) { var cls = sv == null ? 'none' : sv > 0.15 ? 'pos' : sv < -0.15 ? 'neg' : '';
-        return '<div class="sdr"><b' + (lead ? ' class="lead"' : '') + '>' + esc(name) + '</b><span class="pl">' + ((got || []).map(function (g) { return esc(g.n); }).join(', ') || '–') + '</span><span class="pr ' + (v >= 0 ? 'p' : 'n') + '">' + sgn(v) + '</span><span class="sv ' + cls + '">' + (sv == null ? '' : (sv > 0 ? '+' : sv < 0 ? '\u2212' : '') + Math.abs(sv).toFixed(1)) + '</span></div>'; };
+        return '<div class="sdr"><b' + (lead ? ' class="lead"' : '') + '>' + esc(name) + '</b><span class="pl">' + ((got || []).map(function (g) { return esc(g.n); }).join(', ') || '–') + '</span><span class="pr ' + (v >= 0 ? 'p' : 'n') + '">' + sgn(v) + '</span><span class="sv ' + cls + '">' + (sv == null ? '' : (sv > 0 ? '+' : sv < 0 ? '\u2212' : '') + Math.abs(Math.round(sv * 10))) + '</span></div>'; };
       return hdr('Trade report', s.head || '', '') + (function () {
-        var rows = s.rows || [], half = Math.ceil(rows.length / 2), hd = '<div class="tgh"><span>Team</span><span>Got</span><span>PAR</span><span>Chat</span></div>';
+        var rows = s.rows || [], half = Math.ceil(rows.length / 2), hd = '<div class="tgh"><span>Team</span><span>Got</span><span>PAR</span><span>Slack</span></div>';
         var cell = function (r, i) { var vc = r.verdict === 'right' ? ' ok' : r.verdict === 'wrong' ? ' no' : '';
           return '<div class="tc in' + vc + '"' + ds(Math.min(i + 1, 6)) + ' title="Week ' + r.w + ' trade">' + side(r.a, r.ga, r.lga, r.sa, r.par > 0) + side(r.b, r.gb, r.lgb, r.sb, r.par < 0) + '</div>'; };
         return '<div class="tgw"><div class="tcol">' + hd + '<div class="tg">' + rows.slice(0, half).map(cell).join('') + '</div></div>' +
           (rows.length > half ? '<div class="tcol dup">' + hd + '<div class="tg">' + rows.slice(half).map(function (r, i) { return cell(r, i + half); }).join('') + '</div></div>' : '') + '</div>';
       })() +
-        '<div class="notes in"' + ds(7) + '><h4>Season trade PAR</h4><p>' + (s.best || []).map(function (x) { return '<b>' + esc(x.m) + '</b> ' + sgn(x.v); }).concat((s.worst || []).map(function (x) { return '<b style="color:#ff8a8f">' + esc(x.m) + '</b> ' + sgn(x.v); })).join(' · ') + '</p>' + (s.clear ? '<p>Chat called <b>' + s.right + ' of ' + s.clear + '</b> clear ones right</p>' : '') + '</div>';
+        '<div class="notes in"' + ds(7) + '><h4>Trade PAR by manager</h4><p>' + (s.tot || []).map(function (x) { return '<b' + (x.v < 0 ? ' style="color:#ff8a8f"' : '') + '>' + esc(x.m) + '</b> ' + sgn(x.v); }).join(' \u00b7 ') + '</p></div>';
     }
     if (s.type === 'race') return hdr('Playoff hunt', s.head || '', s.weeksLeft + (s.weeksLeft === 1 ? ' WK LEFT' : ' WKS LEFT')) +
       '<div class="rows hunt">' + labelRow(s) + (s.teams || []).map(function (t, i) {
@@ -745,8 +749,9 @@
           (x.old ? '<span class="rw">was ' + esc(x.old) + (took ? ' \u00b7 held by ' + esc(x.prev) : '') + '</span>' : '') + '</div>'; }).join('') + '</div>';
     }
     if (s.type === 'lifetime') return hdr('All-time standings', '', '') + '<div class="mvs">' + (s.items || []).map(function (x, i) {
-      var up = x.delta > 0; return '<div class="mc in ' + (up ? 'up' : 'dn') + '"' + ds(i + 1) + '><b>' + (up ? '▲' : '▼') + Math.abs(x.delta) + '</b><span>' + esc(x.m) + '</span><small>' + esc(x.metric) + ' · #' + x.rank + '</small>' +
-        '<em>' + esc(x.val || '') + '</em>' + (x.vs ? '<s>' + (x.vs.passed ? 'passed ' : 'passed by ') + esc(x.vs.m) + ' (' + esc(x.vs.val) + ')</s>' : '') + '</div>'; }).join('') + '</div>';
+      return '<div class="mc in"' + ds(i + 1) + '><small class="mt">' + esc(x.metric) + '</small>' +
+        '<div class="mr up"><b>\u25B2' + Math.abs(x.delta) + '</b><span>' + esc(x.m) + '</span><i>#' + x.rank + ' \u00b7 ' + esc(x.val || '') + '</i></div>' +
+        (x.dn ? '<div class="mr dn"><b>\u25BC' + Math.abs(x.dn.delta || 1) + '</b><span>' + esc(x.dn.m) + '</span><i>#' + x.dn.rank + ' \u00b7 ' + esc(x.dn.val || '') + '</i></div>' : '') + '</div>'; }).join('') + '</div>';
     if (s.type === 'standings') { var top = 1; (s.rows || []).forEach(function (r) { top = Math.max(top, r.rumbles); });
       return hdr('Standings', s.head || '', 'WK ' + D.week) + '<div class="rows">' + s.rows.map(function (r, i) {
         var dl = r.prev - r.rank;
