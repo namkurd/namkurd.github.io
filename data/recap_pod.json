@@ -1,5 +1,21 @@
 {
  "videoId": "YbkRrv3n1QQ",
- "tried": "2026-11-24T19:58:47.605846+00:00",
- "card": null
+ "tried": "2026-11-25T00:16:42.300954+00:00",
+ "card": {
+  "type": "pod",
+  "dur": 9,
+  "title": "From the pod",
+  "ep": 53,
+  "name": "The Bill Romanowski Episode",
+  "quote": "Yeah, I'm a big fan of reverse jinx. Yeah. And, you know, even even Joe calling her on it, it's too late. It's already happened. Um, let's see. Probably we got uh, well, calling her on it was the desperate play really. like…",
+  "at": 4203,
+  "url": "https://www.youtube.com/watch?v=YbkRrv3n1QQ&t=4203s",
+  "hits": [
+   "Joe",
+   "Ryan",
+   "Stephanie"
+  ],
+  "vid": "YbkRrv3n1QQ"
+ },
+ "sig": "YbkRrv3n1QQ:701"
 }

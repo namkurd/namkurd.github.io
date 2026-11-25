@@ -12,7 +12,7 @@
    "R": 168,
    "make": 1,
    "bye": 0.999,
-   "one": 0.965,
+   "one": 0.968,
    "x": false,
    "z": false,
    "top": false,
@@ -50,22 +50,22 @@
     },
     "b": {
      "own": 20,
-     "real": 8,
+     "real": 7,
      "long": 1,
      "help": {
       "allow": 0,
       "list": [
        {
         "n": "Ryan",
-        "th": 9
+        "th": 8
        },
        {
         "n": "Jake",
-        "th": 10
+        "th": 9
        },
        {
         "n": "Stephanie",
-        "th": 19
+        "th": 18
        }
       ]
      }
@@ -77,8 +77,8 @@
    "rank": 2,
    "R": 142,
    "make": 0.998,
-   "bye": 0.818,
-   "one": 0.034,
+   "bye": 0.815,
+   "one": 0.032,
    "x": false,
    "z": false,
    "top": false,
@@ -86,26 +86,22 @@
    "scen": {
     "p": {
      "own": null,
-     "real": 11,
+     "real": 12,
      "long": 8,
      "help": {
       "allow": 1,
       "list": [
        {
         "n": "Haan",
-        "th": 2
+        "th": 3
        },
        {
         "n": "Kaitlyn",
-        "th": 5
+        "th": 6
        },
        {
         "n": "Ankit",
-        "th": 5
-       },
-       {
-        "n": "Alex",
-        "th": 20
+        "th": 6
        }
       ]
      }
@@ -116,8 +112,8 @@
    "m": "Ryan",
    "rank": 3,
    "R": 127,
-   "make": 0.899,
-   "bye": 0.077,
+   "make": 0.895,
+   "bye": 0.079,
    "one": 0.0,
    "x": false,
    "z": false,
@@ -129,8 +125,8 @@
    "m": "Jake",
    "rank": 4,
    "R": 126,
-   "make": 0.863,
-   "bye": 0.058,
+   "make": 0.867,
+   "bye": 0.062,
    "one": 0,
    "x": false,
    "z": false,
@@ -142,8 +138,8 @@
    "m": "Stephanie",
    "rank": 5,
    "R": 117,
-   "make": 0.743,
-   "bye": 0.026,
+   "make": 0.73,
+   "bye": 0.024,
    "one": 0,
    "x": false,
    "z": false,
@@ -155,8 +151,8 @@
    "m": "Haan",
    "rank": 6,
    "R": 111,
-   "make": 0.589,
-   "bye": 0.019,
+   "make": 0.585,
+   "bye": 0.018,
    "one": 0,
    "x": false,
    "z": false,
@@ -168,7 +164,7 @@
    "m": "Kaitlyn",
    "rank": 7,
    "R": 108,
-   "make": 0.379,
+   "make": 0.405,
    "bye": 0.001,
    "one": 0,
    "x": false,
@@ -181,7 +177,7 @@
    "m": "Ankit",
    "rank": 8,
    "R": 108,
-   "make": 0.413,
+   "make": 0.415,
    "bye": 0.001,
    "one": 0,
    "x": false,
@@ -194,7 +190,7 @@
    "m": "Alex",
    "rank": 9,
    "R": 93,
-   "make": 0.111,
+   "make": 0.101,
    "bye": 0,
    "one": 0,
    "x": false,
@@ -320,5 +316,5 @@
    }
   }
  ],
- "generatedAt": "2026-11-24T21:23:31Z"
+ "generatedAt": "2026-11-25T00:16:32Z"
 }
