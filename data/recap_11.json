@@ -25,7 +25,7 @@
     },
     {
      "k": "Race",
-     "t": "On the bubble: Haan 58%, Ankit 42%, Kaitlyn 40%"
+     "t": "On the bubble: Haan 59%, Kaitlyn 41%, Ankit 41%"
     }
    ],
    "id": 0
@@ -2067,7 +2067,7 @@
    "dur": 7,
    "title": "Playoff hunt",
    "head": "",
-   "bubble": "On the bubble: Haan 58%, Ankit 42%, Kaitlyn 40%",
+   "bubble": "On the bubble: Haan 59%, Kaitlyn 41%, Ankit 41%",
    "spots": 6,
    "byes": 2,
    "weeksLeft": 3,
@@ -2090,7 +2090,7 @@
      "R": 142,
      "make": 0.998,
      "prev": null,
-     "bye": 0.815,
+     "bye": 0.823,
      "x": false,
      "z": false,
      "top": false,
@@ -2100,9 +2100,9 @@
      "m": "Ryan",
      "rank": 3,
      "R": 127,
-     "make": 0.896,
+     "make": 0.899,
      "prev": null,
-     "bye": 0.079,
+     "bye": 0.076,
      "x": false,
      "z": false,
      "top": false,
@@ -2112,9 +2112,9 @@
      "m": "Jake",
      "rank": 4,
      "R": 126,
-     "make": 0.867,
+     "make": 0.868,
      "prev": null,
-     "bye": 0.062,
+     "bye": 0.059,
      "x": false,
      "z": false,
      "top": false,
@@ -2124,9 +2124,9 @@
      "m": "Stephanie",
      "rank": 5,
      "R": 117,
-     "make": 0.729,
+     "make": 0.727,
      "prev": null,
-     "bye": 0.024,
+     "bye": 0.023,
      "x": false,
      "z": false,
      "top": false,
@@ -2136,9 +2136,9 @@
      "m": "Haan",
      "rank": 6,
      "R": 111,
-     "make": 0.585,
+     "make": 0.592,
      "prev": null,
-     "bye": 0.018,
+     "bye": 0.017,
      "x": false,
      "z": false,
      "top": false,
@@ -2148,7 +2148,7 @@
      "m": "Kaitlyn",
      "rank": 7,
      "R": 108,
-     "make": 0.403,
+     "make": 0.41,
      "prev": null,
      "bye": 0.001,
      "x": false,
@@ -2160,7 +2160,7 @@
      "m": "Ankit",
      "rank": 8,
      "R": 108,
-     "make": 0.415,
+     "make": 0.41,
      "prev": null,
      "bye": 0.001,
      "x": false,
@@ -2172,7 +2172,7 @@
      "m": "Alex",
      "rank": 9,
      "R": 93,
-     "make": 0.101,
+     "make": 0.092,
      "prev": null,
      "bye": 0,
      "x": false,
@@ -2184,7 +2184,7 @@
      "m": "Christian",
      "rank": 10,
      "R": 87,
-     "make": 0.004,
+     "make": 0.003,
      "prev": null,
      "bye": 0,
      "x": false,
@@ -2196,7 +2196,7 @@
      "m": "Joe",
      "rank": 11,
      "R": 80,
-     "make": 0.002,
+     "make": 0.001,
      "prev": null,
      "bye": 0,
      "x": false,
@@ -2324,7 +2324,7 @@
        "th": 14
       }
      ],
-     "make": 0.002
+     "make": 0.001
     },
     {
      "m": "Christian",
@@ -2354,7 +2354,7 @@
        "th": 20
       }
      ],
-     "make": 0.004
+     "make": 0.003
     }
    ],
    "noElim": false,
@@ -2984,5 +2984,5 @@
   }
  ],
  "link": "https://namkurd.github.io/recap/?week=11",
- "generatedAt": "2026-11-25T02:15:20Z"
+ "generatedAt": "2026-11-25T04:25:04Z"
 }
