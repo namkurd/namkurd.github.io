@@ -309,8 +309,6 @@
   .cover { position: absolute; inset: 0; z-index: 10; background: #050202; overflow: hidden; display: flex; flex-direction: column; } .cover[hidden] { display: none; } #cvp { flex: 1; position: relative; min-height: 0; }
   .cover .portal { position: absolute; inset: 0; } .cover .portal .ptz { bottom: 12px; }
   .cover .cvb { flex: none; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 6px 0 22px; z-index: 2; position: relative; }
-  .cover .thm[hidden] { display: none; }
-  .cover .thm { position: absolute; right: 14px; top: 12px; z-index: 3; display: flex; align-items: center; gap: 6px; background: #000000a0; color: #f6e7b9; border: 1px solid #f2c14e66; padding: 4px 11px; font: inherit; font-size: .85rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; } .cover .thm[aria-pressed=true] { color: #1a0d05; background: #f2c14e; border-color: #f2c14e; } .cover .thm .ni { font-size: 1.05rem; }
   .cover .cvn { position: absolute; left: 14px; top: 12px; z-index: 2; background: #000000a0; padding: 3px 10px; } .cover .cvn[hidden], .cover .cvb [hidden] { display: none; }
   .cover[hidden] { display: none; }
   button:focus-visible, a:focus-visible, .bars i:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
@@ -333,12 +331,11 @@
   <div class="sheet" id="sheet" hidden></div>
   <div class="toast" id="toast" hidden></div>
   <div class="cover" id="cover">
-    <div id="cvp"></div><a class="cvn" href="/">&larr; Hub</a><button id="th" class="thm" type="button" aria-pressed="false" hidden><span class="ni">&#9835;</span> <span id="tht">Theme off</span></button>
+    <div id="cvp"></div><a class="cvn" href="/">&larr; Hub</a>
     <div class="cvb"><div class="st"><span id="cst">Loading&hellip;</span> <span class="dim" id="cs"></span></div>
     <button id="go" disabled>&#9654; Watch</button><span class="kb">← → move · space pause</span><i hidden id="cw"></i><i hidden id="ch"></i></div>
   </div>
 </div></div>
-<script src="theme.js"></script>
 <script>
 (function () {
   'use strict';
@@ -371,7 +368,6 @@
     $('cs').textContent = '\u00b7 ' + fmt(D.seconds || 0) + (D.generatedAt ? ' \u00b7 built ' + new Date(D.generatedAt).toLocaleString('en-US', { timeZone: 'America/New_York', weekday: 'short', hour: 'numeric', minute: '2-digit' }) + ' ET' : ''); $('cst').textContent = 'Ready'; $('go').disabled = false;
     segs = raw.filter(function (x) { return x.type === 'intro'; }); drawBars(raw.length);
     if (segs[0]) $('cvp').innerHTML = render(segs[0]);   // the start card is the opener itself, with the Watch button on it
-    if (window.Theme) Theme.setup().then(function () { $('th').hidden = false; }, function () { /* no theme this week */ });   // the button appears once this week's theme exists
     fitCover(); window.addEventListener('resize', fitCover); if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitCover);   // the opener can start right away; the clips are checked while it plays
     resolve().then(function () {
       segs = build(); full = true; drawBars(segs.length); clock0();
@@ -496,7 +492,6 @@
     [].forEach.call(seg.querySelectorAll('.wpb .a, .trk i, .axis i, .hb i'), function (a) { requestAnimationFrame(function () { requestAnimationFrame(function () { a.classList.add('go'); }); }); });
     if (cur.type === 'play') { startClip(cur.clip); if (!animateChart()) animateWP(); } else if (cur.type === 'game') animateChart();
     [].forEach.call(seg.querySelectorAll('[data-count]'), countUp);
-    if (window.Theme && Theme.armed()) Theme.card(cur.type, i, segs.length);   // the theme changes with the card: it steps aside while an NFL clip plays
     clock();
   }
   // the win-probability swing: the number counts from where it was to where it went while a bar fills and its leading edge glows; the size of the swing pops in at the end
@@ -603,7 +598,7 @@
     v.appendChild(b);
   }
   function finish() {   // the last card stays up; the play button becomes replay
-    ended = true; stopVideo(); if (window.Theme && Theme.armed()) Theme.finish(); [].forEach.call($('bars').children, function (b) { b.className = 'done'; });
+    ended = true; stopVideo(); [].forEach.call($('bars').children, function (b) { b.className = 'done'; });
     $('pp').innerHTML = ICON.replay; $('pp').setAttribute('aria-label', 'Replay'); $('clock').textContent = '';
   }
   // ---- the building blocks
@@ -782,17 +777,11 @@
     userPaused = !userPaused; applyPause();
   }
   function begin(at) { $('cover').hidden = true; started = true; ended = false; last = performance.now(); go(at); requestAnimationFrame(tick); }
-  $('th').onclick = function () {   // the theme only plays once the listener asks for it
-    if (!window.Theme) return;
-    var on = this.getAttribute('aria-pressed') !== 'true';
-    this.setAttribute('aria-pressed', on); $('tht').textContent = on ? 'Theme on' : 'Theme off';
-    if (on) { muted = false; $('mu').style.opacity = 1; $('mu').setAttribute('aria-pressed', false); Theme.start(); Theme.mute(false); } else Theme.stop();
-  };
   $('go').onclick = function () { begin(startAt != null && startAt > 0 ? startAt : 1); };
   $('pp').onclick = toggle;
   $('next').onclick = function () { if (ended || !started) return; go(idx + 1); };
   $('prev').onclick = function () { if (!started) return; if (ended) { ended = false; last = performance.now(); go(segs.length - 1); requestAnimationFrame(tick); return; } go(elapsed > 2 ? idx : idx - 1); };
-  $('mu').onclick = function () { muted = !muted; if (window.Theme) Theme.mute(muted); try { if (yt) { muted ? yt.mute() : yt.unMute(); } } catch (e) { /* not ready */ } this.style.opacity = muted ? .55 : 1; this.setAttribute('aria-pressed', muted); };
+  $('mu').onclick = function () { muted = !muted; try { if (yt) { muted ? yt.mute() : yt.unMute(); } } catch (e) { /* not ready */ } this.style.opacity = muted ? .55 : 1; this.setAttribute('aria-pressed', muted); };
   $('bars').addEventListener('click', function (e) { var i = e.target.closest('i'); if (!i || !started) return; ended = false; go(Number(i.dataset.i)); });
   var holdT = null, downX = 0, downAt = 0, heldNow = false;
   $('seg').addEventListener('pointerdown', function (e) {
