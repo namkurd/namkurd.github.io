@@ -50,22 +50,22 @@
     },
     "b": {
      "own": 20,
-     "real": 7,
+     "real": 9,
      "long": 1,
      "help": {
       "allow": 0,
       "list": [
        {
         "n": "Ryan",
-        "th": 8
+        "th": 10
        },
        {
         "n": "Jake",
-        "th": 9
+        "th": 11
        },
        {
         "n": "Stephanie",
-        "th": 18
+        "th": 20
        }
       ]
      }
@@ -76,8 +76,8 @@
    "m": "Steven",
    "rank": 2,
    "R": 142,
-   "make": 0.998,
-   "bye": 0.834,
+   "make": 0.999,
+   "bye": 0.835,
    "one": 0.028,
    "x": false,
    "z": false,
@@ -116,8 +116,8 @@
    "m": "Ryan",
    "rank": 3,
    "R": 127,
-   "make": 0.898,
-   "bye": 0.069,
+   "make": 0.903,
+   "bye": 0.063,
    "one": 0,
    "x": false,
    "z": false,
@@ -129,8 +129,8 @@
    "m": "Jake",
    "rank": 4,
    "R": 126,
-   "make": 0.875,
-   "bye": 0.058,
+   "make": 0.914,
+   "bye": 0.07,
    "one": 0,
    "x": false,
    "z": false,
@@ -142,8 +142,8 @@
    "m": "Stephanie",
    "rank": 5,
    "R": 117,
-   "make": 0.729,
-   "bye": 0.022,
+   "make": 0.74,
+   "bye": 0.019,
    "one": 0,
    "x": false,
    "z": false,
@@ -155,8 +155,8 @@
    "m": "Haan",
    "rank": 6,
    "R": 111,
-   "make": 0.613,
-   "bye": 0.016,
+   "make": 0.618,
+   "bye": 0.014,
    "one": 0,
    "x": false,
    "z": false,
@@ -168,8 +168,8 @@
    "m": "Kaitlyn",
    "rank": 7,
    "R": 108,
-   "make": 0.413,
-   "bye": 0.001,
+   "make": 0.42,
+   "bye": 0.0,
    "one": 0,
    "x": false,
    "z": false,
@@ -181,8 +181,8 @@
    "m": "Ankit",
    "rank": 8,
    "R": 108,
-   "make": 0.379,
-   "bye": 0.001,
+   "make": 0.344,
+   "bye": 0.0,
    "one": 0,
    "x": false,
    "z": false,
@@ -194,7 +194,7 @@
    "m": "Alex",
    "rank": 9,
    "R": 93,
-   "make": 0.087,
+   "make": 0.056,
    "bye": 0,
    "one": 0,
    "x": false,
@@ -207,7 +207,7 @@
    "m": "Christian",
    "rank": 10,
    "R": 87,
-   "make": 0.008,
+   "make": 0.005,
    "bye": 0,
    "one": 0,
    "x": false,
@@ -251,7 +251,7 @@
    "m": "Joe",
    "rank": 11,
    "R": 80,
-   "make": 0.001,
+   "make": 0.002,
    "bye": 0,
    "one": 0,
    "x": false,
@@ -320,5 +320,5 @@
    }
   }
  ],
- "generatedAt": "2026-11-26T00:32:27Z"
+ "generatedAt": "2026-11-26T09:40:22Z"
 }
