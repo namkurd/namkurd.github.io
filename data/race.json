@@ -12,7 +12,7 @@
    "R": 168,
    "make": 1,
    "bye": 0.999,
-   "one": 0.968,
+   "one": 0.972,
    "x": false,
    "z": false,
    "top": false,
@@ -77,8 +77,8 @@
    "rank": 2,
    "R": 142,
    "make": 0.998,
-   "bye": 0.829,
-   "one": 0.032,
+   "bye": 0.834,
+   "one": 0.028,
    "x": false,
    "z": false,
    "top": false,
@@ -116,8 +116,8 @@
    "m": "Ryan",
    "rank": 3,
    "R": 127,
-   "make": 0.894,
-   "bye": 0.072,
+   "make": 0.898,
+   "bye": 0.069,
    "one": 0,
    "x": false,
    "z": false,
@@ -129,8 +129,8 @@
    "m": "Jake",
    "rank": 4,
    "R": 126,
-   "make": 0.864,
-   "bye": 0.057,
+   "make": 0.875,
+   "bye": 0.058,
    "one": 0,
    "x": false,
    "z": false,
@@ -142,8 +142,8 @@
    "m": "Stephanie",
    "rank": 5,
    "R": 117,
-   "make": 0.736,
-   "bye": 0.023,
+   "make": 0.729,
+   "bye": 0.022,
    "one": 0,
    "x": false,
    "z": false,
@@ -155,8 +155,8 @@
    "m": "Haan",
    "rank": 6,
    "R": 111,
-   "make": 0.614,
-   "bye": 0.018,
+   "make": 0.613,
+   "bye": 0.016,
    "one": 0,
    "x": false,
    "z": false,
@@ -168,7 +168,7 @@
    "m": "Kaitlyn",
    "rank": 7,
    "R": 108,
-   "make": 0.416,
+   "make": 0.413,
    "bye": 0.001,
    "one": 0,
    "x": false,
@@ -181,7 +181,7 @@
    "m": "Ankit",
    "rank": 8,
    "R": 108,
-   "make": 0.377,
+   "make": 0.379,
    "bye": 0.001,
    "one": 0,
    "x": false,
@@ -194,7 +194,7 @@
    "m": "Alex",
    "rank": 9,
    "R": 93,
-   "make": 0.095,
+   "make": 0.087,
    "bye": 0,
    "one": 0,
    "x": false,
@@ -207,7 +207,7 @@
    "m": "Christian",
    "rank": 10,
    "R": 87,
-   "make": 0.004,
+   "make": 0.008,
    "bye": 0,
    "one": 0,
    "x": false,
@@ -261,26 +261,26 @@
    "scen": {
     "o": {
      "own": 11,
-     "real": 1,
+     "real": 0,
      "long": 0,
      "help": {
       "allow": 1,
       "list": [
        {
         "n": "Stephanie",
-        "th": 5
+        "th": 4
        },
        {
         "n": "Haan",
-        "th": 11
+        "th": 10
        },
        {
         "n": "Kaitlyn",
-        "th": 14
+        "th": 13
        },
        {
         "n": "Ankit",
-        "th": 14
+        "th": 13
        }
       ]
      }
@@ -320,5 +320,5 @@
    }
   }
  ],
- "generatedAt": "2026-11-25T15:48:11Z"
+ "generatedAt": "2026-11-26T00:32:27Z"
 }

@@ -2204,9 +2204,17 @@
  ],
  "ir": {
   "week": 12,
-  "state": "clear",
+  "state": "blocked",
   "violations": [],
-  "blocked": []
+  "blocked": [
+   {
+    "m": "Joe",
+    "player": "D. Stribling",
+    "pos": "WR",
+    "status": "IR",
+    "how": "waiver"
+   }
+  ]
  },
- "generatedAt": "2026-11-24T19:58:45Z"
+ "generatedAt": "2026-11-26T00:32:32Z"
 }

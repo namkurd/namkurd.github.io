@@ -25,7 +25,7 @@
     },
     {
      "k": "Race",
-     "t": "On the bubble: Haan 61%, Kaitlyn 42%, Ankit 38%"
+     "t": "On the bubble: Haan 61%, Kaitlyn 41%, Ankit 38%"
     }
    ],
    "id": 0
@@ -2067,7 +2067,7 @@
    "dur": 7,
    "title": "Playoff hunt",
    "head": "",
-   "bubble": "On the bubble: Haan 61%, Kaitlyn 42%, Ankit 38%",
+   "bubble": "On the bubble: Haan 61%, Kaitlyn 41%, Ankit 38%",
    "spots": 6,
    "byes": 2,
    "weeksLeft": 3,
@@ -2090,7 +2090,7 @@
      "R": 142,
      "make": 0.998,
      "prev": null,
-     "bye": 0.829,
+     "bye": 0.834,
      "x": false,
      "z": false,
      "top": false,
@@ -2100,9 +2100,9 @@
      "m": "Ryan",
      "rank": 3,
      "R": 127,
-     "make": 0.894,
+     "make": 0.898,
      "prev": null,
-     "bye": 0.072,
+     "bye": 0.069,
      "x": false,
      "z": false,
      "top": false,
@@ -2112,9 +2112,9 @@
      "m": "Jake",
      "rank": 4,
      "R": 126,
-     "make": 0.864,
+     "make": 0.875,
      "prev": null,
-     "bye": 0.057,
+     "bye": 0.058,
      "x": false,
      "z": false,
      "top": false,
@@ -2124,9 +2124,9 @@
      "m": "Stephanie",
      "rank": 5,
      "R": 117,
-     "make": 0.736,
+     "make": 0.729,
      "prev": null,
-     "bye": 0.023,
+     "bye": 0.022,
      "x": false,
      "z": false,
      "top": false,
@@ -2136,9 +2136,9 @@
      "m": "Haan",
      "rank": 6,
      "R": 111,
-     "make": 0.614,
+     "make": 0.613,
      "prev": null,
-     "bye": 0.018,
+     "bye": 0.016,
      "x": false,
      "z": false,
      "top": false,
@@ -2148,7 +2148,7 @@
      "m": "Kaitlyn",
      "rank": 7,
      "R": 108,
-     "make": 0.416,
+     "make": 0.413,
      "prev": null,
      "bye": 0.001,
      "x": false,
@@ -2160,7 +2160,7 @@
      "m": "Ankit",
      "rank": 8,
      "R": 108,
-     "make": 0.377,
+     "make": 0.379,
      "prev": null,
      "bye": 0.001,
      "x": false,
@@ -2172,7 +2172,7 @@
      "m": "Alex",
      "rank": 9,
      "R": 93,
-     "make": 0.095,
+     "make": 0.087,
      "prev": null,
      "bye": 0,
      "x": false,
@@ -2184,7 +2184,7 @@
      "m": "Christian",
      "rank": 10,
      "R": 87,
-     "make": 0.004,
+     "make": 0.008,
      "prev": null,
      "bye": 0,
      "x": false,
@@ -2308,24 +2308,24 @@
      "m": "Joe",
      "kind": "elim",
      "own": 11,
-     "need": 1,
+     "need": 0,
      "must": 3,
      "help": [
       {
        "n": "Stephanie",
-       "th": 5
+       "th": 4
       },
       {
        "n": "Haan",
-       "th": 11
+       "th": 10
       },
       {
        "n": "Kaitlyn",
-       "th": 14
+       "th": 13
       },
       {
        "n": "Ankit",
-       "th": 14
+       "th": 13
       }
      ],
      "make": 0.001
@@ -2358,7 +2358,7 @@
        "th": 20
       }
      ],
-     "make": 0.004
+     "make": 0.008
     }
    ],
    "noElim": false,
@@ -2974,13 +2974,13 @@
     {
      "label": "Trade deadline",
      "when": "Thu Nov 26",
-     "days": 1,
+     "days": 0,
      "kind": "trade-deadline"
     },
     {
      "label": "Playoffs begin",
      "when": "Thu Dec 17",
-     "days": 22,
+     "days": 21,
      "kind": "playoffs"
     }
    ],
@@ -2988,5 +2988,5 @@
   }
  ],
  "link": "https://namkurd.github.io/recap/?week=11",
- "generatedAt": "2026-11-25T15:48:26Z"
+ "generatedAt": "2026-11-26T00:32:42Z"
 }
