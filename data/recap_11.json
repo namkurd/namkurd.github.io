@@ -2,7 +2,7 @@
  "schema": 1,
  "season": 2026,
  "week": 11,
- "seconds": 173,
+ "seconds": 152,
  "segments": [
   {
    "type": "intro",
@@ -25,7 +25,7 @@
     },
     {
      "k": "Race",
-     "t": "On the bubble: Haan 62%, Kaitlyn 42%, Ankit 34%"
+     "t": "On the bubble: Haan 64%, Kaitlyn 42%, Ankit 38%"
     }
    ],
    "id": 0
@@ -2067,7 +2067,7 @@
    "dur": 7,
    "title": "Playoff hunt",
    "head": "",
-   "bubble": "On the bubble: Haan 62%, Kaitlyn 42%, Ankit 34%",
+   "bubble": "On the bubble: Haan 64%, Kaitlyn 42%, Ankit 38%",
    "spots": 6,
    "byes": 2,
    "weeksLeft": 3,
@@ -2088,9 +2088,9 @@
      "m": "Steven",
      "rank": 2,
      "R": 142,
-     "make": 0.999,
+     "make": 0.998,
      "prev": null,
-     "bye": 0.835,
+     "bye": 0.857,
      "x": false,
      "z": false,
      "top": false,
@@ -2100,9 +2100,9 @@
      "m": "Ryan",
      "rank": 3,
      "R": 127,
-     "make": 0.903,
+     "make": 0.893,
      "prev": null,
-     "bye": 0.063,
+     "bye": 0.051,
      "x": false,
      "z": false,
      "top": false,
@@ -2112,9 +2112,9 @@
      "m": "Jake",
      "rank": 4,
      "R": 126,
-     "make": 0.914,
+     "make": 0.885,
      "prev": null,
-     "bye": 0.07,
+     "bye": 0.055,
      "x": false,
      "z": false,
      "top": false,
@@ -2124,7 +2124,7 @@
      "m": "Stephanie",
      "rank": 5,
      "R": 117,
-     "make": 0.74,
+     "make": 0.743,
      "prev": null,
      "bye": 0.019,
      "x": false,
@@ -2136,9 +2136,9 @@
      "m": "Haan",
      "rank": 6,
      "R": 111,
-     "make": 0.618,
+     "make": 0.636,
      "prev": null,
-     "bye": 0.014,
+     "bye": 0.017,
      "x": false,
      "z": false,
      "top": false,
@@ -2148,9 +2148,9 @@
      "m": "Kaitlyn",
      "rank": 7,
      "R": 108,
-     "make": 0.42,
+     "make": 0.423,
      "prev": null,
-     "bye": 0.0,
+     "bye": 0.001,
      "x": false,
      "z": false,
      "top": false,
@@ -2160,9 +2160,9 @@
      "m": "Ankit",
      "rank": 8,
      "R": 108,
-     "make": 0.344,
+     "make": 0.377,
      "prev": null,
-     "bye": 0.0,
+     "bye": 0,
      "x": false,
      "z": false,
      "top": false,
@@ -2172,7 +2172,7 @@
      "m": "Alex",
      "rank": 9,
      "R": 93,
-     "make": 0.056,
+     "make": 0.038,
      "prev": null,
      "bye": 0,
      "x": false,
@@ -2184,7 +2184,7 @@
      "m": "Christian",
      "rank": 10,
      "R": 87,
-     "make": 0.005,
+     "make": 0.004,
      "prev": null,
      "bye": 0,
      "x": false,
@@ -2196,7 +2196,7 @@
      "m": "Joe",
      "rank": 11,
      "R": 80,
-     "make": 0.002,
+     "make": 0.003,
      "prev": null,
      "bye": 0,
      "x": false,
@@ -2280,26 +2280,26 @@
        "th": 20
       }
      ],
-     "make": 0.999
+     "make": 0.998
     },
     {
      "m": "Ben",
      "kind": "bye",
      "own": 20,
-     "need": 9,
+     "need": 7,
      "allow": 0,
      "help": [
       {
        "n": "Ryan",
-       "th": 10
+       "th": 8
       },
       {
        "n": "Jake",
-       "th": 11
+       "th": 9
       },
       {
        "n": "Stephanie",
-       "th": 20
+       "th": 18
       }
      ],
      "make": 0.999
@@ -2308,27 +2308,27 @@
      "m": "Joe",
      "kind": "elim",
      "own": 11,
-     "need": 0,
+     "need": 2,
      "must": 3,
      "help": [
       {
        "n": "Stephanie",
-       "th": 4
+       "th": 6
       },
       {
        "n": "Haan",
-       "th": 10
+       "th": 12
       },
       {
        "n": "Kaitlyn",
-       "th": 13
+       "th": 15
       },
       {
        "n": "Ankit",
-       "th": 13
+       "th": 15
       }
      ],
-     "make": 0.002
+     "make": 0.003
     },
     {
      "m": "Christian",
@@ -2358,7 +2358,7 @@
        "th": 20
       }
      ],
-     "make": 0.005
+     "make": 0.004
     }
    ],
    "noElim": false,
@@ -2724,54 +2724,14 @@
      "href": "https://dtf-club.slack.com/archives/CCH72430F/p1795195755715409"
     },
     {
-     "t": "Finally found a stream for redzone and it was in India",
-     "ch": "gameday",
-     "n": 32,
-     "p": 7,
-     "href": "https://dtf-club.slack.com/archives/CCH72NHC7/p1795373349504059"
+     "t": "Great pod lots of highlights",
+     "ch": "podcast",
+     "n": 35,
+     "p": 6,
+     "href": "https://dtf-club.slack.com/archives/CCFGS58UQ/p1795114472766859"
     }
    ],
    "id": 7
-  },
-  {
-   "type": "pod",
-   "dur": 21,
-   "title": "The podcast",
-   "ep": 53,
-   "name": "The Bill Romanowski Episode",
-   "quote": "Yeah, I'm a big fan of reverse jinx. Yeah. And, you know, even even Joe calling her on it, it's too late. It's already happened. Um, let's see. Probably we got uh, well, calling her on it was the desperate play really. like…",
-   "at": 4203,
-   "url": "https://www.youtube.com/watch?v=YbkRrv3n1QQ&t=4203s",
-   "hits": [
-    "Joe",
-    "Ryan",
-    "Stephanie"
-   ],
-   "vid": "YbkRrv3n1QQ",
-   "coin": {
-    "winner": "Aidan",
-    "reason": "his answer to the listener question: \"does anyone believe that Haan's win was honest? How could TNF polls be so wrong?\"",
-    "quote": "Yes, you're right. Give them to Aidan.",
-    "at": 4139
-   },
-   "takes": [
-    {
-     "topic": "Stephanie's reverse jinx on Joe",
-     "quote": "this was a real veteran move by a rookie league member, and I think we have to tip our hats to Stephanie",
-     "at": 4168
-    },
-    {
-     "topic": "Cut a bench spot",
-     "quote": "I would be in favor of cutting a bench spot if you think that the waiver wire is too barren.",
-     "at": 1881
-    },
-    {
-     "topic": "Haan's win and the \"collusion\"",
-     "quote": "A 90 yard touchdown from a dead man. Debo Samuel, a dead man catching touchdowns.",
-     "at": 1986
-    }
-   ],
-   "id": 8
   },
   {
    "type": "shotguns",
@@ -2929,7 +2889,7 @@
     }
    ],
    "week": 11,
-   "id": 9
+   "id": 8
   },
   {
    "type": "lifetime",
@@ -2964,7 +2924,7 @@
     }
    ],
    "head": "Ankit climbs 2 in career field win %",
-   "id": 10
+   "id": 9
   },
   {
    "type": "coming",
@@ -2984,9 +2944,9 @@
      "kind": "playoffs"
     }
    ],
-   "id": 11
+   "id": 10
   }
  ],
  "link": "https://namkurd.github.io/recap/?week=11",
- "generatedAt": "2026-11-26T09:40:31Z"
+ "generatedAt": "2026-11-26T19:43:58Z"
 }

@@ -1,44 +1,5 @@
 {
- "videoId": "YbkRrv3n1QQ",
- "tried": "2026-11-25T01:27:11.497264+00:00",
- "card": {
-  "type": "pod",
-  "dur": 9,
-  "title": "From the pod",
-  "ep": 53,
-  "name": "The Bill Romanowski Episode",
-  "quote": "Yeah, I'm a big fan of reverse jinx. Yeah. And, you know, even even Joe calling her on it, it's too late. It's already happened. Um, let's see. Probably we got uh, well, calling her on it was the desperate play really. like…",
-  "at": 4203,
-  "url": "https://www.youtube.com/watch?v=YbkRrv3n1QQ&t=4203s",
-  "hits": [
-   "Joe",
-   "Ryan",
-   "Stephanie"
-  ],
-  "vid": "YbkRrv3n1QQ",
-  "coin": {
-   "winner": "Aidan",
-   "reason": "his answer to the listener question: \"does anyone believe that Haan's win was honest? How could TNF polls be so wrong?\"",
-   "quote": "Yes, you're right. Give them to Aidan.",
-   "at": 4139
-  },
-  "takes": [
-   {
-    "topic": "Stephanie's reverse jinx on Joe",
-    "quote": "this was a real veteran move by a rookie league member, and I think we have to tip our hats to Stephanie",
-    "at": 4168
-   },
-   {
-    "topic": "Cut a bench spot",
-    "quote": "I would be in favor of cutting a bench spot if you think that the waiver wire is too barren.",
-    "at": 1881
-   },
-   {
-    "topic": "Haan's win and the \"collusion\"",
-    "quote": "A 90 yard touchdown from a dead man. Debo Samuel, a dead man catching touchdowns.",
-    "at": 1986
-   }
-  ]
- },
- "sig": "YbkRrv3n1QQ:701"
+ "videoId": "ZQCYvcgPHZY",
+ "tried": "2026-11-26T19:43:51.528064+00:00",
+ "card": null
 }

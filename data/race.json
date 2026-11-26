@@ -12,7 +12,7 @@
    "R": 168,
    "make": 1,
    "bye": 0.999,
-   "one": 0.972,
+   "one": 0.977,
    "x": false,
    "z": false,
    "top": false,
@@ -50,22 +50,22 @@
     },
     "b": {
      "own": 20,
-     "real": 9,
+     "real": 7,
      "long": 1,
      "help": {
       "allow": 0,
       "list": [
        {
         "n": "Ryan",
-        "th": 10
+        "th": 8
        },
        {
         "n": "Jake",
-        "th": 11
+        "th": 9
        },
        {
         "n": "Stephanie",
-        "th": 20
+        "th": 18
        }
       ]
      }
@@ -76,9 +76,9 @@
    "m": "Steven",
    "rank": 2,
    "R": 142,
-   "make": 0.999,
-   "bye": 0.835,
-   "one": 0.028,
+   "make": 0.998,
+   "bye": 0.857,
+   "one": 0.023,
    "x": false,
    "z": false,
    "top": false,
@@ -116,8 +116,8 @@
    "m": "Ryan",
    "rank": 3,
    "R": 127,
-   "make": 0.903,
-   "bye": 0.063,
+   "make": 0.893,
+   "bye": 0.051,
    "one": 0,
    "x": false,
    "z": false,
@@ -129,8 +129,8 @@
    "m": "Jake",
    "rank": 4,
    "R": 126,
-   "make": 0.914,
-   "bye": 0.07,
+   "make": 0.885,
+   "bye": 0.055,
    "one": 0,
    "x": false,
    "z": false,
@@ -142,7 +142,7 @@
    "m": "Stephanie",
    "rank": 5,
    "R": 117,
-   "make": 0.74,
+   "make": 0.743,
    "bye": 0.019,
    "one": 0,
    "x": false,
@@ -155,8 +155,8 @@
    "m": "Haan",
    "rank": 6,
    "R": 111,
-   "make": 0.618,
-   "bye": 0.014,
+   "make": 0.636,
+   "bye": 0.017,
    "one": 0,
    "x": false,
    "z": false,
@@ -168,8 +168,8 @@
    "m": "Kaitlyn",
    "rank": 7,
    "R": 108,
-   "make": 0.42,
-   "bye": 0.0,
+   "make": 0.423,
+   "bye": 0.001,
    "one": 0,
    "x": false,
    "z": false,
@@ -181,8 +181,8 @@
    "m": "Ankit",
    "rank": 8,
    "R": 108,
-   "make": 0.344,
-   "bye": 0.0,
+   "make": 0.377,
+   "bye": 0,
    "one": 0,
    "x": false,
    "z": false,
@@ -194,7 +194,7 @@
    "m": "Alex",
    "rank": 9,
    "R": 93,
-   "make": 0.056,
+   "make": 0.038,
    "bye": 0,
    "one": 0,
    "x": false,
@@ -207,7 +207,7 @@
    "m": "Christian",
    "rank": 10,
    "R": 87,
-   "make": 0.005,
+   "make": 0.004,
    "bye": 0,
    "one": 0,
    "x": false,
@@ -251,7 +251,7 @@
    "m": "Joe",
    "rank": 11,
    "R": 80,
-   "make": 0.002,
+   "make": 0.003,
    "bye": 0,
    "one": 0,
    "x": false,
@@ -261,26 +261,26 @@
    "scen": {
     "o": {
      "own": 11,
-     "real": 0,
+     "real": 2,
      "long": 0,
      "help": {
       "allow": 1,
       "list": [
        {
         "n": "Stephanie",
-        "th": 4
+        "th": 6
        },
        {
         "n": "Haan",
-        "th": 10
+        "th": 12
        },
        {
         "n": "Kaitlyn",
-        "th": 13
+        "th": 15
        },
        {
         "n": "Ankit",
-        "th": 13
+        "th": 15
        }
       ]
      }
@@ -320,5 +320,5 @@
    }
   }
  ],
- "generatedAt": "2026-11-26T09:40:22Z"
+ "generatedAt": "2026-11-26T19:43:44Z"
 }
