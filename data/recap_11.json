@@ -2,7 +2,7 @@
  "schema": 1,
  "season": 2026,
  "week": 11,
- "seconds": 152,
+ "seconds": 150,
  "segments": [
   {
    "type": "intro",
@@ -25,7 +25,7 @@
     },
     {
      "k": "Race",
-     "t": "On the bubble: Haan 64%, Kaitlyn 42%, Ankit 38%"
+     "t": "On the bubble: Haan 49%, Ankit 47%, Kaitlyn 24%"
     }
    ],
    "id": 0
@@ -2067,7 +2067,7 @@
    "dur": 7,
    "title": "Playoff hunt",
    "head": "",
-   "bubble": "On the bubble: Haan 64%, Kaitlyn 42%, Ankit 38%",
+   "bubble": "On the bubble: Haan 49%, Ankit 47%, Kaitlyn 24%",
    "spots": 6,
    "byes": 2,
    "weeksLeft": 3,
@@ -2078,7 +2078,7 @@
      "R": 168,
      "make": 1,
      "prev": null,
-     "bye": 0.999,
+     "bye": 0.997,
      "x": false,
      "z": false,
      "top": false,
@@ -2090,7 +2090,7 @@
      "R": 142,
      "make": 0.998,
      "prev": null,
-     "bye": 0.857,
+     "bye": 0.809,
      "x": false,
      "z": false,
      "top": false,
@@ -2100,9 +2100,9 @@
      "m": "Ryan",
      "rank": 3,
      "R": 127,
-     "make": 0.893,
+     "make": 0.905,
      "prev": null,
-     "bye": 0.051,
+     "bye": 0.088,
      "x": false,
      "z": false,
      "top": false,
@@ -2112,9 +2112,9 @@
      "m": "Jake",
      "rank": 4,
      "R": 126,
-     "make": 0.885,
+     "make": 0.905,
      "prev": null,
-     "bye": 0.055,
+     "bye": 0.069,
      "x": false,
      "z": false,
      "top": false,
@@ -2124,9 +2124,9 @@
      "m": "Stephanie",
      "rank": 5,
      "R": 117,
-     "make": 0.743,
+     "make": 0.796,
      "prev": null,
-     "bye": 0.019,
+     "bye": 0.025,
      "x": false,
      "z": false,
      "top": false,
@@ -2136,9 +2136,9 @@
      "m": "Haan",
      "rank": 6,
      "R": 111,
-     "make": 0.636,
+     "make": 0.49,
      "prev": null,
-     "bye": 0.017,
+     "bye": 0.009,
      "x": false,
      "z": false,
      "top": false,
@@ -2148,9 +2148,9 @@
      "m": "Kaitlyn",
      "rank": 7,
      "R": 108,
-     "make": 0.423,
+     "make": 0.241,
      "prev": null,
-     "bye": 0.001,
+     "bye": 0.0,
      "x": false,
      "z": false,
      "top": false,
@@ -2160,9 +2160,9 @@
      "m": "Ankit",
      "rank": 8,
      "R": 108,
-     "make": 0.377,
+     "make": 0.474,
      "prev": null,
-     "bye": 0,
+     "bye": 0.001,
      "x": false,
      "z": false,
      "top": false,
@@ -2172,7 +2172,7 @@
      "m": "Alex",
      "rank": 9,
      "R": 93,
-     "make": 0.038,
+     "make": 0.188,
      "prev": null,
      "bye": 0,
      "x": false,
@@ -2184,7 +2184,7 @@
      "m": "Christian",
      "rank": 10,
      "R": 87,
-     "make": 0.004,
+     "make": 0.002,
      "prev": null,
      "bye": 0,
      "x": false,
@@ -2196,7 +2196,7 @@
      "m": "Joe",
      "rank": 11,
      "R": 80,
-     "make": 0.003,
+     "make": 0.001,
      "prev": null,
      "bye": 0,
      "x": false,
@@ -2286,49 +2286,45 @@
      "m": "Ben",
      "kind": "bye",
      "own": 20,
-     "need": 7,
+     "need": 11,
      "allow": 0,
      "help": [
       {
        "n": "Ryan",
-       "th": 8
+       "th": 12
       },
       {
        "n": "Jake",
-       "th": 9
-      },
-      {
-       "n": "Stephanie",
-       "th": 18
+       "th": 13
       }
      ],
-     "make": 0.999
+     "make": 0.997
     },
     {
      "m": "Joe",
      "kind": "elim",
      "own": 11,
-     "need": 2,
+     "need": 3,
      "must": 3,
      "help": [
       {
        "n": "Stephanie",
-       "th": 6
+       "th": 7
       },
       {
        "n": "Haan",
-       "th": 12
+       "th": 13
       },
       {
        "n": "Kaitlyn",
-       "th": 15
+       "th": 16
       },
       {
        "n": "Ankit",
-       "th": 15
+       "th": 16
       }
      ],
-     "make": 0.003
+     "make": 0.001
     },
     {
      "m": "Christian",
@@ -2358,7 +2354,7 @@
        "th": 20
       }
      ],
-     "make": 0.004
+     "make": 0.002
     }
    ],
    "noElim": false,
@@ -2724,11 +2720,11 @@
      "href": "https://dtf-club.slack.com/archives/CCH72430F/p1795195755715409"
     },
     {
-     "t": "Great pod lots of highlights",
-     "ch": "podcast",
-     "n": 35,
-     "p": 6,
-     "href": "https://dtf-club.slack.com/archives/CCFGS58UQ/p1795114472766859"
+     "t": "Finally found a stream for redzone and it was in India",
+     "ch": "gameday",
+     "n": 32,
+     "p": 7,
+     "href": "https://dtf-club.slack.com/archives/CCH72NHC7/p1795373349504059"
     }
    ],
    "id": 7
@@ -2928,19 +2924,13 @@
   },
   {
    "type": "coming",
-   "dur": 7,
+   "dur": 5,
    "title": "Coming up",
    "items": [
     {
-     "label": "Trade deadline",
-     "when": "Thu Nov 26",
-     "days": 0,
-     "kind": "trade-deadline"
-    },
-    {
      "label": "Playoffs begin",
      "when": "Thu Dec 17",
-     "days": 21,
+     "days": 20,
      "kind": "playoffs"
     }
    ],
@@ -2948,5 +2938,5 @@
   }
  ],
  "link": "https://namkurd.github.io/recap/?week=11",
- "generatedAt": "2026-11-26T19:43:58Z"
+ "generatedAt": "2026-11-27T02:58:00Z"
 }
